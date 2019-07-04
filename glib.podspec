@@ -43,7 +43,7 @@ TODO: Add long description of the pod here.
 	s.dependency 'SnapKit', '~> 4.0'
 
   #s.dependency 'Alamofire', '~> 4.7'
-  s.dependency 'SwiftyJSON', '~> 4.1'
+  s.dependency 'SwiftyJSON', '4.1'
   s.dependency 'SVProgressHUD', '~> 2.2'
 
   # http://www.dbotha.com/2014/12/04/optional-cocoapod-dependencies/
