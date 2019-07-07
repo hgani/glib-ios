@@ -46,9 +46,12 @@ public class JsonUi {
 
     public static func parseScreenContent(_ spec: Json, screen: GScreen) {
         initVerticalPanel(screen.container.header, spec: spec["header"], screen: screen)
-        initVerticalPanel(screen.container.content, spec: spec["content"], screen: screen)
+        initVerticalPanel(screen.container.content, spec: spec["body"], screen: screen)
         initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
         JsonAction.execute(spec: spec["onLoad"], screen: screen, creator: nil)
+
+        // TODO: Remove (deprecated)
+        initVerticalPanel(screen.container.content, spec: spec["content"], screen: screen)
     }
 
     public static func parseEntireScreen(_ spec: Json, screen: GScreen) {
