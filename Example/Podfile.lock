@@ -1,34 +1,30 @@
 PODS:
-  - Alamofire (4.8.0)
-  - GaniLib (0.8.1):
-    - Alamofire (~> 4.7)
-    - GaniLib/Core (= 0.8.1)
-    - SideMenu (~> 3.0)
+  - GLib (0.8.1):
+    - GLib/Core (= 0.8.1)
+    - SideMenu (~> 5.0)
     - SnapKit (~> 4.0)
     - SVProgressHUD (~> 2.2)
-    - SwiftIconFont (= 2.8.0)
-    - SwiftyJSON (~> 4.1)
-  - GaniLib/Core (0.8.1):
-    - Alamofire (~> 4.7)
+    - SwiftIconFont (~> 3.0)
+    - SwiftyJSON (= 4.1)
+  - GLib/Core (0.8.1):
     - Kingfisher (~> 4.0)
-    - SideMenu (~> 3.0)
+    - SideMenu (~> 5.0)
     - SnapKit (~> 4.0)
     - SVProgressHUD (~> 2.2)
-    - SwiftIconFont (= 2.8.0)
-    - SwiftyJSON (~> 4.1)
+    - SwiftIconFont (~> 3.0)
+    - SwiftyJSON (= 4.1)
   - Kingfisher (4.10.1)
-  - SideMenu (3.1.7)
+  - SideMenu (5.0.3)
   - SnapKit (4.2.0)
   - SVProgressHUD (2.2.5)
-  - SwiftIconFont (2.8.0)
-  - SwiftyJSON (4.2.0)
+  - SwiftIconFont (3.0.0)
+  - SwiftyJSON (4.1.0)
 
 DEPENDENCIES:
-  - GaniLib (from `../`)
+  - GLib (from `../`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Alamofire
     - Kingfisher
     - SideMenu
     - SnapKit
@@ -37,19 +33,18 @@ SPEC REPOS:
     - SwiftyJSON
 
 EXTERNAL SOURCES:
-  GaniLib:
+  GLib:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
-  GaniLib: 9e354ae822b6e3169c66eeabbb605b751d06bb22
+  GLib: bfe3af170ebd8700f188426d5811776f024b5c03
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
-  SideMenu: 93aefac046e861875abe260d8ae3578acdd75427
+  SideMenu: 1dcaabce84538c53325c287f7fe62999379a641c
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SwiftIconFont: ddaccaa3bb90fc21ebc528cfdf793342618a5cc2
-  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
+  SwiftIconFont: 2ba18554a77c44948dc35b561b344e3c23834a84
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 8b8cce58a1197d3ee801d99de46f02f59af2369d
+PODFILE CHECKSUM: 18b550848203d246dc1607ee600d01626a0dff7a
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.3
