@@ -40,7 +40,7 @@ TODO: Add long description of the pod here.
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'SwiftIconFont', '~> 3.0'
   s.dependency 'SideMenu', '~> 5.0'
-	s.dependency 'SnapKit', '~> 4.0'
+  s.dependency 'SnapKit', '~> 4.0'
 
   #s.dependency 'Alamofire', '~> 4.7'
   s.dependency 'SwiftyJSON', '4.1'

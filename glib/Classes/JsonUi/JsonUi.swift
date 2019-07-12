@@ -1,3 +1,5 @@
+import SwiftyJSON
+
 public class JsonUi {
     private static var moduleName: String?
 
@@ -82,18 +84,40 @@ public class JsonUi {
         screen.rightBarButtons(items: buttons)
 
         if let leftDrawer = spec["leftDrawer"].presence {
-            // TODO: implement
-            screen.leftMenu(controller: JsonUiMenuNavController())
+            let menuController = JsonUiMenuNavController(leftDrawer, screen)
+            screen.leftMenu(controller: menuController)
         }
     }
 }
 
 class JsonUiMenuNavController: MenuNavController {
+    var spec: JSON
+    var screen: GScreen
+
+    public required init(_ spec: Json, _ screen: GScreen) {
+        self.spec = spec
+        self.screen = screen
+        super.init()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func initMenu(_ menu: Menu) {
-        // TODO: display based on json data
-        menu.add(MenuItem(title: "TODO").icon(GIcon(font: .materialIcon, code: "home")).onClick {
-            self.launch.alert("TODO")
-        })
+        if let rows = spec["rows"].presence {
+            rows.arrayValue.forEach { (row) in
+                if let title = row["text"].string, let iconName = row["icon"]["materialName"].string {
+                    menu.add(MenuItem(title: title).icon(GIcon(font: .materialIcon, code: iconName)).onClick {
+                        JsonAction.execute(spec: row["onClick"], screen: self.screen, creator: nil)
+                    })
+                }
+            }
+        }
+
+//        menu.add(MenuItem(title: "TODO").icon(GIcon(font: .materialIcon, code: "home")).onClick {
+//            self.launch.alert("TODO")
+//        })
 
 //        #if DEBUG
 //        menu.add(MenuItem(title: "Diagnostics").screen(JsonUiScreen(path: "/app_diagnostics.json")))
