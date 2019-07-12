@@ -31,6 +31,11 @@ open class GSwitch: UISwitch {
         return self
     }
 
+    public func checked(_ check: Bool) -> Self {
+        isOn = check
+        return self
+    }
+
     public func end() {
         // End chaining initialisation
     }
