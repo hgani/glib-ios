@@ -71,5 +71,6 @@ TODO: Add long description of the pod here.
 
     sub.dependency 'MaterialComponents/Buttons', '~> 60.0'
     sub.dependency 'MaterialComponents/TextFields', '~> 60.0'
+    sub.dependency 'MaterialComponents/Tabs', '~> 60.0'
   end
 end

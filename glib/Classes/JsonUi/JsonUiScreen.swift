@@ -32,4 +32,8 @@ public class JsonUiScreen: GScreen {
             return true
         }
     }
+
+    public func getUrl() -> String {
+        return url
+    }
 }

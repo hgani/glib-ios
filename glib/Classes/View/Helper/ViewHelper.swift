@@ -276,7 +276,7 @@ public class ViewHelper {
     }
 }
 
-public enum LayoutSize {
+public enum LayoutSize: String {
     case matchParent, wrapContent
 }
 
