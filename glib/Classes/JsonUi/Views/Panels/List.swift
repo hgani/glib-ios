@@ -87,5 +87,9 @@ open class JsonView_Panels_ListV1: JsonView {
                 }
             }
         }
+
+        func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+            return JsonView_Panels_VerticalV1(sections[section]["header"], listView.screen).createView()
+        }
     }
 }
