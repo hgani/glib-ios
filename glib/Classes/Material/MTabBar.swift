@@ -55,4 +55,9 @@ open class MTabBar: MDCTabBar {
         }
         return self
     }
+
+    public func alignment(_ align: MDCTabBarAlignment) -> Self {
+        self.alignment = align
+        return self
+    }
 }

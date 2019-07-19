@@ -5,10 +5,11 @@ class JsonView_TabBarV1: JsonView {
 
     override func initView() -> UIView {
         let delegate = Delegate(view: self)
-        
+
         tabBar
             .width(LayoutSize(rawValue: spec["width"].stringValue)!)
             .color(bg: UIColor(hex: spec["backgroundColor"].stringValue), text: UIColor(hex: spec["color"].stringValue))
+            .alignment(spec["tabButtons"].arrayValue.count > 3 ? .leading : .justified)
             .delegate(delegate, retain: true)
 
         spec["tabButtons"].arrayValue.forEach { (tab) in
@@ -39,6 +40,10 @@ class JsonView_TabBarV1: JsonView {
         }
 
         func tabBar(_ tabBar: MDCTabBar, didSelect item: UITabBarItem) {
+            if !item.isEnabled {
+                return
+            }
+
             if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
                 JsonAction.execute(spec: onClick, screen: view.screen, creator: nil)
             }
@@ -53,6 +58,7 @@ class JsonView_TabBarItemV1: UITabBarItem {
         self.spec = spec
         super.init()
         self.title = spec["text"].stringValue
+        self.isEnabled = !spec["disabled"].boolValue
     }
 
     required init?(coder aDecoder: NSCoder) {
