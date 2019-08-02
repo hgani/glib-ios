@@ -72,6 +72,14 @@ open class GMapView: MKMapView {
         return self
     }
 
+    public func center(latitude: Double, longitude: Double, zoomLevel: Double) -> Self {
+        let span = MKCoordinateSpan(latitudeDelta: zoomLevel, longitudeDelta: zoomLevel)
+        let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+        setRegion(MKCoordinateRegion(center: coordinate, span: span), animated: true)
+        
+        return self
+    }
+
     open func onUserLocationUpdate(_ command: @escaping (GMapView, MKUserLocation) -> Void) -> Self {
         onUserLocationUpdate = command
         return self
