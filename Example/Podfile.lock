@@ -37,7 +37,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  GLib: 0ed3dd0d571011025e124952c8718a0473c029af
+  GLib: d9ba459e5812d1aef4f0f11c3afdf03bd81a8c9f
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   SideMenu: 1dcaabce84538c53325c287f7fe62999379a641c
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
