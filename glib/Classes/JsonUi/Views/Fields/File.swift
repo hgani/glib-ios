@@ -1,8 +1,7 @@
-import MaterialComponents.MaterialProgressView
-
 class JsonView_Fields_FileV1: JsonView, SubmittableField, ImagePickerDelegate {
     private let panel = GHorizontalPanel()
     private let imageView = GImageView()
+    private let progressView = MProgressView()
     private var imagePicker: ImagePicker!
 
     var name: String?
@@ -26,12 +25,23 @@ class JsonView_Fields_FileV1: JsonView, SubmittableField, ImagePickerDelegate {
 
     func didSelect(image: UIImage?) {
         if let selectedImage = image {
-            panel.clearViews()
-
-            imageView.source(image: selectedImage).width(80)
-            panel.append(imageView)
-            imageView.adjustHeight()
+            updateViews(image: selectedImage)
+            uploadImage(image: selectedImage)
         }
+    }
+
+    private func updateViews(image: UIImage) {
+        panel.clearViews()
+
+        imageView.source(image: image).width(80)
+        panel.append(GAligner().align(.left).withView(imageView))
+        imageView.adjustHeight()
+
+        panel.append(progressView.hidden(false).progress(0.0).width(.wrapContent).height(5), left: 5)
+    }
+
+    private func uploadImage(image: UIImage) {
+
     }
 }
 
