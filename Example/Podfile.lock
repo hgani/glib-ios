@@ -1,5 +1,7 @@
 PODS:
+  - Alamofire (4.8.2)
   - GLib (0.8.1):
+    - Alamofire (~> 4.8)
     - GLib/Core (= 0.8.1)
     - SideMenu (~> 5.0)
     - SnapKit (~> 4.0)
@@ -7,6 +9,7 @@ PODS:
     - SwiftIconFont (~> 3.0)
     - SwiftyJSON (= 4.1)
   - GLib/Core (0.8.1):
+    - Alamofire (~> 4.8)
     - Kingfisher (~> 4.0)
     - SideMenu (~> 5.0)
     - SnapKit (~> 4.0)
@@ -25,6 +28,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - Kingfisher
     - SideMenu
     - SnapKit
@@ -37,7 +41,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  GLib: d9ba459e5812d1aef4f0f11c3afdf03bd81a8c9f
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  GLib: bf52f10e7b0d80e4f8ade76685b2ec6d7b80f5ad
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   SideMenu: 1dcaabce84538c53325c287f7fe62999379a641c
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
