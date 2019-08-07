@@ -45,6 +45,12 @@ class JsonView_Panels_FormV1: JsonView {
         func submit() {
             var params = GParams()
             for field in fields {
+                if let fileField = field as? SubmittableFileField, let completed = fileField.completed {
+                    if !completed {
+                        jsonView.screen.launch.alert("Please wait...")
+                        return
+                    }
+                }
                 if let name = field.name {
                     params[name] = field.value
                 }

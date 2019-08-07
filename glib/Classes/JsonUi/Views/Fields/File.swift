@@ -2,7 +2,7 @@ import Photos
 import CommonCrypto
 import Alamofire
 
-class JsonView_Fields_FileV1: JsonView, SubmittableField, ImagePickerDelegate {
+class JsonView_Fields_FileV1: JsonView, SubmittableFileField, ImagePickerDelegate {
     private let panel = GHorizontalPanel()
     private let imageView = GImageView()
     private let progressView = MProgressView()
@@ -15,6 +15,8 @@ class JsonView_Fields_FileV1: JsonView, SubmittableField, ImagePickerDelegate {
 
     var name: String?
     var value: String = ""
+    var fileInput: Bool? = true
+    var completed: Bool? = true
 
     override func initView() -> UIView {
         name = spec["name"].stringValue
@@ -52,14 +54,29 @@ class JsonView_Fields_FileV1: JsonView, SubmittableField, ImagePickerDelegate {
 
     private func initialViews() -> GHorizontalPanel {
         panel.clearViews()
+
+        if let fileUrl = spec["file_url"].string {
+            value = spec["value"].stringValue
+            imageFileName = spec["file_name"].stringValue
+            imageView.source(url: fileUrl)
+            selectedImage = imageView.image
+            updateUploadCompletedViews()
+        }
+        else {
+            uploadViews()
+        }
+
+        return panel
+    }
+
+    private func uploadViews() {
+        panel.clearViews()
         panel.append(GAligner().align(.left).withView(GLabel().text("No file choosen")))
             .append(GAligner().align(.right).withView(
                 MButton().title("Choose file").onClick({ (button) in
                     self.imagePicker.present()
                 })
             ))
-
-        return panel
     }
 
     private func updateUploadProgressViews() {
@@ -79,13 +96,16 @@ class JsonView_Fields_FileV1: JsonView, SubmittableField, ImagePickerDelegate {
             .append(GLabel().text(imageFileName), left: 5)
             .append(GAligner().align(.right).withView(
                 MButton().color(bg: .red).title("X").onClick({ button in
-                    self.initialViews()
+                    self.value = ""
+                    self.uploadViews()
                 })
             ), left: 5)
         imageView.adjustHeight()
     }
 
     private func upload() {
+        self.completed = false
+
         let blobRecord: GParams = [
             "blob[byte_size]": imageByteSize!,
             "blob[checksum]": checksum(),
@@ -112,9 +132,12 @@ class JsonView_Fields_FileV1: JsonView, SubmittableField, ImagePickerDelegate {
                              method: .put, headers: uploadHeaders)
                 .uploadProgress { progress in
                     self.progressView.progress(Float(progress.fractionCompleted))
-                }.responseData { data in
-                    self.value = self.directUploadData["signed_id"].stringValue
-                    self.updateUploadCompletedViews()
+
+                    if progress.fractionCompleted == 1.0 {
+                        self.value = self.directUploadData["signed_id"].stringValue
+                        self.updateUploadCompletedViews()
+                        self.completed = true
+                    }
                 }
 
             return true
