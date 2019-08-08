@@ -202,7 +202,7 @@ public class Rest {
         }
 
         let statusCode = response.statusCode
-        GLog.d("[\(statusCode)]: \(content)")
+//        GLog.t("[\(statusCode)]: \(content)")
 
         DispatchQueue.main.async {
             if !onHttpSuccess(Response(statusCode: statusCode, content: content, headers: headers)) {

@@ -13,7 +13,7 @@ class JsonView_Panels_FormV1: JsonView {
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
         for viewSpec in childViews {
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-                panel.addView(jsonView.createView(), top: 10)
+                panel.addView(jsonView.createView())
 
                 // NOTE: Currently we assume all fields are direct children.
 
@@ -52,17 +52,25 @@ class JsonView_Panels_FormV1: JsonView {
                     }
                 }
                 if let name = field.name {
-                    params[name] = field.value
+                    if name.hasSuffix("[]") {
+                        if let oldArray = params[name] as? [String] {
+                            var newArray = [String](oldArray)
+                            newArray.append(field.value)
+                            params[name] = newArray
+                        } else {
+                            params[name] = [field.value]
+                        }
+                    } else {
+                        params[name] = field.value
+                    }
                 }
             }
 
             let spec = jsonView.spec
             let screen = jsonView.screen
+//            _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)
+
             _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)?.execute { response in
-//                // Support generic uncustomizable framework (e.g. Devise).
-//                if let error = result["error"].string {
-//                    screen.launch.alert(error)
-//                }
                 JsonAction.execute(spec: response.content["onResponse"], screen: screen, creator: self)
                 return true
             }

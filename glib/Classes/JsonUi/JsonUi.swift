@@ -28,14 +28,14 @@ public class JsonUi {
             .joined(separator: "_")
             .replacingOccurrences(of: "-v", with: "V")
         let nameWithLibPrefix = "\(typeName)_\(className)"
-        GLog.d("Loading \(nameWithLibPrefix) from \(name) ...")
+//        GLog.t("Loading \(nameWithLibPrefix) from \(name) ...")
         if let clazz = NSClassFromString(nameWithLibPrefix) {
             return clazz
         }
 
         if let replacement = moduleName {
             let nameWithAppPrefix = replaceNamespace(of: nameWithLibPrefix, with: replacement)
-            GLog.d("Loading \(nameWithAppPrefix) from \(name) ...")
+//            GLog.t("Loading \(nameWithAppPrefix) from \(name) ...")
             return NSClassFromString(nameWithAppPrefix)
         }
 

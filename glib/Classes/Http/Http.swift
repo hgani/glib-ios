@@ -124,6 +124,10 @@ public class HttpRequest {
                 return "\(prev)\(formData(from: sub, prefix: key))"
             }
 
+            if let array = item.value as? [String] {
+                return array.map { "\(prev)\(key)=\($0)" }.joined(separator: "&")
+            }
+
             let value = encodeUriComponent(String(describing: item.value ?? ""))
             return "\(prev)\(key)=\(value)"
         })

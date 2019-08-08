@@ -85,10 +85,11 @@ open class JsonView {
     }
 
     static func create(spec: Json, screen: GScreen) -> JsonView? {
-        if let klass = JsonUi.loadClass(name: spec["view"].stringValue, type: JsonView.self) as? JsonView.Type {
+        let viewName = spec["view"].stringValue
+        if let klass = JsonUi.loadClass(name: viewName, type: JsonView.self) as? JsonView.Type {
             return klass.init(spec, screen)
         }
-        GLog.w("Failed loading view: \(spec)")
+        GLog.w("Failed loading view: \(viewName)")
         return nil
     }
 }

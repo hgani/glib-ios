@@ -71,7 +71,7 @@ class JsonView_Fields_FileV1: JsonView, SubmittableFileField, ImagePickerDelegat
 
     private func uploadViews() {
         panel.clearViews()
-        panel.append(GAligner().align(.left).withView(GLabel().text("No file choosen")))
+        panel.append(GAligner().align(.left).withView(GLabel().text("No file chosen")))
             .append(GAligner().align(.right).withView(
                 MButton().title("Choose file").onClick({ (button) in
                     self.imagePicker.present()
