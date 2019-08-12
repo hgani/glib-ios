@@ -1,3 +1,5 @@
+import MaterialComponents.MaterialSnackbar
+
 class JsonAction_Dialogs_AlertV1: JsonAction {
     override func silentExecute() -> Bool {
         guard let message = spec["message"].string else {
@@ -9,6 +11,27 @@ class JsonAction_Dialogs_AlertV1: JsonAction {
             JsonAction.execute(spec: self.spec["onClose"], screen: self.screen, creator: self)
         }))
         screen.present(alert, animated: true, completion: nil)
+
+        return true
+    }
+}
+
+class JsonAction_Dialogs_SnackbarV1: JsonAction {
+    override func silentExecute() -> Bool {
+        guard let message = spec["message"].string else {
+            return false
+        }
+
+        let action = MDCSnackbarMessageAction()
+        action.title = "CLOSE"
+        action.handler = { () in
+            MDCSnackbarManager.suspendAllMessages()
+        }
+
+        let snackbar = MDCSnackbarMessage()
+        snackbar.text = message
+        snackbar.action = action
+        MDCSnackbarManager.show(snackbar)
 
         return true
     }
