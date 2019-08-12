@@ -19,3 +19,17 @@ class JsonAction_Windows_CloseAllV1: JsonAction {
         return true
     }
 }
+
+class JsonAction_Windows_ReloadV1: JsonAction {
+    override func silentExecute() -> Bool {
+        guard let currentScreen = screen as? JsonUiScreen else {
+            return false
+        }
+        let url = spec["url"].string ?? currentScreen.getUrl()
+
+        nav.pop(animated: false)
+        nav.push(JsonUiScreen(url: url))
+
+        return true
+    }
+}
