@@ -1,3 +1,4 @@
+import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialSnackbar
 
 class JsonAction_Dialogs_AlertV1: JsonAction {
@@ -6,11 +7,9 @@ class JsonAction_Dialogs_AlertV1: JsonAction {
             return false
         }
 
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            JsonAction.execute(spec: self.spec["onClose"], screen: self.screen, creator: self)
-        }))
-        screen.present(alert, animated: true, completion: nil)
+        let alertController = MDCAlertController(title: "", message: message)
+        alertController.addAction(MDCAlertAction(title:"OK") { _ in JsonAction.execute(spec: self.spec["onClose"], screen: self.screen, creator: self) })
+        screen.present(alertController, animated: true, completion: nil)
 
         return true
     }
