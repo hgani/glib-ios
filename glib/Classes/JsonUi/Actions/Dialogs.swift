@@ -35,3 +35,20 @@ class JsonAction_Dialogs_SnackbarV1: JsonAction {
         return true
     }
 }
+
+class JsonAction_Dialogs_OptionsV1: JsonAction {
+    override func silentExecute() -> Bool {
+        guard let buttons = spec["buttons"].array else { return false }
+        let message = spec["message"].string
+        let sheet = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
+        for button in buttons {
+            let action = UIAlertAction(title: button["text"].string, style: .default) { _ in
+                JsonAction.execute(spec: button["onClick"], screen: self.screen, creator: self)
+            }
+            sheet.addAction(action)
+        }
+        screen.present(sheet, animated: true, completion: nil)
+
+        return true
+    }
+}
