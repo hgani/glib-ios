@@ -63,6 +63,10 @@ public class JsonUi {
         initNavBar(spec: spec, screen: screen)
     }
 
+    public static func parseContentScreen(_ spec: Json, screen: GScreen) {
+        parseScreenContent(spec, screen: screen)
+    }
+
     private static func initVerticalPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
         if let wrapper = JsonView_Panels_VerticalV1(spec, screen).createView() as? GVerticalPanel {
             panel.addView(wrapper.width(.matchParent))

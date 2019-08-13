@@ -52,3 +52,18 @@ class JsonAction_Dialogs_OptionsV1: JsonAction {
         return true
     }
 }
+
+class JsonAction_Dialogs_OpenV1: JsonAction {
+    private let dialogTransitionController = MDCDialogTransitionController()
+
+    override func silentExecute() -> Bool {
+        guard let url = spec["url"].string else { return false }
+
+        let dialogController = JsonUiScreen(url: url, contentOnly: true)
+        dialogController.modalPresentationStyle = .custom
+        dialogController.transitioningDelegate = dialogTransitionController
+        screen.present(dialogController, animated: true, completion: nil)
+
+        return true
+    }
+}

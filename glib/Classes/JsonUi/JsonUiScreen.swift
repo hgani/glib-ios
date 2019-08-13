@@ -1,5 +1,6 @@
 public class JsonUiScreen: GScreen {
     private let url: String
+    private let contentOnly: Bool
 
     private let collectionView = GCollectionView()
         .layout(GCollectionViewFlowLayout().horizontal())
@@ -7,8 +8,9 @@ public class JsonUiScreen: GScreen {
         .height(300)
         .color(bg: .red)
 
-    init(url: String) {
+    init(url: String, contentOnly: Bool = false) {
         self.url = url
+        self.contentOnly = contentOnly
         super.init()
     }
 
@@ -28,7 +30,11 @@ public class JsonUiScreen: GScreen {
 
     public override func onRefresh() {
         _ = Rest.get(url: url).execute { response in
-            JsonUi.parseEntireScreen(response.content, screen: self)
+            if self.contentOnly {
+                JsonUi.parseContentScreen(response.content, screen: self)
+            } else {
+                JsonUi.parseEntireScreen(response.content, screen: self)
+            }
             return true
         }
     }
