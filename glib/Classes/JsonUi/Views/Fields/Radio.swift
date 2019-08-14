@@ -8,7 +8,7 @@ class JsonView_Fields_RadioV1: JsonView {
         value = spec["value"].stringValue
 
         return panel
-            .append(GAligner().align(.left).withView(gSwitch))
+            .append(gSwitch)
             .append(GLabel().text(spec["label"].stringValue), left: 10)
     }
 

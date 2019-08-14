@@ -7,7 +7,15 @@ class JsonAction_Windows_OpenV1: JsonAction {
 
 class JsonAction_Windows_CloseV1: JsonAction {
     override func silentExecute() -> Bool {
+        CATransaction.begin()
+        if let onClose = spec["onClose"].presence {
+            CATransaction.setCompletionBlock {
+                let previousScreen = self.nav.previousScreen() ?? self.screen
+                JsonAction.execute(spec: onClose, screen: previousScreen, creator: self)
+            }
+        }
         nav.pop().done()
+        CATransaction.commit()
         return true
     }
 }
