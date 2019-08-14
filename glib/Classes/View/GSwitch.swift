@@ -2,7 +2,7 @@ import UIKit
 
 open class GSwitch: UISwitch {
     private var helper: ViewHelper!
-    private var onClick: (() -> Void)?
+    private var onClick: ((GSwitch) -> Void)?
 
     public init() {
         super.init(frame: .zero)
@@ -34,6 +34,19 @@ open class GSwitch: UISwitch {
     public func checked(_ check: Bool) -> Self {
         isOn = check
         return self
+    }
+
+    @discardableResult
+    open func onClick(_ command: @escaping (GSwitch) -> Void) -> Self {
+        onClick = command
+        addTarget(self, action: #selector(performClick), for: .touchUpInside)
+        return self
+    }
+
+    @objc open func performClick() {
+        if let callback = self.onClick {
+            callback(self)
+        }
     }
 
     public func end() {
