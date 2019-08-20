@@ -31,7 +31,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '10.0'
 
   s.source_files = 'glib/Classes/**/*'
-  
+
   # s.resource_bundles = {
   #   'glib' => ['glib/Assets/*.png']
   # }
@@ -67,7 +67,8 @@ TODO: Add long description of the pod here.
   s.subspec 'UILibs' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_UILIBS' }
     sub.dependency 'XLPagerTabStrip', '~> 8.0'
-    sub.dependency 'TTTAttributedLabel'  
+    sub.dependency 'TTTAttributedLabel'
+    sub.dependency 'RSSelectionMenu', '~> 6.0.4'
 
     sub.dependency 'MaterialComponents/Buttons', '~> 60.0'
     sub.dependency 'MaterialComponents/TextFields', '~> 60.0'
