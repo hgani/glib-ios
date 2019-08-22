@@ -4,6 +4,9 @@ open class JsonView_Panels_ListV1: JsonView {
     open override func initView() -> UIView {
         let delegate = Delegate(view: self)
 
+        tableView.register(ListHeaderCell.self, forCellReuseIdentifier: "HeaderCell")
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.estimatedSectionHeaderHeight = 12
         tableView
             //            .withRefresher(screen.refresher)
             .autoRowHeight(estimate: 100)
@@ -89,7 +92,36 @@ open class JsonView_Panels_ListV1: JsonView {
         }
 
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            return JsonView_Panels_VerticalV1(sections[section]["header"], listView.screen).createView()
+            let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as! ListHeaderCell
+            headerCell.createView(spec: sections[section]["header"], screen: listView.screen)
+            return headerCell
+        }
+
+        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+            return UITableView.automaticDimension
+        }
+    }
+
+    class ListHeaderCell: UITableViewCell {
+        private let panel = GVerticalPanel()
+
+        func createView(spec: Json, screen: GScreen) {
+            contentView.removeFromSuperview()
+            backgroundColor = .white
+            addSubview(panel)
+            panel.paddings(top: 10, left: 10, bottom: 10, right: 10)
+
+            let childViews = spec["childViews"].arrayValue
+            let subviews: [UIView] = childViews.compactMap { viewSpec -> UIView? in
+                if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
+                    return jsonView.createView()
+                }
+                return nil
+            }
+
+            for view in subviews {
+                panel.addView(view)
+            }
         }
     }
 }

@@ -57,3 +57,11 @@ class JsonView_H2V6: JsonView_Heading {
         return label
     }
 }
+
+class JsonView_H3V1: JsonView_Heading {
+    override func initView() -> UIView {
+        super.initView()
+        label.font(nil, size: 14, traits: .traitBold)
+        return label
+    }
+}
