@@ -76,5 +76,6 @@ TODO: Add long description of the pod here.
     sub.dependency 'MaterialComponents/ProgressView', '~> 60.0'
     sub.dependency 'MaterialComponents/Snackbar', '~> 60.0'
     sub.dependency 'MaterialComponents/Dialogs', '~> 60.0'
+    sub.dependency 'MaterialComponents/Cards', '~> 60.0'
   end
 end
