@@ -1,5 +1,5 @@
 public class JsonUiScreen: GScreen {
-    private let url: String
+    private var url: String
     private let contentOnly: Bool
 
     private let collectionView = GCollectionView()
@@ -30,11 +30,29 @@ public class JsonUiScreen: GScreen {
 
     public override func onRefresh() {
         _ = Rest.get(url: url).execute { response in
-            if self.contentOnly {
-                JsonUi.parseContentScreen(response.content, screen: self)
-            } else {
-                JsonUi.parseEntireScreen(response.content, screen: self)
-            }
+            self.update(response: response)
+            return true
+        }
+    }
+
+
+    public func update(response: Rest.Response) {
+        if self.contentOnly {
+            JsonUi.parseContentScreen(response.content, screen: self)
+        } else {
+            JsonUi.parseEntireScreen(response.content, screen: self)
+        }
+    }
+
+    public func update(url: String) {
+        self.url = url
+
+        _ = Rest.get(url: url).execute { response in
+            self.container.header.clearViews()
+            self.container.content.clearViews()
+            self.container.footer.clearViews()
+
+            self.update(response: response)
             return true
         }
     }

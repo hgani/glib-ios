@@ -35,9 +35,8 @@ class JsonAction_Windows_ReloadV1: JsonAction {
         }
         let url = spec["url"].string ?? currentScreen.getUrl()
 
-        nav.pop(animated: false)
-        nav.push(JsonUiScreen(url: url))
-
+        currentScreen.update(url: url)
+        
         return true
     }
 }
