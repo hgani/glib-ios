@@ -233,6 +233,7 @@ open class GTableViewCustomCell: GTableViewCell {
         container.addView(view, top: top)
     }
 
+    @discardableResult
     public func append(_ view: UIView, top: Float = 0) -> Self {
         container.addView(view, top: top)
         return self

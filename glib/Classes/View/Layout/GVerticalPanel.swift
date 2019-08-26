@@ -34,6 +34,12 @@ open class GVerticalPanel: UIView, IView {
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
 
         addInitialBottomConstraint()
+
+        initContent()
+    }
+
+    func initContent() {
+        // To be overridden
     }
 
     private func addInitialBottomConstraint() {
