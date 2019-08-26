@@ -1,27 +1,36 @@
 open class JsonTemplate {
-    public let tableView: GTableView?
+//    public let tableView: GTableView?
     public let spec: Json
     public let screen: GScreen
 
     // This constructor allows dynamic instantiation of child classes.
-    public required init(_ tableView: GTableView?, _ spec: Json, _ screen: GScreen) {
-        self.tableView = tableView
+    public required init(_ spec: Json, _ screen: GScreen) {
+//        self.tableView = tableView
         self.spec = spec
         self.screen = screen
     }
 
-    open func createCell() -> GTableViewCell {
+    open func createCell(tableView: GTableView) -> GTableViewCell {
         fatalError("Need implementation")    }
 
     open func createPanel() -> GVerticalPanel {
         fatalError("Need implementation")
     }
 
-    public static func create(tableView: GTableView?, spec: Json, screen: GScreen) -> JsonTemplate? {
+//    public static func create(tableView: GTableView?, spec: Json, screen: GScreen) -> JsonTemplate? {
+//        if let klass = JsonUi.loadClass(name: spec["template"].stringValue, type: JsonTemplate.self) as? JsonTemplate.Type {
+//            return klass.init(tableView, spec, screen)
+//        }
+//        GLog.w("Failed loading template: \(spec)")
+//        return nil
+//    }
+
+    public static func create(spec: Json, screen: GScreen) -> JsonTemplate? {
         if let klass = JsonUi.loadClass(name: spec["template"].stringValue, type: JsonTemplate.self) as? JsonTemplate.Type {
-            return klass.init(tableView, spec, screen)
+            return klass.init(spec, screen)
         }
         GLog.w("Failed loading template: \(spec)")
         return nil
     }
+
 }

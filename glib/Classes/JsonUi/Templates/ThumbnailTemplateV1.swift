@@ -1,11 +1,7 @@
 
 // TODO: Deprecated. Removed when confirmed not used anymore.
 class JsonTemplate_ThumbnailV1: JsonTemplate {
-    override func createCell() -> GTableViewCell {
-        guard let tableView = self.tableView else {
-            fatalError("Used out of context")
-        }
-
+    override func createCell(tableView: GTableView) -> GTableViewCell {
         let cell = tableView.cellInstance(of: ThumbnailTableCell.self, style: .default)
         initPanel(cell.content)
         return cell

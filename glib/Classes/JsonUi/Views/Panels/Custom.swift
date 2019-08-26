@@ -1,7 +1,7 @@
 class JsonView_Panels_CustomV1: JsonView {
     override func initView() -> UIView {
 
-        if let template = JsonTemplate.create(tableView: nil, spec: spec, screen: screen) {
+        if let template = JsonTemplate.create(spec: spec, screen: screen) {
             return template.createPanel()
         }
 

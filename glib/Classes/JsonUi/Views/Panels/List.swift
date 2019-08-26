@@ -55,8 +55,8 @@ open class JsonView_Panels_ListV1: JsonView {
 
         public func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let row = rows(at: indexPath.section)[indexPath.row]
-            if let template = JsonTemplate.create(tableView: listView.tableView, spec: row, screen: listView.screen) {
-                return template.createCell()
+            if let template = JsonTemplate.create(spec: row, screen: listView.screen) {
+                return template.createCell(tableView: listView.tableView)
             }
             return GTableViewCell()
         }
