@@ -69,6 +69,8 @@ TODO: Add long description of the pod here.
     sub.dependency 'XLPagerTabStrip', '~> 8.0'
     sub.dependency 'TTTAttributedLabel'
     sub.dependency 'RSSelectionMenu', '~> 6.0.4'
+    sub.dependency 'MBRadioButton'
+    sub.dependency 'MBCheckboxButton'
 
     sub.dependency 'MaterialComponents/Buttons', '~> 60.0'
     sub.dependency 'MaterialComponents/TextFields', '~> 60.0'
