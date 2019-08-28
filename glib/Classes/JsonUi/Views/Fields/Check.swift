@@ -57,6 +57,7 @@ class MCheckBox: CheckboxButton {
     func title(_ str: String) -> Self {
         setTitle(str, for: [])
         setTitleColor(.black, for: [])
+        titleLabel?.font = RobotoFonts.Style.regular.font
         return self
     }
 }

@@ -31,6 +31,8 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '10.0'
 
   s.source_files = 'glib/Classes/**/*'
+  s.resources = 'glib/Fonts/*.ttf'
+  s.resource_bundles = { 'GLib' => 'glib/Fonts/*.ttf' }
 
   # s.resource_bundles = {
   #   'glib' => ['glib/Assets/*.png']

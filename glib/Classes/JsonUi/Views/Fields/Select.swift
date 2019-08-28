@@ -1,7 +1,8 @@
 import RSSelectionMenu
 
 class JsonView_Fields_SelectV1: JsonView, SubmittableField {
-    private let label = GLabel()
+    private let textLabel = GLabel()
+    private let valueLabel = GLabel()
 
     var name: String?
     var value: String {
@@ -19,12 +20,12 @@ class JsonView_Fields_SelectV1: JsonView, SubmittableField {
         didSet {
             let textLabel = spec["label"].stringValue
             if selectedOptions.count > 0 {
-                label.text(selectedOptions.map({ (option) -> String in
+                valueLabel.text(selectedOptions.map({ (option) -> String in
                     return option.text
                 }).joined(separator: ", "))
             }
             else {
-                label.text("Select \(textLabel)")
+                valueLabel.text("Select \(textLabel)")
             }
         }
     }
@@ -32,11 +33,13 @@ class JsonView_Fields_SelectV1: JsonView, SubmittableField {
     override func initView() -> UIView {
         name = spec["name"].string
 
-        let textLabel = spec["label"].stringValue
+        let textStrLabel = spec["label"].stringValue
+        textLabel.font(RobotoFonts.Style.regular.font, size: 14)
+        valueLabel.font(RobotoFonts.Style.regular.font, size: 14)
 
         return GVerticalPanel()
-            .append(GLabel().text(textLabel), top: 10)
-            .append(label.text("Select \(textLabel)").onClick({ (sender) in
+            .append(textLabel.text(textStrLabel), top: 10)
+            .append(valueLabel.text("Select \(textStrLabel)").onClick({ (sender) in
                 let selectionMenu = RSSelectionMenu(selectionStyle: .multiple,
                                                     dataSource: self.spec["options"].arrayValue.map({ (option) -> OptionModel in
                                                         return OptionModel(text: option["text"].stringValue, value: option["value"].stringValue)
