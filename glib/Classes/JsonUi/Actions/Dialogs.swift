@@ -1,5 +1,6 @@
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialSnackbar
+import MaterialComponents.MaterialActionSheet
 
 class JsonAction_Dialogs_AlertV1: JsonAction {
     override func silentExecute() -> Bool {
@@ -40,9 +41,9 @@ class JsonAction_Dialogs_OptionsV1: JsonAction {
     override func silentExecute() -> Bool {
         guard let buttons = spec["buttons"].array else { return false }
         let message = spec["message"].string
-        let sheet = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
+        let sheet = MDCActionSheetController(title: nil, message: message)
         for button in buttons {
-            let action = UIAlertAction(title: button["text"].string, style: .default) { _ in
+            let action = MDCActionSheetAction(title: button["text"].stringValue, image: nil) { (_) in
                 JsonAction.execute(spec: button["onClick"], screen: self.screen, creator: self)
             }
             sheet.addAction(action)
