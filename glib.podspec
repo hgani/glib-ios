@@ -74,12 +74,13 @@ TODO: Add long description of the pod here.
     sub.dependency 'MBRadioButton'
     sub.dependency 'MBCheckboxButton'
 
-    sub.dependency 'MaterialComponents/Buttons', '~> 60.0'
-    sub.dependency 'MaterialComponents/TextFields', '~> 60.0'
-    sub.dependency 'MaterialComponents/Tabs', '~> 60.0'
-    sub.dependency 'MaterialComponents/ProgressView', '~> 60.0'
-    sub.dependency 'MaterialComponents/Snackbar', '~> 60.0'
-    sub.dependency 'MaterialComponents/Dialogs', '~> 60.0'
-    sub.dependency 'MaterialComponents/Cards', '~> 60.0'
+    sub.dependency 'MaterialComponents/Buttons', '~> 69.0'
+    sub.dependency 'MaterialComponents/TextFields', '~> 69.0'
+    sub.dependency 'MaterialComponents/Tabs', '~> 69.0'
+    sub.dependency 'MaterialComponents/ProgressView', '~> 69.0'
+    sub.dependency 'MaterialComponents/Snackbar', '~> 69.0'
+    sub.dependency 'MaterialComponents/Dialogs', '~> 69.0'
+    sub.dependency 'MaterialComponents/Cards', '~> 69.0'
+    sub.dependency 'MaterialComponents/List', '~> 69.0'
   end
 end

@@ -12,7 +12,9 @@ class JsonTemplate_Text: JsonTemplate {
     }
 
     private func initPanel(_ panel: TextTemplatePanel, spec: Json) {
+        panel.title.font(RobotoFonts.Style.bold.font, size: 16)
         panel.title.text = spec["title"].stringValue
+        panel.subtitle.font(RobotoFonts.Style.regular.font, size: 14)
         panel.subtitle.text = spec["subtitle"].stringValue
     }
 

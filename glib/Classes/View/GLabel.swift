@@ -28,6 +28,8 @@ open class GLabel: UILabel, IView {
 
     private func initialize() {
         helper = ViewHelper(self)
+        lineBreakMode = .byWordWrapping
+        numberOfLines = 0
     }
 
     open override func didMoveToSuperview() {

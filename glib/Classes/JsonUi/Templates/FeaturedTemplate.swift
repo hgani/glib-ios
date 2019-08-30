@@ -13,7 +13,9 @@ class JsonTemplate_Featured: JsonTemplate {
 
     private func initPanel(_ panel: FeaturedTemplatePanel, spec: Json) {
         panel.picture.source(url: spec["imageUrl"].stringValue)
+        panel.title.font(RobotoFonts.Style.bold.font, size: 16)
         panel.title.text = spec["title"].stringValue
+        panel.subtitle.font(RobotoFonts.Style.regular.font, size: 14)
         panel.subtitle.text = spec["subtitle"].stringValue
     }
 

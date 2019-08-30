@@ -33,6 +33,10 @@ public class RobotoFonts: NSObject {
         public var font: UIFont {
             return UIFont(name: self.value, size: 14) ?? UIFont.init()
         }
+
+        public func fontWithSize(_ size: CGFloat) -> UIFont {
+            return UIFont(name: self.value, size: size) ?? UIFont.init()
+        }
     }
 
     public static var loadAll: () -> Void = {

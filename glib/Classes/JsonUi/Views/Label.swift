@@ -3,7 +3,7 @@ class JsonView_LabelV1: JsonView {
 
     override func initView() -> UIView {
         label.font(RobotoFonts.Style.regular.font, size: 14)
-        
+
         if let text = spec["text"].string {
             _ = label.text(text)
         }
