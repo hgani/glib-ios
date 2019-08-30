@@ -46,6 +46,11 @@ open class GLabel: UILabel, IView {
     }
 
     @discardableResult
+    public func color(text: UIColor) -> Self {
+        return color(bg: nil, text: text)
+    }
+
+    @discardableResult
     public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
         if let bgColor = bg {
             backgroundColor = bgColor
