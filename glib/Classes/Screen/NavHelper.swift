@@ -17,6 +17,13 @@ open class NavHelper {
         showBar = false
     }
 
+    public func hideBackButton() {
+//        if let screen = navController.topViewController as? ScreenProtocol {
+        if let screen = navController.topViewController as? GScreen {
+            screen.navigationItem.setHidesBackButton(true, animated: false)
+        }
+    }
+
     public func color(bg: UIColor, text: UIColor) {
         navController.navigationBar.barTintColor = bg
         navController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: text]
@@ -33,7 +40,9 @@ open class NavHelper {
     }
 
     public func refresh() {
+        // TODO: Remove ScreenProtocol once we've migrated away from eureka
         if let screen = navController.topViewController as? ScreenProtocol {
+//        if let screen = navController.topViewController as? GScreen {
             screen.onRefresh()
         }
     }

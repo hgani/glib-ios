@@ -62,10 +62,16 @@ open class GScreen: UIViewController {
         }
     }
 
-    open override func viewWillAppear(_ animated: Bool) {
+    final override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         helper.viewWillAppear()
         nav.viewWillAppear()
+
+        onViewWillAppear()
+    }
+
+    open func onViewWillAppear() {
+        // To be overridden
     }
 
     @discardableResult
