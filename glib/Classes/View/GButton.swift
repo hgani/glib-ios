@@ -65,17 +65,7 @@ open class GButton: UIButton, IView {
 
     @discardableResult
     public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
-//    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-//        let orig = contentEdgeInsets
-//
-//        let top = top ?? orig.top
-//        let left = left ?? orig.left
-//        let bottom = bottom ?? orig.bottom
-//        let right = right ?? orig.right
-//
-//        contentEdgeInsets = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-
-        paddings = Paddings.from(top: top, left: left, bottom: bottom, right: right, orig: paddings)
+        paddings = paddings.to(top: top, left: left, bottom: bottom, right: right)
         contentEdgeInsets = paddings.toEdgeInsets()
         return self
     }

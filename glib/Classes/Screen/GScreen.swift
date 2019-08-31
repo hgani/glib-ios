@@ -74,6 +74,16 @@ open class GScreen: UIViewController {
         // To be overridden
     }
 
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        onViewWillDisappear()
+    }
+
+    open func onViewWillDisappear() {
+        // To be overridden
+    }
+
     @discardableResult
     public func leftMenu(controller: UIViewController) -> Self {
         helper.leftMenu(controller: controller)
@@ -103,9 +113,9 @@ open class GScreen: UIViewController {
         return self
     }
 
-    public func done() {
-        // Ends chaining
-    }
+//    public func done() {
+//        // Ends chaining
+//    }
 
     public func color(bg: UIColor) -> Self {
         view.backgroundColor = bg

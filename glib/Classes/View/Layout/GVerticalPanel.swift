@@ -168,6 +168,12 @@ open class GVerticalPanel: UIView, IView {
     }
 
     @discardableResult
+    public func padding(_ padding: GPadding) -> Self {
+        helper.padding(padding)
+        return self
+    }
+
+    @discardableResult
     public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self

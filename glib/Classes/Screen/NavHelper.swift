@@ -34,6 +34,7 @@ open class NavHelper {
         navController.setNavigationBarHidden(!showBar, animated: false)
     }
 
+    @discardableResult
     public func backToHome(animated: Bool = true) -> Self {
         navController.popToRootViewController(animated: animated)
         return self
