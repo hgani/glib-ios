@@ -1,6 +1,7 @@
 class JsonView_ButtonV1: JsonView {
     #if INCLUDE_UILIBS
         private let view = MButton()
+            .font(RobotoFonts.Style.regular.font, size: 15)
     #else
         private let view = GButton()
             .color(bg: nil, text: .darkGray)

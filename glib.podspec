@@ -31,6 +31,8 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '10.0'
 
   s.source_files = 'glib/Classes/**/*'
+  s.resources = 'glib/Fonts/*.ttf'
+  s.resource_bundles = { 'GLib' => 'glib/Fonts/*.ttf' }
 
   # s.resource_bundles = {
   #   'glib' => ['glib/Assets/*.png']
@@ -69,13 +71,17 @@ TODO: Add long description of the pod here.
     sub.dependency 'XLPagerTabStrip', '~> 8.0'
     sub.dependency 'TTTAttributedLabel'
     sub.dependency 'RSSelectionMenu', '~> 6.0.4'
+    sub.dependency 'MBRadioButton'
+    sub.dependency 'MBCheckboxButton'
 
-    sub.dependency 'MaterialComponents/Buttons', '~> 60.0'
-    sub.dependency 'MaterialComponents/TextFields', '~> 60.0'
-    sub.dependency 'MaterialComponents/Tabs', '~> 60.0'
-    sub.dependency 'MaterialComponents/ProgressView', '~> 60.0'
-    sub.dependency 'MaterialComponents/Snackbar', '~> 60.0'
-    sub.dependency 'MaterialComponents/Dialogs', '~> 60.0'
-    sub.dependency 'MaterialComponents/Cards', '~> 60.0'
+    sub.dependency 'MaterialComponents/Buttons', '~> 78.0'
+    sub.dependency 'MaterialComponents/TextFields', '~> 78.0'
+    sub.dependency 'MaterialComponents/Tabs', '~> 78.0'
+    sub.dependency 'MaterialComponents/ProgressView', '~> 78.0'
+    sub.dependency 'MaterialComponents/Snackbar', '~> 78.0'
+    sub.dependency 'MaterialComponents/Dialogs', '~> 78.0'
+    sub.dependency 'MaterialComponents/Cards', '~> 78.0'
+    sub.dependency 'MaterialComponents/List', '~> 78.0'
+    sub.dependency 'MaterialComponents/ActionSheet', '~> 78.0'
   end
 end

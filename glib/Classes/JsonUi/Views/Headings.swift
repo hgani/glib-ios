@@ -5,6 +5,7 @@ class JsonView_Heading: JsonView {
         if let text = spec["text"].string {
             _ = label.text(text)
         }
+        label.font(RobotoFonts.Style.bold.font, traits: .traitBold)
 
         return label
     }

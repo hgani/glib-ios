@@ -12,15 +12,17 @@ class JsonView_Fields_RadioGroupV1: JsonView, SubmittableField {
         name = spec["name"].stringValue
         let childViews = spec["childViews"].arrayValue
 
-        for childSpec in childViews {
+        for index in 0..<childViews.count {
+            let childSpec = childViews[index]
+
             if let jsonView = JsonView.create(spec: childSpec, screen: screen) {
                 if let radio = jsonView as? JsonView_Fields_RadioV1 {
                     self.jsonRadios.append(radio)
                     radio.onClick { _ in self.updateSelectedRadio(radio) }
-                    panel.append(radio.createView(), top: 10)
+                    panel.append(radio.createView())
                 }
                 else {
-                    panel.append(jsonView.createView(), top: 10)
+                    panel.append(jsonView.createView())
                 }
             }
         }
