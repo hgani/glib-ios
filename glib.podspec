@@ -73,6 +73,7 @@ TODO: Add long description of the pod here.
     sub.dependency 'RSSelectionMenu', '~> 6.0.4'
     sub.dependency 'MBRadioButton'
     sub.dependency 'MBCheckboxButton'
+    sub.dependency 'Charts'
 
     sub.dependency 'MaterialComponents/Buttons', '~> 78.0'
     sub.dependency 'MaterialComponents/TextFields', '~> 78.0'
