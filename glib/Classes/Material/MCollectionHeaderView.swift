@@ -9,16 +9,29 @@ class MCollectionHeaderView: UICollectionReusableView {
             panel.paddings(top: 10, left: 10, bottom: 10, right: 10)
 
             let childViews = spec["childViews"].arrayValue
-            let subviews: [UIView] = childViews.compactMap { viewSpec -> UIView? in
+            for viewSpec in childViews {
                 if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-                    return jsonView.createView()
+                    if let fabJsonView = jsonView as? JsonView_FabV1 {
+                        let view = fabJsonView.createView()
+                        panel.addView(view, top: 0, skipConstraint: true)
+                        jsonView.afterViewAdded(parentView: panel)
+                    } else {
+                        panel.addView(jsonView.createView())
+                    }
                 }
-                return nil
             }
 
-            for view in subviews {
-                panel.addView(view)
-            }
+//            let subviews: [UIView] = childViews.compactMap { viewSpec -> UIView? in
+//                if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
+//                    return jsonView.createView()
+//                }
+//                return nil
+//            }
+//
+//            for view in subviews {
+//                panel.addView(view)
+//            }
+            
             viewLoaded = true
         }
     }

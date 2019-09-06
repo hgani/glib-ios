@@ -9,6 +9,7 @@ class JsonView_Panels_ScrollV1: JsonView {
                 panel.addView(jsonView.createView())
             }
         }
+
         return panel
     }
 }

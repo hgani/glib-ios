@@ -8,6 +8,8 @@ open class JsonView {
         self.screen = screen
     }
 
+    public func afterViewAdded(parentView: UIView) {}
+
     private func initGenericAttributes(backend: UIView) {
         if let view = backend as? UIView & IView {
             initBackgroundColor(view)
