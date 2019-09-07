@@ -299,3 +299,17 @@ public struct Paddings {
         return Paddings(top: top, left: left, bottom: bottom, right: right)
     }
 }
+
+public struct GPadding {
+    public let top: Float?
+    public let right: Float?
+    public let bottom: Float?
+    public let left: Float?
+
+    public init(top: Float?, right: Float?, bottom: Float?, left: Float?) {
+        self.top = top
+        self.right = right
+        self.bottom = bottom
+        self.left = left
+    }
+}
