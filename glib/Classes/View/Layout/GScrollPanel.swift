@@ -69,6 +69,7 @@ open class GScrollPanel: UIScrollView, IContainer {
         contentView.addView(view, top: top)
     }
 
+    @discardableResult
     public func append(_ view: UIView, top: Float = 0) -> Self {
         _ = contentView.append(view, top: top)
         return self

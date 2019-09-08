@@ -30,7 +30,7 @@ public struct GIcon {
         }
     }
 
-    var string: String {
+    public var string: String {
         return "\(prefix):\(code)"
     }
 }
