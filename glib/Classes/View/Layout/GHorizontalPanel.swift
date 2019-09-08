@@ -28,6 +28,13 @@ open class GHorizontalPanel: UIView {
         helper = ViewHelper(self)
 
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
+
+        snp.makeConstraints { make in
+            // NOTE: Prevent the panel from getting stretched to be larger than necessary. For example, when used
+            // in HamburgerPanel's header, it will squash the middle section.
+            // See https://stackoverflow.com/questions/17117799/autolayout-height-equal-to-maxmultiple-view-heights
+            make.height.equalTo(0).priorityLow()
+        }
     }
 
     open override func didMoveToSuperview() {
@@ -78,11 +85,25 @@ open class GHorizontalPanel: UIView {
 
     private func adjustParentBottomConstraint(child: UIView) {
         snp.makeConstraints { make in
-            // Don't use greaterThanOrEqualTo() or else this view will get stretched in HamburgerPanel.
-//            make.bottomMargin.equalTo(child.snp.bottom)
-
             make.bottomMargin.greaterThanOrEqualTo(child.snp.bottom)
         }
+
+//        // NOTE: Don't use greaterThanOrEqualTo() because there will be cases where this panel gets
+//        // stretched to be larger than necessary. For example, when used in HamburgerPanel's header, it
+//        // will squash the middle section.
+//        // snp.makeConstraints { make in
+//        //     make.bottomMargin.equalTo(child.snp.bottom)
+//        // }
+//        if let prev = previousView {
+//            prev.snp.makeConstraints { make in
+//                make.bottom.equalTo(child.snp.bottom)
+//            }
+//        } else {
+//            snp.makeConstraints { make in
+//                make.bottomMargin.equalTo(child.snp.bottom)
+//            }
+//        }
+//        ViewHelper.maximumResistance(view: child, axis: .vertical)
 
         if helper.shouldWidthMatchParent() {
             rightConstraint?.deactivate()

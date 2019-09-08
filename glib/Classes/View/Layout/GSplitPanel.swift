@@ -69,15 +69,12 @@ open class GSplitPanel: UIView, IView {
             make.top.equalTo(self.snp.topMargin)
             make.left.equalTo(self.snp.leftMargin)
 
-            //            make.right.greaterThanOrEqualTo(right.snp.left)
-            //            make.right.lessThanOrEqualTo(right.snp.left)
         }
         center?.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
 
             make.left.equalTo(left.snp.right)
             make.right.equalTo(right.snp.left)
-            //            make.width.equalTo(self)
         }
         right.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
@@ -85,15 +82,14 @@ open class GSplitPanel: UIView, IView {
         }
 
         snp.makeConstraints { make in
-            //            make.bottomMargin.equalTo(left.snp.bottom)
-            //            make.bottomMargin.equalTo(center.snp.bottom)
-            //            make.bottomMargin.equalTo(right.snp.bottom)
-
             make.bottomMargin.greaterThanOrEqualTo(left.snp.bottom)
             if let centerView = center {
                 make.bottomMargin.greaterThanOrEqualTo(centerView.snp.bottom)
             }
             make.bottomMargin.greaterThanOrEqualTo(right.snp.bottom)
+
+            // See https://stackoverflow.com/questions/17117799/autolayout-height-equal-to-maxmultiple-view-heights
+            make.height.equalTo(0).priorityLow()
         }
     }
 
