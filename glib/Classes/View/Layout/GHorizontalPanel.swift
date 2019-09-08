@@ -88,23 +88,6 @@ open class GHorizontalPanel: UIView {
             make.bottomMargin.greaterThanOrEqualTo(child.snp.bottom)
         }
 
-//        // NOTE: Don't use greaterThanOrEqualTo() because there will be cases where this panel gets
-//        // stretched to be larger than necessary. For example, when used in HamburgerPanel's header, it
-//        // will squash the middle section.
-//        // snp.makeConstraints { make in
-//        //     make.bottomMargin.equalTo(child.snp.bottom)
-//        // }
-//        if let prev = previousView {
-//            prev.snp.makeConstraints { make in
-//                make.bottom.equalTo(child.snp.bottom)
-//            }
-//        } else {
-//            snp.makeConstraints { make in
-//                make.bottomMargin.equalTo(child.snp.bottom)
-//            }
-//        }
-//        ViewHelper.maximumResistance(view: child, axis: .vertical)
-
         if helper.shouldWidthMatchParent() {
             rightConstraint?.deactivate()
 
