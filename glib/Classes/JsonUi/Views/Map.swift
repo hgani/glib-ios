@@ -1,3 +1,5 @@
+#if INCLUDE_LOCATION
+
 import MapKit
 
 class JsonView_MapV1: JsonView {
@@ -34,3 +36,5 @@ class JsonView_MapV1: JsonView {
         }
     }
 }
+
+#endif
