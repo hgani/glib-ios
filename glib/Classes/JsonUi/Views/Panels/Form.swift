@@ -17,7 +17,7 @@ class JsonView_Panels_FormV1: JsonView {
                     let view = fabJsonView.createView()
                     panel.addView(view, top: 0, skipConstraint: true)
                     jsonView.afterViewAdded(parentView: panel)
-                    GScrollPanel.scrollableContents.append(view)
+                    ScrollableView.items.append(view)
                 } else {
                     panel.addView(jsonView.createView())
                 }

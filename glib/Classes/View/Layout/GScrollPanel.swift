@@ -106,11 +106,6 @@ open class GScrollPanel: UIScrollView, IContainer {
 
 extension GScrollPanel: UIScrollViewDelegate {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        for view in GScrollPanel.scrollableContents {
-            if let fab = view as? MFab {
-                fab.frame.origin.y = scrollView.bounds.size.height +
-                    scrollView.contentOffset.y - 76
-            }
-        }
+        ScrollableView.delegateCall(scrollView: scrollView, useContentOffset: true)
     }
 }
