@@ -13,7 +13,14 @@ class JsonView_Panels_FormV1: JsonView {
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
         for viewSpec in childViews {
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-                panel.addView(jsonView.createView())
+                if let fabJsonView = jsonView as? JsonView_FabV1 {
+                    let view = fabJsonView.createView()
+                    panel.addView(view, top: 0, skipConstraint: true)
+                    jsonView.afterViewAdded(parentView: panel)
+                    ScrollableView.items.append(view)
+                } else {
+                    panel.addView(jsonView.createView())
+                }
 
                 // NOTE: Currently we assume all fields are direct children.
 

@@ -1,6 +1,8 @@
 import UIKit
 
 open class GScrollPanel: UIScrollView, IContainer {
+    static var scrollableContents = [UIView]()
+
     private var helper: ViewHelper!
     private let contentView = GVerticalPanel()
 
@@ -25,6 +27,8 @@ open class GScrollPanel: UIScrollView, IContainer {
             make.top.equalTo(self)
             make.bottom.equalTo(self)
         }
+
+        self.delegate = self
     }
 
     public required init?(coder _: NSCoder) {
@@ -98,4 +102,10 @@ open class GScrollPanel: UIScrollView, IContainer {
 //    public func test() {
 //        contentView.height(300)
 //    }
+}
+
+extension GScrollPanel: UIScrollViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        ScrollableView.delegateCall(scrollView: scrollView, useContentOffset: true)
+    }
 }

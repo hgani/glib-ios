@@ -72,17 +72,20 @@ open class GVerticalPanel: UIView, IView {
         }
     }
 
-    public func addView(_ child: UIView, top: Float = 0) {
+    public func addView(_ child: UIView, top: Float = 0, skipConstraint: Bool = false) {
         totalGap += top
 
         // The hope is this makes things more predictable
         child.translatesAutoresizingMaskIntoConstraints = false
 
         super.addSubview(child)
-        initChildConstraints(child: child, top: top)
-        adjustSelfConstraints(child: child)
 
-        previousViewElement = child
+        if !skipConstraint {
+            initChildConstraints(child: child, top: top)
+            adjustSelfConstraints(child: child)
+
+            previousViewElement = child
+        }
     }
 
     public func clear() -> Self {

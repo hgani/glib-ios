@@ -185,3 +185,18 @@ class JsonUiMenuNavController: MenuNavController {
 //        #endif
     }
 }
+
+class ScrollableView {
+    static var items = [UIView]()
+
+    static func delegateCall(scrollView: UIScrollView, useContentOffset: Bool = false) {
+        for view in items {
+            if let fab = view as? MFab {
+                fab.frame.origin.y = scrollView.bounds.size.height - 76
+                if useContentOffset {
+                    fab.frame.origin.y = fab.frame.origin.y + scrollView.contentOffset.y
+                }
+            }
+        }
+    }
+}

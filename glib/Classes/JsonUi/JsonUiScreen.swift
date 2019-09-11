@@ -2,7 +2,7 @@ public class JsonUiScreen: GScreen {
     private var url: String
     private let contentOnly: Bool
 
-    private let collectionView = GCollectionView()
+    let collectionView = GCollectionView()
         .layout(GCollectionViewFlowLayout().horizontal())
         .width(.matchParent)
         .height(300)

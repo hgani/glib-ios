@@ -11,7 +11,9 @@ open class JsonView_Panels_ListV1: JsonView {
         layout.estimatedItemSize = CGSize(width: screen.view.frame.width, height: 60)
         layout.minimumInteritemSpacing = 1
         layout.minimumLineSpacing = 0
-        layout.headerReferenceSize = CGSize(width: screen.view.frame.width, height: 60)
+        if let _ = spec["header"].presence {
+            layout.headerReferenceSize = CGSize(width: screen.view.frame.width, height: 60)
+        }
 
         collectionView = MCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView?.register(MCollectionHeaderView.self,
@@ -27,7 +29,7 @@ open class JsonView_Panels_ListV1: JsonView {
         return collectionView!
     }
 
-    class Delegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
+    class Delegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate {
         private let listView: JsonView_Panels_ListV1
         private var sections: [Json]
 
@@ -78,6 +80,10 @@ open class JsonView_Panels_ListV1: JsonView {
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             let row = rows(at: indexPath.section)[indexPath.row]
             JsonAction.execute(spec: row["onClick"], screen: listView.screen, creator: nil)
+        }
+
+        func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            ScrollableView.delegateCall(scrollView: scrollView)
         }
 
         private func rows(at section: Int) -> [Json] {
