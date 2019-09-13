@@ -1,6 +1,7 @@
 protocol SubmittableField {
     var name: String? { get }
     var value: String { get }
+    func validate() -> Bool
 }
 
 protocol SubmittableFileField: SubmittableField {

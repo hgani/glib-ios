@@ -33,4 +33,16 @@ class JsonView_AbstractTextV1: JsonView, SubmittableField {
             view.layer.shadowRadius = 0.0
         #endif
     }
+
+    func text() -> String? {
+        return view.text
+    }
+
+    func errors(_ text: String?) {
+        view.errors(text)
+    }
+
+    func validate() -> Bool {
+        return true
+    }
 }

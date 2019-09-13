@@ -52,6 +52,10 @@ class JsonView_Fields_SelectV1: JsonView, SubmittableField {
             }), top: 5)
     }
 
+    func validate() -> Bool {
+        return true
+    }
+
     class OptionModel: NSObject, UniquePropertyDelegate {
         var text: String
         var value: String

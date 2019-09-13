@@ -40,6 +40,10 @@ class JsonView_Fields_FileV1: JsonView, SubmittableFileField, ImagePickerDelegat
         }
     }
 
+    func validate() -> Bool {
+        return true
+    }
+
     private func valid() -> Bool {
         let imageData = NSData(data: selectedImage.jpegData(compressionQuality: 1)!)
         imageByteSize = imageData.length / 1024

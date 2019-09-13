@@ -51,6 +51,8 @@ class JsonView_Panels_FormV1: JsonView {
 
         func submit() {
             var params = GParams()
+            var errorsCount = 0
+
             for field in fields {
                 if let fileField = field as? SubmittableFileField, let completed = fileField.completed {
                     if !completed {
@@ -58,6 +60,11 @@ class JsonView_Panels_FormV1: JsonView {
                         return
                     }
                 }
+
+                if !field.validate() {
+                    errorsCount = errorsCount + 1
+                }
+
                 if let name = field.name {
                     if name.hasSuffix("[]") {
                         if let oldArray = params[name] as? [String] {
@@ -71,6 +78,10 @@ class JsonView_Panels_FormV1: JsonView {
                         params[name] = field.value
                     }
                 }
+            }
+
+            if errorsCount > 0 {
+                return
             }
 
             let spec = jsonView.spec
