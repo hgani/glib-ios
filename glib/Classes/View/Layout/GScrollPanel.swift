@@ -1,7 +1,7 @@
 import UIKit
 
 open class GScrollPanel: UIScrollView, IContainer {
-    static var scrollableContents = [UIView]()
+//    static var scrollableContents = [UIView]()
 
     private var helper: ViewHelper!
     private let contentView = GVerticalPanel()
