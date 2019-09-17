@@ -1,3 +1,5 @@
+#if INCLUDE_LOCATION
+
 import MapKit
 import UIKit
 
@@ -264,3 +266,5 @@ public class GPointAnnotation: MKPointAnnotation {
         onClick?(self)
     }
 }
+
+#endif

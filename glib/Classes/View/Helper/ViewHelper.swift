@@ -187,6 +187,11 @@ public class ViewHelper {
         view.layoutMargins = paddings.toEdgeInsets()
     }
 
+    public func padding(_ padding : GPadding) {
+        paddings = paddings.to(top: padding.top, left: padding.left, bottom: padding.bottom, right: padding.right)
+        view.layoutMargins = paddings.toEdgeInsets()
+    }
+
     public static func setResistance(view: UIView, axis: NSLayoutConstraint.Axis, priority: UILayoutPriority) {
         view.setContentCompressionResistancePriority(priority, for: axis)
 
@@ -303,6 +308,38 @@ public struct Paddings {
 
         return Paddings(top: top, left: left, bottom: bottom, right: right)
     }
+
+    func to(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Paddings {
+        let top = top ?? self.top
+        let left = left ?? self.left
+        let bottom = bottom ?? self.bottom
+        let right = right ?? self.right
+
+        return Paddings(top: top, left: left, bottom: bottom, right: right)
+    }
+}
+
+public struct GPadding {
+    public let top: Float?
+    public let right: Float?
+    public let bottom: Float?
+    public let left: Float?
+
+    public init(top: Float?, right: Float?, bottom: Float?, left: Float?) {
+        self.top = top
+        self.right = right
+        self.bottom = bottom
+        self.left = left
+    }
+
+//    func to(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Paddings {
+//        let top = top ?? self.top
+//        let left = left ?? self.left
+//        let bottom = bottom ?? self.bottom
+//        let right = right ?? self.right
+//
+//        return Padding(top: top, left: left, bottom: bottom, right: right)
+//    }
 }
 
 public struct GPadding {
