@@ -66,6 +66,11 @@ TODO: Add long description of the pod here.
     sub.dependency 'Eureka', '~> 4.1.1'
   end
 
+  # Requires NSLocationWhenInUseUsageDescription in Info.plist
+  s.subspec 'Location' do |sub|
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_LOCATION' }
+  end
+
   s.subspec 'UILibs' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_UILIBS' }
     sub.dependency 'XLPagerTabStrip', '~> 8.0'

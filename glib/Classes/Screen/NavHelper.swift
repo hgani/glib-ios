@@ -60,6 +60,7 @@ open class NavHelper {
         navController.setViewControllers(vcArray, animated: animated)
     }
 
+    @discardableResult
     public func pop(animated: Bool = true) -> Self {
         navController.popViewController(animated: animated)
         return self

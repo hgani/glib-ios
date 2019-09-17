@@ -65,7 +65,8 @@ open class JsonView_Panels_ListV1: JsonView {
                 headerView.createView(spec: sections[indexPath.section]["header"], screen: listView.screen)
                 return headerView
             default:
-                assert(false, "Invalid element type")
+//                assert(false, "Invalid element type")
+                fatalError("Invalid element type")
             }
         }
 

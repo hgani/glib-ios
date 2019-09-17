@@ -5,7 +5,7 @@ open class GScrollPanel: UIScrollView, IContainer {
 
     private var helper: ViewHelper!
     private let contentView = GVerticalPanel()
-
+    
     public var size: CGSize {
         return helper.size
     }
@@ -95,13 +95,10 @@ open class GScrollPanel: UIScrollView, IContainer {
         return self
     }
 
-    public func done() {
-        // End chaining
+    public func align(_ align: GAligner.GAlignerHorizontalGravity) -> Self {
+        contentView.align(align)
+        return self
     }
-
-//    public func test() {
-//        contentView.height(300)
-//    }
 }
 
 extension GScrollPanel: UIScrollViewDelegate {
