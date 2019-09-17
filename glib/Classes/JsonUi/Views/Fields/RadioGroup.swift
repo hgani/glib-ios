@@ -38,4 +38,8 @@ class JsonView_Fields_RadioGroupV1: JsonView, SubmittableField {
             }
         }
     }
+
+    func validate() -> Bool {
+        return true
+    }
 }

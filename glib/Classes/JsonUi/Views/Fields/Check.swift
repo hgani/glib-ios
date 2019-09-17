@@ -15,6 +15,10 @@ class JsonView_Fields_CheckV1: JsonView, SubmittableField {
             .width(.matchParent)
             .title(spec["label"].stringValue)
     }
+
+    func validate() -> Bool {
+        return true
+    }
 }
 
 class MCheckBox: CheckboxButton {

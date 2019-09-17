@@ -13,7 +13,14 @@ class JsonView_Panels_FormV1: JsonView {
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
         for viewSpec in childViews {
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-                panel.addView(jsonView.createView())
+                if let fabJsonView = jsonView as? JsonView_FabV1 {
+                    let view = fabJsonView.createView()
+                    panel.addView(view, top: 0, skipConstraint: true)
+                    jsonView.afterViewAdded(parentView: panel)
+                    ScrollableView.items.append(view)
+                } else {
+                    panel.addView(jsonView.createView())
+                }
 
                 // NOTE: Currently we assume all fields are direct children.
 
@@ -44,6 +51,8 @@ class JsonView_Panels_FormV1: JsonView {
 
         func submit() {
             var params = GParams()
+            var errorsCount = 0
+
             for field in fields {
                 if let fileField = field as? SubmittableFileField, let completed = fileField.completed {
                     if !completed {
@@ -51,6 +60,11 @@ class JsonView_Panels_FormV1: JsonView {
                         return
                     }
                 }
+
+                if !field.validate() {
+                    errorsCount = errorsCount + 1
+                }
+
                 if let name = field.name {
                     if name.hasSuffix("[]") {
                         if let oldArray = params[name] as? [String] {
@@ -64,6 +78,10 @@ class JsonView_Panels_FormV1: JsonView {
                         params[name] = field.value
                     }
                 }
+            }
+
+            if errorsCount > 0 {
+                return
             }
 
             let spec = jsonView.spec

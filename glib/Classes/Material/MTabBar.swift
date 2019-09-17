@@ -44,6 +44,7 @@ open class MTabBar: MDCTabBar {
         }
         if let textColor = text {
             setTitleColor(textColor, for: .normal)
+            setTitleColor(.black, for: .selected)
         }
         return self
     }
