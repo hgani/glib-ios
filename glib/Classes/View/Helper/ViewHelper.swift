@@ -176,9 +176,9 @@ public class ViewHelper {
         view.layer.masksToBounds = true
     }
 
-    public func padding(_ padding: GPadding) {
-        paddings(t: padding.top, l: padding.left, b: padding.bottom, r: padding.right)
-    }
+//    public func padding(_ padding: GPadding) {
+//        paddings(t: padding.top, l: padding.left, b: padding.bottom, r: padding.right)
+//    }
 
     public func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?) {
         // Use our own variable to store the definitive values just in case layoutMargins gets changed directly,
@@ -309,14 +309,14 @@ public struct Paddings {
         return Paddings(top: top, left: left, bottom: bottom, right: right)
     }
 
-    func to(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Paddings {
-        let top = top ?? self.top
-        let left = left ?? self.left
-        let bottom = bottom ?? self.bottom
-        let right = right ?? self.right
-
-        return Paddings(top: top, left: left, bottom: bottom, right: right)
-    }
+//    func to(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Paddings {
+//        let top = top ?? self.top
+//        let left = left ?? self.left
+//        let bottom = bottom ?? self.bottom
+//        let right = right ?? self.right
+//
+//        return Paddings(top: top, left: left, bottom: bottom, right: right)
+//    }
 }
 
 public struct GPadding {
@@ -342,16 +342,16 @@ public struct GPadding {
 //    }
 }
 
-public struct GPadding {
-    public let top: Float
-    public let right: Float
-    public let bottom: Float
-    public let left: Float
-
-    public init(top: Float, right: Float, bottom: Float, left: Float) {
-        self.top = top
-        self.right = right
-        self.bottom = bottom
-        self.left = left
-    }
-}
+//public struct GPadding {
+//    public let top: Float
+//    public let right: Float
+//    public let bottom: Float
+//    public let left: Float
+//
+//    public init(top: Float, right: Float, bottom: Float, left: Float) {
+//        self.top = top
+//        self.right = right
+//        self.bottom = bottom
+//        self.left = left
+//    }
+//}

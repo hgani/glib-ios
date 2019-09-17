@@ -179,11 +179,11 @@ open class GVerticalPanel: UIView, IView {
         return self
     }
 
-    @discardableResult
-    public func padding(_ padding: GPadding) -> Self {
-        helper.padding(padding)
-        return self
-    }
+//    @discardableResult
+//    public func padding(_ padding: GPadding) -> Self {
+//        helper.padding(padding)
+//        return self
+//    }
 
     @discardableResult
     public func color(bg: UIColor) -> Self {
