@@ -84,5 +84,6 @@ TODO: Add long description of the pod here.
     sub.dependency 'MaterialComponents/Cards', '~> 78.0'
     sub.dependency 'MaterialComponents/List', '~> 78.0'
     sub.dependency 'MaterialComponents/ActionSheet', '~> 78.0'
+    sub.dependency 'MaterialComponents/Chips', '~> 78.0'
   end
 end
