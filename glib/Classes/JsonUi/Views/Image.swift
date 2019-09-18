@@ -3,11 +3,14 @@ class JsonView_ImageV1: JsonView {
 
     override func initView() -> UIView {
         imageView
-            .width(LayoutSize(rawValue: spec["width"].stringValue)!)
             .height(spec["height"].intValue)
             .onClick { (view) in
                 JsonAction.execute(spec: self.spec["onClick"], screen: self.screen, creator: view)
             }
+
+        if let widthSpec = spec["width"].string {
+            imageView.width(LayoutSize(rawValue: widthSpec)!)
+        }
 
         if let url = spec["url"].presence {
             imageView.source(url: url.stringValue)
