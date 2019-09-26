@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import MaterialComponents.MaterialList
 
 open class MCollectionViewCell: MDCSelfSizingStereoCell {
@@ -5,3 +7,5 @@ open class MCollectionViewCell: MDCSelfSizingStereoCell {
         return String(describing: self)
     }
 }
+
+#endif

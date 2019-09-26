@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 open class JsonTemplateV2 {
     public let spec: Json
     public let screen: GScreen
@@ -71,3 +73,5 @@ class JsonTemplateV2_Featured: JsonTemplateV2 {
         cell.detailLabel.text = spec["subtitle"].stringValue
     }
 }
+
+#endif

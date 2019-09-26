@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import MaterialComponents.MaterialTabs
 
 class JsonView_TabBarV1: JsonView {
@@ -65,3 +67,5 @@ class JsonView_TabBarItemV1: UITabBarItem {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+#endif

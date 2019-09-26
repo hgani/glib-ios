@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import MBRadioButton
 
 class JsonView_Fields_RadioV1: JsonView, RadioButtonDelegate {
@@ -80,6 +82,8 @@ class MRadio: RadioButton {
         return self
     }
 }
+
+#endif
 
 //class JsonView_Fields_RadioV1: JsonView {
 //    private let panel = GHorizontalPanel()

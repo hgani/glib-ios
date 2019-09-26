@@ -52,7 +52,7 @@
             super.viewWillDisappear(animated)
 
             // See https://stackoverflow.com/questions/8228411/detecting-when-the-back-button-is-pressed-on-a-navbar
-            if isMovingFromParentViewController || isBeingDismissed {
+            if isMovingFromParent || isBeingDismissed {
                 onPopping()
             }
         }
@@ -112,7 +112,7 @@
                 if let value = height {
                     return CGFloat(value)
                 }
-                return UITableViewAutomaticDimension
+                return UITableView.automaticDimension
             }
             headerFooter.onSetupView = { view, _ in
                 populate(view.clear())

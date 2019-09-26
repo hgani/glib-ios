@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import MaterialComponents.MaterialProgressView
 
 open class MProgressView: MDCProgressView {
@@ -51,3 +53,5 @@ open class MProgressView: MDCProgressView {
         return self
     }
 }
+
+#endif

@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialSnackbar
 import MaterialComponents.MaterialActionSheet
@@ -68,3 +70,5 @@ class JsonAction_Dialogs_OpenV1: JsonAction {
         return true
     }
 }
+
+#endif
