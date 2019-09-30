@@ -3,6 +3,11 @@ class MCollectionHeaderView: UICollectionReusableView {
     private var viewLoaded = false
 
     func createView(spec: Json, screen: GScreen) {
+        let border = CALayer()
+        border.backgroundColor = UIColor.lightGray.cgColor
+        border.frame = CGRect(x: 0, y: self.frame.size.height - 1, width: self.frame.size.width, height: 1)
+        self.layer.addSublayer(border)
+
         if !viewLoaded {
             backgroundColor = .white
             addSubview(panel)

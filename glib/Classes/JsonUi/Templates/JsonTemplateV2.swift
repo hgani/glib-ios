@@ -17,6 +17,15 @@ open class JsonTemplateV2 {
         GLog.w("Failed loading template: \(spec)")
         return nil
     }
+
+    public func appendEditButtons(_ cell: MCollectionViewCell) {
+        if let editButtons = spec["editButtons"].array {
+            cell.hasEditButtons = true
+            for button in editButtons {
+                cell.appendEditButton(spec: button, screen: screen)
+            }
+        }
+    }
 }
 
 open class JsonTemplateV2_Thumbnail: JsonTemplateV2 {
@@ -35,6 +44,8 @@ open class JsonTemplateV2_Thumbnail: JsonTemplateV2 {
         cell.titleLabel.text = spec["title"].stringValue
         cell.detailLabel.font = RobotoFonts.Style.regular.font
         cell.detailLabel.text = spec["subtitle"].stringValue
+
+        appendEditButtons(cell)
     }
 }
 
@@ -50,6 +61,8 @@ class JsonTemplateV2_Text: JsonTemplateV2 {
         cell.titleLabel.text = spec["title"].stringValue
         cell.detailLabel.font = RobotoFonts.Style.regular.font
         cell.detailLabel.text = spec["subtitle"].stringValue
+
+        appendEditButtons(cell)
     }
 }
 
@@ -69,5 +82,18 @@ class JsonTemplateV2_Featured: JsonTemplateV2 {
         cell.titleLabel.text = spec["title"].stringValue
         cell.detailLabel.font = RobotoFonts.Style.regular.font
         cell.detailLabel.text = spec["subtitle"].stringValue
+
+        appendEditButtons(cell)
+
+//        TODO: incorrect layout
+//        cell.leadingImageView.snp.makeConstraints { (make) in
+//            make.left.equalTo(0)
+//            make.right.equalTo(0)
+//            make.height.equalTo(50)
+//        }
+//        cell.contentView.snp.makeConstraints { (make) in
+//            make.top.equalTo(cell.leadingImageView.snp.bottom)
+//        }
+
     }
 }
