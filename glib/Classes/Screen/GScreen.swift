@@ -62,10 +62,26 @@ open class GScreen: UIViewController {
         }
     }
 
-    open override func viewWillAppear(_ animated: Bool) {
+    final override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         helper.viewWillAppear()
         nav.viewWillAppear()
+
+        onViewWillAppear()
+    }
+
+    open func onViewWillAppear() {
+        // To be overridden
+    }
+
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        onViewWillDisappear()
+    }
+
+    open func onViewWillDisappear() {
+        // To be overridden
     }
 
     @discardableResult
@@ -97,9 +113,9 @@ open class GScreen: UIViewController {
         return self
     }
 
-    public func done() {
-        // Ends chaining
-    }
+//    public func done() {
+//        // Ends chaining
+//    }
 
     public func color(bg: UIColor) -> Self {
         view.backgroundColor = bg

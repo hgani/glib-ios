@@ -176,19 +176,14 @@ public class ViewHelper {
         view.layer.masksToBounds = true
     }
 
+//    public func padding(_ padding: GPadding) {
+//        paddings(t: padding.top, l: padding.left, b: padding.bottom, r: padding.right)
+//    }
+
     public func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?) {
         // Use our own variable to store the definitive values just in case layoutMargins gets changed directly,
         // which can get confusing.
-        paddings = Paddings.from(top: top, left: left, bottom: bottom, right: right, orig: paddings)
-
-//        let orig = paddings
-//
-//        let top = top ?? orig.top
-//        let left = left ?? orig.left
-//        let bottom = bottom ?? orig.bottom
-//        let right = right ?? orig.right
-//
-//        paddings = Paddings(top: top, left: left, bottom: bottom, right: right)
+        paddings = paddings.to(top: top, left: left, bottom: bottom, right: right)
         view.layoutMargins = paddings.toEdgeInsets()
     }
 
@@ -285,6 +280,7 @@ public enum LayoutSize: String {
     case matchParent, wrapContent
 }
 
+// TODO: Deprecate in favour of GPadding
 public struct Paddings {
     public let top: Float
     public let left: Float
@@ -295,14 +291,14 @@ public struct Paddings {
         return UIEdgeInsets(top: CGFloat(top), left: CGFloat(left), bottom: CGFloat(bottom), right: CGFloat(right))
     }
 
-    static func from(top: Float?, left: Float?, bottom: Float?, right: Float?, orig: Paddings) -> Paddings {
-        let top = top ?? orig.top
-        let left = left ?? orig.left
-        let bottom = bottom ?? orig.bottom
-        let right = right ?? orig.right
-
-        return Paddings(top: top, left: left, bottom: bottom, right: right)
-    }
+//    static func from(top: Float?, left: Float?, bottom: Float?, right: Float?, orig: Paddings) -> Paddings {
+//        let top = top ?? orig.top
+//        let left = left ?? orig.left
+//        let bottom = bottom ?? orig.bottom
+//        let right = right ?? orig.right
+//
+//        return Paddings(top: top, left: left, bottom: bottom, right: right)
+//    }
 
     func to(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Paddings {
         let top = top ?? self.top
@@ -312,6 +308,15 @@ public struct Paddings {
 
         return Paddings(top: top, left: left, bottom: bottom, right: right)
     }
+
+//    func to(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Paddings {
+//        let top = top ?? self.top
+//        let left = left ?? self.left
+//        let bottom = bottom ?? self.bottom
+//        let right = right ?? self.right
+//
+//        return Paddings(top: top, left: left, bottom: bottom, right: right)
+//    }
 }
 
 public struct GPadding {
@@ -336,3 +341,17 @@ public struct GPadding {
 //        return Padding(top: top, left: left, bottom: bottom, right: right)
 //    }
 }
+
+//public struct GPadding {
+//    public let top: Float
+//    public let right: Float
+//    public let bottom: Float
+//    public let left: Float
+//
+//    public init(top: Float, right: Float, bottom: Float, left: Float) {
+//        self.top = top
+//        self.right = right
+//        self.bottom = bottom
+//        self.left = left
+//    }
+//}

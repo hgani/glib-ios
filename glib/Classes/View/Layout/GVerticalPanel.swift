@@ -72,17 +72,20 @@ open class GVerticalPanel: UIView, IView {
         }
     }
 
-    public func addView(_ child: UIView, top: Float = 0) {
+    public func addView(_ child: UIView, top: Float = 0, skipConstraint: Bool = false) {
         totalGap += top
 
         // The hope is this makes things more predictable
         child.translatesAutoresizingMaskIntoConstraints = false
 
         super.addSubview(child)
-        initChildConstraints(child: child, top: top)
-        adjustSelfConstraints(child: child)
 
-        previousViewElement = child
+        if !skipConstraint {
+            initChildConstraints(child: child, top: top)
+            adjustSelfConstraints(child: child)
+
+            previousViewElement = child
+        }
     }
 
     public func clear() -> Self {
@@ -168,16 +171,22 @@ open class GVerticalPanel: UIView, IView {
     }
 
     @discardableResult
+    public func padding(_ padding: GPadding) -> Self {
+        helper.padding(padding)
+        return self
+    }
+
+    @discardableResult
     public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
 
-    @discardableResult
-    public func padding(_ padding: GPadding) -> Self {
-        helper.padding(padding)
-        return self
-    }
+//    @discardableResult
+//    public func padding(_ padding: GPadding) -> Self {
+//        helper.padding(padding)
+//        return self
+//    }
 
     @discardableResult
     public func color(bg: UIColor) -> Self {

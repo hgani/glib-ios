@@ -1,8 +1,6 @@
-#if INCLUDE_UILIBS
-
 import MaterialComponents.MaterialTextFields
 
-open class MTextField: MDCTextField, ITextField {
+open class MTextArea: MDCMultilineTextField {
     private var helper: ViewHelper!
     private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
     // TODO: Make sure this doesn't generate cyclic references
@@ -47,21 +45,6 @@ open class MTextField: MDCTextField, ITextField {
         return self
     }
 
-    open override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-//        return UIEdgeInsetsInsetRect(bounds, padding)
-    }
-
-    open override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-//        return UIEdgeInsetsInsetRect(bounds, padding)
-    }
-
-    open override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-//        return UIEdgeInsetsInsetRect(bounds, padding)
-    }
-
     public func color(bg: UIColor) -> Self {
         return color(bg: bg, text: nil)
     }
@@ -101,20 +84,10 @@ open class MTextField: MDCTextField, ITextField {
         return self
     }
 
-    public func specs(_ specs: MTextFieldSpec...) -> Self {
+    public func specs(_ specs: MTextAreaSpec...) -> Self {
         for spec in specs {
             spec.decorate(self)
         }
-        return self
-    }
-
-    public func secure(_ secure: Bool) -> Self {
-        isSecureTextEntry = secure
-        return self
-    }
-
-    public func keyboardType(_ type: UIKeyboardType) -> Self {
-        keyboardType = type
         return self
     }
 
@@ -123,27 +96,24 @@ open class MTextField: MDCTextField, ITextField {
         return self
     }
 
-    public func errors(_ text: String?) -> Self {
-        controller.setErrorText(text, errorAccessibilityValue: nil)
+    public func maxLength(_ value: UInt) -> Self {
+        controller.characterCountMax = value
         return self
     }
 
-    public func trailingViewMode(_ mode: UITextField.ViewMode) -> Self {
-        self.trailingViewMode = mode
-        return self
+    public func maxLength() -> UInt {
+        return controller.characterCountMax
     }
 }
 
-public class MTextFieldSpec {
-    private var decorator: ((MTextField) -> Void)
+public class MTextAreaSpec {
+    private var decorator: ((MTextArea) -> Void)
 
-    public init(_ decorator: @escaping ((MTextField) -> Void)) {
+    public init(_ decorator: @escaping ((MTextArea) -> Void)) {
         self.decorator = decorator
     }
 
-    func decorate(_ view: MTextField) {
+    func decorate(_ view: MTextArea) {
         decorator(view)
     }
 }
-
-#endif

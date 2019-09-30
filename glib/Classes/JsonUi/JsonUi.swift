@@ -1,4 +1,5 @@
 import SwiftyJSON
+import MaterialComponents.MaterialTabs
 
 public class JsonUi {
     private static var moduleName: String?
@@ -50,6 +51,10 @@ public class JsonUi {
         initVerticalPanel(screen.container.header, spec: spec["header"], screen: screen)
         initVerticalPanel(screen.container.content, spec: spec["body"], screen: screen)
         initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
+        if let leftDrawer = spec["leftDrawer"].presence {
+            initBottomTabBar(screen.container.footer, spec: leftDrawer, screen: screen)
+        }
+
         JsonAction.execute(spec: spec["onLoad"], screen: screen, creator: nil)
 
         // TODO: Remove (deprecated)
@@ -92,6 +97,54 @@ public class JsonUi {
             screen.leftMenu(controller: menuController)
         }
     }
+
+    public static func initBottomTabBar(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
+        let tabBar = MTabBar()
+
+        tabBar.delegate(Delegate(view: tabBar, screen: screen), retain: true)
+            .width(.matchParent)
+            .color(bg: .white, text: .gray)
+            .alignment(.leading)
+
+        spec["rows"].arrayValue.forEach { (tab) in
+            let tabBarItem = JsonView_TabBarItemV1(tab)
+            tabBar.items.append(tabBarItem)
+        }
+
+        let selectedTab = tabBar.items.first(where: { (tab) -> Bool in
+            if let onClick = (tab as! JsonView_TabBarItemV1).spec["onClick"].presence {
+                return onClick["url"].stringValue == (screen as! JsonUiScreen).getUrl()
+            }
+
+            return false
+        })
+
+        if selectedTab != nil {
+            tabBar.setSelectedItem(selectedTab, animated: false)
+        }
+
+        panel.addView(tabBar)
+    }
+
+    class Delegate: NSObject, MDCTabBarDelegate {
+        private let view: MTabBar
+        private let screen: GScreen
+
+        init(view: MTabBar, screen: GScreen) {
+            self.view = view
+            self.screen = screen
+        }
+
+        func tabBar(_ tabBar: MDCTabBar, didSelect item: UITabBarItem) {
+            if !item.isEnabled {
+                return
+            }
+
+            if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
+                JsonAction.execute(spec: onClick, screen: screen, creator: nil)
+            }
+        }
+    }
 }
 
 class JsonUiMenuNavController: MenuNavController {
@@ -130,5 +183,20 @@ class JsonUiMenuNavController: MenuNavController {
 //        #if DEBUG
 //        menu.add(MenuItem(title: "Diagnostics").screen(JsonUiScreen(path: "/app_diagnostics.json")))
 //        #endif
+    }
+}
+
+class ScrollableView {
+    static var items = [UIView]()
+
+    static func delegateCall(scrollView: UIScrollView, useContentOffset: Bool = false) {
+        for view in items {
+            if let fab = view as? MFab {
+                fab.frame.origin.y = scrollView.bounds.size.height - 76
+                if useContentOffset {
+                    fab.frame.origin.y = fab.frame.origin.y + scrollView.contentOffset.y
+                }
+            }
+        }
     }
 }

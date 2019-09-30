@@ -65,8 +65,15 @@ open class MButton: MDCButton, IView {
     }
 
     @discardableResult
+    public func padding(_ newPadding: GPadding) -> Self {
+        paddings = paddings.to(top: newPadding.top, left: newPadding.left, bottom: newPadding.bottom, right: newPadding.right)
+        contentEdgeInsets = paddings.toEdgeInsets()
+        return self
+    }
+
+    @discardableResult
     public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
-        paddings = Paddings.from(top: top, left: left, bottom: bottom, right: right, orig: paddings)
+        paddings = paddings.to(top: top, left: left, bottom: bottom, right: right)
         contentEdgeInsets = paddings.toEdgeInsets()
         return self
     }
@@ -98,7 +105,8 @@ open class MButton: MDCButton, IView {
         if let newSize = size {
             newFont = newFont.withSize(CGFloat(newSize))
         }
-        titleLabel!.font = newFont
+//        titleLabel!.font = newFont
+        self.setTitleFont(newFont, for: .normal)
         return self
     }
 
