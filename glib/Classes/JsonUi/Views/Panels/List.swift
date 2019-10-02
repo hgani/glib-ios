@@ -9,19 +9,17 @@ open class JsonView_Panels_ListV1: JsonView {
     open override func initView() -> UIView {
         delegate = Delegate(view: self)
 
-        let layout = UICollectionViewFlowLayout()
-        layout.estimatedItemSize = CGSize(width: screen.view.frame.width, height: 60)
+        let layout = MCollectionFlowLayout()
+        layout.estimatedItemSize = CGSize(width: screen.view.frame.width, height: 40)
         layout.minimumInteritemSpacing = 1
-        layout.minimumLineSpacing = 0
-        if let _ = spec["header"].presence {
-            layout.headerReferenceSize = CGSize(width: screen.view.frame.width, height: 60)
-        }
+        layout.headerReferenceSize = CGSize(width: screen.view.frame.width, height: 40)
 
         collectionView = MCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView?.register(MCollectionHeaderView.self,
                                  forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                  withReuseIdentifier: "\(MCollectionHeaderView.self)")
         collectionView?.register(MCollectionViewCell.self, forCellWithReuseIdentifier: "\(MCollectionViewCell.self)")
+
         collectionView?
             .width(.matchParent)
             .height(.matchParent)

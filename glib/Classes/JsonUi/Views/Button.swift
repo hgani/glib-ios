@@ -16,6 +16,20 @@ class JsonView_ButtonV1: JsonView {
         _ = view.onClick { _ in
             JsonAction.execute(spec: self.spec["onClick"], screen: self.screen, creator: self.view)
         }
+
+        if let styleClasses = spec["styleClasses"].array {
+            for style in styleClasses {
+                switch style {
+                case "link":
+                    view.specs(.link)
+                case "icon":
+                    view.specs(.icon(code: spec["icon"]["name"].stringValue))
+                default:
+                    fatalError("Invalid style \(style)")
+                }
+            }
+        }
+
         return view
     }
 }

@@ -18,6 +18,13 @@ class JsonView_LabelV1: JsonView {
             }
         }
 
+        if let onClick = spec["onClick"].presence {
+            label.specs(.link)
+            label.onClick { (_) in
+                JsonAction.execute(spec: onClick, screen: self.screen, creator: self.label)
+            }
+        }
+
         return label
     }
 }

@@ -26,6 +26,7 @@ open class MButton: MDCButton, IView {
 
         // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
         _ = paddings(top: 10, left: 20, bottom: 10, right: 20)
+        isUppercaseTitle = false
     }
 
     open override func didMoveToSuperview() {
