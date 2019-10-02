@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import MaterialComponents.MaterialCards
 
 class MCard: MDCCard {
@@ -132,3 +134,5 @@ class MCard: MDCCard {
         return self
     }
 }
+
+#endif

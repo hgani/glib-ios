@@ -63,7 +63,7 @@ TODO: Add long description of the pod here.
 
   s.subspec 'Eureka' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_EUREKA' }
-    sub.dependency 'Eureka', '~> 4.1.1'
+    sub.dependency 'Eureka', '~> 4.3.0'
   end
 
   # Requires NSLocationWhenInUseUsageDescription in Info.plist

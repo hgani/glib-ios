@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 class JsonView_Fields_RadioGroupV1: JsonView, SubmittableField {
     private let panel = GVerticalPanel()
     private var selectedJsonRadio: JsonView_Fields_RadioV1?
@@ -43,3 +45,5 @@ class JsonView_Fields_RadioGroupV1: JsonView, SubmittableField {
         return true
     }
 }
+
+#endif

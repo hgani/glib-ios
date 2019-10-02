@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import Photos
 import CommonCrypto
 import Alamofire
@@ -240,3 +242,5 @@ extension ImagePicker: UIImagePickerControllerDelegate, UINavigationControllerDe
         self.pickerController(picker, didSelect: image, fileName: fileName)
     }
 }
+
+#endif

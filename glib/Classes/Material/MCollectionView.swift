@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 open class MCollectionView: UICollectionView, IContainer {
     private var helper: ViewHelper!
 
@@ -72,3 +74,5 @@ open class MCollectionView: UICollectionView, IContainer {
         return type.init()
     }
 }
+
+#endif

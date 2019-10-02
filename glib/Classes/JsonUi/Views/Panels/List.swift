@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import MaterialComponents.MaterialList
 
 open class JsonView_Panels_ListV1: JsonView {
@@ -90,6 +92,10 @@ open class JsonView_Panels_ListV1: JsonView {
         }
     }
 }
+
+#endif
+
+
 
 //open class JsonView_Panels_ListV1: JsonView {
 //    private let tableView = GTableView().width(.matchParent).height(.matchParent)

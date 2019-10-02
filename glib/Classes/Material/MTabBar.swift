@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import MaterialComponents.MaterialTabs
 
 open class MTabBar: MDCTabBar {
@@ -62,3 +64,5 @@ open class MTabBar: MDCTabBar {
         return self
     }
 }
+
+#endif

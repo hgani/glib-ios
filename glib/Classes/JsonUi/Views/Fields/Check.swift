@@ -1,3 +1,6 @@
+
+#if INCLUDE_UILIBS
+
 import MBCheckboxButton
 
 class JsonView_Fields_CheckV1: JsonView, SubmittableField {
@@ -65,6 +68,8 @@ class MCheckBox: CheckboxButton {
         return self
     }
 }
+
+#endif
 
 //class JsonView_Fields_CheckV1: JsonView, SubmittableField {
 //    private let panel = GSplitPanel().width(.matchParent)

@@ -14,6 +14,10 @@ open class LaunchHelper {
         return screen.viewIfLoaded?.window == nil ? GApp.instance.navigationController : screen
     }
 
+    public func present(_ viewController: UIViewController) {
+        navController().present(viewController, animated: true, completion: nil)
+    }
+
     public func alert(_ message: String, title: String? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

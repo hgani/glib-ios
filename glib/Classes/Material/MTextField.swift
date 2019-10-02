@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import MaterialComponents.MaterialTextFields
 
 open class MTextField: MDCTextField, ITextField {
@@ -143,3 +145,5 @@ public class MTextFieldSpec {
         decorator(view)
     }
 }
+
+#endif

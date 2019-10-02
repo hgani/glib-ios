@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import RSSelectionMenu
 
 class JsonView_Fields_SelectV1: JsonView, SubmittableField {
@@ -70,3 +72,5 @@ class JsonView_Fields_SelectV1: JsonView, SubmittableField {
         }
     }
 }
+
+#endif

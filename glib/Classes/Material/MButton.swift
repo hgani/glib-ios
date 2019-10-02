@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import MaterialComponents.MaterialButtons
 
 open class MButton: MDCButton, IView {
@@ -176,3 +178,5 @@ public class MButtonSpec {
         decorator(view)
     }
 }
+
+#endif
