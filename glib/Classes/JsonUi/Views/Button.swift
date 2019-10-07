@@ -25,7 +25,13 @@ class JsonView_ButtonV1: JsonView {
                 case "icon":
                     view.specs(.icon(code: spec["icon"]["name"].stringValue))
                 default:
-                    fatalError("Invalid style \(style)")
+                    if let klass = JsonUi.loadClass(name: "logo", type: MButtonSpecProtocol.self) as? MButtonSpecProtocol.Type {
+                        let spec = klass.init()
+                        spec.createSpec().decorate(view)
+                    }
+                    else {
+                        fatalError("Invalid style \(style)")
+                    }
                 }
             }
         }
