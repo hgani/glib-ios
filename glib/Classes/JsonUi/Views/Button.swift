@@ -25,7 +25,7 @@ class JsonView_ButtonV1: JsonView {
                 case "icon":
                     view.specs(.icon(code: spec["icon"]["name"].stringValue))
                 default:
-                    if let klass = JsonUi.loadClass(name: "logo", type: MButtonSpecProtocol.self) as? MButtonSpecProtocol.Type {
+                    if let klass = JsonUi.loadClass(name: style.stringValue, type: MButtonSpecProtocol.self) as? MButtonSpecProtocol.Type {
                         let spec = klass.init()
                         spec.createSpec().decorate(view)
                     }
