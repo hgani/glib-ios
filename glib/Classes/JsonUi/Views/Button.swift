@@ -36,6 +36,10 @@ class JsonView_ButtonV1: JsonView {
             }
         }
 
+        Generic.sharedInstance.genericIsBusy.asObservable().subscribe { _ in
+            self.view.enabled(!Generic.sharedInstance.genericIsBusy.value)
+        }
+        
         return view
     }
 }
