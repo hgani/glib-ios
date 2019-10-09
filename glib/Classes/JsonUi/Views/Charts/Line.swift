@@ -8,10 +8,14 @@ class JsonView_Charts_LineV1: JsonView {
         for series in spec["dataSeries"].arrayValue {
             var entries = [ChartDataEntry]()
             var index = 0
-            for (key, value) in series["dataPoints"].dictionaryValue {
-                // TODO: json value didn't loop in order
-                GLog.d("\(key) \(value.doubleValue)")
-                entries.append(ChartDataEntry(x: Double(index), y: value.doubleValue))
+//            for (key, value) in series["dataPoints"].dictionaryValue {
+//                // TODO: json value didn't loop in order
+//                GLog.d("\(key) \(value.doubleValue)")
+//                entries.append(ChartDataEntry(x: Double(index), y: value.doubleValue))
+//                index = index + 1
+//            }
+            for point in series["dataPoints"].arrayValue {
+                entries.append(ChartDataEntry(x: Double(index), y: point["y"].doubleValue))
                 index = index + 1
             }
             let color = UIColor(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1.0)
@@ -22,7 +26,6 @@ class JsonView_Charts_LineV1: JsonView {
 
             data.addDataSet(set)
         }
-
         chartView.width(.matchParent).height(300).data(data)
 
         return chartView

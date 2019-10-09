@@ -15,6 +15,7 @@ class JsonView_Fields_PasswordV1: JsonView, SubmittableField {
 
         view.placeholder(spec["label"].stringValue)
             .text(spec["value"].stringValue)
+            .secure(true)
 
 //        TODO: trailingView not show up
 //        #if INCLUDE_UILIBS
