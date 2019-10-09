@@ -5,7 +5,7 @@ class JsonView_Charts_LineV1: JsonView {
 
     override func initView() -> UIView {
         let data = LineChartData(dataSets: [])
-        var xValues = Set<String>()
+        var xValues = [String]()
         for series in spec["dataSeries"].arrayValue {
             var entries = [ChartDataEntry]()
             var index = 0
@@ -16,8 +16,9 @@ class JsonView_Charts_LineV1: JsonView {
 //                index = index + 1
 //            }
             for point in series["dataPoints"].arrayValue {
+                GLog.d(point["x"].stringValue)
                 if !xValues.contains(point["x"].stringValue) {
-                    xValues.insert(point["x"].stringValue)
+                    xValues.append(point["x"].stringValue)
                 }
                 entries.append(ChartDataEntry(x: Double(index), y: point["y"].doubleValue))
                 index = index + 1
@@ -31,7 +32,8 @@ class JsonView_Charts_LineV1: JsonView {
             data.addDataSet(set)
         }
 
-        let chartFormatter = DateValueFormatter(labels: Array(xValues))
+        GLog.d(xValues.description)
+        let chartFormatter = DateValueFormatter(labels: xValues)
         let xAxis = XAxis()
         xAxis.valueFormatter = chartFormatter
 
