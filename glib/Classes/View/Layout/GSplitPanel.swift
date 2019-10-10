@@ -118,6 +118,7 @@ open class GSplitPanel: UIView, IView {
         return self
     }
 
+    @discardableResult
     public func color(bg: UIColor) -> Self {
         backgroundColor = bg
         return self
