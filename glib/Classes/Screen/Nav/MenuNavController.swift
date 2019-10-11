@@ -23,13 +23,8 @@ open class MenuNavController: GScreen {
         )
     }
 
-//    open override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        updateMenu(menu)
-//        tableView.reloadData()
-//    }
-
-    open override func onViewWillAppear() {
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         updateMenu(menu)
         tableView.reloadData()
     }

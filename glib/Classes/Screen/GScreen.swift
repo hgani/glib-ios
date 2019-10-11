@@ -62,16 +62,17 @@ open class GScreen: UIViewController {
         }
     }
 
-    final override public func viewWillAppear(_ animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         helper.viewWillAppear()
         nav.viewWillAppear()
 
-        onViewWillAppear()
+        extViewWillAppear()
     }
 
-    open func onViewWillAppear() {
-        // To be overridden
+    open func extViewWillAppear() {
+        // To be used in extensions, e.g. GScreen+Analytics. Don't redeclare viewWillAppear()
+        // in extensions because that will completely mask this class' viewWillAppear()
     }
 
     open override func viewWillDisappear(_ animated: Bool) {
