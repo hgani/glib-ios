@@ -51,7 +51,7 @@ public class JsonUi {
         initVerticalPanel(screen.container.header, spec: spec["header"], screen: screen)
         initVerticalPanel(screen.container.content, spec: spec["body"], screen: screen)
         initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
-        if let leftDrawer = spec["leftDrawer"].presence {
+        if let leftDrawer = spec["navMenu"].presence {
             initBottomTabBar(screen.container.footer, spec: leftDrawer, screen: screen)
         }
 
