@@ -162,7 +162,7 @@ open class GTableViewCell: UITableViewCell {
     }
 
     static func reuseIdentifier() -> String {
-        return String(describing: self)
+        return String(reflecting: self)
     }
 
     static func nib() -> UINib {

@@ -38,7 +38,7 @@ open class GVerticalPanel: UIView, IView {
         initContent()
     }
 
-    func initContent() {
+    open func initContent() {
         // To be overridden
     }
 
