@@ -249,7 +249,7 @@ open class GVerticalPanel: UIView, IView {
         return self
     }
 
-    public func done() {
-        // Ends chaining
-    }
+//    public func done() {
+//        // Ends chaining
+//    }
 }

@@ -8,7 +8,7 @@ open class JsonTableViewCell: GTableViewCustomCell {
     }
 }
 
-open class JsonTemplate {
+open class JsonTemplate : GObject {
     public let spec: Json
     public let screen: GScreen
 
@@ -33,11 +33,11 @@ open class JsonTemplate {
     }
 
     open func instantiatePanel() -> GVerticalPanel {
-        fatalError("Need implementation")
+        mustBeOverridden()
     }
 
     open func initPanel(_: GVerticalPanel, spec _: Json) {
-        fatalError("Need implementation")
+        mustBeOverridden()
     }
 
     public static func create(spec: Json, screen: GScreen) -> JsonTemplate? {
