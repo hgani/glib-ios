@@ -89,12 +89,15 @@ open class GTableView: UITableView, IContainer {
         return self
     }
 
-    public func cellInstance<T: GTableViewCell>(of type: T.Type, style: UITableViewCell.CellStyle = .default) -> T {
+    public func cellInstance<T: GTableViewCell>(of type: T.Type, style: UITableViewCell.CellStyle = .default, onCreate: ((T) -> (Void))? = nil) -> T {
         var cell: T
         if let safeCell = self.dequeueReusableCell(withIdentifier: type.reuseIdentifier()) as? T {
             cell = safeCell
         } else {
             cell = type.init(style: style)
+            if let block = onCreate {
+                block(cell)
+            }
         }
         cell.tableView = self
         return cell

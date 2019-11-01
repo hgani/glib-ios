@@ -1,29 +1,44 @@
+
+open class JsonTableViewCell: GTableViewCustomCell {
+    internal var content: GVerticalPanel!
+
+    func initPanel(_ panel: GVerticalPanel) {
+        content = panel
+        append(content)
+    }
+}
+
 open class JsonTemplate {
-//    public let tableView: GTableView?
     public let spec: Json
     public let screen: GScreen
 
     // This constructor allows dynamic instantiation of child classes.
     public required init(_ spec: Json, _ screen: GScreen) {
-//        self.tableView = tableView
         self.spec = spec
         self.screen = screen
     }
 
-    open func createCell(tableView: GTableView) -> GTableViewCell {
-        fatalError("Need implementation")    }
+    func createCell(tableView: GTableView) -> GTableViewCell {
+        let cell = tableView.cellInstance(of: JsonTableViewCell.self, style: .default) { newCell in
+            newCell.initPanel(self.instantiatePanel())
+        }
+        initPanel(cell.content, spec: spec)
+        return cell
+    }
 
-    open func createPanel() -> GVerticalPanel {
+    func createPanel() -> GVerticalPanel {
+        let panel = instantiatePanel()
+        initPanel(panel, spec: spec["data"])
+        return panel
+    }
+
+    open func instantiatePanel() -> GVerticalPanel {
         fatalError("Need implementation")
     }
 
-//    public static func create(tableView: GTableView?, spec: Json, screen: GScreen) -> JsonTemplate? {
-//        if let klass = JsonUi.loadClass(name: spec["template"].stringValue, type: JsonTemplate.self) as? JsonTemplate.Type {
-//            return klass.init(tableView, spec, screen)
-//        }
-//        GLog.w("Failed loading template: \(spec)")
-//        return nil
-//    }
+    open func initPanel(_: GVerticalPanel, spec _: Json) {
+        fatalError("Need implementation")
+    }
 
     public static func create(spec: Json, screen: GScreen) -> JsonTemplate? {
         if let klass = JsonUi.loadClass(name: spec["template"].stringValue, type: JsonTemplate.self) as? JsonTemplate.Type {
@@ -32,5 +47,4 @@ open class JsonTemplate {
         GLog.w("Failed loading template: \(spec)")
         return nil
     }
-
 }
