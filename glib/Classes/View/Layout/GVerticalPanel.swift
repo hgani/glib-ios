@@ -248,8 +248,4 @@ open class GVerticalPanel: UIView, IView {
         horizontalAlign = align
         return self
     }
-
-//    public func done() {
-//        // Ends chaining
-//    }
 }

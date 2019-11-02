@@ -30,6 +30,7 @@ open class GLabel: UILabel, IView {
         helper = ViewHelper(self)
         lineBreakMode = .byWordWrapping
         numberOfLines = 0
+        font(RobotoFonts.Style.regular.font)
     }
 
     open override func didMoveToSuperview() {

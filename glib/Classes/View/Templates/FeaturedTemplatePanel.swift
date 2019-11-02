@@ -1,20 +1,31 @@
 import UIKit
 
 open class FeaturedTemplatePanel: GVerticalPanel {
-    public let picture = GImageView()
-    public let title = GLabel().specs(.libCellTitle)
-    public let subtitle = GLabel().specs(.libCellSubtitle)
+    private let picture = GImageView()
+    private let title = GLabel().specs(.libCellTitle)
+    private let subtitle = GLabel().specs(.libCellSubtitle, .libMuted)
 
     open override func initContent() {
-        paddings(top: 8, left: 14, bottom: 8, right: 14)
-            .append(picture.height(210))
+        append(picture.height(210))
             .append(GVerticalPanel().paddings(top: 5, left: 10, bottom: 10, right: 10).append(title).append(subtitle))
     }
 
+    func setImage(url: String?) {
+        if let imageUrl = url {
+            picture.source(url: imageUrl)
+        }
+    }
 
-//    open override func initContent() {
-//        append(picture.height(210))
-//            .append(GVerticalPanel().paddings(top: 5, left: 10, bottom: 10, right: 10).append(title).append(subtitle))
-//            .done()
-//    }
+    func setTitle(text: String?) {
+        title.text = text
+    }
+
+    func setSubtitle(text: String?) {
+        if let string = text {
+            subtitle.paddings(top: 6, left: nil, bottom: nil, right: nil)
+            subtitle.text = string
+        } else {
+            subtitle.paddings(top: 0, left: nil, bottom: nil, right: nil)
+        }
+    }
 }
