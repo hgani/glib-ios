@@ -106,7 +106,7 @@ public class JsonUi {
             .width(.matchParent)
             .color(bg: .white, text: .gray)
             .alignment(.leading)
-            .onChange { tabBar, item in
+            .onChange { _, item, _ in
                 if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
                     JsonAction.execute(spec: onClick, screen: screen, creator: nil)
                 }

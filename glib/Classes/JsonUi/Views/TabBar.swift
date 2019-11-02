@@ -12,7 +12,7 @@ class JsonView_TabBarV1: JsonView {
             .width(LayoutSize(rawValue: spec["width"].stringValue)!)
             .color(bg: UIColor(hex: spec["backgroundColor"].stringValue), text: UIColor(hex: spec["color"].stringValue))
             .alignment(spec["tabButtons"].arrayValue.count > 3 ? .leading : .justified)
-            .onChange { tabBar, item in
+            .onChange { _, item, _ in
                 if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
                     JsonAction.execute(spec: onClick, screen: self.screen, creator: nil)
                 }

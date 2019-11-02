@@ -5,7 +5,7 @@ import MaterialComponents.MaterialTabs
 open class MTabBar: MDCTabBar {
     private var helper: ViewHelper!
 //    private var retainedRef: MDCTabBarDelegate?
-    private var onChange: ((MTabBar, UITabBarItem) -> Void)?
+    private var onChange: ((MTabBar, UITabBarItem, Int) -> Void)?
 
     public init() {
         super.init(frame: .zero)
@@ -50,7 +50,7 @@ open class MTabBar: MDCTabBar {
         }
         if let textColor = text {
             setTitleColor(textColor, for: .normal)
-            setTitleColor(.black, for: .selected)
+            setTitleColor(textColor.muted(), for: .selected)
         }
         return self
     }
@@ -71,31 +71,20 @@ open class MTabBar: MDCTabBar {
 
     // Use block instead of selector from now on. See https://stackoverflow.com/questions/24007650/selector-in-swift
     @discardableResult
-    open func onChange(_ command: @escaping (MTabBar, UITabBarItem) -> Void) -> Self {
+    open func onChange(_ command: @escaping (MTabBar, UITabBarItem, Int) -> Void) -> Self {
         onChange = command
         return self
     }
 
     public func selectTab(index: Int) {
-        let item = self.items[index]
+        let item = items[index]
         selectedItem = item
         performChange(item: item)
-
-//        if let item = self.selectedItem {
-//            performChange(item: item)
-//        }
-//        self.selectedItem = self.items[index]
     }
 
-//    public func triggerChange() {
-//        if let item = self.selectedItem {
-//            performChange(item: item)
-//        }
-//    }
-
     private func performChange(item: UITabBarItem) {
-        if let callback = self.onChange {
-            callback(self, item)
+        if let callback = self.onChange, let index = items.index(of: item) {
+            callback(self, item, index)
         }
     }
 }
@@ -105,7 +94,7 @@ extension MTabBar: MDCTabBarDelegate {
         performChange(item: item)
     }
 
-    func tabBar(_ tabBar: MDCTabBar, shouldSelect item: UITabBarItem) -> Bool {
+    public func tabBar(_ tabBar: MDCTabBar, shouldSelect item: UITabBarItem) -> Bool {
         return item.isEnabled
     }
 }

@@ -8,6 +8,6 @@ extension GLabelSpec {
     }
 
     static let libMuted = GLabelSpec { label in
-        _ = label.color(text: label.textColor.withAlphaComponent(0.6))
+        _ = label.color(text: label.textColor.muted())
     }
 }

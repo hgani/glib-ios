@@ -30,4 +30,8 @@ public extension UIColor {
         }
         self.init(red: 0, green: 0, blue: 0, alpha: 0)
     }
+
+    func muted() -> UIColor {
+        return withAlphaComponent(0.6)
+    }
 }
