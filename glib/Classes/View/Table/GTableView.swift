@@ -151,6 +151,26 @@ open class GTableViewCell: UITableViewCell {
         helper = ViewHelper(contentView)
     }
 
+    override open func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        if selected {
+            contentView.backgroundColor = .libCellHighlight
+        } else {
+            contentView.backgroundColor = .clear
+        }
+    }
+
+    open override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+
+        if highlighted {
+            contentView.backgroundColor = .libCellHighlight
+        } else {
+            contentView.backgroundColor = .clear
+        }
+    }
+
     public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
