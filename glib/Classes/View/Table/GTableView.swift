@@ -165,7 +165,7 @@ open class GTableViewCell: UITableViewCell {
         super.setHighlighted(highlighted, animated: animated)
 
         if highlighted {
-            contentView.backgroundColor = .libCellHighlight
+            contentView.backgroundColor = .lightGray
         } else {
             contentView.backgroundColor = .clear
         }
