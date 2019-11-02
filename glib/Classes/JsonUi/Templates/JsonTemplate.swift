@@ -36,7 +36,7 @@ open class JsonTemplate : GObject {
         mustBeOverridden()
     }
 
-    open func initPanel(_: GVerticalPanel, spec _: Json) {
+    open func initPanel(_ panel: GVerticalPanel, spec _: Json) {
         mustBeOverridden()
     }
 
