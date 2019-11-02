@@ -18,8 +18,11 @@ open class MenuCell: GTableViewCustomCell, MenuCellType {
 
     open func populate() {
         paddings(top: 8, left: 14, bottom: 8, right: 14)
-            .append(GHorizontalPanel().paddings(top: 5, left: 10, bottom: 5, right: 10).append(iconLabel).append(titleLabel, left: 5))
-            .done()
+            .append(GHorizontalPanel()
+                .paddings(top: 5, left: 10, bottom: 5, right: 10)
+                .append(iconLabel)
+                .append(titleLabel, left: 5)
+            )
     }
 
     open func update(item: MenuItem) {

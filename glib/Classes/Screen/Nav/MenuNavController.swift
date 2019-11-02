@@ -35,11 +35,11 @@ open class MenuNavController: GScreen {
 //        tableView.reloadData()
 //    }
 
-    open func initMenu(_: Menu) {
+    open func initMenu(_ menu: Menu) {
         fatalError("Must be overridden")
     }
 
-    open func updateMenu(_: Menu) {
+    open func updateMenu(_ menu: Menu) {
         // To be overridden
     }
 

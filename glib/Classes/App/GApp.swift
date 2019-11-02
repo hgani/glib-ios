@@ -10,6 +10,15 @@ public class GApp {
     public static let instance = GApp()
 
     public func withNav(_ navigationController: GNavigationController) -> Self {
+        RobotoFonts.loadAll()
+
+        #if DEBUG
+        GLog.t("Font family: \(UIFont.familyNames)")
+        for fontName in UIFont.fontNames(forFamilyName: "Roboto") {
+            GLog.t("Font name: \(fontName)")
+        }
+        #endif
+        
         self.navigationController = navigationController
 
         window = UIWindow(frame: UIScreen.main.bounds)
