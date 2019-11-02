@@ -51,8 +51,8 @@ public class JsonUi {
         initVerticalPanel(screen.container.header, spec: spec["header"], screen: screen)
         initVerticalPanel(screen.container.content, spec: spec["body"], screen: screen)
         initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
-        if let leftDrawer = spec["navMenu"].presence {
-            initBottomTabBar(screen.container.footer, spec: leftDrawer, screen: screen)
+        if let navMenu = spec["navMenu"].presence {
+            initBottomTabBar(screen.container.footer, spec: navMenu, screen: screen)
         }
 
         JsonAction.execute(spec: spec["onLoad"], screen: screen, creator: nil)
@@ -101,10 +101,16 @@ public class JsonUi {
     public static func initBottomTabBar(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
         let tabBar = MTabBar()
 
-        tabBar.delegate(Delegate(view: tabBar, screen: screen), retain: true)
+        tabBar
+//            .delegate(Delegate(view: tabBar, screen: screen), retain: true)
             .width(.matchParent)
             .color(bg: .white, text: .gray)
             .alignment(.leading)
+            .onChange { tabBar, item in
+                if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
+                    JsonAction.execute(spec: onClick, screen: screen, creator: nil)
+                }
+            }
 
         spec["rows"].arrayValue.forEach { (tab) in
             let tabBarItem = JsonView_TabBarItemV1(tab)
@@ -126,25 +132,25 @@ public class JsonUi {
         panel.addView(tabBar)
     }
 
-    class Delegate: NSObject, MDCTabBarDelegate {
-        private let view: MTabBar
-        private let screen: GScreen
-
-        init(view: MTabBar, screen: GScreen) {
-            self.view = view
-            self.screen = screen
-        }
-
-        func tabBar(_ tabBar: MDCTabBar, didSelect item: UITabBarItem) {
-            if !item.isEnabled {
-                return
-            }
-
-            if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
-                JsonAction.execute(spec: onClick, screen: screen, creator: nil)
-            }
-        }
-    }
+//    class Delegate: NSObject, MDCTabBarDelegate {
+//        private let view: MTabBar
+//        private let screen: GScreen
+//
+//        init(view: MTabBar, screen: GScreen) {
+//            self.view = view
+//            self.screen = screen
+//        }
+//
+//        func tabBar(_ tabBar: MDCTabBar, didSelect item: UITabBarItem) {
+//            if !item.isEnabled {
+//                return
+//            }
+//
+//            if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
+//                JsonAction.execute(spec: onClick, screen: screen, creator: nil)
+//            }
+//        }
+//    }
 }
 
 class JsonUiMenuNavController: MenuNavController {

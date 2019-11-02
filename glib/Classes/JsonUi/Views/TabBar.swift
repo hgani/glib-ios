@@ -6,13 +6,18 @@ class JsonView_TabBarV1: JsonView {
     private let tabBar = MTabBar()
 
     override func initView() -> UIView {
-        let delegate = Delegate(view: self)
+//        let delegate = Delegate(view: self)
 
         tabBar
             .width(LayoutSize(rawValue: spec["width"].stringValue)!)
             .color(bg: UIColor(hex: spec["backgroundColor"].stringValue), text: UIColor(hex: spec["color"].stringValue))
             .alignment(spec["tabButtons"].arrayValue.count > 3 ? .leading : .justified)
-            .delegate(delegate, retain: true)
+            .onChange { tabBar, item in
+                if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
+                    JsonAction.execute(spec: onClick, screen: self.screen, creator: nil)
+                }
+            }
+//            .delegate(delegate, retain: true)
 
         spec["tabButtons"].arrayValue.forEach { (tab) in
             let tabBarItem = JsonView_TabBarItemV1(tab)
@@ -34,27 +39,27 @@ class JsonView_TabBarV1: JsonView {
         return tabBar
     }
 
-    class Delegate: NSObject, MDCTabBarDelegate {
-        private let view: JsonView_TabBarV1
-
-        init(view: JsonView_TabBarV1) {
-            self.view = view
-        }
-
-        func tabBar(_ tabBar: MDCTabBar, didSelect item: UITabBarItem) {
-//            if !item.isEnabled {
-//                return
+//    class Delegate: NSObject, MDCTabBarDelegate {
+//        private let view: JsonView_TabBarV1
+//
+//        init(view: JsonView_TabBarV1) {
+//            self.view = view
+//        }
+//
+//        func tabBar(_ tabBar: MDCTabBar, didSelect item: UITabBarItem) {
+////            if !item.isEnabled {
+////                return
+////            }
+//
+//            if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
+//                JsonAction.execute(spec: onClick, screen: view.screen, creator: nil)
 //            }
-
-            if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
-                JsonAction.execute(spec: onClick, screen: view.screen, creator: nil)
-            }
-        }
-
-        func tabBar(_ tabBar: MDCTabBar, shouldSelect item: UITabBarItem) -> Bool {
-            return item.isEnabled
-        }
-    }
+//        }
+//
+//        func tabBar(_ tabBar: MDCTabBar, shouldSelect item: UITabBarItem) -> Bool {
+//            return item.isEnabled
+//        }
+//    }
 }
 
 class JsonView_TabBarItemV1: UITabBarItem {
