@@ -15,15 +15,14 @@ open class TextTemplatePanel: GVerticalPanel {
     }
 
     public func setTitle(text: String?) {
-        title.text = text
+        title.text(text ?? "")
     }
 
     public func setSubtitle(text: String?) {
         if let string = text {
-            subtitle.paddings(top: 4, left: nil, bottom: nil, right: nil)
-            subtitle.text = string
+            subtitle.paddings(top: 4, left: nil, bottom: nil, right: nil).text(string)
         } else {
-            subtitle.paddings(top: 0, left: nil, bottom: nil, right: nil)
+            subtitle.paddings(top: 0, left: nil, bottom: nil, right: nil).text("")
         }
     }
 }
