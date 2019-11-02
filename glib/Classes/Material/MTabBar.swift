@@ -76,13 +76,24 @@ open class MTabBar: MDCTabBar {
         return self
     }
 
-    public func triggerChange() {
-        if let item = self.selectedItem {
-            performChange(item: item)
-        }
+    public func selectTab(index: Int) {
+        let item = self.items[index]
+        selectedItem = item
+        performChange(item: item)
+
+//        if let item = self.selectedItem {
+//            performChange(item: item)
+//        }
+//        self.selectedItem = self.items[index]
     }
 
-    public func performChange(item: UITabBarItem) {
+//    public func triggerChange() {
+//        if let item = self.selectedItem {
+//            performChange(item: item)
+//        }
+//    }
+
+    private func performChange(item: UITabBarItem) {
         if let callback = self.onChange {
             callback(self, item)
         }
@@ -91,7 +102,7 @@ open class MTabBar: MDCTabBar {
 
 extension MTabBar: MDCTabBarDelegate {
     public func tabBar(_ tabBar: MDCTabBar, didSelect item: UITabBarItem) {
-        triggerChange()
+        performChange(item: item)
     }
 
     func tabBar(_ tabBar: MDCTabBar, shouldSelect item: UITabBarItem) -> Bool {
