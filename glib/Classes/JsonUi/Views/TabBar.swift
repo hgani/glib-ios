@@ -42,13 +42,17 @@ class JsonView_TabBarV1: JsonView {
         }
 
         func tabBar(_ tabBar: MDCTabBar, didSelect item: UITabBarItem) {
-            if !item.isEnabled {
-                return
-            }
+//            if !item.isEnabled {
+//                return
+//            }
 
             if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
                 JsonAction.execute(spec: onClick, screen: view.screen, creator: nil)
             }
+        }
+
+        func tabBar(_ tabBar: MDCTabBar, shouldSelect item: UITabBarItem) -> Bool {
+            return item.isEnabled
         }
     }
 }
