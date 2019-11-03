@@ -50,7 +50,7 @@ open class MTabBar: MDCTabBar {
         }
         if let textColor = text {
             setTitleColor(textColor, for: .normal)
-//            setTitleColor(textColor.muted(), for: .selected)
+            setTitleColor(textColor.muted(), for: .selected)
         }
         return self
     }
