@@ -1,4 +1,4 @@
-#if INCLUDE_UILIBS
+#if INCLUDE_PHOTO
 
 import Photos
 import CommonCrypto

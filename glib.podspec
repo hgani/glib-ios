@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GLib'
-  s.version          = '0.8.1'
+  s.version          = '0.9.0'
   s.summary          = 'Simplify iOS development'
 
 # This description is used to generate tags and improve search results.
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+Simplify iOS development
                        DESC
 
   s.homepage         = 'https://github.com/hgani/ganilib-ios'
@@ -44,7 +44,6 @@ TODO: Add long description of the pod here.
   s.dependency 'SideMenu', '~> 5.0'
   s.dependency 'SnapKit', '~> 4.0'
 
-  s.dependency 'Alamofire', '~> 4.8'
   s.dependency 'SwiftyJSON', '4.1'
   s.dependency 'SVProgressHUD', '~> 2.2'
 
@@ -69,6 +68,12 @@ TODO: Add long description of the pod here.
   # Requires NSLocationWhenInUseUsageDescription in Info.plist
   s.subspec 'Location' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_LOCATION' }
+  end
+
+  # Requires NSPhotoLibraryUsageDescription in Info.plist
+  s.subspec 'Photo' do |sub|
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_PHOTO' }
+    sub.dependency 'Alamofire', '~> 4.8'
   end
 
   s.subspec 'UILibs' do |sub|
