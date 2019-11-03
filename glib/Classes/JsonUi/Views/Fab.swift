@@ -6,7 +6,11 @@ class JsonView_FabV1: JsonView {
     override func initView() -> UIView {
         fab.icon(spec["icon"]["name"].stringValue)
             .onClick { (_) in JsonAction.execute(spec: self.spec["onClick"], screen: self.screen, creator: self.fab) }
-        
+
+        Generic.sharedInstance.genericIsBusy.asObservable().subscribe { _ in
+            self.fab.enabled(!Generic.sharedInstance.genericIsBusy.value)
+        }
+
         return fab
     }
 
@@ -49,6 +53,13 @@ class MFab: MDCFloatingButton {
     open func onClick(_ command: @escaping (MFab) -> Void) -> Self {
         onClick = command
         addTarget(self, action: #selector(performClick), for: .touchUpInside)
+        return self
+    }
+
+    @discardableResult
+    public func enabled(_ value: Bool) -> Self {
+        isEnabled = value
+        alpha = value ? 1.0 : 0.5
         return self
     }
 

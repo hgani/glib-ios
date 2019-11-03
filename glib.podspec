@@ -79,6 +79,7 @@ TODO: Add long description of the pod here.
     sub.dependency 'MBRadioButton'
     sub.dependency 'MBCheckboxButton'
     sub.dependency 'Charts'
+    sub.dependency 'RxSwift', '~> 4.5'
 
     sub.dependency 'MaterialComponents/Buttons', '~> 92.0'
     sub.dependency 'MaterialComponents/TextFields', '~> 92.0'

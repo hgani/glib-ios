@@ -190,6 +190,19 @@ class JsonUiMenuNavController: MenuNavController {
 //        menu.add(MenuItem(title: "Diagnostics").screen(JsonUiScreen(path: "/app_diagnostics.json")))
 //        #endif
     }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if let header = spec["header"].presence{
+            let panel = GVerticalPanel()
+            header["childViews"].arrayValue.forEach { viewSpec in
+                if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
+                    panel.append(jsonView.createView())
+                }
+            }
+            return panel
+        }
+        return nil
+    }
 }
 
 class ScrollableView {

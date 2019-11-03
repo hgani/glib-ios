@@ -5,13 +5,22 @@ class JsonView_Charts_LineV1: JsonView {
 
     override func initView() -> UIView {
         let data = LineChartData(dataSets: [])
+        var xValues = [String]()
         for series in spec["dataSeries"].arrayValue {
             var entries = [ChartDataEntry]()
             var index = 0
-            for (key, value) in series["dataPoints"].dictionaryValue {
-                // TODO: json value didn't loop in order
-                GLog.d("\(key) \(value.doubleValue)")
-                entries.append(ChartDataEntry(x: Double(index), y: value.doubleValue))
+//            for (key, value) in series["dataPoints"].dictionaryValue {
+//                // TODO: json value didn't loop in order
+//                GLog.d("\(key) \(value.doubleValue)")
+//                entries.append(ChartDataEntry(x: Double(index), y: value.doubleValue))
+//                index = index + 1
+//            }
+            for point in series["dataPoints"].arrayValue {
+                GLog.d(point["x"].stringValue)
+                if !xValues.contains(point["x"].stringValue) {
+                    xValues.append(point["x"].stringValue)
+                }
+                entries.append(ChartDataEntry(x: Double(index), y: point["y"].doubleValue))
                 index = index + 1
             }
             let color = UIColor(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1.0)
@@ -23,6 +32,12 @@ class JsonView_Charts_LineV1: JsonView {
             data.addDataSet(set)
         }
 
+        GLog.d(xValues.description)
+        let chartFormatter = DateValueFormatter(labels: xValues)
+        let xAxis = XAxis()
+        xAxis.valueFormatter = chartFormatter
+
+        chartView.xAxis.valueFormatter = xAxis.valueFormatter
         chartView.width(.matchParent).height(300).data(data)
 
         return chartView
@@ -69,5 +84,26 @@ class MLineChartView: LineChartView {
     public func data(_ data: LineChartData) -> Self {
         self.data = data
         return self
+    }
+}
+
+public class DateValueFormatter: NSObject, IAxisValueFormatter {
+    private let dateFormatterGet = DateFormatter()
+    private let dateFormatterPrint = DateFormatter()
+    var labels: [String] = []
+
+    init(labels: [String]) {
+        super.init()
+        dateFormatterGet.dateFormat = "EEE, dd MMM yyyy"
+        dateFormatterPrint.dateFormat = "MMM dd"
+        self.labels = labels
+    }
+
+    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        if let date = dateFormatterGet.date(from: labels[Int(value)]) {
+            return dateFormatterPrint.string(from: date)
+        }
+
+        return value.description
     }
 }

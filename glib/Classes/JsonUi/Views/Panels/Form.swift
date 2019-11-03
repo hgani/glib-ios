@@ -84,11 +84,14 @@ class JsonView_Panels_FormV1: JsonView {
                 return
             }
 
+            Generic.sharedInstance.genericIsBusy.value = true
+
             let spec = jsonView.spec
             let screen = jsonView.screen
 //            _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)
 
             _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)?.execute { response in
+                Generic.sharedInstance.genericIsBusy.value = false
                 JsonAction.execute(spec: response.content["onResponse"], screen: screen, creator: self)
                 return true
             }
