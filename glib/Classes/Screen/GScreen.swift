@@ -78,10 +78,18 @@ open class GScreen: UIViewController {
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        onViewWillDisappear()
+        extViewWillDisappear()
+
+        if isMovingFromParent || isBeingDismissed {
+            viewWillDetach()
+        }
     }
 
-    open func onViewWillDisappear() {
+    open func extViewWillDisappear() {
+        // To be overridden
+    }
+
+    open func viewWillDetach() {
         // To be overridden
     }
 
