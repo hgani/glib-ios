@@ -1,4 +1,4 @@
-#if INCLUDE_UILIBS
+#if INCLUDE_MDLIBS
 
 class JsonView_Panels_CardV1: JsonView {
     private let card = MCard()

@@ -3,6 +3,9 @@ import UIKit
 open class GCollectionView: UICollectionView {
     private var helper: ViewHelper!
 
+    // Useful for making sure an unattached delegate object sticks around.
+    private var retainedRef: UICollectionViewDelegate?
+
     fileprivate var pager: UIPageControl?
 
     public init() {
@@ -82,6 +85,14 @@ open class GCollectionView: UICollectionView {
         return self
     }
 
+    public func delegate(_ delegate: UICollectionViewDelegate, retain: Bool = false) -> Self {
+        self.delegate = delegate
+        if retain {
+            retainedRef = delegate
+        }
+        return self
+    }
+    
     public func pager(_ pager: UIPageControl) -> Self {
         self.pager = pager
         return self
