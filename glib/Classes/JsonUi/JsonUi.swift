@@ -1,5 +1,5 @@
 import SwiftyJSON
-import MaterialComponents.MaterialTabs
+//import MaterialComponents.MaterialTabs
 
 public class JsonUi {
     private static var moduleName: String?
@@ -99,6 +99,8 @@ public class JsonUi {
     }
 
     public static func initBottomTabBar(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
+        #if INCLUDE_MDLIBS
+
         let tabBar = MTabBar()
 
         tabBar
@@ -130,6 +132,8 @@ public class JsonUi {
         }
 
         panel.addView(tabBar)
+
+        #endif
     }
 
 //    class Delegate: NSObject, MDCTabBarDelegate {
@@ -210,12 +214,14 @@ class ScrollableView {
 
     static func delegateCall(scrollView: UIScrollView, useContentOffset: Bool = false) {
         for view in items {
+            #if INCLUDE_MDLIBS
             if let fab = view as? MFab {
                 fab.frame.origin.y = scrollView.bounds.size.height - 76
                 if useContentOffset {
                     fab.frame.origin.y = fab.frame.origin.y + scrollView.contentOffset.y
                 }
             }
+            #endif
         }
     }
 }

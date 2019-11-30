@@ -16,6 +16,7 @@ class MCollectionHeaderView: UICollectionReusableView {
             let childViews = spec["childViews"].arrayValue
             for viewSpec in childViews {
                 if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
+                    #if INCLUDE_MDLIBS
                     if let fabJsonView = jsonView as? JsonView_FabV1 {
                         let view = fabJsonView.createView()
                         panel.addView(view, top: 0, skipConstraint: true)
@@ -23,6 +24,7 @@ class MCollectionHeaderView: UICollectionReusableView {
                     } else {
                         panel.addView(jsonView.createView())
                     }
+                    #endif
                 }
             }
 

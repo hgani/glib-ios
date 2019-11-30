@@ -1,3 +1,5 @@
+#if INCLUDE_MDLIBS
+
 import Charts
 
 class JsonView_Charts_LineV1: JsonView {
@@ -107,3 +109,5 @@ public class DateValueFormatter: NSObject, IAxisValueFormatter {
         return value.description
     }
 }
+
+#endif

@@ -1,3 +1,5 @@
+#if INCLUDE_MDLIBS
+
 import MaterialComponents.MaterialTextFields
 
 open class MTextArea: MDCMultilineTextField {
@@ -117,3 +119,5 @@ public class MTextAreaSpec {
         decorator(view)
     }
 }
+
+#endif

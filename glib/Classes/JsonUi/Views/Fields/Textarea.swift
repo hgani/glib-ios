@@ -1,3 +1,5 @@
+#if INCLUDE_MDLIBS
+
 class JsonView_Fields_TextareaV1: JsonView, SubmittableField {
     private let view = MTextArea()
 
@@ -27,3 +29,5 @@ class JsonView_Fields_TextareaV1: JsonView, SubmittableField {
         return true
     }
 }
+
+#endif

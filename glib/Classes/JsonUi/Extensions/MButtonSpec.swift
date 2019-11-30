@@ -1,3 +1,5 @@
+#if INCLUDE_MDLIBS
+
 extension MButtonSpec {
     static let link = MButtonSpec { button in
         button.color(bg: .clear, text: UIColor(hex: "#1976d2"))
@@ -9,3 +11,13 @@ extension MButtonSpec {
         }
     }
 }
+
+open class MButtonSpecProtocol {
+    public required init() {}
+
+    open func createSpec() -> MButtonSpec {
+        fatalError()
+    }
+}
+
+#endif

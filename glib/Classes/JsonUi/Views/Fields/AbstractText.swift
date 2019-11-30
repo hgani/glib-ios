@@ -1,5 +1,5 @@
 class JsonView_AbstractTextV1: JsonView, SubmittableField {
-    #if INCLUDE_UILIBS
+    #if INCLUDE_MDLIBS
         private let view = MTextField()
     #else
         private let view = GTextField()
@@ -39,7 +39,11 @@ class JsonView_AbstractTextV1: JsonView, SubmittableField {
     }
 
     func errors(_ text: String?) {
+        #if INCLUDE_MDLIBS
+
         view.errors(text)
+
+        #endif
     }
 
     func validate() -> Bool {

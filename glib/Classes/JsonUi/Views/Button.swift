@@ -1,5 +1,5 @@
 class JsonView_ButtonV1: JsonView {
-    #if INCLUDE_UILIBS
+    #if INCLUDE_MDLIBS
         private let view = MButton()
             .font(RobotoFonts.Style.regular.font, size: 15)
     #else
@@ -17,6 +17,7 @@ class JsonView_ButtonV1: JsonView {
             JsonAction.execute(spec: self.spec["onClick"], screen: self.screen, creator: self.view)
         }
 
+        #if INCLUDE_MDLIBS
         if let styleClasses = spec["styleClasses"].array {
             for style in styleClasses {
                 switch style {
@@ -39,6 +40,7 @@ class JsonView_ButtonV1: JsonView {
         Generic.sharedInstance.genericIsBusy.asObservable().subscribe { _ in
             self.view.enabled(!Generic.sharedInstance.genericIsBusy.value)
         }
+        #endif
         
         return view
     }

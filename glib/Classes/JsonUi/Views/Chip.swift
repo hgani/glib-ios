@@ -1,3 +1,5 @@
+#if INCLUDE_MDLIBS
+
 class JsonView_ChipV1: JsonView {
     private let view = MChip()
 
@@ -6,3 +8,5 @@ class JsonView_ChipV1: JsonView {
         return view
     }
 }
+
+#endif

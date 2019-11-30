@@ -57,7 +57,7 @@ Simplify iOS development
 
   s.subspec 'Realm' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_REALM' }
-    sub.dependency 'RealmSwift', '~> 3.0'
+    sub.dependency 'RealmSwift', '~> 3.20'
   end
 
   s.subspec 'Eureka' do |sub|
@@ -81,11 +81,14 @@ Simplify iOS development
     sub.dependency 'XLPagerTabStrip', '~> 8.0'
     sub.dependency 'TTTAttributedLabel'
     sub.dependency 'RSSelectionMenu', '~> 6.0.4'
+    sub.dependency 'Charts'
+  end
+  
+  s.subspec 'MDLibs' do |sub|
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_MDLIBS' }
     sub.dependency 'MBRadioButton'
     sub.dependency 'MBCheckboxButton'
-    sub.dependency 'Charts'
     sub.dependency 'RxSwift', '~> 4.5'
-
     sub.dependency 'MaterialComponents/Buttons', '~> 92.0'
     sub.dependency 'MaterialComponents/TextFields', '~> 92.0'
     sub.dependency 'MaterialComponents/Tabs', '~> 92.0'

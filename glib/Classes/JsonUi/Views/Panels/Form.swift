@@ -13,6 +13,8 @@ class JsonView_Panels_FormV1: JsonView {
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
         for viewSpec in childViews {
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
+                #if INCLUDE_MDLIBS
+
                 if let fabJsonView = jsonView as? JsonView_FabV1 {
                     let view = fabJsonView.createView()
                     panel.addView(view, top: 0, skipConstraint: true)
@@ -27,6 +29,8 @@ class JsonView_Panels_FormV1: JsonView {
                 if let field = jsonView as? SubmittableField {
                     panel.addField(field)
                 }
+
+                #endif
             }
         }
         return panel
@@ -84,14 +88,22 @@ class JsonView_Panels_FormV1: JsonView {
                 return
             }
 
+            #if INCLUDE_MDLIBS
+
             Generic.sharedInstance.genericIsBusy.value = true
+
+            #endif
 
             let spec = jsonView.spec
             let screen = jsonView.screen
 //            _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)
 
             _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)?.execute { response in
+                #if INCLUDE_MDLIBS
+
                 Generic.sharedInstance.genericIsBusy.value = false
+
+                #endif
                 JsonAction.execute(spec: response.content["onResponse"], screen: screen, creator: self)
                 return true
             }

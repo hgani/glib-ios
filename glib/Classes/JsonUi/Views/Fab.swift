@@ -1,3 +1,5 @@
+#if INCLUDE_MDLIBS
+
 import MaterialComponents.MaterialButtons
 
 class JsonView_FabV1: JsonView {
@@ -69,3 +71,5 @@ class MFab: MDCFloatingButton {
         }
     }
 }
+
+#endif

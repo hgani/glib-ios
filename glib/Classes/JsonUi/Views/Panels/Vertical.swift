@@ -18,11 +18,15 @@ class JsonView_Panels_VerticalV1: JsonView {
 
         for viewSpec in childViews {
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
+                #if INCLUDE_MDLIBS
+
                 if let fabJsonView = jsonView as? JsonView_FabV1 {
                     fabView = fabJsonView
                 } else {
                     subviews.append(jsonView.createView())
                 }
+
+                #endif
             }
         }
 

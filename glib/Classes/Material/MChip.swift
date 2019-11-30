@@ -1,3 +1,5 @@
+#if INCLUDE_MDLIBS
+
 import MaterialComponents.MaterialChips
 
 class MChip: MDCChipView {
@@ -21,3 +23,5 @@ class MChip: MDCChipView {
         return self
     }
 }
+
+#endif
