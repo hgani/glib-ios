@@ -1,5 +1,5 @@
 class JsonView_Fields_PasswordV1: JsonView, SubmittableField {
-    #if INCLUDE_UILIBS
+    #if INCLUDE_MDLIBS
         private let view = MTextField()
     #else
         private let view = GTextField()

@@ -1,4 +1,4 @@
-#if INCLUDE_UILIBS
+#if INCLUDE_MDLIBS
 
 open class MCollectionView: UICollectionView, IContainer {
     private var helper: ViewHelper!

@@ -1,4 +1,4 @@
-#if INCLUDE_UILIBS
+#if INCLUDE_MDLIBS
 
 class JsonView_Fields_RadioGroupV1: JsonView, SubmittableField {
     private let panel = GVerticalPanel()

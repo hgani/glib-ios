@@ -1,5 +1,5 @@
 
-#if INCLUDE_UILIBS
+#if INCLUDE_MDLIBS
 
 import MBCheckboxButton
 

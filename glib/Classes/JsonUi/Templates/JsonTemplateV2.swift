@@ -1,4 +1,4 @@
-#if INCLUDE_UILIBS
+#if INCLUDE_MDLIBS
 
 open class JsonTemplateV2 {
     public let spec: Json
