@@ -62,32 +62,32 @@ open class GScreen: UIViewController {
         }
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         helper.viewWillAppear()
         nav.viewWillAppear()
 
-        extViewWillAppear()
+//        extViewWillAppear()
     }
 
-    open func extViewWillAppear() {
-        // To be used in extensions, e.g. GScreen+Analytics. Don't redeclare viewWillAppear()
-        // in extensions because that will completely mask this class' viewWillAppear()
-    }
+//    open func extViewWillAppear() {
+//        // To be used in extensions, e.g. GScreen+Analytics. Don't redeclare viewWillAppear()
+//        // in extensions because that will completely mask this class' viewWillAppear()
+//    }
 
-    open override func viewWillDisappear(_ animated: Bool) {
+    override public func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        extViewWillDisappear()
+//        extViewWillDisappear()
 
         if isMovingFromParent || isBeingDismissed {
             viewWillDetach()
         }
     }
 
-    open func extViewWillDisappear() {
-        // To be overridden
-    }
+//    open func extViewWillDisappear() {
+//        // To be overridden
+//    }
 
     open func viewWillDetach() {
         // To be overridden
