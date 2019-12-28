@@ -30,6 +30,10 @@ open class GScreen: UIViewController {
     }
 
     open override func viewDidLoad() {
+        fatalError("Call initOnDidLoad() instead")
+    }
+
+    open func initOnDidLoad() {
         super.viewDidLoad()
 
         helper = ScreenHelper(self)

@@ -7,7 +7,8 @@ open class MenuNavController: GScreen {
     private let menu = Menu()
 
     open override func viewDidLoad() {
-        super.viewDidLoad()
+//        super.viewDidLoad()
+        super.initOnDidLoad()
 
         // Use our main nav controller instead of SideMenu's
         nav = NavHelper(navController: GApp.instance.navigationController)
