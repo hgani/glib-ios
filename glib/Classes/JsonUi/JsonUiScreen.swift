@@ -23,7 +23,8 @@ public class JsonUiScreen: GScreen {
     }
 
     public override func viewDidLoad() {
-        super.viewDidLoad()
+//        super.viewDidLoad()
+        super.initOnDidLoad()
 
         onRefresh()
     }
