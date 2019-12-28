@@ -68,6 +68,11 @@ open class GScreen: UIViewController {
         nav.viewWillAppear()
 
 //        extViewWillAppear()
+        onWillAppear()
+    }
+
+    open func onWillAppear() {
+        // To be overridden
     }
 
 //    open func extViewWillAppear() {
@@ -79,15 +84,16 @@ open class GScreen: UIViewController {
         super.viewWillDisappear(animated)
 
 //        extViewWillDisappear()
+        onWillDisappear()
 
         if isMovingFromParent || isBeingDismissed {
             viewWillDetach()
         }
     }
 
-//    open func extViewWillDisappear() {
-//        // To be overridden
-//    }
+    open func onWillDisappear() {
+        // To be overridden
+    }
 
     open func viewWillDetach() {
         // To be overridden

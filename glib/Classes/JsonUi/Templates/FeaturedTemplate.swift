@@ -12,4 +12,3 @@ class JsonTemplate_Featured: JsonTemplate {
         }
     }
 }
-

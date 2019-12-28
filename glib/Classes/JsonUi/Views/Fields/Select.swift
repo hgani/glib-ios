@@ -12,8 +12,7 @@ class JsonView_Fields_SelectV1: JsonView, SubmittableField {
             return selectedOptions.map({ (option) -> String in
                 return option.value
             }).joined(separator: ",")
-        }
-        else {
+        } else {
             return ""
         }
     }

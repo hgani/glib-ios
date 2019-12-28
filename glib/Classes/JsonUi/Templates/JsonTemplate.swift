@@ -1,4 +1,3 @@
-
 open class JsonTableViewCell: GTableViewCustomCell {
     internal var content: GVerticalPanel!
 
