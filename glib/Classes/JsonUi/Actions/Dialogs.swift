@@ -11,7 +11,7 @@ class JsonAction_Dialogs_AlertV1: JsonAction {
         }
 
         let alertController = MDCAlertController(title: "", message: message)
-        alertController.addAction(MDCAlertAction(title:"OK") { _ in JsonAction.execute(spec: self.spec["onClose"], screen: self.screen, creator: self) })
+        alertController.addAction(MDCAlertAction(title: "OK") { _ in JsonAction.execute(spec: self.spec["onClose"], screen: self.screen, creator: self) })
         screen.present(alertController, animated: true, completion: nil)
 
         return true

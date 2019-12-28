@@ -189,9 +189,11 @@ open class JsonView_Panels_ListV1: JsonView {
         }
 
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as! ListHeaderCell
-            headerCell.createView(spec: sections[section]["header"], screen: listView.screen)
-            return headerCell
+            if let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as? ListHeaderCell {
+                headerCell.createView(spec: sections[section]["header"], screen: listView.screen)
+                return headerCell
+            }
+            return nil
         }
 
         func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

@@ -8,7 +8,7 @@ open class JsonTableViewCell: GTableViewCustomCell {
     }
 }
 
-open class JsonTemplate : GObject {
+open class JsonTemplate: GObject {
     public let spec: Json
     public let screen: GScreen
 

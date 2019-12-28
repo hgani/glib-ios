@@ -187,7 +187,7 @@ public class ViewHelper {
         view.layoutMargins = paddings.toEdgeInsets()
     }
 
-    public func padding(_ padding : GPadding) {
+    public func padding(_ padding: GPadding) {
         paddings = paddings.to(top: padding.top, left: padding.left, bottom: padding.bottom, right: padding.right)
         view.layoutMargins = paddings.toEdgeInsets()
     }

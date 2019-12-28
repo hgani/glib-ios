@@ -14,7 +14,7 @@ class MCard: MDCCard {
     public var size: CGSize {
         return helper.size
     }
-    
+
     public init() {
         super.init(frame: .zero)
         initialize()

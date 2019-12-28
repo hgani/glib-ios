@@ -1,4 +1,3 @@
-
 open class GObject {
     func mustBeOverridden() -> Never {
         fatalError("Must be overridden by \(type(of: self))")

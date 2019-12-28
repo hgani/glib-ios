@@ -19,7 +19,7 @@ public class GApp {
 //            GLog.t("Font name: \(fontName)")
 //        }
 //        #endif
-        
+
         self.navigationController = navigationController
 
         window = UIWindow(frame: UIScreen.main.bounds)

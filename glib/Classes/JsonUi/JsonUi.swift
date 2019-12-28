@@ -104,12 +104,11 @@ public class JsonUi {
         let tabBar = MTabBar()
 
         tabBar
-//            .delegate(Delegate(view: tabBar, screen: screen), retain: true)
             .width(.matchParent)
             .color(bg: .white, text: .gray)
             .alignment(.leading)
             .onChange { _, item, _ in
-                if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
+                if let tabItem = item as? JsonView_TabBarItemV1, let onClick = tabItem.spec["onClick"].presence {
                     JsonAction.execute(spec: onClick, screen: screen, creator: nil)
                 }
             }
@@ -119,9 +118,9 @@ public class JsonUi {
             tabBar.items.append(tabBarItem)
         }
 
-        let selectedTab = tabBar.items.first(where: { (tab) -> Bool in
-            if let onClick = (tab as! JsonView_TabBarItemV1).spec["onClick"].presence {
-                return onClick["url"].stringValue == (screen as! JsonUiScreen).getUrl()
+        let selectedTab = tabBar.items.first(where: { (item) -> Bool in
+            if let tabItem = item as? JsonView_TabBarItemV1, let onClick = tabItem.spec["onClick"].presence {
+                return onClick["url"].stringValue == (screen as? JsonUiScreen)?.getUrl()
             }
 
             return false
@@ -218,7 +217,7 @@ class ScrollableView {
             if let fab = view as? MFab {
                 fab.frame.origin.y = scrollView.bounds.size.height - 76
                 if useContentOffset {
-                    fab.frame.origin.y = fab.frame.origin.y + scrollView.contentOffset.y
+                    fab.frame.origin.y += scrollView.contentOffset.y
                 }
             }
             #endif

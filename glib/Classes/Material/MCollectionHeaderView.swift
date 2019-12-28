@@ -38,7 +38,7 @@ class MCollectionHeaderView: UICollectionReusableView {
 //            for view in subviews {
 //                panel.addView(view)
 //            }
-            
+
             viewLoaded = true
         }
     }

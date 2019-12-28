@@ -23,7 +23,7 @@ class JsonView_Charts_LineV1: JsonView {
                     xValues.append(point["x"].stringValue)
                 }
                 entries.append(ChartDataEntry(x: Double(index), y: point["y"].doubleValue))
-                index = index + 1
+                index += 1
             }
             let color = UIColor(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1.0)
             let set = LineChartDataSet(entries: entries, label: series["title"].stringValue)

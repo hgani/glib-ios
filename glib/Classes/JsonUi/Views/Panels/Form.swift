@@ -66,7 +66,7 @@ class JsonView_Panels_FormV1: JsonView {
                 }
 
                 if !field.validate() {
-                    errorsCount = errorsCount + 1
+                    errorsCount += 1
                 }
 
                 if let name = field.name {
