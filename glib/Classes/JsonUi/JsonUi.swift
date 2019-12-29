@@ -216,7 +216,14 @@ class ScrollableView {
         items.append(fab)
     }
 
-    // TODO: Need a better solution. Currently, FAB doesn't show if the screen never gets scrolled.
+    // TODO: Need a better solution. Currently, FAB doesn't show if the screen never gets scrolled.]
+    //
+    // Consider deprecating support for FAB inside scroll view, i.e. FAB has to be specified outside
+    // scroll view, just like when it needs to co-exist with table view.
+    // - The problem with this constraint is that we can't have FAB inside a form, which means that
+    //   FAB can't have submit action.
+    // - This may not be a bad thing given that we want to phase out submit action in favor of
+    //   submit button because submit buttons work better for the web
     static func delegateCall(scrollView: UIScrollView, useContentOffset: Bool = false) {
         for view in items {
             #if INCLUDE_MDLIBS
