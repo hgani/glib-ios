@@ -30,22 +30,8 @@ class JsonView_Panels_VerticalV1: JsonView {
             }
         }
 
-        switch spec["distribution"].stringValue {
-        case "fillEqually":
-            for view in subviews {
-                panel.addView(view)
-            }
-            panel.split()
-        case "spaceEqually":
-            for view in subviews {
-                panel.addView(GAligner().align(.left).withView(view))
-            }
-            panel.split()
-        default:
-            for view in subviews {
-                panel.addView(view)
-            }
-        }
+        setAlign()  // Needs to be called before adding child views
+        setDistribution(childViews: subviews)
 
         if let fabJsonView = fabView {
             let view = fabJsonView.createView()
@@ -54,30 +40,39 @@ class JsonView_Panels_VerticalV1: JsonView {
             ScrollableView.items.append(view)
         }
 
-//        let subviews: [UIView] = childViews.compactMap { viewSpec -> UIView? in
-//            if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-//                return jsonView.createView()
-//            }
-//            return nil
-//        }
-//
-//        switch spec["distribution"].stringValue {
-//        case "fillEqually":
-//            for view in subviews {
-//                panel.addView(view)
-//            }
-//            panel.split()
-//        case "spaceEqually":
-//            for view in subviews {
-//                panel.addView(GAligner().align(.left).withView(view))
-//            }
-//            panel.split()
-//        default:
-//            for view in subviews {
-//                panel.addView(view)
-//            }
-//        }
-
         return panel
+    }
+
+    private func setAlign() {
+        panel.align(getGravity())
+    }
+
+    private func getGravity() -> GAligner.GAlignerHorizontalGravity {
+        switch spec["align"].stringValue {
+        case "center":
+            return .center
+        case "right":
+            return .right
+        default:
+            return .left
+        }
+    }
+    private func setDistribution(childViews: [UIView]) {
+        switch spec["distribution"].stringValue {
+        case "fillEqually":
+            for view in childViews {
+                panel.addView(view)
+            }
+            panel.split()
+        case "spaceEqually":
+            for view in childViews {
+                panel.addView(GAligner().align(.left).withView(view))
+            }
+            panel.split()
+        default:
+            for view in childViews {
+                panel.addView(view)
+            }
+        }
     }
 }

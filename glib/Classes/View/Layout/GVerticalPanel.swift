@@ -16,7 +16,7 @@ open class GVerticalPanel: UIView, IView {
     private var paddings: Paddings {
         return helper.paddings
     }
-    
+
     public init() {
         super.init(frame: .zero)
         initialize()

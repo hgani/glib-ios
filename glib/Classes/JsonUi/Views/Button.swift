@@ -29,9 +29,9 @@ class JsonView_ButtonV1: JsonView {
                     if let klass = JsonUi.loadClass(name: style.stringValue, type: MButtonSpecProtocol.self) as? MButtonSpecProtocol.Type {
                         let spec = klass.init()
                         spec.createSpec().decorate(view)
-                    }
-                    else {
-                        fatalError("Invalid style \(style)")
+                    } else {
+                        GLog.e("Invalid style \(style)")
+//                        fatalError("Invalid style \(style)")
                     }
                 }
             }
@@ -41,7 +41,7 @@ class JsonView_ButtonV1: JsonView {
             self.view.enabled(!Generic.sharedInstance.genericIsBusy.value)
         }
         #endif
-        
+
         return view
     }
 }
