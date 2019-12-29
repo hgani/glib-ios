@@ -199,6 +199,23 @@ open class JsonView_Panels_ListV1: JsonView {
         func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
             return sections[section]["header"].isNull ? 0 : UITableView.automaticDimension
         }
+
+        func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+            let row = rows(at: indexPath.section)[indexPath.row]
+            var actions = [UITableViewRowAction]()
+            for button in row["editButtons"].arrayValue {
+                let action = UITableViewRowAction(style: .normal, title: button["text"].string) { (_, _) in
+                    JsonAction.execute(spec: button["onClick"], screen: self.listView.screen, creator: tableView)
+                }
+
+                if let str = button["backgroundColor"].string {
+                    action.backgroundColor = UIColor(hex: str)
+                }
+                actions.append(action)
+            }
+
+            return actions.reversed()
+        }
     }
 
     class ListHeaderCell: UITableViewCell {
