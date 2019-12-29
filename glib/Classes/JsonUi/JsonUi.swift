@@ -216,6 +216,7 @@ class ScrollableView {
         items.append(fab)
     }
 
+    // TODO: Need a better solution. Currently, FAB doesn't show if the screen never gets scrolled.
     static func delegateCall(scrollView: UIScrollView, useContentOffset: Bool = false) {
         for view in items {
             #if INCLUDE_MDLIBS

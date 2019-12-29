@@ -83,9 +83,9 @@ open class JsonView_Panels_ListV1: JsonView {
             JsonAction.execute(spec: row["onClick"], screen: listView.screen, creator: nil)
         }
 
-        func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            ScrollableView.delegateCall(scrollView: scrollView)
-        }
+//        func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//            ScrollableView.delegateCall(scrollView: scrollView)
+//        }
 
         private func rows(at section: Int) -> [Json] {
             return sections[section]["rows"].arrayValue
