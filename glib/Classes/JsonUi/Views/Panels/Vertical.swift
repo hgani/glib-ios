@@ -5,7 +5,7 @@ class JsonView_Panels_VerticalV1: JsonView {
         self.init(GVerticalPanel(), spec, screen)
     }
 
-    init(_ view: GVerticalPanel, _ spec: Json, _ screen: GScreen) {
+    private init(_ view: GVerticalPanel, _ spec: Json, _ screen: GScreen) {
         panel = view
         super.init(spec, screen)
     }

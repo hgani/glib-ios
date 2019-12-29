@@ -4,7 +4,7 @@ open class GScrollPanel: UIScrollView, IContainer {
 //    static var scrollableContents = [UIView]()
 
     private var helper: ViewHelper!
-    private let contentView = GVerticalPanel()
+    let contentView = GVerticalPanel()
     
     public var size: CGSize {
         return helper.size
