@@ -22,12 +22,13 @@ class JsonView_Fields_RadioGroupV1: JsonView, SubmittableField {
                     self.jsonRadios.append(radio)
                     radio.onClick { _ in self.updateSelectedRadio(radio) }
                     panel.append(radio.createView())
-                }
-                else {
+                } else {
                     panel.append(jsonView.createView())
                 }
             }
         }
+
+        self.registerToClosestForm(field: panel)
 
         return panel
     }

@@ -9,34 +9,36 @@ class JsonView_Panels_FormV1: JsonView {
     override func initView() -> UIView {
         panel.jsonView = self
 
-        // NOTE: subviews property is deprecated
-        let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
-        for viewSpec in childViews {
-            if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-                #if INCLUDE_MDLIBS
+        JsonViewDefaultPanel(panel, spec, screen).createView()
 
-                if let fabJsonView = jsonView as? JsonView_FabV1 {
-                    let view = fabJsonView.createView()
-                    panel.addView(view, top: 0, skipConstraint: true)
-                    jsonView.afterViewAdded(parentView: panel)
-                    ScrollableView.items.append(view)
-                } else {
-                    panel.addView(jsonView.createView())
-                }
-
-                // NOTE: Currently we assume all fields are direct children.
-
-                if let field = jsonView as? SubmittableField {
-                    panel.addField(field)
-                }
-
-                #endif
-            }
-        }
+//        // NOTE: subviews property is deprecated
+//        let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
+//        for viewSpec in childViews {
+//            if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
+//                #if INCLUDE_MDLIBS
+//
+//                if let fabJsonView = jsonView as? JsonView_FabV1 {
+//                    let view = fabJsonView.createView()
+//                    panel.addView(view, top: 0, skipConstraint: true)
+//                    jsonView.afterViewAdded(parentView: panel)
+////                    ScrollableView.items.append(view)
+//                } else {
+//                    panel.addView(jsonView.createView())
+//                }
+//
+//                // NOTE: Currently we assume all fields are direct children.
+//                if let field = jsonView as? SubmittableField {
+//                    panel.addField(field)
+//                }
+//
+//                #endif
+//            }
+//        }
         return panel
     }
 
     class FormPanel: GVerticalPanel {
+        // NOTE: needs to be a weak var?
         fileprivate var jsonView: JsonView_Panels_FormV1!
 
         private var fields = [SubmittableField]()
@@ -49,7 +51,7 @@ class JsonView_Panels_FormV1: JsonView {
 //            fatalError("Unsupported")
 //        }
 
-        fileprivate func addField(_ field: SubmittableField) {
+        func addField(_ field: SubmittableField) {
             fields.append(field)
         }
 

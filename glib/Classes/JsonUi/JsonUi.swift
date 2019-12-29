@@ -209,19 +209,23 @@ class JsonUiMenuNavController: MenuNavController {
 }
 
 class ScrollableView {
-    static var items = [UIView]()
+    // TODO: Need to use weak ref to avoid leaks
+    private static var items = [UIView]()
+
+    static func register(fab: UIView) {
+        items.append(fab)
+    }
 
     static func delegateCall(scrollView: UIScrollView, useContentOffset: Bool = false) {
-        // NOTE: Not sure if this is required
-//        for view in items {
-//            #if INCLUDE_MDLIBS
-//            if let fab = view as? MFloatingButton {
-//                fab.frame.origin.y = scrollView.bounds.size.height - 76
-//                if useContentOffset {
-//                    fab.frame.origin.y += scrollView.contentOffset.y
-//                }
-//            }
-//            #endif
-//        }
+        for view in items {
+            #if INCLUDE_MDLIBS
+            if let fab = view as? MFloatingButton {
+                fab.frame.origin.y = scrollView.bounds.size.height - 76
+                if useContentOffset {
+                    fab.frame.origin.y += scrollView.contentOffset.y
+                }
+            }
+            #endif
+        }
     }
 }

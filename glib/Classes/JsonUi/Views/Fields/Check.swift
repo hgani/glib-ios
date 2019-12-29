@@ -14,6 +14,8 @@ class JsonView_Fields_CheckV1: JsonView, SubmittableField {
     override func initView() -> UIView {
         self.name = spec["name"].string
 
+        self.registerToClosestForm(field: checkbox)
+
         return checkbox
             .width(.matchParent)
             .title(spec["label"].stringValue)

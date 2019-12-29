@@ -18,6 +18,8 @@ class JsonView_AbstractTextV1: JsonView, SubmittableField {
 
         initBottomBorderIfApplicable()
 
+        self.registerToClosestForm(field: view)
+
         return view
     }
 

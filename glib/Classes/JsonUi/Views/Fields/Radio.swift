@@ -5,7 +5,7 @@ import MBRadioButton
 class JsonView_Fields_RadioV1: JsonView, RadioButtonDelegate {
     private let radio = MRadio()
     private var onClick: ((JsonView_Fields_RadioV1) -> Void)?
-    
+
     var value: String {
         return radio.isOn ? spec["value"].stringValue : ""
     }
@@ -35,7 +35,7 @@ class JsonView_Fields_RadioV1: JsonView, RadioButtonDelegate {
 
 class MRadio: RadioButton {
     fileprivate var helper: ViewHelper!
-    
+
     init() {
         super.init(frame: .zero)
         initialize()
