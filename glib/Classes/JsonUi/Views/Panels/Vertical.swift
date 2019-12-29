@@ -13,32 +13,15 @@ class JsonView_Panels_VerticalV1: JsonView {
     override func initView() -> UIView {
         // NOTE: subviews property is deprecated
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
-        var fabView: JsonView?
-        var subviews = [UIView]()
-
-        for viewSpec in childViews {
+        let views: [UIView] = childViews.compactMap { viewSpec -> UIView? in
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-                #if INCLUDE_MDLIBS
-
-                if let fabJsonView = jsonView as? JsonView_FabV1 {
-                    fabView = fabJsonView
-                } else {
-                    subviews.append(jsonView.createView())
-                }
-
-                #endif
+                return jsonView.createView()
             }
+            return nil
         }
 
         setAlign()  // Needs to be called before adding child views
-        setDistribution(childViews: subviews)
-
-        if let fabJsonView = fabView {
-            let view = fabJsonView.createView()
-            panel.addView(view, top: 0, skipConstraint: true)
-            fabJsonView.afterViewAdded(parentView: panel)
-            ScrollableView.items.append(view)
-        }
+        setDistribution(childViews: views)
 
         return panel
     }

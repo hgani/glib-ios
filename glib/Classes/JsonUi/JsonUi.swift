@@ -195,7 +195,7 @@ class JsonUiMenuNavController: MenuNavController {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if let header = spec["header"].presence{
+        if let header = spec["header"].presence {
             let panel = GVerticalPanel()
             header["childViews"].arrayValue.forEach { viewSpec in
                 if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
@@ -212,15 +212,16 @@ class ScrollableView {
     static var items = [UIView]()
 
     static func delegateCall(scrollView: UIScrollView, useContentOffset: Bool = false) {
-        for view in items {
-            #if INCLUDE_MDLIBS
-            if let fab = view as? MFab {
-                fab.frame.origin.y = scrollView.bounds.size.height - 76
-                if useContentOffset {
-                    fab.frame.origin.y += scrollView.contentOffset.y
-                }
-            }
-            #endif
-        }
+        // NOTE: Not sure if this is required
+//        for view in items {
+//            #if INCLUDE_MDLIBS
+//            if let fab = view as? MFloatingButton {
+//                fab.frame.origin.y = scrollView.bounds.size.height - 76
+//                if useContentOffset {
+//                    fab.frame.origin.y += scrollView.contentOffset.y
+//                }
+//            }
+//            #endif
+//        }
     }
 }

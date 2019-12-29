@@ -2,16 +2,31 @@ class JsonViewDefaultPanel: JsonView {
     private let panel = GVerticalPanel().width(.matchParent)
 
     override func initView() -> UIView {
-        let childViews: [UIView] = spec["childViews"].arrayValue.compactMap { viewSpec -> UIView? in
+        // NOTE: subviews property is deprecated
+        let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
+        var fabView: JsonView?
+        var views = [UIView]()
+        for viewSpec in childViews {
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-                return jsonView.createView()
+                if let fabJsonView = jsonView as? JsonView_FabV1 {
+                    fabView = fabJsonView
+                } else {
+                    views.append(jsonView.createView())
+                }
             }
-            return nil
         }
 
-        for view in childViews {
+        for view in views {
             panel.addView(view)
         }
+
+        if let fabJsonView = fabView {
+            let view = fabJsonView.createView()
+            panel.addView(view, top: 0, skipConstraint: true)
+            fabJsonView.afterViewAdded(parentView: panel)
+            ScrollableView.items.append(view)
+        }
+
         return panel
     }
 
@@ -19,9 +34,5 @@ class JsonViewDefaultPanel: JsonView {
         let component = JsonViewDefaultPanel(spec, screen)
         component.createView()
         return component.panel
-
-//        if let wrapper = JsonViewDefaultPanel(spec, screen).createView() as? GVerticalPanel {
-//            panel.addView(wrapper.width(.matchParent))
-//        }
     }
 }
