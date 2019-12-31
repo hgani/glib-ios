@@ -16,7 +16,7 @@ class JsonView_Fields_TextareaV1: JsonView, SubmittableField {
             .text(spec["value"].stringValue)
             .maxLength(spec["maxLength"].uIntValue)
 
-        self.registerToClosestForm(field: view)
+//        self.registerToClosestForm(field: view)
 
         return view
     }

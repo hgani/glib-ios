@@ -29,24 +29,10 @@ class JsonView_Panels_SplitV1: JsonView {
         }
     }
 
-//    private static func initVerticalPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
-//        if let wrapper = JsonView_Panels_VerticalV1(spec, screen).createView() as? GVerticalPanel {
-//            panel.addView(wrapper.width(.matchParent))
-//        }
-//    }
-
     private func createSubview(_ subviewSpec: Json, center: Bool) -> UIView {
         if subviewSpec.isNull {
             return GView().width(0)
         }
-
-//        let view = JsonView.create(spec: subviewSpec, screen: screen)?.createView() ?? UIView()
-//        if center, let iview = view as? IView {
-//            // Make sure the center view doesn't stretch up until the right of the container.
-//            // Let the split view stretch it only up until the left of the right component.
-//            iview.width(.wrapContent)
-//        }
-//        return view
 
 //        let panel = GVerticalPanel()
 //        let childViews = subviewSpec.arrayValue
@@ -63,8 +49,6 @@ class JsonView_Panels_SplitV1: JsonView {
 //
 //        return panel
 
-        let panel = JsonViewDefaultPanel.createPanel(spec: subviewSpec, screen: screen)
-
-        return panel
+        return JsonViewDefaultPanel.createPanel(spec: subviewSpec, screen: screen)
     }
 }

@@ -28,7 +28,7 @@ class JsonView_Fields_RadioGroupV1: JsonView, SubmittableField {
             }
         }
 
-        self.registerToClosestForm(field: panel)
+//        self.registerToClosestForm(field: panel)
 
         return panel
     }

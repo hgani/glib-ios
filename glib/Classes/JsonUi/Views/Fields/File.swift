@@ -24,8 +24,8 @@ class JsonView_Fields_FileV1: JsonView, SubmittableFileField, ImagePickerDelegat
         name = spec["name"].stringValue
 
         self.imagePicker = ImagePicker(self.screen, delegate: self)
-        
-        self.registerToClosestForm(field: panel)
+
+//        self.registerToClosestForm(field: panel)
 
         return GVerticalPanel()
             .append(GLabel().text(spec["label"].stringValue))

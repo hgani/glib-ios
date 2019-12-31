@@ -1,4 +1,5 @@
 open class JsonView {
+    private var backend: UIView?
     public let spec: Json
     public unowned let screen: GScreen
 
@@ -8,7 +9,9 @@ open class JsonView {
         self.screen = screen
     }
 
-    public func afterViewAdded(parentView: UIView) {}
+    public func didAttach(to parent: UIView) {
+        // To be overridden
+    }
 
     private func initGenericAttributes(backend: UIView) {
         if let view = backend as? UIView & IView {
@@ -80,12 +83,36 @@ open class JsonView {
         fatalError("Need implementation")
     }
 
+    // TODO: Deprecate
     func createView() -> UIView {
+//        let view = initView()
+//        initGenericAttributes(backend: view)
+//        return view
+        return view()
+    }
+
+    func view() -> UIView {
+        if let backend = self.backend {
+            return backend
+        }
+
         let view = initView()
+        self.backend = view
         initGenericAttributes(backend: view)
         return view
     }
 
+    func closest<T: UIView>(_ type: T.Type, from: UIView) -> T? {
+        if let superview = from.superview {
+            if let found = superview as? T {
+                return found
+            } else {
+                return closest(type, from: superview)
+            }
+        }
+        return nil
+    }
+    
     static func create(spec: Json, screen: GScreen) -> JsonView? {
         let viewName = spec["view"].stringValue
         if let klass = JsonUi.loadClass(name: viewName, type: JsonView.self) as? JsonView.Type {
