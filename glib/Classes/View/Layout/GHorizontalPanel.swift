@@ -80,8 +80,33 @@ open class GHorizontalPanel: UIView {
             } else {
                 make.left.equalTo(self.snp.leftMargin).offset(left)
             }
+
+            switch verticalAlign {
+            case .middle: make.centerY.equalTo(self)
+            case .top: make.top.equalTo(self.snp.topMargin)
+            case .bottom: make.bottom.equalTo(self.snp.bottomMargin)
+            }
         }
     }
+
+//        // See https://github.com/zaxonus/AutoLayScroll/blob/master/AutoLayScroll/ViewController.swift
+//        private func initChildConstraints(child: UIView, top: Float) {
+//            child.snp.makeConstraints { make in
+//                if previousViewElement == nil {
+//                    make.top.equalTo(self.snp.topMargin).offset(top)
+//                } else {
+//                    make.top.equalTo(previousViewElement.snp.bottom).offset(top)
+//                }
+//
+//    //            make.left.equalTo(self.snp.leftMargin)
+//
+//                switch horizontalAlign {
+//                case .center: make.centerX.equalTo(self)
+//                case .right: make.right.equalTo(self.snp.rightMargin)
+//                case .left: make.left.equalTo(self.snp.leftMargin)
+//                }
+//            }
+//        }
 
     private func adjustParentBottomConstraint(child: UIView) {
         snp.makeConstraints { make in
@@ -133,6 +158,15 @@ open class GHorizontalPanel: UIView {
 
     public func done() {
         // Ends chaining
+    }
+
+    // MARK: - Alignment
+
+    private var verticalAlign: GAligner.GAlignerVerticalGravity = .top
+
+    public func align(_ align: GAligner.GAlignerVerticalGravity) -> Self {
+        verticalAlign = align
+        return self
     }
 }
 

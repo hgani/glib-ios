@@ -20,7 +20,7 @@ class JsonView_FabV1: JsonView {
         return fab
     }
 
-    override func afterViewAdded(parentView: UIView) {
+    override func didAttach(to _: UIView) {
         fab.snp.makeConstraints { (make) in
             make.right.equalTo(-20)
             make.bottom.equalTo(-20)

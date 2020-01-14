@@ -1,4 +1,4 @@
-class JsonView_AbstractTextV1: JsonView, SubmittableField {
+class JsonView_AbstractTextV1: JsonView_AbstractField, SubmittableField {
     #if INCLUDE_MDLIBS
         private let view = MTextField()
     #else
@@ -18,7 +18,7 @@ class JsonView_AbstractTextV1: JsonView, SubmittableField {
 
         initBottomBorderIfApplicable()
 
-        self.registerToClosestForm(field: view)
+//        self.registerToClosestForm(field: view)
 
         return view
     }

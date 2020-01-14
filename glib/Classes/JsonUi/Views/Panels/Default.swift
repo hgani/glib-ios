@@ -1,4 +1,4 @@
-class JsonViewDefaultPanel: JsonView {
+class JsonViewDefaultPanel: JsonView, ParentPanel {
     let panel: GVerticalPanel
 
 //    private let panel = GVerticalPanel().width(.matchParent)
@@ -22,7 +22,9 @@ class JsonViewDefaultPanel: JsonView {
                 if let fabJsonView = jsonView as? JsonView_FabV1 {
                     fabView = fabJsonView
                 } else {
-                    views.append(jsonView.createView())
+                    addView(jsonView, to: panel)
+
+//                    views.append(jsonView.createView())
                 }
             }
         }
@@ -31,11 +33,14 @@ class JsonViewDefaultPanel: JsonView {
             panel.addView(view)
         }
 
+        // Need to be added last
         if let fabJsonView = fabView {
-            let view = fabJsonView.createView()
-            panel.addView(view, top: 0, skipConstraint: true)
-            fabJsonView.afterViewAdded(parentView: panel)
-//            ScrollableView.items.append(view)
+//            let view = fabJsonView.createView()
+//            panel.addView(view, top: 0, skipConstraint: true)
+//            fabJsonView.afterViewAdded(parentView: panel)
+//            ScrollableView.register(fab: view)
+
+            let view = addConstraintlessView(fabJsonView, to: panel)
             ScrollableView.register(fab: view)
         }
 
