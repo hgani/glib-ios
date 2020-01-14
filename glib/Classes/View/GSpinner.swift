@@ -8,20 +8,25 @@ open class GSpinner<T>: GButton {
     private var onItemSelected: ((T) -> Void)?
     private var message: String?
 
-    public init(_ screen: GScreen) {
-        self.screen = screen
-
+    public override init() {
+//        self.screen = screen
         super.init()
-
-        addTarget(self, action: #selector(showOptions), for: .touchUpInside)
+        initialize()
     }
 
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
+        initialize()
     }
 
-    public func data(_ data: [T]) -> Self {
+    private func initialize() {
+        addTarget(self, action: #selector(showOptions), for: .touchUpInside)
+    }
+
+    @discardableResult
+    public func data(_ data: [T], screen: GScreen) -> Self {
         self.data = data
+        self.screen = screen
 
         if data.count > 0 {
             selectedItem = data[0]

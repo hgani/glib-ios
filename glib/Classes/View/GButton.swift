@@ -32,6 +32,7 @@ open class GButton: UIButton, IView {
         helper.didMoveToSuperview()
     }
 
+    @discardableResult
     public func title(_ title: String) -> Self {
         titleLabel!.numberOfLines = 0
         setTitle(title, for: .normal)

@@ -90,6 +90,7 @@ open class GVerticalPanel: UIView, IView {
         super.addSubview(child)
     }
 
+    @discardableResult
     public func clear() -> Self {
         clearViews()
         return self
