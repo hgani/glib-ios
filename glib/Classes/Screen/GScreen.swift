@@ -66,7 +66,7 @@ open class GScreen: UIViewController {
         }
     }
 
-    override public func viewWillAppear(_ animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         helper.viewWillAppear()
         nav.viewWillAppear()
@@ -84,7 +84,7 @@ open class GScreen: UIViewController {
 //        // in extensions because that will completely mask this class' viewWillAppear()
 //    }
 
-    override public func viewWillDisappear(_ animated: Bool) {
+    override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
 //        extViewWillDisappear()

@@ -2,7 +2,7 @@ open class TextTemplatePanel: GVerticalPanel {
     let title = GLabel().specs(.libCellTitle)
     let subtitle = GLabel().specs(.libCellSubtitle, .libMuted)
 
-    public override func initContent() {
+    open override func initContent() {
         paddings(top: 8, left: 14, bottom: 8, right: 14)
             .append(title)
             .append(subtitle)

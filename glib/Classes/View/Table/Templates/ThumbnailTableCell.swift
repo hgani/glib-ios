@@ -1,7 +1,7 @@
 open class ThumbnailTableCell: GTableViewCustomCell {
     private let content = ThumbnailTemplatePanel()
 
-    public override func initContent() {
+    open override func initContent() {
         initContent(picture: content.picture, title: content.title, subtitle: content.subtitle)
 
         append(content)
