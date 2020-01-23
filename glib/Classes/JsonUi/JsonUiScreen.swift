@@ -1,6 +1,7 @@
 public class JsonUiScreen: GScreen {
     private var url: String
     private let contentOnly: Bool
+    private var request: Rest?
 
     let collectionView = GCollectionView()
         .layout(GCollectionViewFlowLayout().horizontal())
@@ -30,12 +31,17 @@ public class JsonUiScreen: GScreen {
     }
 
     public override func onRefresh() {
-        _ = Rest.get(url: url).execute { response in
+        self.request = Rest.get(url: url).execute { response in
             self.update(response: response)
             return true
         }
     }
 
+    public override func viewWillDetach() {
+        super.viewWillDetach()
+
+        self.request?.cancel()
+    }
 
     public func update(response: Rest.Response) {
         if self.contentOnly {

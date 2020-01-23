@@ -39,10 +39,13 @@ open class ScreenHelper {
         menuLeftNavigationController.leftSide = true
 
         SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
-        SideMenuManager.default.menuAddPanGestureToPresent(toView: screen.navigationController!.navigationBar)
-        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: screen.navigationController!.view)
         SideMenuManager.default.menuPresentMode = .viewSlideOut
         SideMenuManager.default.menuFadeStatusBar = false
+
+        if let navigationController = screen.navigationController {
+            SideMenuManager.default.menuAddPanGestureToPresent(toView: navigationController.navigationBar)
+            SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: navigationController.view)
+        }
     }
 
     @objc func leftMenuButtonPressed() {
