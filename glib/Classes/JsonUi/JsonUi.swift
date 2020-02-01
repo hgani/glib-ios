@@ -185,10 +185,6 @@ class JsonUiMenuNavController: MenuNavController {
             }
         }
 
-//        menu.add(MenuItem(title: "TODO").icon(GIcon(font: .materialIcon, code: "home")).onClick {
-//            self.launch.alert("TODO")
-//        })
-
 //        #if DEBUG
 //        menu.add(MenuItem(title: "Diagnostics").screen(JsonUiScreen(path: "/app_diagnostics.json")))
 //        #endif
