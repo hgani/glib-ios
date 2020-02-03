@@ -1,4 +1,5 @@
 import UIKit
+import SnapKit
 
 open class GSplitPanel: UIView, IView {
     private var helper: ViewHelper!
@@ -69,6 +70,7 @@ open class GSplitPanel: UIView, IView {
             make.top.equalTo(self.snp.topMargin)
             make.left.equalTo(self.snp.leftMargin)
 
+            minimizeWidth(constraint: make)
         }
         center?.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
@@ -79,6 +81,8 @@ open class GSplitPanel: UIView, IView {
         right.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
             make.right.equalTo(self.snp.rightMargin)
+
+            minimizeWidth(constraint: make)
         }
 
         snp.makeConstraints { make in
@@ -91,6 +95,13 @@ open class GSplitPanel: UIView, IView {
             // See https://stackoverflow.com/questions/17117799/autolayout-height-equal-to-maxmultiple-view-heights
             make.height.equalTo(0).priorityLow()
         }
+    }
+
+    private func minimizeWidth(constraint: ConstraintMaker) {
+        // NOTE: Prevent the panel from getting stretched to be larger than necessary. For example, when used
+        // in SplitPanel's left section, it will squash the middle section.
+        // See https://stackoverflow.com/questions/17117799/autolayout-height-equal-to-maxmultiple-view-heights
+        constraint.width.equalTo(0).priorityLow()
     }
 
     public func width(_ width: Int) -> Self {
