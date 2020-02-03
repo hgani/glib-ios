@@ -99,5 +99,6 @@ Simplify iOS development
     sub.dependency 'MaterialComponents/List', '~> 92.0'
     sub.dependency 'MaterialComponents/ActionSheet', '~> 92.0'
     sub.dependency 'MaterialComponents/Chips', '~> 92.0'
+    sub.dependency 'Stripe'
   end
 end

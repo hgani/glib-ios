@@ -8,7 +8,10 @@ class JsonView_Fields_SubmitV1: JsonView, SubmittableField {
 
     // This constructor allows dynamic instantiation of child classes.
     public required init(_ spec: Json, _ screen: GScreen) {
-        self.backend = JsonView_ButtonV1(spec, screen)
+        var newSpec = spec
+        newSpec["onClick"] = ["action": "forms/submit-v1"]
+        
+        self.backend = JsonView_ButtonV1(newSpec, screen)
 
         // TODO:
         // - Implement submit functionaliy when the button is clicked
