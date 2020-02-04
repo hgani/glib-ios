@@ -80,10 +80,10 @@ Simplify iOS development
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_UILIBS' }
     sub.dependency 'XLPagerTabStrip', '~> 8.0'
     sub.dependency 'TTTAttributedLabel'
-    sub.dependency 'RSSelectionMenu', '~> 6.0.4'
-    sub.dependency 'Charts'
+    sub.dependency 'RSSelectionMenu', '~> 5.3.2'
+    sub.dependency 'Charts', '~> 3.2.2'
   end
-  
+
   s.subspec 'MDLibs' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_MDLIBS' }
     sub.dependency 'MBRadioButton'
@@ -99,5 +99,6 @@ Simplify iOS development
     sub.dependency 'MaterialComponents/List', '~> 92.0'
     sub.dependency 'MaterialComponents/ActionSheet', '~> 92.0'
     sub.dependency 'MaterialComponents/Chips', '~> 92.0'
+    sub.dependency 'Stripe'
   end
 end

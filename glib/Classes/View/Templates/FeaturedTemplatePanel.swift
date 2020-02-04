@@ -5,7 +5,7 @@ open class FeaturedTemplatePanel: GVerticalPanel {
     let title = GLabel().specs(.libCellTitle)
     let subtitle = GLabel().specs(.libCellSubtitle, .libMuted)
 
-    public override func initContent() {
+    open override func initContent() {
         append(picture.height(210))
             .append(GVerticalPanel().paddings(top: 5, left: 10, bottom: 10, right: 10).append(title).append(subtitle))
 

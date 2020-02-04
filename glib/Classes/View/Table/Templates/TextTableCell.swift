@@ -1,7 +1,7 @@
 open class TextTableCell: GTableViewCustomCell {
     private let content = TextTemplatePanel()
 
-    public override func initContent() {
+    open override func initContent() {
         initContent(title: content.title, subtitle: content.subtitle)
 
         append(content)

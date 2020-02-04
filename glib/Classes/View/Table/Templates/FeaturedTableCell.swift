@@ -1,7 +1,7 @@
 open class FeaturedTableCell: GTableViewCustomCell {
     private let content = FeaturedTemplatePanel()
 
-    public override func initContent() {
+    open override func initContent() {
         initContent(picture: content.picture, title: content.title, subtitle: content.subtitle)
 
         append(content)

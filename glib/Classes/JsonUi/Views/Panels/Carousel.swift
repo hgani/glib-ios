@@ -57,7 +57,7 @@ class JsonView_Panels_CarouselV1: JsonView {
             let cell = carouselView.scroller.cellInstance(of: VerticalCollectionCell.self, for: indexPath)
 //            renderStrategy.renderCell(cell: cell, indexPath: indexPath)
 
-            let spec = childViews[indexPath.row]
+            let spec = self.childViews[indexPath.row]
             let childViews = spec["childViews"].arrayValue
             for viewSpec in childViews {
                 if let jsonView = JsonView.create(spec: viewSpec, screen: carouselView.screen) {

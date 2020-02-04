@@ -26,7 +26,7 @@ class JsonView_Charts_LineV1: JsonView {
                 index += 1
             }
             let color = UIColor(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1.0)
-            let set = LineChartDataSet(entries: entries, label: series["title"].stringValue)
+            let set = LineChartDataSet(values: entries, label: series["title"].stringValue)
             set.mode = .cubicBezier
             set.setColor(color)
             set.setCircleColor(color)
