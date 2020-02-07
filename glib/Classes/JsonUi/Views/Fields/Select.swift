@@ -1,7 +1,6 @@
 #if INCLUDE_UILIBS
 
 import RSSelectionMenu
-import MaterialComponents.MaterialChips
 
 class JsonView_Fields_SelectV1: JsonView, SubmittableField {
     private let textLabel = GLabel()
@@ -93,7 +92,7 @@ class JsonView_Fields_SelectV1: JsonView, SubmittableField {
                 selectionMenu.show(style: .Actionsheet(title: self.spec["label"].stringValue, action: "Done", height: nil), from: self.screen)
             }
         
-        return chipField
+        return GVerticalPanel().append(chipField, top: 10)
     }
 
     class OptionModel: NSObject, UniqueProperty  {

@@ -24,9 +24,12 @@ class MChipField: MDCChipField {
         helper = ViewHelper(self)
         showChipsDeleteButton = true
         contentEdgeInsets = UIEdgeInsets(top: contentEdgeInsets.top,
-                                         left: 0,
+                                         left: 8,
                                          bottom: contentEdgeInsets.bottom,
-                                         right: 0)
+                                         right: 8)
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.gray.cgColor
+        layer.cornerRadius = 4
         
         var frame = UIScreen.main.bounds
         frame.size = sizeThatFits(frame.size)
