@@ -1,6 +1,6 @@
 #if INCLUDE_MDLIBS
 
-import MBCheckboxButton
+import MBRadioCheckboxButton2
 
 class MCheckBox: CheckboxButton {
     fileprivate var helper: ViewHelper!

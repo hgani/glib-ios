@@ -1,6 +1,6 @@
 #if INCLUDE_MDLIBS
 
-import MBCheckboxButton
+import MBRadioCheckboxButton2
 
 class JsonView_Fields_CheckV1: JsonView_AbstractField, SubmittableField {
     private let checkbox = MCheckBox()
