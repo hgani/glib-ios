@@ -1,6 +1,6 @@
 #if INCLUDE_MDLIBS
 
-import MBRadioButton
+import MBRadioCheckboxButton2
 
 class JsonView_Fields_RadioV1: JsonView, RadioButtonDelegate {
     private let radio = MRadio()

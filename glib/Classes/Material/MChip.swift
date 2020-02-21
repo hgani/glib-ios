@@ -3,6 +3,8 @@
 import MaterialComponents.MaterialChips
 
 class MChip: MDCChipView {
+    private var onClearClick: ((MChip) -> Void)?
+    
     public init() {
         super.init(frame: .zero)
         initialize()
@@ -21,6 +23,38 @@ class MChip: MDCChipView {
         titleLabel.text = str
         sizeToFit()
         return self
+    }
+    
+    public func addClearButton() -> Self {
+        var clearButton = UIControl()
+        let clearButtonWidthAndHeight = 24.0
+        clearButton.frame = CGRect(x: 0, y: 0, width: clearButtonWidthAndHeight, height: clearButtonWidthAndHeight)
+        clearButton.layer.cornerRadius = CGFloat(clearButtonWidthAndHeight / 2.0)
+        
+        let clearImageWidthAndHeight = 18.0
+        let clearImage = UIImage(from: .materialIcon, code: "clear",
+                                 size: CGSize(width: clearImageWidthAndHeight, height: clearImageWidthAndHeight))
+        let padding = (clearButtonWidthAndHeight - clearImageWidthAndHeight) / 2
+        var clearImageView = UIImageView(image: clearImage)
+        clearImageView.frame = CGRect(x: padding, y: padding, width: clearImageWidthAndHeight, height: clearImageWidthAndHeight)
+        
+        clearButton.addSubview(clearImageView)
+        accessoryView = clearButton
+        clearButton.addTarget(self, action: #selector(performClick), for: .touchUpInside)
+        
+        return self
+    }
+    
+    @discardableResult
+    open func onClearClick(_ command: @escaping (MChip) -> Void) -> Self {
+        onClearClick = command
+        return self
+    }
+    
+    @objc open func performClick() {
+        if let callback = self.onClearClick {
+            callback(self)
+        }
     }
 }
 

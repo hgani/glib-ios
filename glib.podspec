@@ -86,8 +86,9 @@ Simplify iOS development
 
   s.subspec 'MDLibs' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_MDLIBS' }
-    sub.dependency 'MBRadioButton'
-    sub.dependency 'MBCheckboxButton'
+    # sub.dependency 'MBRadioButton'
+    # sub.dependency 'MBCheckboxButton'
+    sub.dependency 'MBRadioCheckboxButton2', '2.0.1'
     sub.dependency 'RxSwift', '~> 4.5'
     sub.dependency 'MaterialComponents/Buttons', '~> 92.0'
     sub.dependency 'MaterialComponents/TextFields', '~> 92.0'
