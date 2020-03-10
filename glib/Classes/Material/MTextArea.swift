@@ -25,6 +25,7 @@ open class MTextArea: MDCMultilineTextField {
     private func initialize() {
         helper = ViewHelper(self)
         controller = MDCTextInputControllerFilled(textInput: self)
+        minimumLines = 3
     }
 
     open override func didMoveToSuperview() {
