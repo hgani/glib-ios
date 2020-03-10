@@ -107,6 +107,11 @@ open class MTextArea: MDCMultilineTextField {
     public func maxLength() -> UInt {
         return controller.characterCountMax
     }
+    
+    public func errors(_ text: String?) -> Self {
+        controller.setErrorText(text, errorAccessibilityValue: nil)
+        return self
+    }
 }
 
 public class MTextAreaSpec {
