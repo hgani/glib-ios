@@ -25,6 +25,7 @@ open class MTextArea: MDCMultilineTextField {
     private func initialize() {
         helper = ViewHelper(self)
         controller = MDCTextInputControllerFilled(textInput: self)
+        minimumLines = 3
     }
 
     open override func didMoveToSuperview() {
@@ -105,6 +106,11 @@ open class MTextArea: MDCMultilineTextField {
 
     public func maxLength() -> UInt {
         return controller.characterCountMax
+    }
+    
+    public func errors(_ text: String?) -> Self {
+        controller.setErrorText(text, errorAccessibilityValue: nil)
+        return self
     }
 }
 
