@@ -1,6 +1,37 @@
+import SwiftIconFont
+
 class JsonView_Fields_PasswordV1: JsonView_AbstractTextV1 {
+    private var view: UITextField!
+    private var isSecure = true
+    
     override func initView() -> UITextField {
-        return super.initTextField().secure(true)
+        view = super.initTextField().secure(isSecure)
+        
+        #if INCLUDE_MDLIBS
+        if let mTextField = view as? MTextField {
+            let imageView = GImageView().width(24).height(24).onClick({ (imageView) in
+                self.isSecure = !self.isSecure
+                self.toggleRightIcon()
+                mTextField.secure(self.isSecure)
+            })
+            mTextField.rightViewMode = .always
+            mTextField.rightView = imageView
+            toggleRightIcon()
+        }
+        #endif
+        
+        return view
+    }
+    
+    private func toggleRightIcon() {
+        if let mTextField = view as? MTextField {
+            if let mImageView = mTextField.rightView as? UIImageView {
+                let code = isSecure ? "visibility" : "visibility.off"
+                mImageView.image = UIImage(from: .materialIcon, code: code,
+                                           textColor: .blue, backgroundColor: .clear,
+                                           size: CGSize(width: 24, height: 24))
+            }
+        }
     }
 }
 
