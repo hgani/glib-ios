@@ -12,7 +12,9 @@ class JsonView_AbstractTextV1: JsonView_AbstractField, SubmittableField {
 
     func initTextField() -> UITextField & ITextField {
         name = spec["name"].string
-
+        #if INCLUDE_MDLIBS
+        view.styleClasses(spec["styleClasses"].arrayValue)
+        #endif
         view.placeholder = spec["label"].string
         view.text = spec["value"].string
 

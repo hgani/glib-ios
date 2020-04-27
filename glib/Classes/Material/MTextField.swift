@@ -31,6 +31,17 @@ open class MTextField: MDCTextField, ITextField {
         super.didMoveToSuperview()
         helper.didMoveToSuperview()
     }
+    
+    public func styleClasses(_ styleClasses: [Json]) -> Self {
+        if styleClasses.contains("outlined") {
+            controller = MDCTextInputControllerOutlined(textInput: self)
+        }
+        if styleClasses.contains("rounded") {
+            
+        }
+        
+        return self
+    }
 
     public func placeholder(_ str: String) -> Self {
         controller.placeholderText = str
@@ -133,6 +144,18 @@ open class MTextField: MDCTextField, ITextField {
         return self
     }
 }
+
+//class MDCTextInputControllerRoundedOutlined: MDCTextInputControllerOutlined {
+//    @objc func updateBorder() {
+//        let superClass = class_getSuperclass(type(of: self))
+//        let selector = #selector(updateBorder)
+//
+//        let impl = class_getMethodImplementation(superClass, selector)
+//        typealias ObjCVoidVoidFn = @convention(c) (AnyObject, Selector) -> Void
+//        let fn = unsafeBitCast(impl, to: ObjCVoidVoidFn.self)
+//        fn(self, selector)
+//    }
+//}
 
 public class MTextFieldSpec {
     private var decorator: ((MTextField) -> Void)
