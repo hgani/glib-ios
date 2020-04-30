@@ -121,6 +121,21 @@ open class GImageView: UIImageView {
         public func source(url: String, placeholder: UIImage? = nil) -> Self {
             return source(url: URL(string: url), placeholder: placeholder)
         }
+        
+        @discardableResult
+        public func source(url: URL?, placeholder: UIImage? = nil, onSuccess: @escaping () -> Void) -> Self {
+            kf.setImage(with: url, placeholder: placeholder, options: nil, progressBlock: nil){ (image, error, cache, url) in
+                if let image = image {
+                    onSuccess()
+                }
+            }
+            return self
+        }
+        
+        @discardableResult
+        public func source(url: String, placeholder: UIImage? = nil, onSuccess: @escaping () -> Void) -> Self {
+            return source(url: URL(string: url), placeholder: placeholder, onSuccess: onSuccess)
+        }
     }
 
 #endif

@@ -3,28 +3,37 @@ class JsonView_ImageV1: JsonView {
 
     override func initView() -> UIView {
         imageView
-            .width(spec["width"].int ?? 210)
-            .height(spec["height"].int ?? 210)
             .onClick { (view) in
                 JsonAction.execute(spec: self.spec["onClick"], screen: self.screen, creator: view)
             }
 
         if let widthSpec = spec["width"].string {
             imageView.width(LayoutSize(rawValue: widthSpec)!)
+        } else if let width = spec["width"].int {
+            imageView.width(width)
         }
 
         if let heightSpec = spec["height"].string {
             imageView.height(LayoutSize(rawValue: heightSpec)!)
+        } else if let height = spec["height"].int {
+            imageView.height(height)
         }
 
         if let url = spec["url"].presence {
-            imageView.source(url: url.stringValue)
+            imageView.source(url: url.stringValue, placeholder: nil) {
+                self.resizeImageSize()
+            }
         } else {
             if let base64data = spec["base64Data"].presence, let decodedData = Data(base64Encoded: base64data.stringValue, options: .ignoreUnknownCharacters) {
                 imageView.source(image: UIImage(data: decodedData))
+                resizeImageSize()
             }
         }
-        
+
+        return imageView
+    }
+    
+    func resizeImageSize() {
         let fit = spec["fit"].string ?? "fit"
         switch fit {
         case "crop":
@@ -54,7 +63,5 @@ class JsonView_ImageV1: JsonView {
                 imageView.contentMode(.scaleAspectFit)
             }
         }
-
-        return imageView
     }
 }
