@@ -2,7 +2,7 @@ class JsonView_IconV1: JsonView {
     private let view = GLabel()
 
     override func initView() -> UIView {
-        view.icon(GIcon(font: .materialIcon, code: spec["name"].stringValue).string)
+        view.icon(GIcon(font: .materialIcon, code: spec["spec"]["material"]["name"].stringValue).string)
             .width(24).height(24)
 
 //        let sampleBadgeJson = Json(parseJSON: "{\"badge\":{\"text\":\"2\",\"backgroundColor\":\"#ff0000\"}}")

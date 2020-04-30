@@ -24,7 +24,7 @@ class JsonView_ButtonV1: JsonView {
                 case "link":
                     view.specs(.link)
                 case "icon":
-                    view.specs(.icon(code: spec["icon"]["name"].stringValue))
+                    view.specs(.icon(code: spec["icon"]["material"]["name"].stringValue))
                 default:
                     if let klass = JsonUi.loadClass(name: style.stringValue, type: MButtonSpecProtocol.self) as? MButtonSpecProtocol.Type {
                         let spec = klass.init()
