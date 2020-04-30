@@ -8,7 +8,7 @@ class JsonView_FabV1: JsonView {
     override func initView() -> UIView {
         #if INCLUDE_MDLIBS
 
-        fab.icon(spec["icon"]["name"].stringValue)
+        fab.icon(spec["icon"]["material"]["name"].stringValue)
             .onClick { (_) in JsonAction.execute(spec: self.spec["onClick"], screen: self.screen, creator: self.fab) }
 
         Generic.sharedInstance.genericIsBusy.asObservable().subscribe { _ in
