@@ -103,5 +103,6 @@ Simplify iOS development
     # sub.dependency 'MaterialComponents/TextFields+Theming', '~> 92.0'
     # sub.dependency 'MaterialComponents/schemes/Shape', '~> 92.0'
     sub.dependency 'Stripe'
+    sub.dependency 'MarkdownKit', '1.5'
   end
 end
