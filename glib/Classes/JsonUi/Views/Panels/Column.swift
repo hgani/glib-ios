@@ -17,6 +17,6 @@ class JsonView_Panels_ColumnV1: JsonViewDefaultPanel {
 
     override func initView() -> UIView {
         super.initView()
-        return panel.width(.matchParent)
+        return panel.width(.matchParent) as! UIView
     }
 }

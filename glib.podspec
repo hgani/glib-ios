@@ -97,6 +97,7 @@ Simplify iOS development
     sub.dependency 'MaterialComponents/Snackbar', '~> 92.0'
     sub.dependency 'MaterialComponents/Dialogs', '~> 92.0'
     sub.dependency 'MaterialComponents/Cards', '~> 92.0'
+    sub.dependency 'MaterialComponents/Cards+Theming', '~> 92.0'
     sub.dependency 'MaterialComponents/List', '~> 92.0'
     sub.dependency 'MaterialComponents/ActionSheet', '~> 92.0'
     sub.dependency 'MaterialComponents/Chips', '~> 92.0'

@@ -1,6 +1,6 @@
 import UIKit
 
-open class GVerticalPanel: UIView, IView {
+open class GVerticalPanel: UIView, IView, IVerticalPanel {
     private var helper: ViewHelper!
 
     private var previousViewElement: UIView!

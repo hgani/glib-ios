@@ -4,6 +4,8 @@ class JsonView_Panels_CardV1: JsonView {
     private let card = MCard()
 
     override func initView() -> UIView {
+        card.applyStyles(spec)
+        
         let paddings = spec["padding"]
         card.width(LayoutSize(rawValue: spec["width"].stringValue)!)
             .height(.wrapContent)

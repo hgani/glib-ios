@@ -1,15 +1,15 @@
 class JsonView_Panels_VerticalV1: JsonView {
-    private let panel: GVerticalPanel
+    private let panel: IVerticalPanel
 
-    required convenience init(_ spec: Json, _ screen: GScreen) {
-        self.init(GVerticalPanel(), spec, screen)
-    }
-
-    private init(_ view: GVerticalPanel, _ spec: Json, _ screen: GScreen) {
-        panel = view
+    public required init(_ spec: Json, _ screen: GScreen) {
+        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
+            panel = MCard().applyStyles(spec)
+        } else {
+            panel = GVerticalPanel()
+        }
         super.init(spec, screen)
     }
-
+    
     override func initView() -> UIView {
         // NOTE: subviews property is deprecated
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
@@ -19,17 +19,17 @@ class JsonView_Panels_VerticalV1: JsonView {
             }
             return nil
         }
-
+        
         setAlign()  // Needs to be called before adding child views
         setDistribution(childViews: views)
-
-        return panel
+        
+        return panel as! UIView
     }
-
+    
     private func setAlign() {
         panel.align(getGravity())
     }
-
+    
     private func getGravity() -> GAligner.GAlignerHorizontalGravity {
         switch spec["align"].stringValue {
         case "center":
@@ -40,22 +40,32 @@ class JsonView_Panels_VerticalV1: JsonView {
             return .left
         }
     }
+    
     private func setDistribution(childViews: [UIView]) {
         switch spec["distribution"].stringValue {
         case "fillEqually":
             for view in childViews {
-                panel.addView(view)
+                panel.addView(view, top: 0)
             }
             panel.split()
         case "spaceEqually":
             for view in childViews {
-                panel.addView(GAligner().align(.left).withView(view))
+                panel.addView(GAligner().align(.left).withView(view), top: 0)
             }
             panel.split()
         default:
             for view in childViews {
-                panel.addView(view)
+                panel.addView(view, top: 0)
             }
         }
     }
+}
+
+protocol IVerticalPanel {
+    func addView(_ view: UIView, top: Float) -> Void
+    func align(_ align: GAligner.GAlignerHorizontalGravity) -> Self
+    func split() -> Self
+    func addConstraintlessView(_ child: UIView) -> Void
+    func width(_ width: Int) -> Self
+    func width(_ width: LayoutSize) -> Self
 }
