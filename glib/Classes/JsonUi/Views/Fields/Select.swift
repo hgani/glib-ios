@@ -2,10 +2,11 @@
 
 import RSSelectionMenu
 
-class JsonView_Fields_SelectV1: JsonView, SubmittableField {
-    private let textLabel = GLabel()
-    private let valueLabel = GLabel()
+class JsonView_Fields_SelectV1: JsonView_AbstractField, SubmittableField {
+//    private let textLabel = GLabel()
+//    private let valueLabel = GLabel()
     private let chipField = MChipField()
+    private let errorLabel = GLabel()
 
     var name: String?
     var value: String {
@@ -37,6 +38,13 @@ class JsonView_Fields_SelectV1: JsonView, SubmittableField {
     }
     
     func validate() -> Bool {
+        errors(nil)
+        if let validation = spec["validation"].presence {
+            if let required = validation["required"].presence, value == "" {
+                self.errors(required["message"].stringValue)
+                return false
+            }
+        }
         return true
     }
 
@@ -85,6 +93,7 @@ class JsonView_Fields_SelectV1: JsonView, SubmittableField {
                         cell.textLabel?.text = option.text
                 }
                 selectionMenu.onDismiss = {
+                    self.errors(nil)
                     self.selectedOptions = $0
                     self.chipField.clearTextInput()
                     self.chipField.textField.resignFirstResponder()
@@ -92,9 +101,24 @@ class JsonView_Fields_SelectV1: JsonView, SubmittableField {
                 selectionMenu.show(style: .Actionsheet(title: self.spec["label"].stringValue, action: "Done", height: nil), from: self.screen)
             }
         
-        return GVerticalPanel().append(chipField, top: 10)
+        errorLabel.width(.matchParent)
+            .color(.red)
+            .font(RobotoFonts.Style.regular.font, size: 12)
+            .paddings(top: 10, left: 12, bottom: 0, right: 0)
+        
+        return GVerticalPanel().append(chipField, top: 10).append(errorLabel)
     }
-
+    
+    func errors(_ text: String?) -> Void {
+        if let errorText = text {
+            chipField.layer.borderColor = UIColor.red.cgColor
+            errorLabel.text(errorText)
+        } else {
+            chipField.layer.borderColor = UIColor.lightGray.cgColor
+            errorLabel.text("")
+        }
+    }
+    
     class OptionModel: NSObject, UniqueProperty  {
         func uniquePropertyName() -> String {
             return "value"
