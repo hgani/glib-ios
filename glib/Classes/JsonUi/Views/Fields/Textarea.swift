@@ -6,7 +6,7 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
 
     var name: String?
     var value: String {
-        return view.text ?? ""
+        return view.textView?.text ?? ""
     }
 
     override func initView() -> UIView {
@@ -26,8 +26,11 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
     }
 
     func validate() -> Bool {
-        view.becomeFirstResponder()
-        return view.resignFirstResponder()
+        if let textView = view.textView {
+            textView.becomeFirstResponder()
+            return textView.resignFirstResponder()
+        }
+        return true
     }
     
     func errors(_ text: String?) {
@@ -48,8 +51,8 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
         func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
             field.errors(nil)
 
-            if let validation = field.spec["validation"].dictionary {
-                if let required = validation["required"]?.presence {
+            if let validation = field.spec["validation"].presence {
+                if let required = validation["required"].presence {
                     if UInt(textView.text.count) <= 0 {
                         field.errors(required["message"].stringValue)
                         return false
