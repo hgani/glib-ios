@@ -105,5 +105,7 @@ Simplify iOS development
     # sub.dependency 'MaterialComponents/schemes/Shape', '~> 92.0'
     sub.dependency 'Stripe'
     sub.dependency 'MarkdownKit', '1.5'
+    sub.dependency 'FBSDKCoreKit/Swift', '6.5.2'
+    sub.dependency 'FBSDKLoginKit/Swift', '6.5.2'
   end
 end

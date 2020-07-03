@@ -72,3 +72,39 @@ class JsonAction_Dialogs_OpenV1: JsonAction {
 }
 
 #endif
+
+import FBSDKCoreKit
+import FBSDKLoginKit
+
+class JsonAction_Dialogs_OauthV1: JsonAction {
+    override func silentExecute() -> Bool {
+        if spec["provider"]["name"].stringValue == "facebook" {
+            Settings.appID = spec["provider"]["clientId"].stringValue
+            let loginManager = LoginManager()
+            
+            loginManager.logIn(permissions: spec["provider"]["permissions"].stringValue.components(separatedBy: ","), from: screen) { (result, error) in
+                if let e = error {
+                    GLog.e("Error Facebook Login", error: error)
+                } else if let r = result, !r.isCancelled, let token = r.token {
+                    var onSuccessSpec = self.spec["onSuccess"]
+                    
+                    do {
+                        try onSuccessSpec["formData"].merge(with: [
+                            "provider": "facebook",
+                            "uid": token.userID,
+                            "credentials[expires]": true,
+                            "credentials[expires_at]": token.expirationDate.timeIntervalSince1970,
+                            "credentials[token]": token.tokenString
+                        ])
+                    } catch {
+                        GLog.e("Error formData json merge")
+                    }
+                    
+                    JsonAction.execute(spec: onSuccessSpec, screen: self.screen, creator: self)
+                }
+            }
+        }
+        
+        return true
+    }
+}
