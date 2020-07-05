@@ -1,6 +1,6 @@
 class JsonViewDefaultPanel: JsonView, ParentPanel {
 //    let panel: GVerticalPanel
-    let panel: IVerticalPanel
+    let panel: IVerticalPanel & UIView
 
 //    private let panel = GVerticalPanel().width(.matchParent)
 
@@ -13,7 +13,7 @@ class JsonViewDefaultPanel: JsonView, ParentPanel {
         }
     }
 
-    init(_ view: IVerticalPanel, _ spec: Json, _ screen: GScreen) {
+    init(_ view: IVerticalPanel & UIView, _ spec: Json, _ screen: GScreen) {
         panel = view
         super.init(spec, screen)
     }
@@ -50,10 +50,10 @@ class JsonViewDefaultPanel: JsonView, ParentPanel {
             ScrollableView.register(fab: view)
         }
 
-        return panel as! UIView
+        return panel
     }
 
-    static func createPanel(spec: Json, screen: GScreen) -> IVerticalPanel {
+    static func createPanel(spec: Json, screen: GScreen) -> IVerticalPanel & UIView {
         let component = JsonViewDefaultPanel(spec, screen)
         component.createView()
         return component.panel
