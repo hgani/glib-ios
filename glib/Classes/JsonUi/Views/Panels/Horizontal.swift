@@ -1,5 +1,5 @@
 class JsonView_Panels_HorizontalV1: JsonView {
-    private let panel: IHorizontalPanel
+    private let panel: IHorizontalPanel & UIView
     
     public required init(_ spec: Json, _ screen: GScreen) {
         if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
@@ -35,8 +35,8 @@ class JsonView_Panels_HorizontalV1: JsonView {
                 panel.addView(view, left: 0)
             }
         }
-        
-        return panel as! UIView
+
+        return panel
     }
 }
 

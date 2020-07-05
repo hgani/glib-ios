@@ -4,8 +4,10 @@ class JsonView_Fields_NumberV1: JsonView_AbstractTextV1 {
     
     override func initView() -> UITextField {
         delegate = Delegate(self)
-        
-        field = super.initTextField() as! MTextField
+
+        if let mField = super.initTextField() as? MTextField {
+            field = mField
+        }
         field.delegate = delegate
         return field.keyboardType(.numberPad)
     }

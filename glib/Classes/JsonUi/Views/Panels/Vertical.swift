@@ -1,5 +1,5 @@
 class JsonView_Panels_VerticalV1: JsonView {
-    private let panel: IVerticalPanel
+    private let panel: IVerticalPanel & UIView
 
     public required init(_ spec: Json, _ screen: GScreen) {
         if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
@@ -9,7 +9,7 @@ class JsonView_Panels_VerticalV1: JsonView {
         }
         super.init(spec, screen)
     }
-    
+
     override func initView() -> UIView {
         // NOTE: subviews property is deprecated
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
@@ -19,11 +19,11 @@ class JsonView_Panels_VerticalV1: JsonView {
             }
             return nil
         }
-        
+
         setAlign()  // Needs to be called before adding child views
         setDistribution(childViews: views)
-        
-        return panel as! UIView
+
+        return panel
     }
     
     private func setAlign() {

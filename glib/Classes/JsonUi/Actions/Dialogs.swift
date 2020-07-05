@@ -83,9 +83,9 @@ class JsonAction_Dialogs_OauthV1: JsonAction {
             let loginManager = LoginManager()
             
             loginManager.logIn(permissions: spec["provider"]["permissions"].stringValue.components(separatedBy: ","), from: screen) { (result, error) in
-                if let e = error {
-                    GLog.e("Error Facebook Login", error: error)
-                } else if let r = result, !r.isCancelled, let token = r.token {
+                if let fbError = error {
+                    GLog.e("Error Facebook Login", error: fbError)
+                } else if let fbResult = result, !fbResult.isCancelled, let token = fbResult.token {
                     var onSuccessSpec = self.spec["onSuccess"]
                     
                     do {
