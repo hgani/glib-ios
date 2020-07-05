@@ -6,8 +6,12 @@ class JsonViewDefaultPanel: JsonView, ParentPanel {
 
     required convenience init(_ spec: Json, _ screen: GScreen) {
         if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
+            #if INCLUDE_MDLIBS
             let panel = MCard().applyStyles(spec)
             self.init(panel, spec, screen)
+            #else
+            self.init(GVerticalPanel(), spec, screen)
+            #endif
         } else {
             self.init(GVerticalPanel(), spec, screen)
         }

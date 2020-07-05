@@ -1,15 +1,19 @@
 class JsonView_Fields_NumberV1: JsonView_AbstractTextV1 {
     private var delegate: Delegate?
-    private var field = MTextField()
+//    private var field = MTextField()
+    private var field: UITextField!
     
     override func initView() -> UITextField {
         delegate = Delegate(self)
 
-        if let mField = super.initTextField() as? MTextField {
-            field = mField
+        field = super.initTextField()
+        #if INCLUDE_MDLIBS
+        if let mField = field as? MTextField {
+            mField.keyboardType(.numberPad)
         }
+        #endif
         field.delegate = delegate
-        return field.keyboardType(.numberPad)
+        return field
     }
     
     override func validate() -> Bool {

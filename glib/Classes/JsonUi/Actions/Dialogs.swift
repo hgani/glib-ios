@@ -71,8 +71,6 @@ class JsonAction_Dialogs_OpenV1: JsonAction {
     }
 }
 
-#endif
-
 import FBSDKCoreKit
 import FBSDKLoginKit
 
@@ -108,3 +106,5 @@ class JsonAction_Dialogs_OauthV1: JsonAction {
         return true
     }
 }
+
+#endif

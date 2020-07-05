@@ -3,7 +3,11 @@ class JsonView_Panels_VerticalV1: JsonView {
 
     public required init(_ spec: Json, _ screen: GScreen) {
         if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
+            #if INCLUDE_MDLIBS
             panel = MCard().applyStyles(spec)
+            #else
+            panel = GVerticalPanel()
+            #endif
         } else {
             panel = GVerticalPanel()
         }

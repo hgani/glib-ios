@@ -1,3 +1,5 @@
+#if INCLUDE_MDLIBS
+
 import Foundation
 import Stripe
 
@@ -128,3 +130,5 @@ class GStripeTextField: STPPaymentCardTextField, IView {
         return self
     }
 }
+
+#endif

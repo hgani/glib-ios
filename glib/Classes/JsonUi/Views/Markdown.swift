@@ -1,3 +1,5 @@
+#if INCLUDE_MDLIBS
+
 import MarkdownKit
 
 class JsonView_MarkdownV1: JsonView {
@@ -9,3 +11,5 @@ class JsonView_MarkdownV1: JsonView {
         return label
     }
 }
+
+#endif

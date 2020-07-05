@@ -5,7 +5,11 @@ class JsonView_Panels_SplitV1: JsonView {
     
     public required init(_ spec: Json, _ screen: GScreen) {
         if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
+            #if INCLUDE_MDLIBS
             panel = MSplitCard().applyStyles(spec).width(.matchParent)
+            #else
+            panel = GSplitPanel().width(.matchParent)
+            #endif
         } else {
             panel = GSplitPanel().width(.matchParent)
         }

@@ -24,6 +24,7 @@ class JsonView_Fields_PasswordV1: JsonView_AbstractTextV1 {
     }
     
     private func toggleRightIcon() {
+        #if INCLUDE_MDLIBS
         if let mTextField = view as? MTextField {
             if let mImageView = mTextField.rightView as? UIImageView {
                 let code = isSecure ? "visibility" : "visibility.off"
@@ -32,6 +33,7 @@ class JsonView_Fields_PasswordV1: JsonView_AbstractTextV1 {
                                            size: CGSize(width: 24, height: 24))
             }
         }
+        #endif
     }
 }
 
