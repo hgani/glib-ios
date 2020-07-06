@@ -1,19 +1,23 @@
 class JsonViewDefaultPanel: JsonView, ParentPanel {
 //    let panel: GVerticalPanel
-    let panel: IVerticalPanel
+    let panel: IVerticalPanel & UIView
 
 //    private let panel = GVerticalPanel().width(.matchParent)
 
     required convenience init(_ spec: Json, _ screen: GScreen) {
         if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
+            #if INCLUDE_MDLIBS
             let panel = MCard().applyStyles(spec)
             self.init(panel, spec, screen)
+            #else
+            self.init(GVerticalPanel(), spec, screen)
+            #endif
         } else {
             self.init(GVerticalPanel(), spec, screen)
         }
     }
 
-    init(_ view: IVerticalPanel, _ spec: Json, _ screen: GScreen) {
+    init(_ view: IVerticalPanel & UIView, _ spec: Json, _ screen: GScreen) {
         panel = view
         super.init(spec, screen)
     }
@@ -50,10 +54,10 @@ class JsonViewDefaultPanel: JsonView, ParentPanel {
             ScrollableView.register(fab: view)
         }
 
-        return panel as! UIView
+        return panel
     }
 
-    static func createPanel(spec: Json, screen: GScreen) -> IVerticalPanel {
+    static func createPanel(spec: Json, screen: GScreen) -> IVerticalPanel & UIView {
         let component = JsonViewDefaultPanel(spec, screen)
         component.createView()
         return component.panel
