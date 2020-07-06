@@ -6,7 +6,7 @@ open class FeaturedTemplatePanel: GVerticalPanel {
     let subtitle = GLabel().specs(.libCellSubtitle, .libMuted)
 
     open override func initContent() {
-        append(picture.height(210))
+        append(picture.height(100).clipsToBounds(true).contentMode(.scaleAspectFill))
             .append(GVerticalPanel().paddings(top: 5, left: 10, bottom: 10, right: 10).append(title).append(subtitle))
 
         initContent(picture: picture, title: title, subtitle: subtitle)

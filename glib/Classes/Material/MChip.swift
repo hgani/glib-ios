@@ -25,6 +25,23 @@ class MChip: MDCChipView {
         return self
     }
     
+    public func style(_ styleClasses: [Json]) -> Self {
+        setTitleColor(.white, for: .normal)
+        
+        for style in styleClasses {
+            switch style.stringValue {
+            case "info":
+                setBackgroundColor(UIColor(hex: "#2196f3"), for: .normal)
+            case "success":
+                setBackgroundColor(UIColor(hex: "#4caf50"), for: .normal)
+            default:
+                setBackgroundColor(UIColor(hex: "#e0e0e0"), for: .normal)
+                setTitleColor(.black, for: .normal)
+            }
+        }
+        return self
+    }
+    
     public func addClearButton() -> Self {
         var clearButton = UIControl()
         let clearButtonWidthAndHeight = 24.0

@@ -4,13 +4,15 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
     let picture = GImageView()
     let title = GLabel().specs(.libCellTitle)
     let subtitle = GLabel().specs(.libCellSubtitle, .libMuted)
+    let chips = GHorizontalPanel()
 
     open override func initContent() {
         let content = GHorizontalPanel()
             .append(picture)
             .append(GVerticalPanel().paddings(top: 10, left: 10, bottom: 10, right: 10)
                 .append(title)
-                .append(subtitle))
+                .append(subtitle)
+                .append(chips.width(.matchParent), top: 5))
 
         paddings(top: 8, left: 14, bottom: 8, right: 14)
             .append(content)

@@ -95,6 +95,11 @@ open class GImageView: UIImageView {
             }
         }
     }
+    
+    public func clipsToBounds(_ value: Bool) -> Self {
+        clipsToBounds = value
+        return self
+    }
 
     public func contentMode(_ mode: UIView.ContentMode) -> Self {
         contentMode = mode
