@@ -19,6 +19,7 @@ class JsonView_Panels_FlowV1: JsonView {
         }
         
         panel.flex
+            .backgroundColor(UIColor(hex: spec["backgroundColor"].stringValue))
             .direction(.row)
             .wrap(.wrap)
             .width(CGFloat(spec["width"].intValue))

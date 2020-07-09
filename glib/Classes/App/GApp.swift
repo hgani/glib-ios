@@ -32,26 +32,26 @@ public class GApp {
         return self
     }
 
-    @available(iOS 13.0, *)
-    public func withNav(_ navigationController: GNavigationController, scene: UIWindowScene) -> Self {
-        RobotoFonts.loadAll()
-
-        // Uncomment to debug
-//        #if DEBUG
-//        GLog.t("Font family: \(UIFont.familyNames)")
-//        for fontName in UIFont.fontNames(forFamilyName: "Roboto") {
-//            GLog.t("Font name: \(fontName)")
-//        }
-//        #endif
-
-        self.navigationController = navigationController
-
-        window = UIWindow(windowScene: scene)
-        window.rootViewController = navigationController
-
-//        window.backgroundColor = .white
-//        window.makeKeyAndVisible()
-
-        return self
-    }
+//    @available(iOS 13.0, *)
+//    public func withNav(_ navigationController: GNavigationController, scene: UIWindowScene) -> Self {
+//        RobotoFonts.loadAll()
+//
+//        // Uncomment to debug
+////        #if DEBUG
+////        GLog.t("Font family: \(UIFont.familyNames)")
+////        for fontName in UIFont.fontNames(forFamilyName: "Roboto") {
+////            GLog.t("Font name: \(fontName)")
+////        }
+////        #endif
+//
+//        self.navigationController = navigationController
+//
+//        window = UIWindow(windowScene: scene)
+//        window.rootViewController = navigationController
+//
+////        window.backgroundColor = .white
+////        window.makeKeyAndVisible()
+//
+//        return self
+//    }
 }
