@@ -108,5 +108,6 @@ Simplify iOS development
     sub.dependency 'FBSDKCoreKit/Swift', '6.5.2'
     sub.dependency 'FBSDKLoginKit/Swift', '6.5.2'
     sub.dependency 'FlexLayout'
+    sub.dependency 'jsonlogic'
   end
 end

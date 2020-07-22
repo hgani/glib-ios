@@ -49,6 +49,18 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
         }
         
         func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+            do {
+                if let fieldName = self.field.spec["name"].string, let text = textView.text {
+                    try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
+                        """
+                            { "\(fieldName)" : "\(text)" }
+                        """
+                    ))
+                }
+            } catch {
+                GLog.d("Invalid json")
+            }
+            
             field.errors(nil)
 
             if let validation = field.spec["validation"].presence {
@@ -61,7 +73,7 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
             }
             
             if let text = textView.text {
-                if UInt(text.count) > field.spec["maxLength"].uIntValue {
+                if let maxLength = field.spec["maxLength"].presence, maxLength.uIntValue > 0, UInt(text.count) > maxLength.uIntValue {
                     field.errors("Maximum \(field.spec["maxLength"].uIntValue) characters")
                     return false
                 }

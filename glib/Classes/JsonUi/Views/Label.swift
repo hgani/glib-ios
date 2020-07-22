@@ -1,3 +1,5 @@
+import jsonlogic
+
 class JsonView_LabelV1: JsonView {
     private let label = GLabel()
 
@@ -22,6 +24,19 @@ class JsonView_LabelV1: JsonView {
             label.specs(.link)
             label.onClick { (_) in
                 JsonAction.execute(spec: onClick, screen: self.screen, creator: self.label)
+            }
+        }
+        
+        Generic.sharedInstance.formData.asObservable().subscribe { _ in
+            if let showIf = self.spec["showIf"].rawString() {
+                GLog.d(showIf)
+                do {
+                    let jsonlogic = try JsonLogic(showIf)
+                    let result: Bool = try jsonlogic.applyRule(to: Generic.sharedInstance.formData.value.rawString())
+                    self.label.isHidden = !result
+                } catch {
+                    GLog.d("Invalid rule")
+                }
             }
         }
 
