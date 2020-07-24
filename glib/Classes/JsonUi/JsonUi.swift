@@ -171,17 +171,15 @@ class JsonUiMenuNavController: MenuNavController {
     }
 
     override func initMenu(_ menu: Menu) {
-        if let rows = spec["rows"].presence {
-            rows.arrayValue.forEach { (row) in
-                if let title = row["text"].string {
-                    let item = MenuItem(title: title).onClick {
-                        JsonAction.execute(spec: row["onClick"], screen: self.screen, creator: nil)
-                    }
-                    if let iconName = row["icon"]["materialName"].string {
-                        item.icon(GIcon(font: .materialIcon, code: iconName))
-                    }
-                    menu.add(item)
+        spec["rows"].arrayValue.forEach { (row) in
+            if let title = row["text"].string {
+                let item = MenuItem(title: title).onClick {
+                    JsonAction.execute(spec: row["onClick"], screen: self.screen, creator: nil)
                 }
+                if let iconName = row["icon"]["materialName"].string {
+                    item.icon(GIcon(font: .materialIcon, code: iconName))
+                }
+                menu.add(item)
             }
         }
 

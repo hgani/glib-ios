@@ -78,6 +78,11 @@ open class GWebView: WKWebView {
         return load(url: URL(string: url)!)
     }
 
+    // Not meant to be used in conjuction with Http and Rest because sessions are not shared
+    public func load(path: String) -> Self {
+        return load(url: "\(GHttp.instance.host())\(path)")
+    }
+
     public func refresh() {
         // It seems that reload() doesn't do anything when the initial load() failed.
         if let url = self.requestUrl {
