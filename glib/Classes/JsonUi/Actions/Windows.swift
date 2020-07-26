@@ -29,12 +29,12 @@ class JsonAction_Windows_CloseAllV1: JsonAction {
 }
 
 class JsonAction_Windows_ReloadV1: JsonAction {
-    override func silentExecute() -> Bool {
+    override func silentExecute() -> Bool {        
         guard let currentScreen = screen as? JsonUiScreen else {
             return false
         }
-        let url = spec["url"].string ?? currentScreen.getUrl()
 
+        let url = spec["url"].string ?? currentScreen.url
         currentScreen.update(url: url)
 
         return true

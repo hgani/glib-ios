@@ -1,5 +1,5 @@
-public class JsonUiScreen: GScreen {
-    private var url: String
+open class JsonUiScreen: GScreen {
+    private(set) var url: String
     private let contentOnly: Bool
     private var request: Rest?
 
@@ -9,22 +9,21 @@ public class JsonUiScreen: GScreen {
         .height(300)
         .color(bg: .red)
 
-    init(url: String, contentOnly: Bool = false) {
+    public init(url: String, contentOnly: Bool = false) {
         self.url = url
         self.contentOnly = contentOnly
         super.init()
     }
 
     public convenience init(path: String) {
-        self.init(url: "\(GHttp.instance.host())/\(path)")
+        self.init(url: "\(GHttp.instance.host())\(path)")
     }
 
     public required init?(coder _: NSCoder) {
         fatalError("Unsupported")
     }
 
-    public override func viewDidLoad() {
-//        super.viewDidLoad()
+    open override func viewDidLoad() {
         super.initOnDidLoad()
 
         onRefresh()
@@ -64,7 +63,7 @@ public class JsonUiScreen: GScreen {
         }
     }
 
-    public func getUrl() -> String {
-        return url
-    }
+//    public func getUrl() -> String {
+//        return url
+//    }
 }
