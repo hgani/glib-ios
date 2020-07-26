@@ -326,9 +326,9 @@ open class GHeaderFooterView: UIView {
         return self
     }
 
-    public func done() {
-        // Ends chaining
-    }
+//    public func done() {
+//        // Ends chaining
+//    }
 
 //    open override func didMoveToSuperview() {
 //        container.snp.makeConstraints { (make) -> Void in
