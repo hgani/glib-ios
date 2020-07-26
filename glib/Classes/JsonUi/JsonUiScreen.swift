@@ -16,7 +16,7 @@ open class JsonUiScreen: GScreen {
     }
 
     public convenience init(path: String) {
-        self.init(url: "\(GHttp.instance.host())\(path)")
+        self.init(url: "\(GHttp.instance.host())/\(path)")
     }
 
     public required init?(coder _: NSCoder) {
