@@ -189,6 +189,13 @@ open class JsonView_Panels_ListV1: JsonView {
         }
 
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//            let tableView = listView.tableView
+//            let cell = tableView.cellInstance(of: JsonTableViewCell.self, style: .default) { newCell in
+//                newCell.initPanel(GVerticalPanel())
+//            }
+//            JsonUi.initVerticalPanel(cell.content, spec: sections[section]["header"], screen: listView.screen)
+//            return cell
+
             if let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as? ListHeaderCell {
                 headerCell.createView(spec: sections[section]["header"], screen: listView.screen)
                 return headerCell
