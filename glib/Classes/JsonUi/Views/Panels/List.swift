@@ -200,9 +200,9 @@ open class JsonView_Panels_ListV1: JsonView {
 //            return nil
         }
 
-//        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//            return sections[section]["header"].isNull ? 0 : UITableView.automaticDimension
-//        }
+        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+            return sections[section]["header"].isNull ? 0 : UITableView.automaticDimension
+        }
 
         func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
             let row = rows(at: indexPath.section)[indexPath.row]
