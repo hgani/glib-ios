@@ -194,8 +194,11 @@ open class GTableViewCell: UITableViewCell {
 
     public func interactive(_ value: Bool) -> Self {
         isUserInteractionEnabled = value
-
-        selectionStyle = .none
+        if value {
+            selectionStyle = .default
+        } else {
+            selectionStyle = .none
+        }
         return self
     }
 

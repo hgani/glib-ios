@@ -21,6 +21,7 @@ open class JsonTemplate: GObject {
         let cell = tableView.cellInstance(of: JsonTableViewCell.self, style: .default) { newCell in
             newCell.initPanel(self.instantiatePanel())
         }
+        initCell(cell, spec: spec)
         initPanel(cell.content, spec: spec)
         return cell
     }
@@ -37,6 +38,10 @@ open class JsonTemplate: GObject {
 
     open func initPanel(_ panel: GVerticalPanel, spec _: Json) {
         mustBeOverridden()
+    }
+
+    private func initCell(_ cell: GTableViewCell, spec _: Json) {
+        cell.interactive(!spec["onClick"].isNull)
     }
 
     public static func create(spec: Json, screen: GScreen) -> JsonTemplate? {
