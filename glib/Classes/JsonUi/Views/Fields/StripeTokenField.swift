@@ -18,17 +18,30 @@ class JsonView_Fields_StripeTokenV1: JsonView_AbstractField, SubmittableField {
     
     override func initView() -> UIView {
         Stripe.setDefaultPublishableKey(spec["publicKey"].stringValue)
-
         name = spec["name"].string
+
+        let panel = GVerticalPanel().width(.matchParent).height(.wrapContent)
+        let stripeTokenField = GStripeTextField()
         
-        let stripeTokenField = GStripeTextField().width(.matchParent)
+        panel.addView(stripeTokenField)
+        
+        if let width = spec["width"].presence {
+            switch width {
+            case "wrapContent":
+                stripeTokenField.width(.wrapContent)
+            case "matchParent":
+                stripeTokenField.width(.matchParent)
+            default:
+                stripeTokenField.width(width.intValue)
+            }
+        }
+
         self.delegate = Delegate(view: self)
-        
         if let delegate = self.delegate {
             stripeTokenField.delegate(delegate)
         }
         
-        return stripeTokenField
+        return panel
     }
     
     class Delegate: NSObject, STPPaymentCardTextFieldDelegate {
@@ -111,7 +124,15 @@ class GStripeTextField: STPPaymentCardTextField, IView {
     }
     
     public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
+//        doesn't work with STPPaymentCardTextField
+//        helper.width(width)
+        if (width == .matchParent) {
+            snp.makeConstraints { (make) in
+                if let superview = superview {
+                    make.right.equalTo(superview.snp.rightMargin)
+                }
+            }
+        }
         return self
     }
     
