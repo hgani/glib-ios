@@ -189,15 +189,20 @@ open class JsonView_Panels_ListV1: JsonView {
         }
 
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            let panel = GVerticalPanel()
-            JsonUi.initVerticalPanel(panel, spec: sections[section]["header"], screen: listView.screen)
-            return panel
+            // Without this wrapper, all section headers will be at the top trampling each other.
+            let wrapper = GHeaderFooterView()
+            wrapper.append(JsonViewDefaultPanel.createPanel(spec: sections[section]["header"], screen: listView.screen))
+            return wrapper
 
 //            if let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as? ListHeaderCell {
 //                headerCell.createView(spec: sections[section]["header"], screen: listView.screen)
 //                return headerCell
 //            }
 //            return nil
+
+//            let vw = UIView()
+//            vw.backgroundColor = UIColor.red
+//            return vw
         }
 
         func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
