@@ -31,12 +31,6 @@ open class JsonUiScreen: GScreen {
 
     public override func onRefresh() {
         update(url: url)
-
-//        self.request = Rest.get(url: url).execute { response in
-//            self.update(response: response)
-//            self.refresher.endRefreshing()
-//            return true
-//        }
     }
 
     public override func viewWillDetach() {
