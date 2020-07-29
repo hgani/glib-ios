@@ -30,10 +30,13 @@ open class JsonUiScreen: GScreen {
     }
 
     public override func onRefresh() {
-        self.request = Rest.get(url: url).execute { response in
-            self.update(response: response)
-            return true
-        }
+        update(url: url)
+
+//        self.request = Rest.get(url: url).execute { response in
+//            self.update(response: response)
+//            self.refresher.endRefreshing()
+//            return true
+//        }
     }
 
     public override func viewWillDetach() {
@@ -42,7 +45,7 @@ open class JsonUiScreen: GScreen {
         self.request?.cancel()
     }
 
-    public func update(response: Rest.Response) {
+    private func update(response: Rest.Response) {
         if self.contentOnly {
             JsonUi.parseContentScreen(response.content, screen: self)
         } else {
@@ -50,10 +53,13 @@ open class JsonUiScreen: GScreen {
         }
     }
 
-    public func update(url: String) {
+    func update(url: String) {
         self.url = url
 
-        _ = Rest.get(url: url).execute { response in
+        self.request = Rest.get(url: url).execute { response in
+            self.refresher.endRefreshing()
+            self.refresher.removeFromSuperview()
+
             self.container.header.clearViews()
             self.container.content.clearViews()
             self.container.footer.clearViews()
@@ -62,8 +68,4 @@ open class JsonUiScreen: GScreen {
             return true
         }
     }
-
-//    public func getUrl() -> String {
-//        return url
-//    }
 }

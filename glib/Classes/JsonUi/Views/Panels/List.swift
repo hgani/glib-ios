@@ -105,7 +105,9 @@ open class JsonView_Panels_ListV1: JsonView {
 //        tableView.sectionHeaderHeight = UITableView.automaticDimension
 //        tableView.estimatedSectionHeaderHeight = 12
         tableView
-//                        .withRefresher(screen.refresher)
+            .withRefresher(GRefreshControl().onValueChanged {
+                self.screen.onRefresh()
+            })
             .autoRowHeight(estimate: 100)
             .delegate(delegate, retain: true)
             .source(delegate)
