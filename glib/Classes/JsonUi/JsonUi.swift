@@ -84,7 +84,7 @@ public class JsonUi {
                 .onClick({
                     JsonAction.execute(spec: json["onClick"], screen: screen, creator: nil)
                 })
-            if let iconName = json["icon"]["materialName"].string {
+            if let iconName = json["icon"]["material"]["name"].string {
                 item.icon(GIcon(font: .materialIcon, code: iconName))
             }
             return item
