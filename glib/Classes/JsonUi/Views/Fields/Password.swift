@@ -2,32 +2,34 @@ import SwiftIconFont
 
 class JsonView_Fields_PasswordV1: JsonView_AbstractTextV1 {
     private var view: UITextField!
-    private var isSecure = true
+//    private var isSecure = true
     
     override func initView() -> UITextField {
-        view = super.initTextField().secure(isSecure)
+        view = super.initTextField().secure(true)
         
         #if INCLUDE_MDLIBS
         if let mTextField = view as? MTextField {
             let imageView = GImageView().width(24).height(24).onClick({ (imageView) in
-                self.isSecure = !self.isSecure
-                self.toggleRightIcon()
-                mTextField.secure(self.isSecure)
+//                self.isSecure = !self.isSecure
+//                self.toggleRightIcon()
+                mTextField.secure(!mTextField.isSecureTextEntry)
+                self.updateRightIcon()
             })
             mTextField.rightViewMode = .always
             mTextField.rightView = imageView
-            toggleRightIcon()
+//            toggleRightIcon()
+            updateRightIcon()
         }
         #endif
         
         return view
     }
-    
-    private func toggleRightIcon() {
+
+    private func updateRightIcon() {
         #if INCLUDE_MDLIBS
         if let mTextField = view as? MTextField {
             if let mImageView = mTextField.rightView as? UIImageView {
-                let code = isSecure ? "visibility" : "visibility.off"
+                let code = mTextField.isSecureTextEntry ? "visibility" : "visibility.off"
                 mImageView.image = UIImage(from: .materialIcon, code: code,
                                            textColor: .blue, backgroundColor: .clear,
                                            size: CGSize(width: 24, height: 24))
@@ -35,6 +37,20 @@ class JsonView_Fields_PasswordV1: JsonView_AbstractTextV1 {
         }
         #endif
     }
+
+//
+//    private func toggleRightIcon() {
+//        #if INCLUDE_MDLIBS
+//        if let mTextField = view as? MTextField {
+//            if let mImageView = mTextField.rightView as? UIImageView {
+//                let code = isSecure ? "visibility" : "visibility.off"
+//                mImageView.image = UIImage(from: .materialIcon, code: code,
+//                                           textColor: .blue, backgroundColor: .clear,
+//                                           size: CGSize(width: 24, height: 24))
+//            }
+//        }
+//        #endif
+//    }
 }
 
 //class JsonView_Fields_PasswordV1: JsonView, SubmittableField {
