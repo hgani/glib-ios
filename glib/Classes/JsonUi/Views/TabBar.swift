@@ -9,7 +9,7 @@ class JsonView_TabBarV1: JsonView {
         tabBar
             .width(LayoutSize(rawValue: spec["width"].stringValue)!)
             .color(bg: UIColor(hex: spec["backgroundColor"].stringValue), text: UIColor(hex: spec["color"].stringValue))
-            .alignment(spec["tabButtons"].arrayValue.count > 3 ? .leading : .justified)
+            .alignment(spec["buttons"].arrayValue.count > 3 ? .leading : .justified)
             .onChange { _, item, _ in
                 if let tabItem = item as? JsonView_TabBarItemV1, let onClick = tabItem.spec["onClick"].presence {
                     JsonAction.execute(spec: onClick, screen: self.screen, creator: nil)
@@ -17,7 +17,7 @@ class JsonView_TabBarV1: JsonView {
             }
 //            .delegate(delegate, retain: true)
 
-        spec["tabButtons"].arrayValue.forEach { (tab) in
+        spec["buttons"].arrayValue.forEach { (tab) in
             let tabBarItem = JsonView_TabBarItemV1(tab)
             tabBar.items.append(tabBarItem)
         }
