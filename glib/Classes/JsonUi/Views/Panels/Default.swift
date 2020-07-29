@@ -17,7 +17,7 @@ class JsonViewDefaultPanel: JsonView, ParentPanel {
         }
     }
 
-    init(_ view: IVerticalPanel & UIView, _ spec: Json, _ screen: GScreen) {
+    private init(_ view: IVerticalPanel & UIView, _ spec: Json, _ screen: GScreen) {
         panel = view
         super.init(spec, screen)
     }

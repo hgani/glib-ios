@@ -2,8 +2,12 @@ class JsonView_Panels_ScrollV1: JsonView {
     private let panel = GScrollPanel()
 
     override func initView() -> UIView {
-        JsonViewDefaultPanel(panel.contentView, spec, screen).createView()
+        JsonViewDefaultPanel.initPanel(panel.contentView, spec: spec, screen: screen)
 
+        panel.addSubview(GRefreshControl().onValueChanged {
+            self.screen.onRefresh()
+        })
+        
 //        // NOTE: subviews property is deprecated
 //        let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
 //        for viewSpec in childViews {
