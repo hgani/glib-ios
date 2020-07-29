@@ -56,8 +56,4 @@ open class GRefreshControl: UIRefreshControl, ProgressIndicator {
     public func show(progress _: Float) {
         // Not applicable yet
     }
-
-    public func done() {
-        // End chaining
-    }
 }

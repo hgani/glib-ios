@@ -120,7 +120,7 @@ public class JsonUi {
 
         let selectedTab = tabBar.items.first(where: { (item) -> Bool in
             if let tabItem = item as? JsonView_TabBarItemV1, let onClick = tabItem.spec["onClick"].presence {
-                return onClick["url"].stringValue == (screen as? JsonUiScreen)?.getUrl()
+                return onClick["url"].stringValue == (screen as? JsonUiScreen)?.url
             }
 
             return false

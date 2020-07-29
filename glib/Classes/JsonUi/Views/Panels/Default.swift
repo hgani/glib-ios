@@ -17,7 +17,7 @@ class JsonViewDefaultPanel: JsonView, ParentPanel {
         }
     }
 
-    init(_ view: IVerticalPanel & UIView, _ spec: Json, _ screen: GScreen) {
+    private init(_ view: IVerticalPanel & UIView, _ spec: Json, _ screen: GScreen) {
         panel = view
         super.init(spec, screen)
     }
@@ -61,5 +61,10 @@ class JsonViewDefaultPanel: JsonView, ParentPanel {
         let component = JsonViewDefaultPanel(spec, screen)
         component.createView()
         return component.panel
+    }
+
+    static func initPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) -> IVerticalPanel & UIView {
+        JsonViewDefaultPanel(panel, spec, screen).createView()
+        return panel
     }
 }
