@@ -115,6 +115,12 @@ open class GLabel: UILabel, IView {
         return self
     }
 
+    @discardableResult
+    public func icon(_ icon: GIcon, size: CGFloat? = nil) -> Self {
+        self.icon(icon.string, size: size)
+        return self
+    }
+
     // Has to be called before text()
     @discardableResult
     public func font(_ font: UIFont?, size: Float? = nil, traits: UIFontDescriptor.SymbolicTraits...) -> Self {
@@ -167,15 +173,22 @@ open class GLabel: UILabel, IView {
         return self
     }
 
-//    public func spec(_ spec : GLabelSpec) -> Self {
-//        spec.decorate(self)
-//        return self
-//    }
-
     public func specs(_ specs: GLabelSpec...) -> Self {
         for spec in specs {
             spec.decorate(self)
         }
+        return self
+    }
+
+    public func badge(text: String, bgColor: UIColor) -> Self {
+        let badgeLabel = UILabel(frame: CGRect(x: 8, y: -4, width: 20, height: 20))
+        badgeLabel.backgroundColor = .clear
+        badgeLabel.layer.backgroundColor = bgColor.cgColor
+        badgeLabel.layer.cornerRadius = 10
+        badgeLabel.text = text
+        badgeLabel.font = RobotoFonts.Style.regular.fontWithSize(10)
+        badgeLabel.textAlignment = .center
+        addSubview(badgeLabel)
         return self
     }
 

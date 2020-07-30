@@ -31,20 +31,6 @@ class JsonView_Fields_PasswordV1: JsonView_AbstractTextV1 {
         }
         #endif
     }
-
-//
-//    private func toggleRightIcon() {
-//        #if INCLUDE_MDLIBS
-//        if let mTextField = view as? MTextField {
-//            if let mImageView = mTextField.rightView as? UIImageView {
-//                let code = isSecure ? "visibility" : "visibility.off"
-//                mImageView.image = UIImage(from: .materialIcon, code: code,
-//                                           textColor: .blue, backgroundColor: .clear,
-//                                           size: CGSize(width: 24, height: 24))
-//            }
-//        }
-//        #endif
-//    }
 }
 
 //class JsonView_Fields_PasswordV1: JsonView, SubmittableField {

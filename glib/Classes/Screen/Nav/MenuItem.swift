@@ -1,5 +1,5 @@
 public class MenuItem {
-    public private(set) var title: String
+    public private(set) var title: String?
     public private(set) var icon: GIcon?
     private(set) var controller: UIViewController?
     private(set) var onClick: (() -> Void)?
@@ -7,18 +7,28 @@ public class MenuItem {
     private(set) var isRoot = false
     private(set) var cellClass: GTableViewCustomCell.Type = MenuCell.self
 
-//    public init(title: String, icon: String, root: Bool) {
-//        self.title = title
-//        self.icon = icon
-//        isRoot = root
-//    }
+    public private(set) var iconSpec: Json?
 
     public init(title: String) {
         self.title = title
     }
 
+    public init() {
+        // Nothing to do
+    }
+
+    public func title(_ title: String) -> Self {
+        self.title = title
+        return self
+    }
+
     public func icon(_ icon: GIcon) -> Self {
         self.icon = icon
+        return self
+    }
+
+    public func iconSpec(_ spec: Json) -> Self {
+        self.iconSpec = spec
         return self
     }
 

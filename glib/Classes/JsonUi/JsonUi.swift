@@ -80,14 +80,13 @@ public class JsonUi {
 
     private static func initNavBar(spec: Json, screen: GScreen) {
         let buttons = spec["rightNavButtons"].arrayValue.map { json -> GBarButtonItem in
-            let item = GBarButtonItem()
-                .onClick({
+            let customView = GLabel()
+                .specs(.link)
+                .onClick({ _ in
                     JsonAction.execute(spec: json["onClick"], screen: screen, creator: nil)
                 })
-            if let iconName = json["icon"]["materialName"].string {
-                item.icon(GIcon(font: .materialIcon, code: iconName))
-            }
-            return item
+            JsonView_IconV1.update(view: customView, spec: json["icon"])
+            return GBarButtonItem(customView: customView)
         }
 
         screen.rightBarButtons(items: buttons)
@@ -172,20 +171,20 @@ class JsonUiMenuNavController: MenuNavController {
 
     override func initMenu(_ menu: Menu) {
         spec["rows"].arrayValue.forEach { (row) in
-            if let title = row["text"].string {
-                let item = MenuItem(title: title).onClick {
-                    JsonAction.execute(spec: row["onClick"], screen: self.screen, creator: nil)
-                }
-                if let iconName = row["icon"]["materialName"].string {
-                    item.icon(GIcon(font: .materialIcon, code: iconName))
-                }
-                menu.add(item)
+            let item = MenuItem().onClick {
+                JsonAction.execute(spec: row["onClick"], screen: self.screen, creator: nil)
             }
-        }
 
-//        #if DEBUG
-//        menu.add(MenuItem(title: "Diagnostics").screen(JsonUiScreen(path: "/app_diagnostics.json")))
-//        #endif
+            if let title = row["text"].string {
+                item.title(title)
+            }
+
+            if let spec = row["icon"].presence {
+                item.iconSpec(spec)
+            }
+
+            menu.add(item)
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
