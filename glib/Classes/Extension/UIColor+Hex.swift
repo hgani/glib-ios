@@ -2,6 +2,22 @@ import UIKit
 
 public extension UIColor {
     convenience init(hex hexString: String) {
+        if let (red, green, blue, alpha) = type(of: self).parseRgba(hex: hexString) {
+            self.init(red: red, green: green, blue: blue, alpha: alpha)
+            return
+        }
+        self.init(red: 0, green: 0, blue: 0, alpha: 0)
+    }
+
+    convenience init?(unsafeHex hexString: String) {
+        if let (red, green, blue, alpha) = type(of: self).parseRgba(hex: hexString) {
+            self.init(red: red, green: green, blue: blue, alpha: alpha)
+            return
+        }
+        return nil
+    }
+
+    private static func parseRgba(hex hexString: String) -> (CGFloat, CGFloat, CGFloat, CGFloat)? {
         let red, green, blue, alpha: CGFloat
 
         if hexString.hasPrefix("#") {
@@ -22,13 +38,11 @@ public extension UIColor {
                     green = CGFloat((hexNumber & 0x00FF_0000) >> 16) / 255
                     blue = CGFloat((hexNumber & 0x0000_FF00) >> 8) / 255
                     alpha = CGFloat(hexNumber & 0x0000_00FF) / 255
-
-                    self.init(red: red, green: green, blue: blue, alpha: alpha)
-                    return
+                    return (red, green, blue, alpha)
                 }
             }
         }
-        self.init(red: 0, green: 0, blue: 0, alpha: 0)
+        return nil
     }
 
     func muted() -> UIColor {
