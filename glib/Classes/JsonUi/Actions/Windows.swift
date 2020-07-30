@@ -14,7 +14,7 @@ class JsonAction_Windows_CloseV1: JsonAction {
                 JsonAction.execute(spec: onClose, screen: previousScreen, creator: self)
             }
         }
-        nav.pop().done()
+        nav.pop()
         CATransaction.commit()
         return true
     }
@@ -22,7 +22,7 @@ class JsonAction_Windows_CloseV1: JsonAction {
 
 class JsonAction_Windows_CloseAllV1: JsonAction {
     override func silentExecute() -> Bool {
-        nav.backToHome().done()
+        nav.backToHome()
         JsonAction.execute(spec: spec["onClose"], screen: screen, creator: self)
         return true
     }
