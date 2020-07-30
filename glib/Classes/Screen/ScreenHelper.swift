@@ -54,15 +54,15 @@ open class ScreenHelper {
 
     // Made public so that it's accessible from GaniWeb
     public func viewWillAppear() {
-        updateBadge()
+//        updateBadge()
     }
 
     @objc fileprivate func applicationDidBecomeActiveNotification(_: Notification) {
-        updateBadge()
+//        updateBadge()
     }
 
-    private func updateBadge() {
-        // Can be nil since not all screens have nav menu.
-        navItem?.setBadge(text: UIApplication.shared.applicationIconBadgeNumber > 0 ? "!" : "")
-    }
+//    private func updateBadge() {
+//        // Can be nil since not all screens have nav menu.
+//        navItem?.setBadge(text: UIApplication.shared.applicationIconBadgeNumber > 0 ? "!" : "")
+//    }
 }
