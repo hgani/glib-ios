@@ -27,7 +27,8 @@ open class MenuCell: GTableViewCustomCell, MenuCellType {
 
     open func update(item: MenuItem) {
         if let icon = item.icon {
-            iconLabel.icon(icon.string)
+//            iconLabel.icon(icon.string)
+            iconLabel.icon(icon)
         }
         titleLabel.text(item.title)
 

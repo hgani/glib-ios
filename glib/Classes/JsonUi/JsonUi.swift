@@ -80,14 +80,13 @@ public class JsonUi {
 
     private static func initNavBar(spec: Json, screen: GScreen) {
         let buttons = spec["rightNavButtons"].arrayValue.map { json -> GBarButtonItem in
-            let item = GBarButtonItem()
-                .onClick({
+            let customView = GLabel()
+                .specs(.link)
+                .onClick({ _ in
                     JsonAction.execute(spec: json["onClick"], screen: screen, creator: nil)
                 })
-            if let iconName = json["icon"]["material"]["name"].string {
-                item.icon(GIcon(font: .materialIcon, code: iconName))
-            }
-            return item
+            JsonView_IconV1.update(view: customView, spec: json["icon"])
+            return GBarButtonItem(customView: customView)
         }
 
         screen.rightBarButtons(items: buttons)
