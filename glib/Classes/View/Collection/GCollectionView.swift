@@ -183,6 +183,12 @@ open class GCollectionViewCell: UICollectionViewCell {
         container.addView(view, top: top)
     }
 
+    public func clear() -> Self {
+        container.clear()
+        return self
+    }
+
+    @discardableResult
     public func append(_ view: UIView, top: Float = 0) -> Self {
         container.addView(view, top: top)
         return self
@@ -193,9 +199,9 @@ open class GCollectionViewCell: UICollectionViewCell {
         return self
     }
 
-    public func done() {
-        // End call chaining
-    }
+//    public func done() {
+//        // End call chaining
+//    }
 
     static func reuseIdentifier() -> String {
         return String(describing: self)

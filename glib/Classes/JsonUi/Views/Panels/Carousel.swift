@@ -19,7 +19,7 @@ class JsonView_Panels_CarouselV1: JsonView {
         let delegate = Delegate(view: self)
 
         scroller
-            .register(cellType: PictureCollectionCell.self)
+//            .register(cellType: PictureCollectionCell.self)
             .register(cellType: VerticalCollectionCell.self)
 //            .delegate(delegate, retain: true)
             .source(delegate, retain: true)
@@ -47,18 +47,23 @@ class Delegate: NSObject, UICollectionViewDataSource {
         }
 
         func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//            let cell = carouselView.scroller.cellInstance(of: VerticalCollectionCell.self, for: indexPath)
-//            let cell = scroller.cellInstance(of: PictureCollectionCell.self, for: indexPath)
+//            let cell = carouselView.scroller.cellInstance(of: PictureCollectionCell.self, for: indexPath)
+//            cell.picture.width(.matchParent).source(name: "Tutorial\(indexPath.row + 1)-en")
 
-            let cell = carouselView.scroller.cellInstance(of: PictureCollectionCell.self, for: indexPath)
-            cell.picture.width(.matchParent).source(name: "Tutorial\(indexPath.row + 1)-en")
-
-            NSLog("cellForItemAt: \(indexPath.row + 1)")
-
-//            renderStrategy.renderCell(cell: cell, indexPath: indexPath)
+//            NSLog("cellForItemAt: \(indexPath.row + 1)")
 
 //            let spec = self.childViews[indexPath.row]
 //            let childViews = spec["childViews"].arrayValue
+
+                        NSLog("cellForItemAt: \(self.childViews[indexPath.row])")
+
+
+            let cell = carouselView.scroller.cellInstance(of: VerticalCollectionCell.self, for: indexPath)
+            let viewSpec = self.childViews[indexPath.row]
+            if let jsonView = JsonView.create(spec: viewSpec, screen: carouselView.screen) {
+                cell.clear().append(jsonView.createView())
+            }
+//            cell.clear().append(GImageView().width(.matchParent).source(name: "Tutorial\(indexPath.row + 1)-en"))
 
 //            for viewSpec in childViews {
 //                if let jsonView = JsonView.create(spec: viewSpec, screen: carouselView.screen) {
@@ -67,8 +72,6 @@ class Delegate: NSObject, UICollectionViewDataSource {
 //            }
 
             return cell
-
-//            return UICollectionViewCell()
         }
 
 
@@ -167,39 +170,6 @@ class Delegate: NSObject, UICollectionViewDataSource {
 
 
 
-//private class UrlStrategy: RenderStrategy {
-//    private let imageUrls: [String]
-//
-//    init(imageUrls: [String]) {
-//        self.imageUrls = imageUrls
-//    }
-//
-//    var count: Int {
-//        return imageUrls.count
-//    }
-//
-//    func renderCell(cell: PictureCollectionCell, indexPath: IndexPath) {
-//        cell.picture.source(url: imageUrls[indexPath.row])
-//    }
-//}
-//
-//private class NameStrategy: RenderStrategy {
-//    private let imageNames: [String]
-//
-//    init(imageNames: [String]) {
-//        self.imageNames = imageNames
-//    }
-//
-//    var count: Int {
-//        return imageNames.count
-//    }
-//
-//    func renderCell(cell: PictureCollectionCell, indexPath: IndexPath) {
-//        cell.picture.width(Device.screenWidth).source(name: imageNames[indexPath.row])
-//    }
-//}
-//
-//
 //
 //// TODO
 //class GalleryScreen: GScreen {

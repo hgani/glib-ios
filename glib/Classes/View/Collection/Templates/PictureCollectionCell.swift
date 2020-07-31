@@ -3,6 +3,5 @@ public class PictureCollectionCell: GCollectionViewCell {
 
     public override func initContent() {
         append(picture)
-            .done()
     }
 }
