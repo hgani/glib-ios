@@ -1,4 +1,4 @@
-#if INCLUDE_MDLIBS
+#if INCLUDE_STRIPE
 
 import Foundation
 import Stripe

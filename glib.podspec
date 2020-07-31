@@ -82,6 +82,11 @@ Simplify iOS development
     sub.dependency 'FBSDKLoginKit/Swift', '6.5.2'
   end
 
+  s.subspec 'Stripe' do |sub|
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_STRIPE' }
+    sub.dependency 'Stripe'
+  end
+
 
   s.subspec 'UILibs' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_UILIBS' }
@@ -110,7 +115,6 @@ Simplify iOS development
     sub.dependency 'MaterialComponents/Chips', '~> 92.0'
     # sub.dependency 'MaterialComponents/TextFields+Theming', '~> 92.0'
     # sub.dependency 'MaterialComponents/schemes/Shape', '~> 92.0'
-    sub.dependency 'Stripe'
     sub.dependency 'MarkdownKit', '1.5'
     sub.dependency 'FlexLayout'
     sub.dependency 'jsonlogic'
