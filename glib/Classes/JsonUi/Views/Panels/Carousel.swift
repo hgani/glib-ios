@@ -1,11 +1,8 @@
 class JsonView_Panels_CarouselV1: JsonView {
     private let container = GAligner()
-        .color(bg: .green)
-//        .width(.matchParent)
 
     private let scroller = GCollectionView()
         .layout(GCollectionViewFlowLayout().horizontal())
-        .color(bg: .red)
         .width(.matchParent)
 //        .height(.wrapContent)
         .height(300)

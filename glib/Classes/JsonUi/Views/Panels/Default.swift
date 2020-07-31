@@ -59,12 +59,12 @@ class JsonViewDefaultPanel: JsonView, ParentPanel {
 
     static func createPanel(spec: Json, screen: GScreen) -> IVerticalPanel & UIView {
         let component = JsonViewDefaultPanel(spec, screen)
-        component.createView()
+        component.view()
         return component.panel
     }
 
     static func initPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) -> IVerticalPanel & UIView {
-        JsonViewDefaultPanel(panel, spec, screen).createView()
+        JsonViewDefaultPanel(panel, spec, screen).view()
         return panel
     }
 }

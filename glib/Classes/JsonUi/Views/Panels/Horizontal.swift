@@ -18,7 +18,7 @@ class JsonView_Panels_HorizontalV1: JsonView {
         // NOTE: subviews property is deprecated
         let childViews: [UIView] = (spec["subviews"].array ?? spec["childViews"].arrayValue).compactMap { viewSpec -> UIView? in
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-                return jsonView.createView()
+                return jsonView.view()
             }
             return nil
         }

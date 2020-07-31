@@ -114,7 +114,7 @@ open class JsonView {
         }
         return nil
     }
-    
+
     static func create(spec: Json, screen: GScreen) -> JsonView? {
         let viewName = spec["view"].stringValue
         if let klass = JsonUi.loadClass(name: viewName, type: JsonView.self) as? JsonView.Type {

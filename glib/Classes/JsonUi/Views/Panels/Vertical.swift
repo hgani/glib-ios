@@ -19,7 +19,7 @@ class JsonView_Panels_VerticalV1: JsonView {
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
         let views: [UIView] = childViews.compactMap { viewSpec -> UIView? in
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-                return jsonView.createView()
+                return jsonView.view()
             }
             return nil
         }
