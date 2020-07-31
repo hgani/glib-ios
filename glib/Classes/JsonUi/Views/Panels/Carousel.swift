@@ -3,7 +3,7 @@ class JsonView_Panels_CarouselV1: JsonView {
         .layout(GCollectionViewFlowLayout().horizontal())
         .color(bg: .red)
         .width(.matchParent)
-        .height(300)
+//        .height(300)
 //        .height(.matchParent)
 
     private let pageControl: UIPageControl = {
@@ -19,8 +19,8 @@ class JsonView_Panels_CarouselV1: JsonView {
         let delegate = Delegate(view: self)
 
         scroller
-//            .register(cellType: PictureCollectionCell.self)
-            .register(cellType: VerticalCollectionCell.self)
+//            .register(cellType: VerticalCollectionCell.self)
+            .register(cellType: GCollectionViewCell.self)
 //            .delegate(delegate, retain: true)
             .source(delegate, retain: true)
             .pagingEnabled(true)
@@ -55,10 +55,7 @@ class Delegate: NSObject, UICollectionViewDataSource {
 //            let spec = self.childViews[indexPath.row]
 //            let childViews = spec["childViews"].arrayValue
 
-                        NSLog("cellForItemAt: \(self.childViews[indexPath.row])")
-
-
-            let cell = carouselView.scroller.cellInstance(of: VerticalCollectionCell.self, for: indexPath)
+            let cell = carouselView.scroller.cellInstance(of: GCollectionViewCell.self, for: indexPath)
             let viewSpec = self.childViews[indexPath.row]
             if let jsonView = JsonView.create(spec: viewSpec, screen: carouselView.screen) {
                 cell.clear().append(jsonView.createView())
@@ -275,42 +272,4 @@ class Delegate: NSObject, UICollectionViewDataSource {
 //        return cell
 //    }
 //}
-//
-//private protocol RenderStrategy {
-//    var count: Int { get }
-//    func renderCell(cell: PictureCollectionCell, indexPath: IndexPath)
-//}
-//
-//private class UrlStrategy: RenderStrategy {
-//    private let imageUrls: [String]
-//
-//    init(imageUrls: [String]) {
-//        self.imageUrls = imageUrls
-//    }
-//
-//    var count: Int {
-//        return imageUrls.count
-//    }
-//
-//    func renderCell(cell: PictureCollectionCell, indexPath: IndexPath) {
-//        cell.picture.source(url: imageUrls[indexPath.row])
-//    }
-//}
-//
-//private class NameStrategy: RenderStrategy {
-//    private let imageNames: [String]
-//
-//    init(imageNames: [String]) {
-//        self.imageNames = imageNames
-//    }
-//
-//    var count: Int {
-//        return imageNames.count
-//    }
-//
-//    func renderCell(cell: PictureCollectionCell, indexPath: IndexPath) {
-//        cell.picture.width(Device.screenWidth).source(name: imageNames[indexPath.row])
-//    }
-//}
-//
 //

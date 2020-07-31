@@ -1,7 +1,7 @@
-public class VerticalCollectionCell: GCollectionViewCell {
-//    public let panel = GVerticalPanel()
-
-    public override func initContent() {
-//        append(panel)
-    }
-}
+//public class VerticalCollectionCell: GCollectionViewCell {
+////    public let panel = GVerticalPanel()
+//
+//    public override func initContent() {
+////        append(panel)
+//    }
+//}
