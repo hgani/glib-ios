@@ -1,7 +1,7 @@
 class JsonView_Panels_CarouselV1: JsonView {
     private let container = GAligner()
         .color(bg: .green)
-        .width(.matchParent)
+//        .width(.matchParent)
 
     private let scroller = GCollectionView()
         .layout(GCollectionViewFlowLayout().horizontal())
@@ -22,15 +22,12 @@ class JsonView_Panels_CarouselV1: JsonView {
             .pagingEnabled(true)
             .pager(pageControl.numberOfPages(delegate.count))
 
-        container.withView(scroller)
-
-        addPageControl()
+        addPageControl(to: container.withView(scroller))
 
         return container
     }
 
-    private func addPageControl() {
-        let view = container
+    private func addPageControl(to view: UIView) {
         view.addSubview(pageControl)
 
         pageControl.snp.makeConstraints { make in
@@ -107,64 +104,6 @@ class JsonView_Panels_CarouselV1: JsonView {
 //    }()
 //
 //    private let renderStrategy: RenderStrategy
-//
-//    init(imageNames: [String]) {
-//        renderStrategy = NameStrategy(imageNames: imageNames)
-//        super.init()
-//    }
-//
-//    init(imageUrls: [String]) {
-//        renderStrategy = UrlStrategy(imageUrls: imageUrls)
-//        super.init()
-//    }
-//
-//    required init?(coder _: NSCoder) {
-//        fatalError("Unsupported")
-//    }
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        navigationItem.setHidesBackButton(true, animated: false)
-//
-//        nav
-//            .color(bg: .navbarBg, text: .navbarText)
-//
-//        let footer = GView().color(bg: .navbarBg)
-//        let padder = GView().color(bg: .navbarBg)
-//
-//        container.content
-//            .append(scroller
-//                .register(cellType: PictureCollectionCell.self)
-//                .source(self)
-//                .pagingEnabled(true)
-//                .pager(pageControl))
-//            .append(footer)
-//            .append(padder)
-//
-//        padder.snp.makeConstraints { make in
-//            make.bottom.equalTo(view.snp.bottom) // Make sure it bypasses safe area
-//        }
-//
-//        let screenRatio = Float(Device.screenWidth) / Float(Device.screenHeight)
-//        if screenRatio < 0.5 { // E.g. iPhone X
-//            footer.height(85)
-//        }
-//
-//        addPageControl()
-//        addSkipButton()
-//    }
-//
-//    private func addPageControl() {
-//        view.addSubview(pageControl)
-//
-//        pageControl.snp.makeConstraints { make in
-//            make.bottom.equalTo(view.snp.bottomMargin)
-//            make.left.equalTo(view.snp.left)
-//            make.right.equalTo(view.snp.right)
-//            make.height.equalTo(50)
-//        }
-//    }
 //
 //}
 //

@@ -45,6 +45,6 @@ class JsonView_Panels_HorizontalV1: JsonView {
 }
 
 protocol IHorizontalPanel {
-    func addView(_ child: UIView, left: Float) -> Void
+    func addView(_ child: UIView, left: Float)
     func split() -> Self
 }

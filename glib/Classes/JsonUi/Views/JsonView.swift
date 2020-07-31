@@ -19,6 +19,8 @@ open class JsonView {
             initWidth(view)
             initHeight(view)
             initPadding(view)
+        } else {
+            fatalError("Not a valid view: \(type(of: backend)) in \(spec["view"])")
         }
     }
 

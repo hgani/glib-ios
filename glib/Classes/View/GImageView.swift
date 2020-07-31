@@ -25,6 +25,87 @@ open class GImageView: UIImageView {
         helper.didMoveToSuperview()
     }
 
+//    @discardableResult
+//    public func color(bg: UIColor?) -> Self {
+//        if let bgColor = bg {
+//            backgroundColor = bgColor
+//        }
+//        return self
+//    }
+
+    @discardableResult
+    public func source(name: String) -> Self {
+        return source(image: UIImage(named: name))
+    }
+
+    @discardableResult
+    public func source(image: UIImage?) -> Self {
+        self.image = image
+        return self
+    }
+
+    public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
+        helper.border(color: color, width: width, corner: corner)
+        return self
+    }
+
+//    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
+//        helper.paddings(t: top, l: left, b: bottom, r: right)
+//        return self
+//    }
+
+    open func onClick(_ command: @escaping (GImageView) -> Void) -> Self {
+        event.onClick(command)
+        return self
+    }
+
+    public func adjustHeight() {
+        if let safeImage = image {
+            layoutIfNeeded()
+
+            let ratio = safeImage.size.width / safeImage.size.height
+            let height = frame.width / ratio
+
+            NSLog("Adjusting to height: \(height)")
+
+            snp.makeConstraints { (make) -> Void in
+                make.height.equalTo(height)
+            }
+        }
+    }
+
+    public func clipsToBounds(_ value: Bool) -> Self {
+        clipsToBounds = value
+        return self
+    }
+
+    public func contentMode(_ mode: UIView.ContentMode) -> Self {
+        contentMode = mode
+        return self
+    }
+
+    public func done() {
+        // End chaining
+    }
+}
+
+extension GImageView: IView {
+    public var size: CGSize {
+        return helper.size
+    }
+
+    @discardableResult
+    public func color(bg: UIColor) -> Self {
+        backgroundColor = bg
+        return self
+    }
+
+    @discardableResult
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
     public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
@@ -46,101 +127,38 @@ open class GImageView: UIImageView {
         helper.height(height)
         return self
     }
-
-    @discardableResult
-    public func color(bg: UIColor?) -> Self {
-        if let bgColor = bg {
-            backgroundColor = bgColor
-        }
-        return self
-    }
-
-    @discardableResult
-    public func source(name: String) -> Self {
-        return source(image: UIImage(named: name))
-    }
-
-    @discardableResult
-    public func source(image: UIImage?) -> Self {
-        self.image = image
-        return self
-    }
-
-    public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
-        helper.border(color: color, width: width, corner: corner)
-        return self
-    }
-
-    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-        helper.paddings(t: top, l: left, b: bottom, r: right)
-        return self
-    }
-
-    open func onClick(_ command: @escaping (GImageView) -> Void) -> Self {
-        event.onClick(command)
-        return self
-    }
-
-    public func adjustHeight() {
-        if let safeImage = image {
-            layoutIfNeeded()
-
-            let ratio = safeImage.size.width / safeImage.size.height
-            let height = frame.width / ratio
-
-            NSLog("Adjusting to height: \(height)")
-
-            snp.makeConstraints { (make) -> Void in
-                make.height.equalTo(height)
-            }
-        }
-    }
-    
-    public func clipsToBounds(_ value: Bool) -> Self {
-        clipsToBounds = value
-        return self
-    }
-
-    public func contentMode(_ mode: UIView.ContentMode) -> Self {
-        contentMode = mode
-        return self
-    }
-
-    public func done() {
-        // End chaining
-    }
 }
 
 #if INCLUDE_KINGFISHER
 
-    import Kingfisher
+import Kingfisher
 
-    extension GImageView {
-        @discardableResult
-        public func source(url: URL?, placeholder: UIImage? = nil) -> Self {
-            kf.setImage(with: url, placeholder: placeholder)
-            return self
-        }
-
-        @discardableResult
-        public func source(url: String, placeholder: UIImage? = nil) -> Self {
-            return source(url: URL(string: url), placeholder: placeholder)
-        }
-        
-        @discardableResult
-        public func source(url: URL?, placeholder: UIImage? = nil, onSuccess: @escaping () -> Void) -> Self {
-            kf.setImage(with: url, placeholder: placeholder, options: nil, progressBlock: nil){ (image, error, cache, url) in
-                if let image = image {
-                    onSuccess()
-                }
-            }
-            return self
-        }
-        
-        @discardableResult
-        public func source(url: String, placeholder: UIImage? = nil, onSuccess: @escaping () -> Void) -> Self {
-            return source(url: URL(string: url), placeholder: placeholder, onSuccess: onSuccess)
-        }
+extension GImageView {
+    @discardableResult
+    public func source(url: URL?, placeholder: UIImage? = nil) -> Self {
+        kf.setImage(with: url, placeholder: placeholder)
+        return self
     }
+
+    @discardableResult
+    public func source(url: String, placeholder: UIImage? = nil) -> Self {
+        return source(url: URL(string: url), placeholder: placeholder)
+    }
+
+    @discardableResult
+    public func source(url: URL?, placeholder: UIImage? = nil, onSuccess: @escaping () -> Void) -> Self {
+        kf.setImage(with: url, placeholder: placeholder, options: nil, progressBlock: nil){ (image, error, cache, url) in
+            if let image = image {
+                onSuccess()
+            }
+        }
+        return self
+    }
+
+    @discardableResult
+    public func source(url: String, placeholder: UIImage? = nil, onSuccess: @escaping () -> Void) -> Self {
+        return source(url: URL(string: url), placeholder: placeholder, onSuccess: onSuccess)
+    }
+}
 
 #endif
