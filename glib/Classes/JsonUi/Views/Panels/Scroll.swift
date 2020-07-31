@@ -4,10 +4,8 @@ class JsonView_Panels_ScrollV1: JsonView {
     override func initView() -> UIView {
         JsonViewDefaultPanel.initPanel(panel.contentView, spec: spec, screen: screen)
 
-        panel.addSubview(GRefreshControl().onValueChanged {
+        return panel.withRefresher(GRefreshControl().onValueChanged {
             self.screen.onRefresh()
         })
-
-        return panel
     }
 }

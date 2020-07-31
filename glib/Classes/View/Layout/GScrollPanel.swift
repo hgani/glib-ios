@@ -79,6 +79,15 @@ open class GScrollPanel: UIScrollView, IContainer {
         return self
     }
 
+    open override func addSubview(_: UIView) {
+        fatalError("Use addView() instead")
+    }
+
+    public func withRefresher(_ refresher: GRefreshControl) -> Self {
+        addSubview(refresher)
+        return self
+    }
+
     public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
         _ = contentView.paddings(top: top, left: left, bottom: bottom, right: right)
         return self
