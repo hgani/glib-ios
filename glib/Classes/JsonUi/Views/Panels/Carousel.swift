@@ -1,11 +1,9 @@
 class JsonView_Panels_CarouselV1: JsonView {
-//    private let label = GLabel()
-
     fileprivate let scroller = GCollectionView()
         .layout(GCollectionViewFlowLayout().horizontal())
         .color(bg: .red)
         .width(.matchParent)
-        .height(100)
+        .height(300)
 //        .height(.matchParent)
 
     private let pageControl: UIPageControl = {
@@ -21,10 +19,10 @@ class JsonView_Panels_CarouselV1: JsonView {
         let delegate = Delegate(view: self)
 
         scroller
-//            .register(cellType: PictureCollectionCell.self)
+            .register(cellType: PictureCollectionCell.self)
             .register(cellType: VerticalCollectionCell.self)
-            .delegate(delegate, retain: true)
-            .source(delegate)
+//            .delegate(delegate, retain: true)
+            .source(delegate, retain: true)
             .pagingEnabled(true)
             .pager(pageControl)
 
@@ -32,53 +30,48 @@ class JsonView_Panels_CarouselV1: JsonView {
     }
 
 
-    class Delegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
+//    class Delegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
+class Delegate: NSObject, UICollectionViewDataSource {
+
         private let carouselView: JsonView_Panels_CarouselV1
         private var childViews: [Json]
-//        private var nextUrl: String?
-//        private var autoLoad = false
-//        private var request: Rest?
 
         init(view: JsonView_Panels_CarouselV1) {
             carouselView = view
             childViews = carouselView.spec["childViews"].arrayValue
-//            carouselView[
             super.init()
-
-//            initNextPageInstructions(spec: listView.spec)
         }
 
         func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-//            return renderStrategy.count
             return childViews.count
         }
 
         func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = carouselView.scroller.cellInstance(of: VerticalCollectionCell.self, for: indexPath)
+//            let cell = carouselView.scroller.cellInstance(of: VerticalCollectionCell.self, for: indexPath)
+//            let cell = scroller.cellInstance(of: PictureCollectionCell.self, for: indexPath)
+
+            let cell = carouselView.scroller.cellInstance(of: PictureCollectionCell.self, for: indexPath)
+            cell.picture.width(.matchParent).source(name: "Tutorial\(indexPath.row + 1)-en")
+
+            NSLog("cellForItemAt: \(indexPath.row + 1)")
+
 //            renderStrategy.renderCell(cell: cell, indexPath: indexPath)
 
-            let spec = self.childViews[indexPath.row]
-            let childViews = spec["childViews"].arrayValue
-            for viewSpec in childViews {
-                if let jsonView = JsonView.create(spec: viewSpec, screen: carouselView.screen) {
-                    cell.panel.append(jsonView.createView())
-                }
-            }
+//            let spec = self.childViews[indexPath.row]
+//            let childViews = spec["childViews"].arrayValue
+
+//            for viewSpec in childViews {
+//                if let jsonView = JsonView.create(spec: viewSpec, screen: carouselView.screen) {
+//                    cell.panel.append(jsonView.createView())
+//                }
+//            }
 
             return cell
 
 //            return UICollectionViewCell()
         }
 
-//        private func initNextPageInstructions(spec: Json) {
-//            if let nextPage = spec["nextPage"].presence {
-//                nextUrl = nextPage["url"].string
-//                autoLoad = nextPage["autoLoad"].boolValue
-//            } else {
-//                autoLoad = false
-//            }
-//        }
-//
+
 //        public func numberOfSections(in _: UITableView) -> Int {
 //            return sections.count
 //        }
@@ -173,116 +166,7 @@ class JsonView_Panels_CarouselV1: JsonView {
 
 
 
-//// TODO
-//class GalleryScreen: GScreen {
-//    private let scroller = GCollectionView()
-//        .layout(GCollectionViewFlowLayout().horizontal())
-//        .width(.matchParent)
-//        .height(.matchParent)
-//
-//    private let pageControl: UIPageControl = {
-//        let pageControl = UIPageControl()
-//        pageControl.currentPage = 0
-//        pageControl.numberOfPages = 3
-//        pageControl.currentPageIndicatorTintColor = .darkGray
-//        pageControl.pageIndicatorTintColor = .lightGray
-//        return pageControl
-//    }()
-//
-//    private let renderStrategy: RenderStrategy
-//
-//    init(imageNames: [String]) {
-//        renderStrategy = NameStrategy(imageNames: imageNames)
-//        super.init()
-//    }
-//
-//    init(imageUrls: [String]) {
-//        renderStrategy = UrlStrategy(imageUrls: imageUrls)
-//        super.init()
-//    }
-//
-//    required init?(coder _: NSCoder) {
-//        fatalError("Unsupported")
-//    }
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        navigationItem.setHidesBackButton(true, animated: false)
-//
-//        nav
-//            .color(bg: .navbarBg, text: .navbarText)
-//
-//        let footer = GView().color(bg: .navbarBg)
-//        let padder = GView().color(bg: .navbarBg)
-//
-//        container.content
-//            .append(scroller
-//                .register(cellType: PictureCollectionCell.self)
-//                .source(self)
-//                .pagingEnabled(true)
-//                .pager(pageControl))
-//            .append(footer)
-//            .append(padder)
-//
-//        padder.snp.makeConstraints { make in
-//            make.bottom.equalTo(view.snp.bottom) // Make sure it bypasses safe area
-//        }
-//
-//        let screenRatio = Float(Device.screenWidth) / Float(Device.screenHeight)
-//        if screenRatio < 0.5 { // E.g. iPhone X
-//            footer.height(85)
-//        }
-//
-//        addPageControl()
-//        addSkipButton()
-//    }
-//
-//    private func addPageControl() {
-//        view.addSubview(pageControl)
-//
-//        pageControl.snp.makeConstraints { make in
-//            make.bottom.equalTo(view.snp.bottomMargin)
-//            make.left.equalTo(view.snp.left)
-//            make.right.equalTo(view.snp.right)
-//            make.height.equalTo(50)
-//        }
-//    }
-//
-//    private func addSkipButton() {
-//        let skipButton = GButton()
-//            .specs(.standardSelected)
-//            .title("SKIP")
-//            .onClick { _ in
-//                self.nav.push(HomeMenuScreen(), animated: false)
-//            }
-//
-//        view.addSubview(skipButton)
-//
-//        skipButton.snp.makeConstraints { make in
-//            make.right.equalTo(view.snp.rightMargin).offset(-12)
-//            make.bottom.equalTo(view.snp.bottomMargin).offset(-8)
-//        }
-//    }
-//}
-//
-//extension GalleryScreen: UICollectionViewDataSource {
-//    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-//        return renderStrategy.count
-//    }
-//
-//    func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = scroller.cellInstance(of: PictureCollectionCell.self, for: indexPath)
-//        renderStrategy.renderCell(cell: cell, indexPath: indexPath)
-//        return cell
-//    }
-//}
-//
-//private protocol RenderStrategy {
-//    var count: Int { get }
-//    func renderCell(cell: PictureCollectionCell, indexPath: IndexPath)
-//}
-//
+
 //private class UrlStrategy: RenderStrategy {
 //    private let imageUrls: [String]
 //

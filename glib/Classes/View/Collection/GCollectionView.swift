@@ -5,6 +5,7 @@ open class GCollectionView: UICollectionView {
 
     // Useful for making sure an unattached delegate object sticks around.
     private var retainedRef: UICollectionViewDelegate?
+    private var retainedDataSource: UICollectionViewDataSource?
 
     fileprivate var pager: UIPageControl?
 
@@ -80,8 +81,11 @@ open class GCollectionView: UICollectionView {
         return self
     }
 
-    public func source(_ source: UICollectionViewDataSource) -> Self {
+    public func source(_ source: UICollectionViewDataSource, retain: Bool = false) -> Self {
         dataSource = source
+        if retain {
+            retainedDataSource = source
+        }
         return self
     }
 
