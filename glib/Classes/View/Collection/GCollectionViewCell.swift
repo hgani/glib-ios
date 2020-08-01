@@ -58,10 +58,6 @@ open class GCollectionViewCell: UICollectionViewCell {
         return self
     }
 
-//    public func done() {
-//        // End call chaining
-//    }
-
     static func reuseIdentifier() -> String {
         return String(describing: self)
     }
