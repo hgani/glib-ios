@@ -20,7 +20,8 @@ open class JsonView {
             initHeight(view)
             initPadding(view)
         } else {
-            fatalError("Not a valid view: \(type(of: backend)) in \(spec["view"])")
+            // TODO: Uncomment this when all of our views conform to IView
+//            fatalError("Not a valid view: \(type(of: backend)) in \(spec["view"])")
         }
     }
 
