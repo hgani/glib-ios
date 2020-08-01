@@ -3,9 +3,10 @@ class JsonView_Panels_CarouselV1: JsonView {
 
     private let scroller = GCollectionView()
         .layout(GCollectionViewFlowLayout().horizontal())
+        .color(bg: .libLightBackground)
         .width(.matchParent)
-//        .height(.wrapContent)
         .height(300)
+//        .height(.wrapContent)
 //        .height(.matchParent)
 
     private let pageControl = GPageControl()
@@ -78,29 +79,3 @@ class JsonView_Panels_CarouselV1: JsonView {
         }
     }
 }
-
-
-
-
-
-//
-//// TODO
-//class GalleryScreen: GScreen {
-//    private let scroller = GCollectionView()
-//        .layout(GCollectionViewFlowLayout().horizontal())
-//        .width(.matchParent)
-//        .height(.matchParent)
-//
-//    private let pageControl: UIPageControl = {
-//        let pageControl = UIPageControl()
-//        pageControl.currentPage = 0
-//        pageControl.numberOfPages = 3
-//        pageControl.currentPageIndicatorTintColor = .darkGray
-//        pageControl.pageIndicatorTintColor = .lightGray
-//        return pageControl
-//    }()
-//
-//    private let renderStrategy: RenderStrategy
-//
-//}
-//
