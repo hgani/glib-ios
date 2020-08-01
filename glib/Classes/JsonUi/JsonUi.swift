@@ -60,9 +60,7 @@ public class JsonUi {
             initBottomTabBar(screen.container.footer, spec: navMenu, screen: screen)
         }
 
-        if let onLoad = spec["onLoad"].presence {
-            JsonAction.execute(spec: onLoad, screen: screen, creator: nil)
-        }
+        JsonAction.execute(spec: spec["onLoad"], screen: screen, creator: nil)
 
         // TODO: Remove (deprecated)
         initVerticalPanel(screen.container.content, spec: spec["content"], screen: screen)
