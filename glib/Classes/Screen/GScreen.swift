@@ -9,11 +9,11 @@ open class GScreen: UIViewController {
     public var indicator: IndicatorHelper!
     public var nav: NavHelper!
 
-    public lazy var refresher: GRefreshControl = {
-        GRefreshControl().onValueChanged {
-            self.onRefresh()
-        }
-    }()
+//    public lazy var refresher: GRefreshControl = {
+//        GRefreshControl().onValueChanged {
+//            self.onRefresh()
+//        }
+//    }()
 
     // Don't make this `convenience` so that child class can delegate to it.
     public init() {

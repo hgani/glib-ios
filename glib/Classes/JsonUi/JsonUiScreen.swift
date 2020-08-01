@@ -41,7 +41,7 @@ open class JsonUiScreen: GScreen {
 
     private func update(response: Rest.Response) {
         if self.contentOnly {
-            JsonUi.parseContentScreen(response.content, screen: self)
+            JsonUi.parseScreenContent(response.content, screen: self)
         } else {
             JsonUi.parseEntireScreen(response.content, screen: self)
         }
@@ -51,12 +51,8 @@ open class JsonUiScreen: GScreen {
         self.url = url
 
         self.request = Rest.get(url: url).execute { response in
-            self.refresher.endRefreshing()
-            self.refresher.removeFromSuperview()
-
-            self.container.header.clearViews()
-            self.container.content.clearViews()
-            self.container.footer.clearViews()
+//            self.refresher.endRefreshing()
+//            self.refresher.removeFromSuperview()
 
             self.update(response: response)
             return true

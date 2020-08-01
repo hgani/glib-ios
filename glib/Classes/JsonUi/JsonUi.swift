@@ -48,14 +48,21 @@ public class JsonUi {
     }
 
     public static func parseScreenContent(_ spec: Json, screen: GScreen) {
-        initVerticalPanel(screen.container.header, spec: spec["header"], screen: screen)
-        initVerticalPanel(screen.container.content, spec: spec["body"], screen: screen)
-        initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
+//        initVerticalPanel(screen.container.header, spec: spec["header"], screen: screen)
+//        initVerticalPanel(screen.container.content, spec: spec["body"], screen: screen)
+//        initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
+
+        initVerticalPanel(screen.container.header.clear(), spec: spec["header"], screen: screen)
+        initVerticalPanel(screen.container.content.clear(), spec: spec["body"], screen: screen)
+        initVerticalPanel(screen.container.footer.clear(), spec: spec["footer"], screen: screen)
+
         if let navMenu = spec["navMenu"].presence {
             initBottomTabBar(screen.container.footer, spec: navMenu, screen: screen)
         }
 
-        JsonAction.execute(spec: spec["onLoad"], screen: screen, creator: nil)
+        if let onLoad = spec["onLoad"].presence {
+            JsonAction.execute(spec: onLoad, screen: screen, creator: nil)
+        }
 
         // TODO: Remove (deprecated)
         initVerticalPanel(screen.container.content, spec: spec["content"], screen: screen)
@@ -68,9 +75,9 @@ public class JsonUi {
         initNavBar(spec: spec, screen: screen)
     }
 
-    public static func parseContentScreen(_ spec: Json, screen: GScreen) {
-        parseScreenContent(spec, screen: screen)
-    }
+//    public static func parseContentScreen(_ spec: Json, screen: GScreen) {
+//        parseScreenContent(spec, screen: screen)
+//    }
 
     private static func initVerticalPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
         if let wrapper = JsonViewDefaultPanel(spec, screen).view() as? GVerticalPanel {
