@@ -1,5 +1,5 @@
-public class JsonUiScreen: GScreen {
-    private var url: String
+open class JsonUiScreen: GScreen {
+    private(set) var url: String
     private let contentOnly: Bool
     private var request: Rest?
 
@@ -9,7 +9,7 @@ public class JsonUiScreen: GScreen {
         .height(300)
         .color(bg: .red)
 
-    init(url: String, contentOnly: Bool = false) {
+    public init(url: String, contentOnly: Bool = false) {
         self.url = url
         self.contentOnly = contentOnly
         super.init()
@@ -23,18 +23,16 @@ public class JsonUiScreen: GScreen {
         fatalError("Unsupported")
     }
 
-    public override func viewDidLoad() {
-//        super.viewDidLoad()
+    open override func viewDidLoad() {
         super.initOnDidLoad()
 
         onRefresh()
     }
 
     public override func onRefresh() {
-        self.request = Rest.get(url: url).execute { response in
-            self.update(response: response)
-            return true
-        }
+        update(url: url, onLoad: {
+            // Nothing to do
+        })
     }
 
     public override func viewWillDetach() {
@@ -43,28 +41,21 @@ public class JsonUiScreen: GScreen {
         self.request?.cancel()
     }
 
-    public func update(response: Rest.Response) {
+    private func update(response: Rest.Response) {
         if self.contentOnly {
-            JsonUi.parseContentScreen(response.content, screen: self)
+            JsonUi.parseScreenContent(response.content, screen: self)
         } else {
             JsonUi.parseEntireScreen(response.content, screen: self)
         }
     }
 
-    public func update(url: String) {
+    func update(url: String, onLoad: @escaping () -> (Void)) {
         self.url = url
 
-        _ = Rest.get(url: url).execute { response in
-            self.container.header.clearViews()
-            self.container.content.clearViews()
-            self.container.footer.clearViews()
-
+        self.request = Rest.get(url: url).execute { response in
             self.update(response: response)
+            onLoad()
             return true
         }
-    }
-
-    public func getUrl() -> String {
-        return url
     }
 }

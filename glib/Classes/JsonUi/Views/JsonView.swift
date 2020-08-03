@@ -19,6 +19,9 @@ open class JsonView {
             initWidth(view)
             initHeight(view)
             initPadding(view)
+        } else {
+            // TODO: Uncomment this when all of our views conform to IView
+//            fatalError("Not a valid view: \(type(of: backend)) in \(spec["view"])")
         }
     }
 
@@ -112,7 +115,7 @@ open class JsonView {
         }
         return nil
     }
-    
+
     static func create(spec: Json, screen: GScreen) -> JsonView? {
         let viewName = spec["view"].stringValue
         if let klass = JsonUi.loadClass(name: viewName, type: JsonView.self) as? JsonView.Type {

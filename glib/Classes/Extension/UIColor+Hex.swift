@@ -2,6 +2,22 @@ import UIKit
 
 public extension UIColor {
     convenience init(hex hexString: String) {
+        if let rgba = type(of: self).parseRgba(hex: hexString) {
+            self.init(red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
+            return
+        }
+        self.init(red: 0, green: 0, blue: 0, alpha: 0)
+    }
+
+    convenience init?(unsafeHex hexString: String) {
+        if let rgba = type(of: self).parseRgba(hex: hexString) {
+            self.init(red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
+            return
+        }
+        return nil
+    }
+
+    private static func parseRgba(hex hexString: String) -> Rgba? {
         let red, green, blue, alpha: CGFloat
 
         if hexString.hasPrefix("#") {
@@ -22,16 +38,21 @@ public extension UIColor {
                     green = CGFloat((hexNumber & 0x00FF_0000) >> 16) / 255
                     blue = CGFloat((hexNumber & 0x0000_FF00) >> 8) / 255
                     alpha = CGFloat(hexNumber & 0x0000_00FF) / 255
-
-                    self.init(red: red, green: green, blue: blue, alpha: alpha)
-                    return
+                    return Rgba(red: red, green: green, blue: blue, alpha: alpha)
                 }
             }
         }
-        self.init(red: 0, green: 0, blue: 0, alpha: 0)
+        return nil
     }
 
     func muted() -> UIColor {
         return withAlphaComponent(0.6)
+    }
+
+    struct Rgba {
+        let red: CGFloat
+        let green: CGFloat
+        let blue: CGFloat
+        let alpha: CGFloat
     }
 }

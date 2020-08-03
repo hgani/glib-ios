@@ -14,7 +14,7 @@ class JsonAction_Windows_CloseV1: JsonAction {
                 JsonAction.execute(spec: onClose, screen: previousScreen, creator: self)
             }
         }
-        nav.pop().done()
+        nav.pop()
         CATransaction.commit()
         return true
     }
@@ -22,7 +22,7 @@ class JsonAction_Windows_CloseV1: JsonAction {
 
 class JsonAction_Windows_CloseAllV1: JsonAction {
     override func silentExecute() -> Bool {
-        nav.backToHome().done()
+        nav.backToHome()
         JsonAction.execute(spec: spec["onClose"], screen: screen, creator: self)
         return true
     }
@@ -33,9 +33,11 @@ class JsonAction_Windows_ReloadV1: JsonAction {
         guard let currentScreen = screen as? JsonUiScreen else {
             return false
         }
-        let url = spec["url"].string ?? currentScreen.getUrl()
 
-        currentScreen.update(url: url)
+        let url = spec["url"].string ?? currentScreen.url
+        currentScreen.update(url: url, onLoad: {
+            JsonAction.execute(spec: self.spec["onReload"], screen: self.screen, creator: self)
+        })
 
         return true
     }

@@ -17,7 +17,7 @@ class JsonView_Panels_CardV1: JsonView {
         let childViews = spec["childViews"].arrayValue
         for viewSpec in childViews {
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-                card.append(jsonView.createView())
+                card.append(jsonView.view())
             }
         }
 

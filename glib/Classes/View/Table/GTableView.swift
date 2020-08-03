@@ -194,8 +194,11 @@ open class GTableViewCell: UITableViewCell {
 
     public func interactive(_ value: Bool) -> Self {
         isUserInteractionEnabled = value
-
-        selectionStyle = .none
+        if value {
+            selectionStyle = .default
+        } else {
+            selectionStyle = .none
+        }
         return self
     }
 
@@ -326,9 +329,9 @@ open class GHeaderFooterView: UIView {
         return self
     }
 
-    public func done() {
-        // Ends chaining
-    }
+//    public func done() {
+//        // Ends chaining
+//    }
 
 //    open override func didMoveToSuperview() {
 //        container.snp.makeConstraints { (make) -> Void in

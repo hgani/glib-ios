@@ -26,8 +26,4 @@ open class GBarButtonItem: UIBarButtonItem {
         super.title = text
         return self
     }
-
-    public func end() {
-        // End chaining initialisation
-    }
 }

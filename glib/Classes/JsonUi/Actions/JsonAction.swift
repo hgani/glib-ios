@@ -30,6 +30,9 @@ open class JsonAction {
     }
 
     private static func create(spec: Json, screen: UIViewController) -> JsonAction? {
+        if spec.isNull {
+            return nil
+        }
         if let klass = JsonUi.loadClass(name: spec["action"].stringValue, type: JsonAction.self) as? JsonAction.Type {
             return klass.init(spec, screen)
         }
@@ -45,9 +48,13 @@ open class JsonAction {
     }
 
     public static func execute(spec: Json, screen: UIViewController, creator: JsonAction) {
-        if let instance = create(spec: spec, screen: screen) {
-            instance.targetView = creator.targetView
-            instance.execute()
-        }
+        execute(spec: spec, screen: screen, creator: creator.targetView)
     }
+
+//    public static func execute(spec: Json, screen: UIViewController, creator: JsonAction) {
+//        if let instance = create(spec: spec, screen: screen) {
+//            instance.targetView = creator.targetView
+//            instance.execute()
+//        }
+//    }
 }

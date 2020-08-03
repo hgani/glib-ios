@@ -80,34 +80,16 @@ extension MenuNavController: UITableViewDelegate, UITableViewDataSource {
             }
 
             if let controller = item.controller {
-                self.nav.backToHome(animated: false).push(controller)
+//                self.nav.backToHome(animated: false).push(controller)
+                self.nav.push(controller)
             }
 
             if let onClick = item.onClick {
                 onClick()
             }
-
-//            switch menu.type {
-//            case .turbolinks:
-//                let session = navigationController?.session
-//                navigationController?.presentVisitableForSession(session!,
-//                                                                 url: menu.url!,
-//                                                                 action: .Replace)
-//            case .notification:
-//                let session = navigationController?.session
-//                let controller = NotificationViewController(url: menu.url!)
-//                navigationController?.presentVisitableForSession(session!,
-//                                                                 controller: controller,
-//                                                                 action: .Replace)
-//            }
-
         })
     }
 
-//    open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return menu.count
-//    }
-//
 //    open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let item = menu[indexPath.row] as MenuItem
 //
@@ -142,23 +124,6 @@ extension MenuNavController: UITableViewDelegate, UITableViewDataSource {
     ////            case .push:
     ////                _ = navigationController?.popToRootViewController(animated: false)
     ////                navigationController?.pushViewController(menu.controller!, animated: true)
-    ////            case .turbolinks:
-    ////                let session = navigationController?.session
-    ////                navigationController?.presentVisitableForSession(session!,
-    ////                                                                 url: menu.url!,
-    ////                                                                 action: .Replace)
-    ////            case .notification:
-    ////                let session = navigationController?.session
-    ////                let controller = NotificationViewController(url: menu.url!)
-    ////                navigationController?.presentVisitableForSession(session!,
-    ////                                                                 controller: controller,
-    ////                                                                 action: .Replace)
-    ////            case .method:
-    ////                // Nothing to do. onClick() must have been executed regardless.
-    //////                NSLog("Executing method ...")
-    ////                //    self.perform(menu.method)
-    ////            }
-//
 //        })
 //    }
 }

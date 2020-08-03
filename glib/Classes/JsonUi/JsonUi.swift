@@ -48,9 +48,14 @@ public class JsonUi {
     }
 
     public static func parseScreenContent(_ spec: Json, screen: GScreen) {
-        initVerticalPanel(screen.container.header, spec: spec["header"], screen: screen)
-        initVerticalPanel(screen.container.content, spec: spec["body"], screen: screen)
-        initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
+//        initVerticalPanel(screen.container.header, spec: spec["header"], screen: screen)
+//        initVerticalPanel(screen.container.content, spec: spec["body"], screen: screen)
+//        initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
+
+        initVerticalPanel(screen.container.header.clear(), spec: spec["header"], screen: screen)
+        initVerticalPanel(screen.container.content.clear(), spec: spec["body"], screen: screen)
+        initVerticalPanel(screen.container.footer.clear(), spec: spec["footer"], screen: screen)
+
         if let navMenu = spec["navMenu"].presence {
             initBottomTabBar(screen.container.footer, spec: navMenu, screen: screen)
         }
@@ -68,26 +73,25 @@ public class JsonUi {
         initNavBar(spec: spec, screen: screen)
     }
 
-    public static func parseContentScreen(_ spec: Json, screen: GScreen) {
-        parseScreenContent(spec, screen: screen)
-    }
+//    public static func parseContentScreen(_ spec: Json, screen: GScreen) {
+//        parseScreenContent(spec, screen: screen)
+//    }
 
     private static func initVerticalPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
-        if let wrapper = JsonViewDefaultPanel(spec, screen).createView() as? GVerticalPanel {
+        if let wrapper = JsonViewDefaultPanel(spec, screen).view() as? GVerticalPanel {
             panel.addView(wrapper.width(.matchParent))
         }
     }
 
     private static func initNavBar(spec: Json, screen: GScreen) {
         let buttons = spec["rightNavButtons"].arrayValue.map { json -> GBarButtonItem in
-            let item = GBarButtonItem()
-                .onClick({
+            let customView = GLabel()
+                .specs(.link)
+                .onClick({ _ in
                     JsonAction.execute(spec: json["onClick"], screen: screen, creator: nil)
                 })
-            if let iconName = json["icon"]["materialName"].string {
-                item.icon(GIcon(font: .materialIcon, code: iconName))
-            }
-            return item
+            JsonView_IconV1.update(view: customView, spec: json["icon"])
+            return GBarButtonItem(customView: customView)
         }
 
         screen.rightBarButtons(items: buttons)
@@ -120,7 +124,7 @@ public class JsonUi {
 
         let selectedTab = tabBar.items.first(where: { (item) -> Bool in
             if let tabItem = item as? JsonView_TabBarItemV1, let onClick = tabItem.spec["onClick"].presence {
-                return onClick["url"].stringValue == (screen as? JsonUiScreen)?.getUrl()
+                return onClick["url"].stringValue == (screen as? JsonUiScreen)?.url
             }
 
             return false
@@ -172,20 +176,20 @@ class JsonUiMenuNavController: MenuNavController {
 
     override func initMenu(_ menu: Menu) {
         spec["rows"].arrayValue.forEach { (row) in
-            if let title = row["text"].string {
-                let item = MenuItem(title: title).onClick {
-                    JsonAction.execute(spec: row["onClick"], screen: self.screen, creator: nil)
-                }
-                if let iconName = row["icon"]["materialName"].string {
-                    item.icon(GIcon(font: .materialIcon, code: iconName))
-                }
-                menu.add(item)
+            let item = MenuItem().onClick {
+                JsonAction.execute(spec: row["onClick"], screen: self.screen, creator: nil)
             }
-        }
 
-//        #if DEBUG
-//        menu.add(MenuItem(title: "Diagnostics").screen(JsonUiScreen(path: "/app_diagnostics.json")))
-//        #endif
+            if let title = row["text"].string {
+                item.title(title)
+            }
+
+            if let spec = row["icon"].presence {
+                item.iconSpec(spec)
+            }
+
+            menu.add(item)
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -193,7 +197,7 @@ class JsonUiMenuNavController: MenuNavController {
             let panel = GVerticalPanel()
             header["childViews"].arrayValue.forEach { viewSpec in
                 if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-                    panel.append(jsonView.createView())
+                    panel.append(jsonView.view())
                 }
             }
             return panel

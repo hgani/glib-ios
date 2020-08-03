@@ -1,15 +1,10 @@
 class JsonView_Panels_FormV1: JsonView {
     private let panel = FormPanel()
 
-//    required init(_ spec: Json, _ screen: GScreen) {
-//        panel = FormPanel(jsonView: self)
-//        super.init(spec, screen)
-//    }
-
     override func initView() -> UIView {
         panel.jsonView = self
 
-        JsonViewDefaultPanel(panel, spec, screen).createView()
+        JsonViewDefaultPanel.initPanel(panel, spec: spec, screen: screen)
 
 //        // NOTE: subviews property is deprecated
 //        let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
@@ -42,14 +37,6 @@ class JsonView_Panels_FormV1: JsonView {
         fileprivate var jsonView: JsonView_Panels_FormV1!
 
         private var fields = [SubmittableField]()
-
-//        init(jsonView: JsonView_Panels_FormV1) {
-//            self.jsonView = jsonView
-//        }
-//
-//        required init?(coder aDecoder: NSCoder) {
-//            fatalError("Unsupported")
-//        }
 
         func addField(_ field: SubmittableField) {
             fields.append(field)
@@ -98,8 +85,6 @@ class JsonView_Panels_FormV1: JsonView {
 
             let spec = jsonView.spec
             let screen = jsonView.screen
-//            _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)
-
             _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)?.execute { response in
                 #if INCLUDE_MDLIBS
 
