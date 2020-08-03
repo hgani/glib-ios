@@ -1,8 +1,6 @@
 import UIKit
 
 open class GScrollPanel: UIScrollView, IContainer {
-//    static var scrollableContents = [UIView]()
-
     private var helper: ViewHelper!
     let contentView = GVerticalPanel()
     
@@ -76,6 +74,15 @@ open class GScrollPanel: UIScrollView, IContainer {
     @discardableResult
     public func append(_ view: UIView, top: Float = 0) -> Self {
         _ = contentView.append(view, top: top)
+        return self
+    }
+
+//    open override func addSubview(_: UIView) {
+//        fatalError("Use addView() instead")
+//    }
+
+    public func withRefresher(_ refresher: GRefreshControl) -> Self {
+        super.addSubview(refresher)
         return self
     }
 

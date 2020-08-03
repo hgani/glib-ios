@@ -71,6 +71,12 @@ class JsonAction_Dialogs_OpenV1: JsonAction {
     }
 }
 
+#endif
+
+
+
+#if INCLUDE_OAUTH
+
 import FBSDKCoreKit
 import FBSDKLoginKit
 

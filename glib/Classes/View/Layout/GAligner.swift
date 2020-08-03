@@ -63,33 +63,6 @@ open class GAligner: UIView {
         return self
     }
 
-    public func width(_ width: Int) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func height(_ height: Int) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func height(_ height: LayoutSize) -> Self {
-        helper.width(height)
-        return self
-    }
-
-    public func color(bg: UIColor?) -> Self {
-        if let bgColor = bg {
-            backgroundColor = bgColor
-        }
-        return self
-    }
-
     public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
         helper.border(color: color, width: width, corner: corner)
         return self
@@ -126,6 +99,44 @@ extension GAligner: GWeightable {
 
     public func height(weight: Float, offset: Float = 0) -> Self {
         helper.height(weight: weight, offset: offset)
+        return self
+    }
+}
+
+extension GAligner: IView {
+    public var size: CGSize {
+        return helper.size
+    }
+
+    @discardableResult
+    public func color(bg: UIColor) -> Self {
+        backgroundColor = bg
+        return self
+    }
+
+    @discardableResult
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func height(_ height: LayoutSize) -> Self {
+        helper.width(height)
         return self
     }
 }

@@ -5,6 +5,7 @@ open class GCollectionView: UICollectionView {
 
     // Useful for making sure an unattached delegate object sticks around.
     private var retainedRef: UICollectionViewDelegate?
+    private var retainedDataSource: UICollectionViewDataSource?
 
     fileprivate var pager: UIPageControl?
 
@@ -28,37 +29,17 @@ open class GCollectionView: UICollectionView {
         helper.didMoveToSuperview()
     }
 
-    public func width(_ width: Int) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
-        return self
-    }
-
     public func width(weight: Float, offset: Float = 0) -> Self {
         helper.width(weight: weight, offset: offset)
         return self
     }
 
-    public func height(_ height: Int) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func height(_ height: LayoutSize) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func color(bg: UIColor?) -> Self {
-        if let bgColor = bg {
-            backgroundColor = bgColor
-        }
-        return self
-    }
+//    public func color(bg: UIColor?) -> Self {
+//        if let bgColor = bg {
+//            backgroundColor = bgColor
+//        }
+//        return self
+//    }
 
     public func layout(_ layout: GCollectionViewFlowLayout) -> Self {
         collectionViewLayout = layout
@@ -80,8 +61,11 @@ open class GCollectionView: UICollectionView {
         return self
     }
 
-    public func source(_ source: UICollectionViewDataSource) -> Self {
+    public func source(_ source: UICollectionViewDataSource, retain: Bool = false) -> Self {
         dataSource = source
+        if retain {
+            retainedDataSource = source
+        }
         return self
     }
 
@@ -110,9 +94,52 @@ open class GCollectionView: UICollectionView {
         return type.init()
     }
 
-    public func done() {
-        // End chaining
+//    public func done() {
+//        // End chaining
+//    }
+}
+
+extension GCollectionView: IView {
+    public var size: CGSize {
+        return helper.size
     }
+
+    @discardableResult
+    public func color(bg: UIColor) -> Self {
+        backgroundColor = bg
+        return self
+    }
+
+    @discardableResult
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
+    @discardableResult
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    @discardableResult
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    @discardableResult
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    @discardableResult
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
+        return self
+    }
+
 }
 
 public class GCollectionViewFlowLayout: UICollectionViewFlowLayout {
@@ -134,66 +161,5 @@ extension GCollectionView: UICollectionViewDelegateFlowLayout {
 
     public func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {
         return 0
-    }
-}
-
-open class GCollectionViewCell: UICollectionViewCell {
-    private let container = GVerticalPanel()
-
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        initialize()
-    }
-
-    public required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        initialize()
-    }
-
-    private func initialize() {
-        contentView.addSubview(container)
-        initContent()
-    }
-
-    open func initContent() {
-        // To be overridden
-    }
-
-    open override func didMoveToSuperview() {
-        container.snp.makeConstraints { (make) -> Void in
-            // See GTableViewCustomCell
-            make.top.equalTo(self.contentView.snp.top)
-            make.bottom.equalTo(self.contentView.snp.bottom)
-
-            make.left.equalTo(self.contentView.snp.left)
-            make.right.equalTo(self.contentView.snp.right)
-        }
-    }
-
-    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-        _ = container.paddings(top: top, left: left, bottom: bottom, right: right)
-        return self
-    }
-
-    public func addView(_ view: UIView, top: Float = 0) {
-        container.addView(view, top: top)
-    }
-
-    public func append(_ view: UIView, top: Float = 0) -> Self {
-        container.addView(view, top: top)
-        return self
-    }
-
-    public func color(bg: UIColor) -> Self {
-        contentView.backgroundColor = bg
-        return self
-    }
-
-    public func done() {
-        // End call chaining
-    }
-
-    static func reuseIdentifier() -> String {
-        return String(describing: self)
     }
 }

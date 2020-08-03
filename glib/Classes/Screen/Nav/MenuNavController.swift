@@ -80,7 +80,8 @@ extension MenuNavController: UITableViewDelegate, UITableViewDataSource {
             }
 
             if let controller = item.controller {
-                self.nav.backToHome(animated: false).push(controller)
+//                self.nav.backToHome(animated: false).push(controller)
+                self.nav.push(controller)
             }
 
             if let onClick = item.onClick {
