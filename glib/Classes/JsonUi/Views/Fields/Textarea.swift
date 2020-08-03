@@ -20,9 +20,25 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
         delegate = Delegate(self)
         view.textView?.delegate = delegate
         
+        NotificationCenter.default.addObserver(self, selector: #selector(updateJsonLogic), name: UITextView.textDidChangeNotification, object: nil)
+        
 //        self.registerToClosestForm(field: view)
 
         return view
+    }
+    
+    @objc func updateJsonLogic() {
+        do {
+            if let fieldName = spec["name"].string, let text = view.text {
+                try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
+                    """
+                    { "\(fieldName)" : "\(text)" }
+                    """
+                ))
+            }
+        } catch {
+            GLog.d("Invalid json")
+        }
     }
 
     func validate() -> Bool {
@@ -48,19 +64,21 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
             self.field = field
         }
         
-        func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        @objc func updateJsonLogic() {
             do {
-                if let fieldName = self.field.spec["name"].string, let text = textView.text {
+                if let fieldName = self.field.spec["name"].string {
                     try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
                         """
-                            { "\(fieldName)" : "\(text)" }
+                        { "\(fieldName)" : "\(self.field.value)" }
                         """
                     ))
                 }
             } catch {
                 GLog.d("Invalid json")
             }
-            
+        }
+        
+        func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
             field.errors(nil)
 
             if let validation = field.spec["validation"].presence {

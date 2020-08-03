@@ -97,6 +97,7 @@ class JsonView_Fields_SelectV1: JsonView_AbstractField, SubmittableField {
                     self.selectedOptions = $0
                     self.chipField.clearTextInput()
                     self.chipField.textField.resignFirstResponder()
+                    self.updateJsonLogic()
                 }
                 selectionMenu.show(style: .Actionsheet(title: self.spec["label"].stringValue, action: "Done", height: nil), from: self.screen)
             }
@@ -107,6 +108,20 @@ class JsonView_Fields_SelectV1: JsonView_AbstractField, SubmittableField {
             .paddings(top: 10, left: 12, bottom: 0, right: 0)
         
         return GVerticalPanel().append(chipField, top: 10).append(errorLabel)
+    }
+    
+    func updateJsonLogic() {
+        do {
+            if let fieldName = spec["name"].string {
+                try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
+                    """
+                    { "\(fieldName)" : "\(value)" }
+                    """
+                ))
+            }
+        } catch {
+            GLog.d("Invalid json")
+        }
     }
     
     func errors(_ text: String?) -> Void {

@@ -2,7 +2,7 @@
 
 import MBRadioCheckboxButton2
 
-class JsonView_Fields_CheckV1: JsonView_AbstractField, SubmittableField {
+class JsonView_Fields_CheckV1: JsonView_AbstractField, SubmittableField, CheckboxButtonDelegate {
     private let checkbox = MCheckBox()
 
     var name: String?
@@ -16,12 +16,36 @@ class JsonView_Fields_CheckV1: JsonView_AbstractField, SubmittableField {
 //        self.registerToClosestForm(field: checkbox)
 
         return checkbox
+            .delegate(self)
             .width(.matchParent)
             .title(spec["label"].stringValue)
     }
 
     func validate() -> Bool {
         return true
+    }
+    
+    func chechboxButtonDidSelect(_ button: CheckboxButton) {
+        updateJsonLogic(button)
+    }
+    
+    func chechboxButtonDidDeselect(_ button: CheckboxButton) {
+        updateJsonLogic(button)
+    }
+    
+    func updateJsonLogic(_ checkbox: CheckboxButton) {
+        do {
+            if let fieldName = spec["name"].string {
+                let isOn = checkbox.isOn ? "on" : ""
+                try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
+                    """
+                    { "\(fieldName)" : "\(isOn)" }
+                    """
+                ))
+            }
+        } catch {
+            GLog.d("Invalid json")
+        }
     }
 }
 

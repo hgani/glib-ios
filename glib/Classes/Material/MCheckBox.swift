@@ -45,6 +45,11 @@ class MCheckBox: CheckboxButton {
         titleLabel?.font = RobotoFonts.Style.regular.font
         return self
     }
+    
+    func delegate(_ delegate: CheckboxButtonDelegate) -> Self {
+        self.delegate = delegate
+        return self
+    }
 }
 
 #endif

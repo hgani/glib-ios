@@ -40,6 +40,21 @@ class JsonView_Fields_RadioGroupV1: JsonView, SubmittableField {
                 radio.checked(false)
             }
         }
+        updateJsonLogic()
+    }
+    
+    func updateJsonLogic() {
+        do {
+            if let fieldName = spec["name"].string {
+                try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
+                    """
+                    { "\(fieldName)" : "\(value)" }
+                    """
+                ))
+            }
+        } catch {
+            GLog.d("Invalid json")
+        }
     }
 
     func validate() -> Bool {

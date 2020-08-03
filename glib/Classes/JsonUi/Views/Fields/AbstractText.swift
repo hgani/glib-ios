@@ -1,5 +1,4 @@
 class JsonView_AbstractTextV1: JsonView_AbstractField, SubmittableField {
-    private var delegate: AbstractTextDelegate?
     #if INCLUDE_MDLIBS
         private let view = MTextField()
     #else
@@ -18,15 +17,27 @@ class JsonView_AbstractTextV1: JsonView_AbstractField, SubmittableField {
         #endif
         view.placeholder = spec["label"].string
         view.text = spec["value"].string
-        
-        delegate = AbstractTextDelegate(self)
-        view.delegate = delegate
+        view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
 
         initBottomBorderIfApplicable()
 
 //        self.registerToClosestForm(field: view)
 
         return view
+    }
+    
+    @objc func updateJsonLogic() {
+        do {
+            if let fieldName = spec["name"].string {
+                try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
+                    """
+                    { "\(fieldName)" : "\(value)" }
+                    """
+                ))
+            }
+        } catch {
+            GLog.d("Invalid json")
+        }
     }
 
     private func initBottomBorderIfApplicable() {
@@ -56,27 +67,5 @@ class JsonView_AbstractTextV1: JsonView_AbstractField, SubmittableField {
 
     func validate() -> Bool {
         return true
-    }
-    
-    class AbstractTextDelegate: NSObject, UITextFieldDelegate {
-        private var field: JsonView_AbstractField
-        
-        init(_ field: JsonView_AbstractField) {
-            self.field = field
-        }
-        
-        func textFieldDidEndEditing(_ textField: UITextField) {
-            do {
-                if let fieldName = self.field.spec["name"].string, let text = textField.text {
-                    try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
-                        """
-                            { "\(fieldName)" : "\(text)" }
-                        """
-                    ))
-                }
-            } catch {
-                GLog.d("Invalid json")
-            }
-        }
     }
 }
