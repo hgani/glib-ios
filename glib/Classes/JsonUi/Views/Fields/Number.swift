@@ -38,11 +38,10 @@ class JsonView_Fields_NumberV1: JsonView_AbstractTextV1 {
         func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
             field.errors(nil)
             
-            if let validation = field.spec["validation"].dictionary {
+            if let validation = field.spec["validation"].dictionary, let text = textField.text {
                 if let required = validation["required"]?.presence {
-                    if textField.text?.count ?? 0 <= 0 {
+                    if text.count ?? 0 <= 0 {
                         field.errors(required["message"].stringValue)
-                        return false
                     }
                 }
             }

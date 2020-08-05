@@ -29,13 +29,13 @@ open class JsonUiScreen: GScreen {
         onRefresh()
     }
 
-    public override func onRefresh() {
+    open override func onRefresh() {
         update(url: url, onLoad: {
             // Nothing to do
         })
     }
 
-    public override func viewWillDetach() {
+    open override func viewWillDetach() {
         super.viewWillDetach()
 
         self.request?.cancel()

@@ -85,7 +85,6 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
                 if let required = validation["required"].presence {
                     if UInt(textView.text.count) <= 0 {
                         field.errors(required["message"].stringValue)
-                        return false
                     }
                 }
             }
@@ -93,7 +92,6 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
             if let text = textView.text {
                 if let maxLength = field.spec["maxLength"].presence, maxLength.uIntValue > 0, UInt(text.count) > maxLength.uIntValue {
                     field.errors("Maximum \(field.spec["maxLength"].uIntValue) characters")
-                    return false
                 }
             }
             
