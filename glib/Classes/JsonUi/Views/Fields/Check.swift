@@ -34,17 +34,10 @@ class JsonView_Fields_CheckV1: JsonView_AbstractField, SubmittableField, Checkbo
     }
     
     func updateJsonLogic(_ checkbox: CheckboxButton) {
-        do {
-            if let fieldName = spec["name"].string {
-                let isOn = checkbox.isOn ? "on" : ""
-                try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
-                    """
-                    { "\(fieldName)" : "\(isOn)" }
-                    """
-                ))
-            }
-        } catch {
-            GLog.d("Invalid json")
+        if let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: checkbox),
+            let fieldName = spec["name"].string {
+            let isOn = checkbox.isOn ? "on" : ""
+            updateFormData(form, fieldName, isOn)
         }
     }
 }

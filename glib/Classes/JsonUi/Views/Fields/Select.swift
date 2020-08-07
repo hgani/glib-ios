@@ -111,16 +111,8 @@ class JsonView_Fields_SelectV1: JsonView_AbstractField, SubmittableField {
     }
     
     func updateJsonLogic() {
-        do {
-            if let fieldName = spec["name"].string {
-                try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
-                    """
-                    { "\(fieldName)" : "\(value)" }
-                    """
-                ))
-            }
-        } catch {
-            GLog.d("Invalid json")
+        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: chipField) {
+            updateFormData(form, fieldName, value)
         }
     }
     

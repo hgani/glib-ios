@@ -27,16 +27,8 @@ class JsonView_AbstractTextV1: JsonView_AbstractField, SubmittableField {
     }
     
     @objc func updateJsonLogic() {
-        do {
-            if let fieldName = spec["name"].string {
-                try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
-                    """
-                    { "\(fieldName)" : "\(value)" }
-                    """
-                ))
-            }
-        } catch {
-            GLog.d("Invalid json")
+        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: view) {
+            updateFormData(form, fieldName, value)
         }
     }
 

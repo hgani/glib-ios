@@ -26,20 +26,23 @@ class JsonView_LabelV1: JsonView {
                 JsonAction.execute(spec: onClick, screen: self.screen, creator: self.label)
             }
         }
-        
-        Generic.sharedInstance.formData.asObservable().subscribe { _ in
-            if let showIf = self.spec["showIf"].rawString() {
-                GLog.d(showIf)
-                do {
-                    let jsonlogic = try JsonLogic(showIf)
-                    let result: Bool = try jsonlogic.applyRule(to: Generic.sharedInstance.formData.value.rawString())
-                    self.label.isHidden = !result
-                } catch {
-                    GLog.d("Invalid rule")
+
+        return label
+    }
+    
+    override func didAttach(to parent: UIView) {
+        if let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: label) {
+            form.formData.asObservable().subscribe { _ in
+                if let showIf = self.spec["showIf"].rawString() {
+                    do {
+                        let jsonlogic = try JsonLogic(showIf)
+                        let result: Bool = try jsonlogic.applyRule(to: form.formData.value.rawString())
+                        self.label.isHidden = !result
+                    } catch {
+                        GLog.d("Invalid rule")
+                    }
                 }
             }
         }
-
-        return label
     }
 }

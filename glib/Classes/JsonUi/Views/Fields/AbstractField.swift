@@ -12,4 +12,16 @@ class JsonView_AbstractField: JsonView {
             }
         }
     }
+    
+    func updateFormData(_ form: JsonView_Panels_FormV1.FormPanel, _ fieldName: String, _ value: String) {
+        do {
+            try form.formData.value.merge(with: Json(parseJSON:
+                """
+                { "\(fieldName)" : "\(value)" }
+                """
+            ))
+        } catch {
+            GLog.d("Invalid json")
+        }
+    }
 }

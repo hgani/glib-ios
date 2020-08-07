@@ -28,16 +28,10 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
     }
     
     @objc func updateJsonLogic() {
-        do {
-            if let fieldName = spec["name"].string, let text = view.text {
-                try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
-                    """
-                    { "\(fieldName)" : "\(text)" }
-                    """
-                ))
-            }
-        } catch {
-            GLog.d("Invalid json")
+        if let fieldName = spec["name"].string,
+            let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: view),
+            let value = view.text {
+            updateFormData(form, fieldName, value)
         }
     }
 

@@ -1,3 +1,5 @@
+import RxSwift
+
 class JsonView_Panels_FormV1: JsonView {
     private let panel = FormPanel()
 
@@ -33,6 +35,8 @@ class JsonView_Panels_FormV1: JsonView {
     }
 
     class FormPanel: GVerticalPanel {
+        var formData = Variable(Json(parseJSON: "{}"))
+        
         // NOTE: needs to be a weak var?
         fileprivate var jsonView: JsonView_Panels_FormV1!
 

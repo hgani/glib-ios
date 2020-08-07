@@ -1,6 +1,6 @@
 #if INCLUDE_MDLIBS
 
-class JsonView_Fields_RadioGroupV1: JsonView, SubmittableField {
+class JsonView_Fields_RadioGroupV1: JsonView_AbstractField, SubmittableField {
     private let panel = GVerticalPanel()
     private var selectedJsonRadio: JsonView_Fields_RadioV1?
     private var jsonRadios: [JsonView_Fields_RadioV1] = []
@@ -44,16 +44,9 @@ class JsonView_Fields_RadioGroupV1: JsonView, SubmittableField {
     }
     
     func updateJsonLogic() {
-        do {
-            if let fieldName = spec["name"].string {
-                try Generic.sharedInstance.formData.value.merge(with: Json(parseJSON:
-                    """
-                    { "\(fieldName)" : "\(value)" }
-                    """
-                ))
-            }
-        } catch {
-            GLog.d("Invalid json")
+        if let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: panel),
+            let fieldName = spec["name"].string {
+            updateFormData(form, fieldName, value)
         }
     }
 
