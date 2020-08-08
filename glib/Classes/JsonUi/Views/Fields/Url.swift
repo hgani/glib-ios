@@ -1,4 +1,4 @@
-class JsonView_Fields_UrlV1: JsonView_AbstractTextV1 {
+class JsonView_Fields_Url: JsonView_AbstractText {
     override func initView() -> UITextField {
         return super.initTextField().keyboardType(.URL)
     }

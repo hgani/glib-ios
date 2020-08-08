@@ -18,7 +18,7 @@ class JsonView_TabBar: JsonView {
 //            .delegate(delegate, retain: true)
 
         spec["buttons"].arrayValue.forEach { (tab) in
-            let tabBarItem = JsonView_TabBarItemV1(tab)
+            let tabBarItem = JsonView_TabBarItem(tab)
             tabBar.items.append(tabBarItem)
         }
 

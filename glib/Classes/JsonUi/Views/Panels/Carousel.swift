@@ -1,4 +1,4 @@
-class JsonView_Panels_CarouselV1: JsonView {
+class JsonView_Panels_Carousel: JsonView {
     private let container = GAligner()
 
     private let scroller = GCollectionView()
@@ -37,13 +37,13 @@ class JsonView_Panels_CarouselV1: JsonView {
     }
 
     class Delegate: NSObject, UICollectionViewDataSource {
-        private let carouselView: JsonView_Panels_CarouselV1
+        private let carouselView: JsonView_Panels_Carousel
         private var childViews: [Json]
         fileprivate var count: Int {
            return childViews.count
         }
 
-        init(view: JsonView_Panels_CarouselV1) {
+        init(view: JsonView_Panels_Carousel) {
             carouselView = view
             childViews = carouselView.spec["childViews"].arrayValue
             super.init()

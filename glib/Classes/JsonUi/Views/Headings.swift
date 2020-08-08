@@ -77,7 +77,7 @@ class JsonView_H2V6: JsonView_Heading {
     }
 }
 
-class JsonView_H3V1: JsonView_Heading {
+class JsonView_H3: JsonView_Heading {
     override func initView() -> UIView {
         super.initView()
         label.font(nil, size: 14, traits: .traitBold)
@@ -85,7 +85,7 @@ class JsonView_H3V1: JsonView_Heading {
     }
 }
 
-class JsonView_H4V1: JsonView_Heading {
+class JsonView_H4: JsonView_Heading {
     override func initView() -> UIView {
         super.initView()
         label.font(nil, size: 13, traits: .traitBold)

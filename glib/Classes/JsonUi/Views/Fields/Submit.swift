@@ -1,5 +1,5 @@
-class JsonView_Fields_SubmitV1: JsonView, SubmittableField {
-    private let backend: JsonView_ButtonV1
+class JsonView_Fields_Submit: JsonView, SubmittableField {
+    private let backend: JsonView_Button
 
     var name: String?
     var value: String {
@@ -11,12 +11,12 @@ class JsonView_Fields_SubmitV1: JsonView, SubmittableField {
         var newSpec = spec
         newSpec["onClick"] = ["action": "forms/submit-v1"]
         
-        self.backend = JsonView_ButtonV1(newSpec, screen)
+        self.backend = JsonView_Button(newSpec, screen)
 
         // TODO:
         // - Implement submit functionaliy when the button is clicked
-        // - If possible, use JsonAction_Forms_SubmitV1
-        // - If not possible, use the code in JsonAction_Forms_SubmitV1.silentExecute()
+        // - If possible, use JsonAction_Forms_Submit
+        // - If not possible, use the code in JsonAction_Forms_Submit.silentExecute()
 
         super.init(spec, screen)
     }

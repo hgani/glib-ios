@@ -2,7 +2,7 @@
 
 import MaterialComponents.MaterialList
 
-open class JsonView_Panels_ListV1: JsonView {
+open class JsonView_Panels_List: JsonView {
     private var collectionView: MCollectionView?
     private var delegate: Delegate?
 
@@ -30,10 +30,10 @@ open class JsonView_Panels_ListV1: JsonView {
     }
 
     class Delegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate {
-        private let listView: JsonView_Panels_ListV1
+        private let listView: JsonView_Panels_List
         private var sections: [Json]
 
-        init(view: JsonView_Panels_ListV1) {
+        init(view: JsonView_Panels_List) {
             listView = view
             sections = view.spec["sections"].arrayValue
             super.init()
@@ -95,7 +95,7 @@ open class JsonView_Panels_ListV1: JsonView {
 
 #else
 
-open class JsonView_Panels_ListV1: JsonView {
+open class JsonView_Panels_List: JsonView {
     private let tableView = GTableView().width(.matchParent).height(.matchParent)
 
     open override func initView() -> UIView {
@@ -117,13 +117,13 @@ open class JsonView_Panels_ListV1: JsonView {
     }
 
     class Delegate: NSObject, UITableViewDataSource, UITableViewDelegate {
-        private let listView: JsonView_Panels_ListV1
+        private let listView: JsonView_Panels_List
         private var sections: [Json]
         private var nextUrl: String?
         private var autoLoad = false
         private var request: Rest?
 
-        init(view: JsonView_Panels_ListV1) {
+        init(view: JsonView_Panels_List) {
             listView = view
             sections = listView.spec["sections"].arrayValue
             super.init()

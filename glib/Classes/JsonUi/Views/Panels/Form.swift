@@ -1,6 +1,6 @@
 import RxSwift
 
-class JsonView_Panels_FormV1: JsonView {
+class JsonView_Panels_Form: JsonView {
     private let panel = FormPanel()
 
     override func initView() -> UIView {
@@ -8,29 +8,6 @@ class JsonView_Panels_FormV1: JsonView {
 
         JsonViewDefaultPanel.initPanel(panel, spec: spec, screen: screen)
 
-//        // NOTE: subviews property is deprecated
-//        let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
-//        for viewSpec in childViews {
-//            if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-//                #if INCLUDE_MDLIBS
-//
-//                if let fabJsonView = jsonView as? JsonView_FabV1 {
-//                    let view = fabJsonView.createView()
-//                    panel.addView(view, top: 0, skipConstraint: true)
-//                    jsonView.afterViewAdded(parentView: panel)
-////                    ScrollableView.items.append(view)
-//                } else {
-//                    panel.addView(jsonView.createView())
-//                }
-//
-//                // NOTE: Currently we assume all fields are direct children.
-//                if let field = jsonView as? SubmittableField {
-//                    panel.addField(field)
-//                }
-//
-//                #endif
-//            }
-//        }
         return panel
     }
 
@@ -38,7 +15,7 @@ class JsonView_Panels_FormV1: JsonView {
         var formData = Variable(Json(parseJSON: "{}"))
         
         // NOTE: needs to be a weak var?
-        fileprivate var jsonView: JsonView_Panels_FormV1!
+        fileprivate var jsonView: JsonView_Panels_Form!
 
         private var fields = [SubmittableField]()
 

@@ -1,9 +1,9 @@
 #if INCLUDE_MDLIBS
 
-class JsonView_Fields_RadioGroupV1: JsonView_AbstractField, SubmittableField {
+class JsonView_Fields_RadioGroup: JsonView_AbstractField, SubmittableField {
     private let panel = GVerticalPanel()
-    private var selectedJsonRadio: JsonView_Fields_RadioV1?
-    private var jsonRadios: [JsonView_Fields_RadioV1] = []
+    private var selectedJsonRadio: JsonView_Fields_Radio?
+    private var jsonRadios: [JsonView_Fields_Radio] = []
 
     var name: String?
     var value: String {
@@ -18,7 +18,7 @@ class JsonView_Fields_RadioGroupV1: JsonView_AbstractField, SubmittableField {
             let childSpec = childViews[index]
 
             if let jsonView = JsonView.create(spec: childSpec, screen: screen) {
-                if let radio = jsonView as? JsonView_Fields_RadioV1 {
+                if let radio = jsonView as? JsonView_Fields_Radio {
                     self.jsonRadios.append(radio)
                     radio.onClick { _ in self.updateSelectedRadio(radio) }
                     panel.append(radio.createView())
@@ -33,7 +33,7 @@ class JsonView_Fields_RadioGroupV1: JsonView_AbstractField, SubmittableField {
         return panel
     }
 
-    private func updateSelectedRadio(_ jsonRadio: JsonView_Fields_RadioV1) {
+    private func updateSelectedRadio(_ jsonRadio: JsonView_Fields_Radio) {
         self.selectedJsonRadio = jsonRadio
         for radio in jsonRadios {
             if radio.value != self.selectedJsonRadio?.value {
@@ -44,7 +44,7 @@ class JsonView_Fields_RadioGroupV1: JsonView_AbstractField, SubmittableField {
     }
     
     func updateJsonLogic() {
-        if let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: panel),
+        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: panel),
             let fieldName = spec["name"].string {
             updateFormData(form, fieldName, value)
         }
