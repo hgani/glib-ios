@@ -13,7 +13,7 @@ class JsonView_Heading: JsonView {
     }
     
     override func didAttach(to parent: UIView) {
-        if let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: label) {
+        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: label) {
             form.formData.asObservable().subscribe { _ in
                 if let showIf = self.spec["showIf"].rawString() {
                     do {
@@ -29,7 +29,7 @@ class JsonView_Heading: JsonView {
     }
 }
 
-class JsonView_H1V1: JsonView_Heading {
+class JsonView_H1: JsonView_Heading {
     override func initView() -> UIView {
         super.initView()
         label.font(nil, size: 18, traits: .traitBold)
@@ -37,7 +37,7 @@ class JsonView_H1V1: JsonView_Heading {
     }
 }
 
-class JsonView_H2V1: JsonView_Heading {
+class JsonView_H2: JsonView_Heading {
     override func initView() -> UIView {
         super.initView()
         label.font(nil, size: 16, traits: .traitBold)

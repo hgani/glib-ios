@@ -1,5 +1,5 @@
 // TODO: Deprecated
-class JsonView_BrV1: JsonView {
+class JsonView_Br: JsonView {
     private let view = GView()
 
     override func initView() -> UIView {
@@ -8,7 +8,7 @@ class JsonView_BrV1: JsonView {
     }
 }
 
-class JsonView_SpacerV1: JsonView {
+class JsonView_Spacer: JsonView {
     private let view = GView()
 
     override func initView() -> UIView {

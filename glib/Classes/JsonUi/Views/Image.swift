@@ -1,4 +1,4 @@
-class JsonView_ImageV1: JsonView {
+class JsonView_Image: JsonView {
     private let imageView = GImageView()
 
     override func initView() -> UIView {

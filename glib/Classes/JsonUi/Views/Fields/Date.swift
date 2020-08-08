@@ -1,4 +1,4 @@
-class JsonView_Fields_DateV1: JsonView_AbstractDateV1 {
+class JsonView_Fields_Date: JsonView_AbstractDate {
     private var textField = UITextField()
     private lazy var dateFormatter : DateFormatter = {
         let dateFormatter = DateFormatter()

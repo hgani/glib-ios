@@ -1,6 +1,6 @@
 import jsonlogic
 
-class JsonView_LabelV1: JsonView {
+class JsonView_Label: JsonView {
     private let label = GLabel()
 
     override func initView() -> UIView {
@@ -31,7 +31,7 @@ class JsonView_LabelV1: JsonView {
     }
     
     override func didAttach(to parent: UIView) {
-        if let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: label) {
+        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: label) {
             form.formData.asObservable().subscribe { _ in
                 if let showIf = self.spec["showIf"].rawString() {
                     do {

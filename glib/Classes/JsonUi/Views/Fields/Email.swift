@@ -1,4 +1,4 @@
-class JsonView_Fields_EmailV1: JsonView_AbstractTextV1 {
+class JsonView_Fields_Email: JsonView_AbstractText {
     override func initView() -> UITextField {
         return super.initTextField().keyboardType(.emailAddress)
     }

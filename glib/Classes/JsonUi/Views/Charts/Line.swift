@@ -2,7 +2,7 @@
 
 import Charts
 
-class JsonView_Charts_LineV1: JsonView {
+class JsonView_Charts_Line: JsonView {
     private var chartView = MLineChartView()
     private let data = LineChartData(dataSets: [])
     

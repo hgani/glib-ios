@@ -1,4 +1,4 @@
-class JsonView_ButtonV1: JsonView {
+class JsonView_Button: JsonView {
     #if INCLUDE_MDLIBS
         private let view = MButton()
             .font(RobotoFonts.Style.regular.font, size: 15)

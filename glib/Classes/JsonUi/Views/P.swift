@@ -1,4 +1,4 @@
-class JsonView_PV1: JsonView {
+class JsonView_P: JsonView {
     fileprivate let label = GLabel().width(.matchParent)
     
     override func initView() -> UIView {
