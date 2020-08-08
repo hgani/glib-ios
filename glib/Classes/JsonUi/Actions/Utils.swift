@@ -1,4 +1,4 @@
-class JsonAction_Utils_SetTimeoutV1: JsonAction {
+class JsonAction_Utils_SetTimeout: JsonAction {
     override func silentExecute() -> Bool {
         guard let interval = spec["interval"].double else {
             return false

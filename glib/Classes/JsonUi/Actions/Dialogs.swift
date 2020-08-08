@@ -4,7 +4,7 @@ import MaterialComponents.MaterialDialogs
 import MaterialComponents.MaterialSnackbar
 import MaterialComponents.MaterialActionSheet
 
-class JsonAction_Dialogs_AlertV1: JsonAction {
+class JsonAction_Dialogs_Alert: JsonAction {
     override func silentExecute() -> Bool {
         guard let message = spec["message"].string else {
             return false
@@ -18,7 +18,7 @@ class JsonAction_Dialogs_AlertV1: JsonAction {
     }
 }
 
-class JsonAction_Dialogs_SnackbarV1: JsonAction {
+class JsonAction_Dialogs_Snackbar: JsonAction {
     override func silentExecute() -> Bool {
         guard let message = spec["message"].string else {
             return false
@@ -39,7 +39,7 @@ class JsonAction_Dialogs_SnackbarV1: JsonAction {
     }
 }
 
-class JsonAction_Dialogs_OptionsV1: JsonAction {
+class JsonAction_Dialogs_Options: JsonAction {
     override func silentExecute() -> Bool {
         guard let buttons = spec["buttons"].array else { return false }
         let message = spec["message"].string
@@ -56,7 +56,7 @@ class JsonAction_Dialogs_OptionsV1: JsonAction {
     }
 }
 
-class JsonAction_Dialogs_OpenV1: JsonAction {
+class JsonAction_Dialogs_Open: JsonAction {
     private let dialogTransitionController = MDCDialogTransitionController()
 
     override func silentExecute() -> Bool {
@@ -80,7 +80,7 @@ class JsonAction_Dialogs_OpenV1: JsonAction {
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class JsonAction_Dialogs_OauthV1: JsonAction {
+class JsonAction_Dialogs_Oauth: JsonAction {
     override func silentExecute() -> Bool {
         if spec["provider"]["name"].stringValue == "facebook" {
             Settings.appID = spec["provider"]["clientId"].stringValue

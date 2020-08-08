@@ -21,8 +21,16 @@ public class JsonUi {
     }
 
     static func loadClass(name: String, type: AnyClass) -> Swift.AnyClass? {
+        let versionName: String
+        if type == JsonAction.self {
+            // Support names without v1
+            versionName = name.hasSuffix("-v1") ? String(name.dropLast(3)) : name
+        } else {
+            versionName = name
+        }
+
         let typeName = NSStringFromClass(type)
-        let className = name
+        let className = versionName
             .components(separatedBy: "/")
             // Don't use .capitalized() because that converts "showAlert" to "Showalert"
             .map { $0.prefix(1).uppercased() + $0.dropFirst() }
