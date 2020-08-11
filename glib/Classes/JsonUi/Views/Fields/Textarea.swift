@@ -16,6 +16,7 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
             .placeholder(spec["label"].stringValue)
             .text(spec["value"].stringValue)
             .maxLength(spec["maxLength"].uIntValue)
+            .styleClasses(spec["styleClasses"].arrayValue)
         
         delegate = Delegate(self)
         view.textView?.delegate = delegate

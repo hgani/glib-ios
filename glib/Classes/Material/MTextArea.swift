@@ -27,6 +27,17 @@ open class MTextArea: MDCMultilineTextField {
         controller = MDCTextInputControllerFilled(textInput: self)
         minimumLines = 3
     }
+    
+    public func styleClasses(_ styleClasses: [Json]) -> Self {
+        if styleClasses.contains("outlined") {
+            controller = MDCTextInputControllerOutlinedTextArea(textInput: self)
+        }
+        if styleClasses.contains("rounded") {
+            
+        }
+        
+        return self
+    }
 
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
