@@ -23,3 +23,7 @@ pod "ganilib"
 ## License
 
 ganilib is available under the MIT license. See the LICENSE file for more info.
+
+## Push to Cocoapods
+https://guides.cocoapods.org/making/making-a-cocoapod.html#release
+
