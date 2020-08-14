@@ -1,4 +1,4 @@
-class JsonView_AbstractTextV1: JsonView_AbstractField, SubmittableField {
+class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
     #if INCLUDE_MDLIBS
         private let view = MTextField()
     #else
@@ -27,7 +27,7 @@ class JsonView_AbstractTextV1: JsonView_AbstractField, SubmittableField {
     }
     
     @objc func updateJsonLogic() {
-        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: view) {
+        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {
             updateFormData(form, fieldName, value)
         }
     }

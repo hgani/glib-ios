@@ -1,4 +1,4 @@
-class JsonView_FabV1: JsonView {
+class JsonView_Fab: JsonView {
     #if INCLUDE_MDLIBS
     private let fab = MFloatingButton()
     #else

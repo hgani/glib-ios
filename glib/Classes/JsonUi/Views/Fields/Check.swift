@@ -2,7 +2,7 @@
 
 import MBRadioCheckboxButton2
 
-class JsonView_Fields_CheckV1: JsonView_AbstractField, SubmittableField, CheckboxButtonDelegate {
+class JsonView_Fields_Check: JsonView_AbstractField, SubmittableField, CheckboxButtonDelegate {
     private let checkbox = MCheckBox()
 
     var name: String?
@@ -34,7 +34,7 @@ class JsonView_Fields_CheckV1: JsonView_AbstractField, SubmittableField, Checkbo
     }
     
     func updateJsonLogic(_ checkbox: CheckboxButton) {
-        if let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: checkbox),
+        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: checkbox),
             let fieldName = spec["name"].string {
             let isOn = checkbox.isOn ? "on" : ""
             updateFormData(form, fieldName, isOn)
@@ -44,7 +44,7 @@ class JsonView_Fields_CheckV1: JsonView_AbstractField, SubmittableField, Checkbo
 
 #endif
 
-//class JsonView_Fields_CheckV1: JsonView, SubmittableField {
+//class JsonView_Fields_Switch: JsonView, SubmittableField {
 //    private let panel = GSplitPanel().width(.matchParent)
 //    private let switchView = GSwitch()
 //

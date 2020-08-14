@@ -1,4 +1,4 @@
-class JsonView_AbstractDateV1: JsonView_AbstractField, SubmittableField {
+class JsonView_AbstractDate: JsonView_AbstractField, SubmittableField {
     #if INCLUDE_MDLIBS
         private let view = MTextField()
     #else

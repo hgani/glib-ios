@@ -2,9 +2,9 @@
 
 import MBRadioCheckboxButton2
 
-class JsonView_Fields_RadioV1: JsonView, RadioButtonDelegate {
+class JsonView_Fields_Radio: JsonView, RadioButtonDelegate {
     private let radio = MRadio()
-    private var onClick: ((JsonView_Fields_RadioV1) -> Void)?
+    private var onClick: ((JsonView_Fields_Radio) -> Void)?
 
     var value: String {
         return radio.isOn ? spec["value"].stringValue : ""
@@ -20,7 +20,7 @@ class JsonView_Fields_RadioV1: JsonView, RadioButtonDelegate {
         radio.isOn = checked
     }
 
-    public func onClick(_ command: @escaping (JsonView_Fields_RadioV1) -> Void) {
+    public func onClick(_ command: @escaping (JsonView_Fields_Radio) -> Void) {
         onClick = command
     }
 
@@ -84,26 +84,3 @@ class MRadio: RadioButton {
 }
 
 #endif
-
-//class JsonView_Fields_RadioV1: JsonView {
-//    private let panel = GHorizontalPanel()
-//    private let gSwitch = GSwitch()
-//
-//    var value: String? = nil
-//
-//    override func initView() -> UIView {
-//        value = spec["value"].stringValue
-//
-//        return panel
-//            .append(gSwitch)
-//            .append(GLabel().text(spec["label"].stringValue), left: 10)
-//    }
-//
-//    public func checked(_ checked: Bool) {
-//        gSwitch.checked(checked)
-//    }
-//
-//    public func onClick(_ command: @escaping (GSwitch) -> Void) {
-//        gSwitch.onClick(command)
-//    }
-//}

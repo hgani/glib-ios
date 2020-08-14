@@ -4,7 +4,7 @@ class JsonView_AbstractField: JsonView {
     }
 
     func registerToClosestForm(field: UIView) {
-        if let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: field) {
+        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: field) {
             if let jsonField = self as? SubmittableField {
                 form.addField(jsonField)
             } else {
@@ -13,7 +13,7 @@ class JsonView_AbstractField: JsonView {
         }
     }
     
-    func updateFormData(_ form: JsonView_Panels_FormV1.FormPanel, _ fieldName: String, _ value: String) {
+    func updateFormData(_ form: JsonView_Panels_Form.FormPanel, _ fieldName: String, _ value: String) {
         do {
             try form.formData.value.merge(with: Json(parseJSON:
                 """

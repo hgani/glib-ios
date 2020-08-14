@@ -21,8 +21,9 @@ public class JsonUi {
     }
 
     static func loadClass(name: String, type: AnyClass) -> Swift.AnyClass? {
+        let versionName = name.hasSuffix("-v1") ? String(name.dropLast(3)) : name
         let typeName = NSStringFromClass(type)
-        let className = name
+        let className = versionName
             .components(separatedBy: "/")
             // Don't use .capitalized() because that converts "showAlert" to "Showalert"
             .map { $0.prefix(1).uppercased() + $0.dropFirst() }
@@ -90,7 +91,7 @@ public class JsonUi {
                 .onClick({ _ in
                     JsonAction.execute(spec: json["onClick"], screen: screen, creator: nil)
                 })
-            JsonView_IconV1.update(view: customView, spec: json["icon"])
+            JsonView_Icon.update(view: customView, spec: json["icon"])
             return GBarButtonItem(customView: customView)
         }
 
@@ -112,18 +113,18 @@ public class JsonUi {
             .color(bg: .white, text: .gray)
             .alignment(.leading)
             .onChange { _, item, _ in
-                if let tabItem = item as? JsonView_TabBarItemV1, let onClick = tabItem.spec["onClick"].presence {
+                if let tabItem = item as? JsonView_TabBarItem, let onClick = tabItem.spec["onClick"].presence {
                     JsonAction.execute(spec: onClick, screen: screen, creator: nil)
                 }
             }
 
         spec["rows"].arrayValue.forEach { (tab) in
-            let tabBarItem = JsonView_TabBarItemV1(tab)
+            let tabBarItem = JsonView_TabBarItem(tab)
             tabBar.items.append(tabBarItem)
         }
 
         let selectedTab = tabBar.items.first(where: { (item) -> Bool in
-            if let tabItem = item as? JsonView_TabBarItemV1, let onClick = tabItem.spec["onClick"].presence {
+            if let tabItem = item as? JsonView_TabBarItem, let onClick = tabItem.spec["onClick"].presence {
                 return onClick["url"].stringValue == (screen as? JsonUiScreen)?.url
             }
 
@@ -138,26 +139,6 @@ public class JsonUi {
 
         #endif
     }
-
-//    class Delegate: NSObject, MDCTabBarDelegate {
-//        private let view: MTabBar
-//        private let screen: GScreen
-//
-//        init(view: MTabBar, screen: GScreen) {
-//            self.view = view
-//            self.screen = screen
-//        }
-//
-//        func tabBar(_ tabBar: MDCTabBar, didSelect item: UITabBarItem) {
-//            if !item.isEnabled {
-//                return
-//            }
-//
-//            if let onClick = (item as! JsonView_TabBarItemV1).spec["onClick"].presence {
-//                JsonAction.execute(spec: onClick, screen: screen, creator: nil)
-//            }
-//        }
-//    }
 }
 
 class JsonUiMenuNavController: MenuNavController {

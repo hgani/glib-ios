@@ -29,7 +29,7 @@ class JsonViewDefaultPanel: JsonView, ParentPanel {
         var views = [UIView]()
         for viewSpec in childViews {
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-                if let fabJsonView = jsonView as? JsonView_FabV1 {
+                if let fabJsonView = jsonView as? JsonView_Fab {
                     fabView = fabJsonView
                 } else {
                     addView(jsonView, to: panel)

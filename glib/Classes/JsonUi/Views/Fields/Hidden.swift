@@ -1,4 +1,4 @@
-class JsonView_Fields_HiddenV1: JsonView_AbstractTextV1 {
+class JsonView_Fields_Hidden: JsonView_AbstractText {
     override func initView() -> UITextField {
         return super.initTextField().width(0).height(0)
     }

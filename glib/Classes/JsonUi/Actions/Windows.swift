@@ -1,11 +1,11 @@
-class JsonAction_Windows_OpenV1: JsonAction {
+class JsonAction_Windows_Open: JsonAction {
     override func silentExecute() -> Bool {
         nav.push(JsonUiScreen(url: spec["url"].stringValue))
         return true
     }
 }
 
-class JsonAction_Windows_CloseV1: JsonAction {
+class JsonAction_Windows_Close: JsonAction {
     override func silentExecute() -> Bool {
         CATransaction.begin()
         if let onClose = spec["onClose"].presence {
@@ -20,7 +20,7 @@ class JsonAction_Windows_CloseV1: JsonAction {
     }
 }
 
-class JsonAction_Windows_CloseAllV1: JsonAction {
+class JsonAction_Windows_CloseAll: JsonAction {
     override func silentExecute() -> Bool {
         nav.backToHome()
         JsonAction.execute(spec: spec["onClose"], screen: screen, creator: self)
@@ -28,7 +28,7 @@ class JsonAction_Windows_CloseAllV1: JsonAction {
     }
 }
 
-class JsonAction_Windows_ReloadV1: JsonAction {
+class JsonAction_Windows_Reload: JsonAction {
     override func silentExecute() -> Bool {
         guard let currentScreen = screen as? JsonUiScreen else {
             return false

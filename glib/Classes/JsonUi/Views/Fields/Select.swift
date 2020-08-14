@@ -2,7 +2,7 @@
 
 import RSSelectionMenu
 
-class JsonView_Fields_SelectV1: JsonView_AbstractField, SubmittableField {
+class JsonView_Fields_Select: JsonView_AbstractField, SubmittableField {
 //    private let textLabel = GLabel()
 //    private let valueLabel = GLabel()
     private let chipField = MChipField()
@@ -111,7 +111,7 @@ class JsonView_Fields_SelectV1: JsonView_AbstractField, SubmittableField {
     }
     
     func updateJsonLogic() {
-        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: chipField) {
+        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: chipField) {
             updateFormData(form, fieldName, value)
         }
     }

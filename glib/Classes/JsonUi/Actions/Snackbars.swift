@@ -1,7 +1,7 @@
 import MaterialComponents.MaterialSnackbar
 //import MaterialComponents.MaterialSnackbar_ColorThemer
 
-class JsonAction_Snackbars_AlertV1: JsonAction {
+class JsonAction_Snackbars_Alert: JsonAction {
     override func silentExecute() -> Bool {
         guard let message = spec["message"].string else {
             return false
@@ -23,7 +23,7 @@ class JsonAction_Snackbars_AlertV1: JsonAction {
     }
 }
 
-class JsonAction_Snackbars_SelectV1: JsonAction {
+class JsonAction_Snackbars_Select: JsonAction {
     override func silentExecute() -> Bool {
         guard let message = spec["message"].string else {
             return false

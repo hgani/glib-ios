@@ -1,6 +1,6 @@
 import FlexLayout
 
-class JsonView_Panels_FlowV1: JsonView {
+class JsonView_Panels_Flow: JsonView {
     private let panel: UIView
     
     public required init(_ spec: Json, _ screen: GScreen) {
@@ -26,11 +26,12 @@ class JsonView_Panels_FlowV1: JsonView {
         
         for (index, view) in views.enumerated() {
             // TODO: seem spacer view doesn't work with FlexLayout
-            if let childSpec = childViews[index].presence, childSpec["view"].stringValue == "spacer-v1" {
-                panel.flex.addItem().width(CGFloat(childSpec["width"].intValue))
-            } else {
-                panel.flex.addItem(view)
-            }
+//            if let childSpec = childViews[index].presence, childSpec["view"].stringValue == "spacer-v1" {
+//                panel.flex.addItem().width(CGFloat(childSpec["width"].intValue))
+//            } else {
+//                panel.flex.addItem(view)
+//            }
+            panel.flex.addItem(view)
         }
         
         panel.flex.layout(mode: .adjustHeight)

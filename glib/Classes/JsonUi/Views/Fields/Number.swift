@@ -1,4 +1,4 @@
-class JsonView_Fields_NumberV1: JsonView_AbstractTextV1 {
+class JsonView_Fields_Number: JsonView_AbstractText {
     private var delegate: Delegate?
 //    private var field = MTextField()
     private var field: UITextField!
@@ -22,9 +22,9 @@ class JsonView_Fields_NumberV1: JsonView_AbstractTextV1 {
     }
     
     class Delegate: NSObject, UITextFieldDelegate {
-        private var field: JsonView_Fields_NumberV1
+        private var field: JsonView_Fields_Number
         
-        init(_ field: JsonView_Fields_NumberV1) {
+        init(_ field: JsonView_Fields_Number) {
             self.field = field
         }
         

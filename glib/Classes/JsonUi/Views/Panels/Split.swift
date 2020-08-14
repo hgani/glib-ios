@@ -1,4 +1,4 @@
-class JsonView_Panels_SplitV1: JsonView {
+class JsonView_Panels_Split: JsonView {
     // It makes no sense to use split panel with `wrapContent`, so `wrapContent` is not supported in iOS.
     // Use either `matchParent` (default in iOS) or specific width.
     private let panel: ISplitPanel & UIView

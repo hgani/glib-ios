@@ -61,6 +61,7 @@ open class MCollectionViewCell: MDCSelfSizingStereoCell {
 
     func appendEditButton(spec: Json, screen: GScreen) {
         var buttonSpec = spec
+        // TODO: Need to be able to support non-v1 as well
         buttonSpec["view"] = "button-v1"
         if let jsonView = JsonView.create(spec: buttonSpec, screen: screen) {
             editButtonsPanel.append(jsonView.createView())

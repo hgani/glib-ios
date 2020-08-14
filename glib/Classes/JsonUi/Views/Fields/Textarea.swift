@@ -1,6 +1,6 @@
 #if INCLUDE_MDLIBS
 
-class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
+class JsonView_Fields_Textarea: JsonView_AbstractField, SubmittableField {
     private var delegate: Delegate?
     private let view = MTextArea()
 
@@ -30,7 +30,7 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
     
     @objc func updateJsonLogic() {
         if let fieldName = spec["name"].string,
-            let form = closest(JsonView_Panels_FormV1.FormPanel.self, from: view),
+            let form = closest(JsonView_Panels_Form.FormPanel.self, from: view),
             let value = view.text {
             updateFormData(form, fieldName, value)
         }
@@ -53,9 +53,9 @@ class JsonView_Fields_TextareaV1: JsonView_AbstractField, SubmittableField {
     }
     
     class Delegate: NSObject, UITextViewDelegate {
-        private var field: JsonView_Fields_TextareaV1
+        private var field: JsonView_Fields_Textarea
         
-        init(_ field: JsonView_Fields_TextareaV1) {
+        init(_ field: JsonView_Fields_Textarea) {
             self.field = field
         }
         
