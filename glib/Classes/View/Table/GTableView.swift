@@ -328,20 +328,4 @@ open class GHeaderFooterView: UIView {
         _ = container.color(bg: bg)
         return self
     }
-
-//    public func done() {
-//        // Ends chaining
-//    }
-
-//    open override func didMoveToSuperview() {
-//        container.snp.makeConstraints { (make) -> Void in
-//            // Snap the panel's vertical edges so that the tableView can determine the dynamic height of each row
-//            // See https://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights
-//            make.top.equalTo(self.contentView).offset(paddings.top)
-//            make.bottom.equalTo(self.contentView).offset(-paddings.bottom)
-//
-//            make.left.equalTo(self.contentView).offset(paddings.left)
-//            make.right.equalTo(self.contentView).offset(-paddings.right)
-//        }
-//    }
 }
