@@ -22,6 +22,7 @@ open class GTableView: UITableView, IContainer {
 
     private func initialize() {
         helper = ViewHelper(self)
+        color(bg: .libDefaultBackground)
     }
 
     open override func didMoveToSuperview() {

@@ -22,6 +22,7 @@ open class GTableViewCell: UITableViewCell {
 
     private func initialize() {
         helper = ViewHelper(contentView)
+        backgroundColor = .libDefaultBackground
     }
 
     override open func setSelected(_ selected: Bool, animated: Bool) {
