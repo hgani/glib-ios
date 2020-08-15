@@ -134,7 +134,19 @@ open class JsonView_Panels_List: JsonView {
         private func initNextPageInstructions(spec: Json) {
             if let nextPage = spec["nextPage"].presence {
                 nextUrl = nextPage["url"].string
-                autoLoad = nextPage["autoLoad"].boolValue
+//                autoLoad = nextPage["autoLoad"].boolValue
+
+                let autoloadMode = nextPage["autoload"].stringValue
+                switch autoloadMode {
+                case "asNeeded":
+                    autoLoad = true
+                case "all":
+                    if let url = nextUrl {
+                        loadMore(url: url)
+                    }
+                default:
+                    GLog.e("Invalid autoload: \(autoloadMode)")
+                }
             } else {
                 autoLoad = false
             }
@@ -174,19 +186,24 @@ open class JsonView_Panels_List: JsonView {
                     request = nil
                 }
 
-                request = Rest.get(url: url).execute { response in
-                    self.request = nil
+                loadMore(url: url)
+            }
+        }
 
-                    let result = response.content
+        private func loadMore(url: String) {
+            request = Rest.get(url: url).execute(indicator: .null) { response in
+                self.request = nil
 
-                    self.initNextPageInstructions(spec: result)
+                let result = response.content
 
-                    for section in result["sections"].arrayValue {
-                        self.sections.append(section)
-                    }
-                    tableView.reloadData()
-                    return true
+                self.initNextPageInstructions(spec: result)
+
+                for section in result["sections"].arrayValue {
+                    self.sections.append(section)
                 }
+//                tableView.reloadData()
+                self.listView.tableView.reload()
+                return true
             }
         }
 
