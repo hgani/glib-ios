@@ -88,7 +88,8 @@ open class GMapView: MKMapView {
     }
 
     public func trackUser() -> Self {
-        if CLLocationManager.authorizationStatus() == .authorizedAlways {
+        let status = CLLocationManager.authorizationStatus()
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
             showsUserLocation = true
             userTrackingMode = .followWithHeading
         } else {

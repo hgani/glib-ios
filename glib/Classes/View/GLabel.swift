@@ -30,6 +30,8 @@ open class GLabel: UILabel, IView {
         helper = ViewHelper(self)
         lineBreakMode = .byWordWrapping
         numberOfLines = 0
+
+        color(text: .libDefaultLabel)
         font(RobotoFonts.Style.regular.font)
     }
 
