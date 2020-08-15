@@ -122,19 +122,21 @@ open class JsonView_Panels_List: JsonView {
         private var nextUrl: String?
         private var autoLoad = false
         private var request: Rest?
+        private var loadingIndicatorSpec: Json?
 
         init(view: JsonView_Panels_List) {
             listView = view
             sections = listView.spec["sections"].arrayValue
             super.init()
 
-            initNextPageInstructions(spec: listView.spec)
+            let spec = listView.spec
+            initNextPageInstructions(spec: spec)
+            appendLoadingIndicator(spec: spec)
         }
 
         private func initNextPageInstructions(spec: Json) {
             if let nextPage = spec["nextPage"].presence {
                 nextUrl = nextPage["url"].string
-//                autoLoad = nextPage["autoLoad"].boolValue
 
                 let autoloadMode = nextPage["autoload"].stringValue
                 switch autoloadMode {
@@ -196,15 +198,37 @@ open class JsonView_Panels_List: JsonView {
 
                 let result = response.content
 
+                self.removeLoadingIndicator()
                 self.initNextPageInstructions(spec: result)
+                self.appendItems(spec: result)
+                self.appendLoadingIndicator(spec: result)
 
-                for section in result["sections"].arrayValue {
-                    self.sections.append(section)
-                }
+//                for section in result["sections"].arrayValue {
+//                    self.sections.append(section)
+//                }
 //                tableView.reloadData()
                 self.listView.tableView.reload()
                 return true
             }
+        }
+
+        private func appendItems(spec: Json) {
+            for section in spec["sections"].arrayValue {
+                self.sections.append(section)
+            }
+        }
+
+        private func appendLoadingIndicator(spec: Json) {
+            if autoLoad {
+                var indicator = Json(["template": "thumbnail", "title": "Loading..."])
+                var section = Json(["rows": [indicator]])
+                sections.append(section)
+                loadingIndicatorSpec = section
+            }
+        }
+
+        private func removeLoadingIndicator() {
+            sections.removeAll { $0 == loadingIndicatorSpec }
         }
 
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
