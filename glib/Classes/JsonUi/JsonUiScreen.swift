@@ -59,3 +59,21 @@ open class JsonUiScreen: GScreen {
         }
     }
 }
+
+open class JsonScreen: GScreen {
+    private let spec: Json
+    
+    public init(spec: Json) {
+        self.spec = spec
+        super.init()
+    }
+    
+    public required init?(coder _: NSCoder) {
+        fatalError("Unsupported")
+    }
+    
+    open override func viewDidLoad() {
+        super.initOnDidLoad()
+        JsonUi.parseScreenContent(spec, screen: self)
+    }
+}

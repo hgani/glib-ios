@@ -71,6 +71,31 @@ class JsonAction_Dialogs_OpenV1: JsonAction {
     }
 }
 
+class JsonAction_Dialogs_ShowV1: JsonAction {
+    private let dialogTransitionController = MDCDialogTransitionController()
+    
+    override func silentExecute() -> Bool {
+        let dialogScreen = JsonScreen(spec: spec)
+        dialogScreen.modalPresentationStyle = .custom
+        dialogScreen.transitioningDelegate = dialogTransitionController
+        screen.present(dialogScreen, animated: true, completion: nil)
+        
+        return true
+    }
+}
+
+class JsonAction_Dialogs_CloseV1: JsonAction {
+    override func silentExecute() -> Bool {
+        if var rootScreen = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedScreen = rootScreen.presentedViewController {
+                rootScreen = presentedScreen
+            }
+            rootScreen.dismiss(animated: true, completion: nil)
+        }
+        return true
+    }
+}
+
 #endif
 
 
