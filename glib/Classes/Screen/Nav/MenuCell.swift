@@ -35,7 +35,7 @@ open class MenuCell: GTableViewCustomCell, MenuCellType {
         }
 
         if let spec = item.iconSpec {
-            JsonView_IconV1.update(view: iconLabel, spec: spec)
+            JsonView_Icon.update(view: iconLabel, spec: spec)
         }
 
         isUserInteractionEnabled = item.hasAction()

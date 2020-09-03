@@ -2,7 +2,7 @@
 
 import MapKit
 
-class JsonView_MapV1: JsonView {
+class JsonView_Map: JsonView {
     private let mapView = GMapView()
 
     override func initView() -> UIView {

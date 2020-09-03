@@ -1,4 +1,4 @@
-class JsonView_Panels_HorizontalV1: JsonView {
+class JsonView_Panels_Horizontal: JsonView {
     private let panel: IHorizontalPanel & UIView
     
     public required init(_ spec: Json, _ screen: GScreen) {

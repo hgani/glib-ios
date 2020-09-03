@@ -1,6 +1,6 @@
 #if INCLUDE_MDLIBS
 
-class JsonView_Panels_CardV1: JsonView {
+class JsonView_Panels_Card: JsonView {
     private let card = MCard()
 
     override func initView() -> UIView {

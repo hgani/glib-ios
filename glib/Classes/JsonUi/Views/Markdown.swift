@@ -2,7 +2,7 @@
 
 import MarkdownKit
 
-class JsonView_MarkdownV1: JsonView {
+class JsonView_Markdown: JsonView {
     private let label = GLabel()
     
     override func initView() -> UIView {

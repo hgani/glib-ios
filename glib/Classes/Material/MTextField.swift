@@ -31,7 +31,7 @@ open class MTextField: MDCTextField, ITextField {
         super.didMoveToSuperview()
         helper.didMoveToSuperview()
     }
-    
+
     public func styleClasses(_ styleClasses: [Json]) -> Self {
         if styleClasses.contains("outlined") {
             controller = MDCTextInputControllerOutlined(textInput: self)
@@ -39,7 +39,7 @@ open class MTextField: MDCTextField, ITextField {
         if styleClasses.contains("rounded") {
             
         }
-        
+
         return self
     }
 

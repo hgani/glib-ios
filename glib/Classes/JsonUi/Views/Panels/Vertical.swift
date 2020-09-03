@@ -1,4 +1,4 @@
-class JsonView_Panels_VerticalV1: JsonView {
+class JsonView_Panels_Vertical: JsonView {
     private let panel: IVerticalPanel & UIView
 
     public required init(_ spec: Json, _ screen: GScreen) {

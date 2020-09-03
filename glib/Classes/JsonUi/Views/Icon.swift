@@ -1,4 +1,4 @@
-class JsonView_IconV1: JsonView {
+class JsonView_Icon: JsonView {
     private let view = GLabel()
 //        .width(24).height(24)
 

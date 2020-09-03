@@ -1,4 +1,4 @@
-class JsonView_HrV1: JsonView {
+class JsonView_Hr: JsonView {
     fileprivate let view = GView()
     
     override func initView() -> UIView {

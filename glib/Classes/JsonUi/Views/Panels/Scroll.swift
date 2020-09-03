@@ -1,4 +1,4 @@
-class JsonView_Panels_ScrollV1: JsonView {
+class JsonView_Panels_Scroll: JsonView {
     private let panel = GScrollPanel()
 
     override func initView() -> UIView {

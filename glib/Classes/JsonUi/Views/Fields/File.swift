@@ -4,7 +4,7 @@ import Photos
 import CommonCrypto
 import Alamofire
 
-class JsonView_Fields_FileV1: JsonView, SubmittableFileField, ImagePickerDelegate {
+class JsonView_Fields_File: JsonView, SubmittableFileField, ImagePickerDelegate {
     private let panel = GHorizontalPanel()
     private let imageView = GImageView()
     private let progressView = MProgressView()

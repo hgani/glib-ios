@@ -3,7 +3,7 @@
 import Foundation
 import Stripe
 
-class JsonView_Fields_StripeTokenV1: JsonView_AbstractField, SubmittableField {
+class JsonView_Fields_StripeToken: JsonView_AbstractField, SubmittableField {
     private var delegate: Delegate?
     private var token: STPToken?
     
@@ -45,9 +45,9 @@ class JsonView_Fields_StripeTokenV1: JsonView_AbstractField, SubmittableField {
     }
     
     class Delegate: NSObject, STPPaymentCardTextFieldDelegate {
-        private let stripeTokenView: JsonView_Fields_StripeTokenV1
+        private let stripeTokenView: JsonView_Fields_StripeToken
         
-        init(view: JsonView_Fields_StripeTokenV1) {
+        init(view: JsonView_Fields_StripeToken) {
             stripeTokenView = view
             super.init()
         }

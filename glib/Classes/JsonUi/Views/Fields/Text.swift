@@ -1,4 +1,4 @@
-class JsonView_Fields_TextV1: JsonView_AbstractTextV1 {
+class JsonView_Fields_Text: JsonView_AbstractText {
     override func initView() -> UITextField {
         return super.initTextField()
     }

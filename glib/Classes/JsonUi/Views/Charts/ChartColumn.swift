@@ -1,6 +1,6 @@
 import Charts
 
-class JsonView_Charts_ColumnV1: JsonView {
+class JsonView_Charts_Column: JsonView {
     private var chartView = MBarChartView()
     
     override func initView() -> UIView {        

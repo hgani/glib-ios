@@ -2,7 +2,7 @@
 
 import MaterialComponents.MaterialList
 
-open class JsonView_Panels_ListV1: JsonView {
+open class JsonView_Panels_List: JsonView {
     private var collectionView: MCollectionView?
     private var delegate: Delegate?
 
@@ -30,10 +30,10 @@ open class JsonView_Panels_ListV1: JsonView {
     }
 
     class Delegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate {
-        private let listView: JsonView_Panels_ListV1
+        private let listView: JsonView_Panels_List
         private var sections: [Json]
 
-        init(view: JsonView_Panels_ListV1) {
+        init(view: JsonView_Panels_List) {
             listView = view
             sections = view.spec["sections"].arrayValue
             super.init()
@@ -95,7 +95,7 @@ open class JsonView_Panels_ListV1: JsonView {
 
 #else
 
-open class JsonView_Panels_ListV1: JsonView {
+open class JsonView_Panels_List: JsonView {
     private let tableView = GTableView().width(.matchParent).height(.matchParent)
 
     open override func initView() -> UIView {
@@ -117,24 +117,38 @@ open class JsonView_Panels_ListV1: JsonView {
     }
 
     class Delegate: NSObject, UITableViewDataSource, UITableViewDelegate {
-        private let listView: JsonView_Panels_ListV1
+        private let listView: JsonView_Panels_List
         private var sections: [Json]
         private var nextUrl: String?
         private var autoLoad = false
         private var request: Rest?
+        private var loadingIndicatorSpec: Json?
 
-        init(view: JsonView_Panels_ListV1) {
+        init(view: JsonView_Panels_List) {
             listView = view
             sections = listView.spec["sections"].arrayValue
             super.init()
 
-            initNextPageInstructions(spec: listView.spec)
+            let spec = listView.spec
+            initNextPageInstructions(spec: spec)
+            appendLoadingIndicator(spec: spec)
         }
 
         private func initNextPageInstructions(spec: Json) {
             if let nextPage = spec["nextPage"].presence {
                 nextUrl = nextPage["url"].string
-                autoLoad = nextPage["autoLoad"].boolValue
+
+                let autoloadMode = nextPage["autoload"].stringValue
+                switch autoloadMode {
+                case "asNeeded":
+                    autoLoad = true
+                case "all":
+                    if let url = nextUrl {
+                        loadMore(url: url)
+                    }
+                default:
+                    GLog.e("Invalid autoload: \(autoloadMode)")
+                }
             } else {
                 autoLoad = false
             }
@@ -174,20 +188,47 @@ open class JsonView_Panels_ListV1: JsonView {
                     request = nil
                 }
 
-                request = Rest.get(url: url).execute { response in
-                    self.request = nil
-
-                    let result = response.content
-
-                    self.initNextPageInstructions(spec: result)
-
-                    for section in result["sections"].arrayValue {
-                        self.sections.append(section)
-                    }
-                    tableView.reloadData()
-                    return true
-                }
+                loadMore(url: url)
             }
+        }
+
+        private func loadMore(url: String) {
+            request = Rest.get(url: url).execute(indicator: .null) { response in
+                self.request = nil
+
+                let result = response.content
+
+                self.removeLoadingIndicator()
+                self.initNextPageInstructions(spec: result)
+                self.appendItems(spec: result)
+                self.appendLoadingIndicator(spec: result)
+
+//                for section in result["sections"].arrayValue {
+//                    self.sections.append(section)
+//                }
+//                tableView.reloadData()
+                self.listView.tableView.reload()
+                return true
+            }
+        }
+
+        private func appendItems(spec: Json) {
+            for section in spec["sections"].arrayValue {
+                self.sections.append(section)
+            }
+        }
+
+        private func appendLoadingIndicator(spec: Json) {
+            if autoLoad {
+                var indicator = Json(["template": "thumbnail", "title": "Loading..."])
+                var section = Json(["rows": [indicator]])
+                sections.append(section)
+                loadingIndicatorSpec = section
+            }
+        }
+
+        private func removeLoadingIndicator() {
+            sections.removeAll { $0 == loadingIndicatorSpec }
         }
 
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
