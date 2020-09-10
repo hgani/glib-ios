@@ -70,6 +70,8 @@ public class JsonUi {
     public static func parseEntireScreen(_ spec: Json, screen: GScreen) {
         screen.title = spec["title"].string
 
+        
+        
         parseScreenContent(spec, screen: screen)
         initNavBar(spec: spec, screen: screen)
     }

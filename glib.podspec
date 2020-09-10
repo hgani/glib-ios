@@ -118,5 +118,6 @@ Simplify iOS development
     sub.dependency 'MarkdownKit', '1.5'
     sub.dependency 'FlexLayout'
     sub.dependency 'jsonlogic'
+    sub.dependency 'SwiftPhoenixClient'
   end
 end
