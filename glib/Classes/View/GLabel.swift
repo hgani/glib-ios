@@ -182,6 +182,11 @@ open class GLabel: UILabel, IView {
         return self
     }
 
+    public func hidden(_ hidden: Bool) -> Self {
+        isHidden = hidden
+        return self
+    }
+
     public func badge(text: String, bgColor: UIColor) -> Self {
         let badgeLabel = UILabel(frame: CGRect(x: 8, y: -4, width: 20, height: 20))
         badgeLabel.backgroundColor = .clear

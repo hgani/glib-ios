@@ -3,13 +3,14 @@
 open class ThumbnailTemplatePanel: GVerticalPanel {
     let picture = GImageView()
     let title = GLabel().specs(.libCellTitle)
-    let subtitle = GLabel().specs(.libCellSubtitle, .libMuted)
+    let subtitle = GLabel().specs(.libCellSubtitle, .libMuted).paddings(top: 4, left: nil, bottom: nil, right: nil)
     let chips = GHorizontalPanel()
+    public let contentPanel = GVerticalPanel().paddings(top: 10, left: 10, bottom: 10, right: 10)
 
     open override func initContent() {
         let content = GHorizontalPanel()
             .append(picture)
-            .append(GVerticalPanel().paddings(top: 10, left: 10, bottom: 10, right: 10)
+            .append(contentPanel
                 .append(title)
                 .append(subtitle)
                 .append(chips.width(.matchParent), top: 5))
@@ -38,9 +39,9 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
 
     public func setSubtitle(text: String?) {
         if let string = text {
-            subtitle.paddings(top: 4, left: nil, bottom: nil, right: nil).text(string)
+            subtitle.text(string).hidden(false)
         } else {
-            subtitle.paddings(top: 0, left: nil, bottom: nil, right: nil).text("")
+            subtitle.text("").hidden(true)
         }
     }
 }
