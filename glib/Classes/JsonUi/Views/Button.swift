@@ -10,6 +10,10 @@ class JsonView_Button: JsonView {
     #endif
 
     override func initView() -> UIView {
+        ifColor(code: spec["color"].string) {
+            view.color(bg: nil, text: $0)
+        }
+
         if let text = spec["text"].string {
             _ = view.title(text)
         }

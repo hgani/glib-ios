@@ -34,6 +34,12 @@ open class JsonView {
         }
     }
 
+    func ifColor(code: String?, handler: (UIColor) -> Void) {
+        if let str = code {
+            handler(color(from: str))
+        }
+    }
+
     private func initBackgroundColor(_ view: IView) {
         if let str = spec["backgroundColor"].string {
             view.color(bg: color(from: str))
