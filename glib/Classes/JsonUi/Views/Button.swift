@@ -22,24 +22,7 @@ class JsonView_Button: JsonView {
         }
 
         #if INCLUDE_MDLIBS
-        if let styleClasses = spec["styleClasses"].array {
-            for style in styleClasses {
-                switch style {
-                case "link":
-                    view.specs(.link)
-                case "icon":
-                    view.specs(.icon(code: spec["icon"]["material"]["name"].stringValue))
-                default:
-                    if let klass = JsonUi.loadClass(name: style.stringValue, type: MButtonSpecProtocol.self) as? MButtonSpecProtocol.Type {
-                        let spec = klass.init()
-                        spec.createSpec().decorate(view)
-                    } else {
-                        GLog.e("Invalid style \(style)")
-//                        fatalError("Invalid style \(style)")
-                    }
-                }
-            }
-        }
+        applyStyleClasses(spec["styleClasses"].arrayValue.map({ $0.stringValue }))
 
         Generic.sharedInstance.genericIsBusy.asObservable().subscribe { _ in
             self.view.enabled(!Generic.sharedInstance.genericIsBusy.value)
@@ -47,5 +30,38 @@ class JsonView_Button: JsonView {
         #endif
 
         return view
+    }
+
+    private func applyStyleClasses(_ styleClasses: [String]) {
+        for styleClass in styleClasses {
+            if let klass = JsonUi.loadClass(name: styleClass, type: MButtonSpecProtocol.self) as? MButtonSpecProtocol.Type {
+                let spec = klass.init()
+                spec.createSpec().decorate(view)
+            } else {
+                switch styleClass {
+                case "link":
+                    view.specs(.link)
+                case "icon":
+                    view.specs(.icon(JsonView_Icon.icon(spec: spec["icon"])))
+                    view.layer.cornerRadius = 18
+                default:
+                    GLog.e("Invalid style \(styleClass)")
+                }
+            }
+
+//            switch styleClass {
+//            case "link":
+//                view.specs(.link)
+//            case "icon":
+//                view.specs(.icon(code: spec["icon"]["material"]["name"].stringValue))
+//            default:
+//                if let klass = JsonUi.loadClass(name: styleClass, type: MButtonSpecProtocol.self) as? MButtonSpecProtocol.Type {
+//                    let spec = klass.init()
+//                    spec.createSpec().decorate(view)
+//                } else {
+//                    GLog.e("Invalid style \(styleClass)")
+//                }
+//            }
+        }
     }
 }

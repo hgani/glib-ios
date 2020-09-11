@@ -5,9 +5,15 @@ extension MButtonSpec {
         button.color(bg: .clear, text: UIColor(hex: "#1976d2"))
     }
 
-    static func icon(code: String) -> MButtonSpec {
+//    static func icon(code: String) -> MButtonSpec {
+//        return MButtonSpec { button in
+//            button.title("ma:\(code)").iconify()
+//        }
+//    }
+
+    static func icon(_ icon: GIcon) -> MButtonSpec {
         return MButtonSpec { button in
-            button.title("ma:\(code)").iconify()
+            button.icon(icon)
         }
     }
 }
