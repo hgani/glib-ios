@@ -40,6 +40,7 @@ open class GLabel: UILabel, IView {
         helper.didMoveToSuperview()
     }
 
+    @discardableResult
     public func color(_ color: UIColor) -> Self {
         textColor = color
         return self
