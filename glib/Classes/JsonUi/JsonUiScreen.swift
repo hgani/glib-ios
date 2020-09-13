@@ -46,8 +46,20 @@ open class JsonUiScreen: GScreen {
     }
 
     private func update(response: Rest.Response) {
+        GLog.t("ws update 1")
         if let ws = response.content["ws"].presence {
-            socket = Socket("wss://phoenix-websocket-demo.herokuapp.com\(ws["socket"]["endpoint"].stringValue)", params: ws["socket"]["params"].dictionaryObject)
+            let url = "ws://localhost:4019\(ws["socket"]["endpoint"].stringValue)"
+            var params = ws["socket"]["params"].dictionaryValue
+
+            // Remove this because version 2.0.0 is still not supported by this client library
+            params.removeValue(forKey: "vsn")
+
+            GLog.t("ws update 2: \(url) -- \(params)")
+
+//            socket = Socket("wss://phoenix-websocket-demo.herokuapp.com\(ws["socket"]["endpoint"].stringValue)", params: ws["socket"]["params"].dictionaryObject)
+
+            socket = Socket(url, params: params)
+
             socket?.delegateOnOpen(to: self) { (self) in
                 GLog.d("Socket Connected")
                 if let topic = ws["topic"].string, let events = ws["events"].array {
