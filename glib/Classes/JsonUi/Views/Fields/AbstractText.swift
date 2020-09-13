@@ -67,6 +67,7 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
 
     override func applyStyleClass(_ styleClass: String) {
 
+        // TODO: Support custom classes
 //            if let klass = JsonUi.loadClass(name: styleClass, type: MTextFieldSpec.self) as? MTextFieldSpec.Type {
 //                klass.init().decorate(view)
 //            } else {

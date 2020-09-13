@@ -31,6 +31,7 @@ class JsonView_Button: JsonView {
     }
 
     override func applyStyleClass(_ styleClass: String) {
+        // TODO: Implement auto load of Spec (e.g. MButtonSpec.link) so we don't need MButtonSpecProtocol anymore
         if let klass = JsonUi.loadClass(name: styleClass, type: MButtonSpecProtocol.self) as? MButtonSpecProtocol.Type {
             let spec = klass.init()
             spec.createSpec().decorate(view)
