@@ -1,3 +1,7 @@
+#if INCLUDE_MDLIBS
+import MaterialComponents.MaterialTextFields
+#endif
+
 class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
     #if INCLUDE_MDLIBS
         private let view = MTextField()
@@ -12,9 +16,9 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
 
     func initTextField() -> UITextField & ITextField {
         name = spec["name"].string
-        #if INCLUDE_MDLIBS
-        view.styleClasses(spec["styleClasses"].arrayValue)
-        #endif
+//        #if INCLUDE_MDLIBS
+//        view.styleClasses(spec["styleClasses"].arrayValue)
+//        #endif
         view.placeholder = spec["label"].string
         view.text = spec["value"].string
         view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
@@ -59,5 +63,26 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
 
     func validate() -> Bool {
         return true
+    }
+
+    override func applyStyleClass(_ styleClass: String) {
+
+//            if let klass = JsonUi.loadClass(name: styleClass, type: MTextFieldSpec.self) as? MTextFieldSpec.Type {
+//                klass.init().decorate(view)
+//            } else {
+                switch styleClass {
+                case "outlined":
+                    view.controller(MDCTextInputControllerOutlined(textInput: view), padding: .zero)
+                case "filled":
+                    view.controller(MDCTextInputControllerFilled(textInput: view), padding: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
+                case "rounded":
+                    // Not supported yet, so use "outlined" instead
+                    view.controller(MDCTextInputControllerOutlined(textInput: view), padding: .zero)
+                default:
+                    GLog.i("Invalid style class: \(styleClass)")
+
+                }
+//            }
+
     }
 }

@@ -4,7 +4,9 @@ import MaterialComponents.MaterialTextFields
 
 open class MTextField: MDCTextField, ITextField {
     private var helper: ViewHelper!
-    private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+//    private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+    private var padding = UIEdgeInsets.zero
+
     // TODO: Make sure this doesn't generate cyclic references
     private var controller: MDCTextInputController!
 
@@ -24,7 +26,7 @@ open class MTextField: MDCTextField, ITextField {
 
     private func initialize() {
         helper = ViewHelper(self)
-        controller = MDCTextInputControllerFilled(textInput: self)
+        controller = MDCTextInputControllerUnderline(textInput: self)
     }
 
     open override func didMoveToSuperview() {
@@ -32,16 +34,31 @@ open class MTextField: MDCTextField, ITextField {
         helper.didMoveToSuperview()
     }
 
-    public func styleClasses(_ styleClasses: [Json]) -> Self {
-        if styleClasses.contains("outlined") {
-            controller = MDCTextInputControllerOutlined(textInput: self)
-        }
-        if styleClasses.contains("rounded") {
-            
-        }
-
-        return self
+    func controller(_ controller: MDCTextInputController, padding: UIEdgeInsets) {
+        self.controller = controller
+        self.padding = padding
     }
+
+//    public func styleClasses(_ styleClasses: [Json]) -> Self {
+//        for styleClass in styleClasses {
+//            switch styleClass {
+//            case "outlined":
+//                controller = MDCTextInputControllerOutlined(textInput: self)
+//                padding = .zero
+//            case "filled":
+//                controller = MDCTextInputControllerFilled(textInput: self)
+//                padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+//            case "rounded":
+//                controller = MDCTextInputControllerOutlined(textInput: self)
+//                padding = .zero
+//            default:
+////                NSLog(<#T##format: String##String#>, <#T##args: CVarArg...##CVarArg#>)
+//
+//            }
+//        }
+//
+//        return self
+//    }
 
     public func placeholder(_ str: String) -> Self {
         controller.placeholderText = str
