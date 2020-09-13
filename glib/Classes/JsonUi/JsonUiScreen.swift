@@ -46,7 +46,6 @@ open class JsonUiScreen: GScreen {
     }
 
     private func update(response: Rest.Response) {
-        GLog.t("ws update 1")
         if let wsSpec = response.content["ws"].presence {
             let socketSpec = wsSpec["socket"]
             let url = "ws://localhost:4019\(socketSpec["endpoint"].stringValue)"
@@ -55,13 +54,11 @@ open class JsonUiScreen: GScreen {
             // Remove this because version 2.0.0 is still not supported by this client library
             params.removeValue(forKey: "vsn")
 
-            GLog.t("ws update 2: \(url) -- \(params)")
-
 //            socket = Socket("wss://phoenix-websocket-demo.herokuapp.com\(ws["socket"]["endpoint"].stringValue)", params: ws["socket"]["params"].dictionaryObject)
 
-            socket = Socket(url, params: params)
-
-            socket?.delegateOnOpen(to: self) { (self) in
+            let safeSocket = Socket(url, params: params)
+            socket = safeSocket
+            safeSocket.delegateOnOpen(to: self) { (self) in
                 GLog.d("Socket Connected")
                 if let topic = wsSpec["topic"].string, let events = wsSpec["events"].array {
                     self.channel = self.socket?.channel(wsSpec["topic"].stringValue)
@@ -84,13 +81,13 @@ open class JsonUiScreen: GScreen {
                         }
                 }
             }
-            socket?.delegateOnClose(to: self) { (self) in
+            safeSocket.delegateOnClose(to: self) { (self) in
                 GLog.d("Socket Disconnected")
             }
-            socket?.delegateOnError(to: self) { (self, error) in
+            safeSocket.delegateOnError(to: self) { (self, error) in
                 GLog.d("Socket Error: \(error.localizedDescription)")
             }
-            socket?.connect()
+            safeSocket.connect()
         }
         
         if self.contentOnly {
