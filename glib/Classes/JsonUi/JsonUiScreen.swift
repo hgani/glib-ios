@@ -47,9 +47,10 @@ open class JsonUiScreen: GScreen {
 
     private func update(response: Rest.Response) {
         GLog.t("ws update 1")
-        if let ws = response.content["ws"].presence {
-            let url = "ws://localhost:4019\(ws["socket"]["endpoint"].stringValue)"
-            var params = ws["socket"]["params"].dictionaryValue
+        if let wsSpec = response.content["ws"].presence {
+            let socketSpec = wsSpec["socket"]
+            let url = "ws://localhost:4019\(socketSpec["endpoint"].stringValue)"
+            var params = socketSpec["params"].dictionaryValue
 
             // Remove this because version 2.0.0 is still not supported by this client library
             params.removeValue(forKey: "vsn")
@@ -62,8 +63,8 @@ open class JsonUiScreen: GScreen {
 
             socket?.delegateOnOpen(to: self) { (self) in
                 GLog.d("Socket Connected")
-                if let topic = ws["topic"].string, let events = ws["events"].array {
-                    self.channel = self.socket?.channel(ws["topic"].stringValue)
+                if let topic = wsSpec["topic"].string, let events = wsSpec["events"].array {
+                    self.channel = self.socket?.channel(wsSpec["topic"].stringValue)
                     self.channel?.delegateOn("join", to: self) { (self, _) in
                         GLog.d("Joined")
                     }
