@@ -58,36 +58,7 @@ open class JsonUiScreen: GScreen {
 
             let safeSocket = Socket(url, params: params)
             socket = safeSocket
-            safeSocket.delegateOnOpen(to: self) { (self) in
-                GLog.d("Socket Connected")
-                if let topic = wsSpec["topic"].string, let events = wsSpec["events"].array {
-                    self.channel = self.socket?.channel(wsSpec["topic"].stringValue)
-                    self.channel?.delegateOn("join", to: self) { (self, _) in
-                        GLog.d("Joined")
-                    }
-                    events.forEach({ (event) in
-                        GLog.d("Registering event \(event.stringValue)")
-                        self.channel?.delegateOn(event.stringValue, to: self) { (self, message) in
-                            GLog.d(message.payload.debugDescription)
-                        }
-                    })
-                    self.channel?
-                        .join()
-                        .delegateReceive("ok", to: self) { (self, _) in
-                            GLog.d("Joined Channel \(topic)")
-                        }
-                        .delegateReceive("error", to: self) { (self, message) in
-                            GLog.d("Failed to join channel \(message.payload)")
-                        }
-                }
-            }
-            safeSocket.delegateOnClose(to: self) { (self) in
-                GLog.d("Socket Disconnected")
-            }
-            safeSocket.delegateOnError(to: self) { (self, error) in
-                GLog.d("Socket Error: \(error.localizedDescription)")
-            }
-            safeSocket.connect()
+            initSocket(safeSocket, wsSpec: wsSpec)
         }
         
         if self.contentOnly {
@@ -95,6 +66,44 @@ open class JsonUiScreen: GScreen {
         } else {
             JsonUi.parseEntireScreen(response.content, screen: self)
         }
+    }
+
+    func initSocket(_ socket: Socket, wsSpec: Json) {
+        socket.delegateOnOpen(to: self) { (self) in
+            GLog.d("Socket Connected")
+            if let topic = wsSpec["topic"].string, let events = wsSpec["events"].array {
+                let safeChannel = socket.channel(topic)
+                self.channel = safeChannel
+                self.initChannel(safeChannel, topic: topic, events: events)
+            }
+        }
+        socket.delegateOnClose(to: self) { (self) in
+            GLog.d("Socket Disconnected")
+        }
+        socket.delegateOnError(to: self) { (self, error) in
+            GLog.d("Socket Error: \(error.localizedDescription)")
+        }
+        socket.connect()
+    }
+
+    func initChannel(_ channel: Channel, topic: String, events: [Json]) {
+        channel.delegateOn("join", to: self) { (self, _) in
+            GLog.d("Joined")
+        }
+        events.forEach({ (event) in
+            GLog.d("Registering event \(event.stringValue)")
+            channel.delegateOn(event.stringValue, to: self) { (self, message) in
+                GLog.d(message.payload.debugDescription)
+            }
+        })
+        channel
+            .join()
+            .delegateReceive("ok", to: self) { (self, _) in
+                GLog.d("Joined channel: \(topic)")
+            }
+            .delegateReceive("error", to: self) { (self, message) in
+                GLog.d("Failed to join channel \(message.payload)")
+            }
     }
 
     func update(url: String, onLoad: @escaping () -> (Void)) {
