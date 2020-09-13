@@ -10,6 +10,10 @@ class JsonView_Button: JsonView {
     #endif
 
     override func initView() -> UIView {
+        ifColor(code: spec["color"].string) {
+            view.color(bg: nil, text: $0)
+        }
+
         if let text = spec["text"].string {
             _ = view.title(text)
         }
@@ -18,30 +22,29 @@ class JsonView_Button: JsonView {
         }
 
         #if INCLUDE_MDLIBS
-        if let styleClasses = spec["styleClasses"].array {
-            for style in styleClasses {
-                switch style {
-                case "link":
-                    view.specs(.link)
-                case "icon":
-                    view.specs(.icon(code: spec["icon"]["material"]["name"].stringValue))
-                default:
-                    if let klass = JsonUi.loadClass(name: style.stringValue, type: MButtonSpecProtocol.self) as? MButtonSpecProtocol.Type {
-                        let spec = klass.init()
-                        spec.createSpec().decorate(view)
-                    } else {
-                        GLog.e("Invalid style \(style)")
-//                        fatalError("Invalid style \(style)")
-                    }
-                }
-            }
-        }
-
         Generic.sharedInstance.genericIsBusy.asObservable().subscribe { _ in
             self.view.enabled(!Generic.sharedInstance.genericIsBusy.value)
         }
         #endif
 
         return view
+    }
+
+    override func applyStyleClass(_ styleClass: String) {
+        // TODO: Implement auto load of Spec (e.g. MButtonSpec.link) so we don't need MButtonSpecProtocol anymore
+        if let klass = JsonUi.loadClass(name: styleClass, type: MButtonSpecProtocol.self) as? MButtonSpecProtocol.Type {
+            let spec = klass.init()
+            spec.createSpec().decorate(view)
+        } else {
+            switch styleClass {
+            case "link":
+                view.specs(.link)
+            case "icon":
+                view.specs(.icon(JsonView_Icon.icon(spec: spec["icon"])))
+                view.layer.cornerRadius = 18
+            default:
+                GLog.e("Invalid style \(styleClass)")
+            }
+        }
     }
 }

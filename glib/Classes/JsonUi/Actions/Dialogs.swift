@@ -11,6 +11,7 @@ class JsonAction_Dialogs_Alert: JsonAction {
         }
 
         let alertController = MDCAlertController(title: "", message: message)
+        alertController.mdc_dialogPresentationController?.dismissOnBackgroundTap = false
         alertController.addAction(MDCAlertAction(title: "OK") { _ in JsonAction.execute(spec: self.spec["onClose"], screen: self.screen, creator: self) })
         screen.present(alertController, animated: true, completion: nil)
 

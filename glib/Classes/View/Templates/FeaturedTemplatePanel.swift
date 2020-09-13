@@ -3,7 +3,7 @@ import UIKit
 open class FeaturedTemplatePanel: GVerticalPanel {
     let picture = GImageView()
     let title = GLabel().specs(.libCellTitle)
-    let subtitle = GLabel().specs(.libCellSubtitle, .libMuted)
+    let subtitle = GLabel().specs(.libCellSubtitle, .libMuted).paddings(top: 6, left: nil, bottom: nil, right: nil)
 
     open override func initContent() {
         append(picture.height(100).clipsToBounds(true).contentMode(.scaleAspectFill))
@@ -26,9 +26,9 @@ open class FeaturedTemplatePanel: GVerticalPanel {
 
     public func setSubtitle(text: String?) {
         if let string = text {
-            subtitle.paddings(top: 6, left: nil, bottom: nil, right: nil).text(string)
+            subtitle.text(string).hidden(false)
         } else {
-            subtitle.paddings(top: 0, left: nil, bottom: nil, right: nil).text("")
+            subtitle.text("").hidden(true)
         }
     }
 }

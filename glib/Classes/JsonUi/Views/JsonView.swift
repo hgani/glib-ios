@@ -19,6 +19,7 @@ open class JsonView {
             initWidth(view)
             initHeight(view)
             initPadding(view)
+            applyStyleClasses(spec["styleClasses"].arrayValue.map({ $0.stringValue }))
         } else {
             // TODO: Uncomment this when all of our views conform to IView
 //            fatalError("Not a valid view: \(type(of: backend)) in \(spec["view"])")
@@ -31,6 +32,12 @@ open class JsonView {
             return UIColor.clear
         default:
             return UIColor(hex: str)
+        }
+    }
+
+    func ifColor(code: String?, handler: (UIColor) -> Void) {
+        if let str = code {
+            handler(color(from: str))
         }
     }
 
@@ -84,6 +91,16 @@ open class JsonView {
 
     open func initView() -> UIView {
         fatalError("Need implementation")
+    }
+
+    private func applyStyleClasses(_ styleClasses: [String]) {
+        for styleClass in styleClasses {
+            applyStyleClass(styleClass)
+        }
+    }
+
+    open func applyStyleClass(_ styleClass: String) {
+        // To be overridden
     }
 
     // TODO: Deprecate

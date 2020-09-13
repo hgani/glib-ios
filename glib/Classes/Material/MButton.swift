@@ -40,10 +40,26 @@ open class MButton: MDCButton, IView {
         return self
     }
 
-    public func iconify() -> Self {
+    @discardableResult
+    public func icon(_ icon: String, size: CGFloat? = nil) -> Self {
+        title(icon)
+        if let sizeValue = size, let label = titleLabel {
+            label.font = label.font.withSize(sizeValue)
+        }
         parseIcon()
         return self
     }
+
+    @discardableResult
+    public func icon(_ icon: GIcon, size: CGFloat? = nil) -> Self {
+        self.icon(icon.string, size: size)
+        return self
+    }
+
+//    public func iconify() -> Self {
+//        parseIcon()
+//        return self
+//    }
 
     public func width(_ width: Int) -> Self {
         helper.width(width)

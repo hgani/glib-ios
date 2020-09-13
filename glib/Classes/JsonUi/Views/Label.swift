@@ -6,9 +6,14 @@ class JsonView_Label: JsonView {
     override func initView() -> UIView {
         label.font(RobotoFonts.Style.regular.font, size: 14)
 
+        ifColor(code: spec["color"].string) {
+            label.color($0)
+        }
+
         if let text = spec["text"].string {
             _ = label.text(text)
         }
+
         if let align = spec["textAlign"].string {
             switch align {
             case "center":

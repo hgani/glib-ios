@@ -40,6 +40,7 @@ open class GLabel: UILabel, IView {
         helper.didMoveToSuperview()
     }
 
+    @discardableResult
     public func color(_ color: UIColor) -> Self {
         textColor = color
         return self
@@ -179,6 +180,11 @@ open class GLabel: UILabel, IView {
         for spec in specs {
             spec.decorate(self)
         }
+        return self
+    }
+
+    public func hidden(_ hidden: Bool) -> Self {
+        isHidden = hidden
         return self
     }
 

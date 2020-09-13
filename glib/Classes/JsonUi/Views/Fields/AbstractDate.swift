@@ -1,29 +1,31 @@
-class JsonView_AbstractDate: JsonView_AbstractField, SubmittableField {
-    #if INCLUDE_MDLIBS
-        private let view = MTextField()
-    #else
-        private let view = GTextField()
-    #endif
-    
-    var name: String?
-    var value: String {
-        return view.text ?? ""
-    }
-    
-    func validate() -> Bool {
-        return true
-    }
-    
-    func initTextField() -> UITextField & ITextField {
-        name = spec["name"].string
-        #if INCLUDE_MDLIBS
-        view.styleClasses(spec["styleClasses"].arrayValue)
-        #endif
-        view.placeholder = spec["label"].string
-        view.text = spec["value"].string
-        
-        return view
-    }
+//class JsonView_AbstractDate: JsonView_AbstractField, SubmittableField {
+class JsonView_AbstractDate: JsonView_AbstractText {
+
+//    #if INCLUDE_MDLIBS
+//        private let view = MTextField()
+//    #else
+//        private let view = GTextField()
+//    #endif
+//
+//    var name: String?
+//    var value: String {
+//        return view.text ?? ""
+//    }
+//
+//    func validate() -> Bool {
+//        return true
+//    }
+//
+//    func initTextField() -> UITextField & ITextField {
+//        name = spec["name"].string
+//        #if INCLUDE_MDLIBS
+//        view.styleClasses(spec["styleClasses"].arrayValue)
+//        #endif
+//        view.placeholder = spec["label"].string
+//        view.text = spec["value"].string
+//
+//        return view
+//    }
 }
 
 extension UITextField {

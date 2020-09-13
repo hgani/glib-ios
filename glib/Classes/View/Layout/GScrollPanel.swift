@@ -3,6 +3,7 @@ import UIKit
 open class GScrollPanel: UIScrollView, IContainer {
     private var helper: ViewHelper!
     let contentView = GVerticalPanel()
+    private weak var keyboardScreen: GScreen?
     
     public var size: CGSize {
         return helper.size
@@ -10,7 +11,14 @@ open class GScrollPanel: UIScrollView, IContainer {
 
     public init() {
         super.init(frame: .zero)
+        initialize()
+    }
 
+    public required init?(coder _: NSCoder) {
+        fatalError("Not supported")
+    }
+
+    private func initialize() {
         helper = ViewHelper(self)
 
         // See https://github.com/zaxonus/AutoLayScroll
@@ -29,8 +37,28 @@ open class GScrollPanel: UIScrollView, IContainer {
         self.delegate = self
     }
 
-    public required init?(coder _: NSCoder) {
-        fatalError("Not supported")
+    func autoResizeForKeyboard(screen: GScreen) {
+        self.keyboardScreen = screen
+
+        NotificationCenter.default.addObserver(self, selector: #selector(resizeForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resizeForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+
+    @objc func resizeForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+
+        if let view = keyboardScreen?.view {
+            let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, to: view.window)
+
+            if notification.name == UIResponder.keyboardWillHideNotification {
+                self.contentInset = UIEdgeInsets.zero
+            } else {
+                self.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+            }
+
+            self.scrollIndicatorInsets = self.contentInset
+        }
     }
 
     open override func didMoveToSuperview() {
