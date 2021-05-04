@@ -33,6 +33,10 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
 
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
 
+        self.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(0).priorityLow()
+        }
+
         addInitialBottomConstraint()
 
         initContent()
