@@ -43,8 +43,11 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
     }
 
     public func clearViews() {
-        previousView = nil
+        // Remove it explicitly because it's not necessarily related to a  child view, thus won't be removed
+        // as part of view.removeFromSuperview()
         rightConstraint = nil
+        
+        previousView = nil
 
         for view in subviews {
             view.removeFromSuperview()
@@ -73,7 +76,6 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
     // See https://github.com/zaxonus/AutoLayScroll/blob/master/AutoLayScroll/ViewController.swift
     private func initChildConstraints(child: UIView, left: Float) {
         child.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.topMargin)
 
             if let view = previousView {
                 make.left.equalTo(view.snp.right).offset(left)
@@ -82,9 +84,13 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
             }
 
             switch verticalAlign {
-            case .middle: make.centerY.equalTo(self)
-            case .top: make.top.equalTo(self.snp.topMargin)
-            case .bottom: make.bottom.equalTo(self.snp.bottomMargin)
+            case .middle:
+                make.centerY.equalTo(self)
+            case .top:
+                make.top.equalTo(self.snp.topMargin)
+            case .bottom:
+                make.top.greaterThanOrEqualTo(self.snp.topMargin)
+                make.bottom.equalTo(self.snp.bottomMargin)
             }
         }
     }
