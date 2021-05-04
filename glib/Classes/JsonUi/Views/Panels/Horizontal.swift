@@ -23,6 +23,28 @@ class JsonView_Panels_Horizontal: JsonView {
             return nil
         }
         
+        setAlign()  // Needs to be called before adding child views
+        setDistribution(childViews: childViews)
+
+        return panel
+    }
+
+    private func setAlign() {
+        panel.align(getGravity())
+    }
+
+    private func getGravity() -> GAligner.GAlignerVerticalGravity {
+        switch spec["align"].stringValue {
+        case "middle":
+            return .middle
+        case "bottom":
+            return .bottom
+        default:
+            return .top
+        }
+    }
+
+    private func setDistribution(childViews: [UIView]) {
         switch spec["distribution"].stringValue {
         case "fillEqually":
             for view in childViews {
@@ -39,12 +61,11 @@ class JsonView_Panels_Horizontal: JsonView {
                 panel.addView(view, left: 0)
             }
         }
-
-        return panel
     }
 }
 
 protocol IHorizontalPanel {
     func addView(_ child: UIView, left: Float)
     func split() -> Self
+    func align(_ align: GAligner.GAlignerVerticalGravity) -> Self
 }
