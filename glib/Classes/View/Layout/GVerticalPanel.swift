@@ -1,3 +1,4 @@
+import SnapKit
 import UIKit
 
 open class GVerticalPanel: UIView, IView, IVerticalPanel {
@@ -5,6 +6,8 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
 
     private var previousViewElement: UIView!
     private var previousConstraint: NSLayoutConstraint!
+    private var bottomConstraint: Constraint?
+    
     private var event: EventHelper<GVerticalPanel>!
 
     private var totalGap = Float(0.0)
@@ -47,15 +50,19 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
     }
 
     private func addInitialBottomConstraint() {
-        previousConstraint = NSLayoutConstraint(item: self,
-                                                attribute: .bottom,
-                                                relatedBy: .equal,
-                                                toItem: self,
-                                                attribute: .top,
-                                                multiplier: 1.0,
-                                                constant: 0.0)
-        previousConstraint.priority = UILayoutPriority(rawValue: 900) // Lower priority than fixed height
-        addConstraint(previousConstraint)
+        self.snp.makeConstraints { (make) -> Void in
+            bottomConstraint = make.height.equalTo(0).priorityLow().constraint
+        }
+
+//        previousConstraint = NSLayoutConstraint(item: self,
+//                                                attribute: .bottom,
+//                                                relatedBy: .equal,
+//                                                toItem: self,
+//                                                attribute: .top,
+//                                                multiplier: 1.0,
+//                                                constant: 0.0)
+//        previousConstraint.priority = UILayoutPriority(rawValue: 900) // Lower priority than fixed height
+//        addConstraint(previousConstraint)
     }
 
     open override func didMoveToSuperview() {
@@ -66,10 +73,12 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
     public func clearViews() {
         // Remove it explicitly because it's not necessarily related to a  child view, thus won't be removed
         // as part of view.removeFromSuperview()
-        removeConstraint(previousConstraint)
+        bottomConstraint = nil
+//        removeConstraint(previousConstraint)
         addInitialBottomConstraint()
 
         previousViewElement = nil
+
 
         for view in subviews {
             view.removeFromSuperview()
@@ -126,24 +135,32 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
     }
 
     private func adjustSelfConstraints(child: UIView) {
+
         snp.makeConstraints { (make) -> Void in
+//            make.rightMargin.equalTo(child.snp.right).priorityLow()
             make.rightMargin.greaterThanOrEqualTo(child.snp.right)
         }
 
         if !helper.shouldHeightMatchParent() {
-            removeConstraint(previousConstraint)
+            bottomConstraint?.deactivate()
 
-            previousConstraint = NSLayoutConstraint(item: child,
-                                                    attribute: .bottom,
-                                                    relatedBy: .equal,
-                                                    toItem: self,
-                                                    attribute: .bottomMargin,
-                                                    multiplier: 1.0,
-                                                    constant: 0.0)
-            previousConstraint.priority = UILayoutPriority(rawValue: 900)
+            child.snp.makeConstraints { make in
+                bottomConstraint = make.bottom.equalTo(self.snp.bottomMargin).constraint
+            }
 
-            // At this point previousViewElement refers to the last subview, that is the one at the bottom.
-            addConstraint(previousConstraint)
+//            removeConstraint(previousConstraint)
+//
+//            previousConstraint = NSLayoutConstraint(item: child,
+//                                                    attribute: .bottom,
+//                                                    relatedBy: .equal,
+//                                                    toItem: self,
+//                                                    attribute: .bottomMargin,
+//                                                    multiplier: 1.0,
+//                                                    constant: 0.0)
+//            previousConstraint.priority = UILayoutPriority(rawValue: 900)
+//
+//            // At this point previousViewElement refers to the last subview, that is the one at the bottom.
+//            addConstraint(previousConstraint)
         }
     }
 
