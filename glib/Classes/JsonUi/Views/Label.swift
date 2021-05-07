@@ -1,7 +1,7 @@
 import jsonlogic
 
 class JsonView_Label: JsonView {
-    private let label = GLabel()
+    let label = GLabel()
 
     override func initView() -> UIView {
         label.font(RobotoFonts.Style.regular.font, size: 14)
