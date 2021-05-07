@@ -73,7 +73,9 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
 //            } else {
                 switch styleClass {
                 case "outlined":
-                    view.controller(MDCTextInputControllerOutlined(textInput: view), padding: .zero)
+//                    view.controller(MDCTextInputControllerOutlined(textInput: view), padding: .zero)
+                    let padding = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 40)
+                    view.controller(MDCTextInputControllerOutlined(textInput: view), padding: padding)
                 case "filled":
                     view.controller(MDCTextInputControllerFilled(textInput: view), padding: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
                 case "rounded":
