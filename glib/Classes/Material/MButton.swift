@@ -183,16 +183,4 @@ extension MButton: GWeightable {
     }
 }
 
-public class MButtonSpec {
-    private var decorator: ((MButton) -> Void)
-
-    public init(_ decorator: @escaping ((MButton) -> Void)) {
-        self.decorator = decorator
-    }
-
-    func decorate(_ view: MButton) {
-        decorator(view)
-    }
-}
-
 #endif
