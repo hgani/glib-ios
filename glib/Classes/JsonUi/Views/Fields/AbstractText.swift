@@ -1,9 +1,12 @@
-#if INCLUDE_MDLIBS
-import MaterialComponents.MaterialTextFields
-#endif
-
 class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
     #if INCLUDE_MDLIBS
+        // NOTE: Library clients can register their own style classes here
+        public static var styleSpecs: [String: MTextFieldSpec] = [
+            "outlined": .outlined,
+            "filled": .filled,
+            "rounded": .rounded
+        ]
+
         private let view = MTextField()
     #else
         private let view = GTextField()
@@ -16,9 +19,7 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
 
     func initTextField() -> UITextField & ITextField {
         name = spec["name"].string
-//        #if INCLUDE_MDLIBS
-//        view.styleClasses(spec["styleClasses"].arrayValue)
-//        #endif
+
         view.placeholder = spec["label"].string
         view.text = spec["value"].string
         view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
@@ -66,25 +67,28 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
     }
 
     override func applyStyleClass(_ styleClass: String) {
+        #if INCLUDE_MDLIBS
+        if let buttonSpec = type(of: self).styleSpecs[styleClass] {
+            buttonSpec.decorate(view)
+        }
+        #endif
 
         // TODO: Support custom classes
 //            if let klass = JsonUi.loadClass(name: styleClass, type: MTextFieldSpec.self) as? MTextFieldSpec.Type {
 //                klass.init().decorate(view)
 //            } else {
-                switch styleClass {
-                case "outlined":
+//                switch styleClass {
+//                case "outlined":
 //                    view.controller(MDCTextInputControllerOutlined(textInput: view), padding: .zero)
-                    let padding = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 40)
-                    view.controller(MDCTextInputControllerOutlined(textInput: view), padding: padding)
-                case "filled":
-                    view.controller(MDCTextInputControllerFilled(textInput: view), padding: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
-                case "rounded":
-                    // Not supported yet, so use "outlined" instead
-                    view.controller(MDCTextInputControllerOutlined(textInput: view), padding: .zero)
-                default:
-                    GLog.i("Invalid style class: \(styleClass)")
-
-                }
+//                case "filled":
+//                    view.controller(MDCTextInputControllerFilled(textInput: view), padding: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
+//                case "rounded":
+//                    // Not supported yet, so use "outlined" instead
+//                    view.controller(MDCTextInputControllerOutlined(textInput: view), padding: .zero)
+//                default:
+//                    GLog.i("Invalid style class: \(styleClass)")
+//
+//                }
 //            }
 
     }
