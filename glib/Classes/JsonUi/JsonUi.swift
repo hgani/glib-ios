@@ -218,3 +218,11 @@ class ScrollableView {
         }
     }
 }
+
+public class JsonUiStyling {
+    // NOTE: Library clients can register their own style classes here
+    public static var buttons: [String: MButtonSpec] = [
+        "link": .link,
+        "icon": .icon
+    ]
+}

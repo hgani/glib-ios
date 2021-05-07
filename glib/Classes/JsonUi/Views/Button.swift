@@ -1,10 +1,4 @@
 class JsonView_Button: JsonView {
-    // NOTE: Library clients can register their own style classes here
-    public static var styleSpecs: [String: MButtonSpec] = [
-        "link": .link,
-        "icon": .icon
-    ]
-
     #if INCLUDE_MDLIBS
         private let view = MButton()
             .font(RobotoFonts.Style.regular.font, size: 15)
@@ -41,7 +35,7 @@ class JsonView_Button: JsonView {
     }
 
     override func applyStyleClass(_ styleClass: String) {
-        if let buttonSpec = type(of: self).styleSpecs[styleClass] {
+        if let buttonSpec = JsonUiStyling.buttons[styleClass] {
             buttonSpec.decorate(view)
         }
 
