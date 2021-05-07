@@ -7,7 +7,7 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
             "rounded": .rounded
         ]
 
-        private let view = MTextField()
+        private let view = MOutlinedTextField()
     #else
         private let view = GTextField()
     #endif
@@ -17,12 +17,13 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
         return view.text ?? ""
     }
 
-    func initTextField() -> UITextField & ITextField {
+    func initTextField() -> UIView & ITextField {
         name = spec["name"].string
 
-        view.placeholder = spec["label"].string
-        view.text = spec["value"].string
-        view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
+        // TODO
+//        view.placeholder = spec["label"].string
+//        view.text = spec["value"].string
+//        view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
 
         initBottomBorderIfApplicable()
 
@@ -57,7 +58,8 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
     func errors(_ text: String?) {
         #if INCLUDE_MDLIBS
 
-        view.errors(text)
+        // TODO
+//        view.errors(text)
 
         #endif
     }
@@ -68,9 +70,10 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
 
     override func applyStyleClass(_ styleClass: String) {
         #if INCLUDE_MDLIBS
-        if let buttonSpec = type(of: self).styleSpecs[styleClass] {
-            buttonSpec.decorate(view)
-        }
+        // TODO
+//        if let buttonSpec = type(of: self).styleSpecs[styleClass] {
+//            buttonSpec.decorate(view)
+//        }
         #endif
 
         // TODO: Support custom classes

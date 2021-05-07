@@ -113,6 +113,8 @@ Simplify iOS development
     sub.dependency 'MaterialComponents/List', '~> 124.0'
     sub.dependency 'MaterialComponents/ActionSheet', '~> 124.0'
     sub.dependency 'MaterialComponents/Chips', '~> 124.0'
+    sub.dependency 'MaterialComponents/TextControls+OutlinedTextFields', '~> 124.0'
+    
     # sub.dependency 'MaterialComponents/TextFields+Theming', '~> 92.0'
     # sub.dependency 'MaterialComponents/schemes/Shape', '~> 92.0'
     sub.dependency 'MarkdownKit', '1.5'
