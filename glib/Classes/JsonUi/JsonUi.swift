@@ -87,7 +87,8 @@ public class JsonUi {
     }
 
     private static func initNavBar(spec: Json, screen: GScreen) {
-        let buttons = spec["rightNavButtons"].arrayValue.map { json -> GBarButtonItem in
+        // TODO: rightNavButtons is Deprecated
+        let buttons = (spec["rightNavButtons"].array ?? spec["navBar"]["rightButtons"].arrayValue).map { json -> GBarButtonItem in
             let customView = GLabel()
                 .specs(.link)
                 .onClick({ _ in
@@ -96,7 +97,6 @@ public class JsonUi {
             JsonView_Icon.update(view: customView, spec: json["icon"])
             return GBarButtonItem(customView: customView)
         }
-
         screen.rightBarButtons(items: buttons)
 
         if let leftDrawer = spec["leftDrawer"].presence {
