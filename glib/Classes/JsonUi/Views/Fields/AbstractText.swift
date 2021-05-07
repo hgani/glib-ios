@@ -7,7 +7,7 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
             "rounded": .rounded
         ]
 
-        private let view = MOutlinedTextField()
+        private let view = MTextField()
     #else
         private let view = GTextField()
     #endif
@@ -20,9 +20,11 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
     func initTextField() -> UIView & ITextField {
         name = spec["name"].string
 
-        // TODO
-//        view.placeholder = spec["label"].string
-//        view.text = spec["value"].string
+        view.labelView.text = spec["label"].string
+        view.placeholder = spec["placeholder"].string
+        view.text = spec["value"].string
+
+        // TODO: Use GControl once we've sort out the autolayout width/height
 //        view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
 
         initBottomBorderIfApplicable()
@@ -58,8 +60,7 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
     func errors(_ text: String?) {
         #if INCLUDE_MDLIBS
 
-        // TODO
-//        view.errors(text)
+        view.hintView.text = text
 
         #endif
     }
@@ -75,24 +76,5 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
 //            buttonSpec.decorate(view)
 //        }
         #endif
-
-        // TODO: Support custom classes
-//            if let klass = JsonUi.loadClass(name: styleClass, type: MTextFieldSpec.self) as? MTextFieldSpec.Type {
-//                klass.init().decorate(view)
-//            } else {
-//                switch styleClass {
-//                case "outlined":
-//                    view.controller(MDCTextInputControllerOutlined(textInput: view), padding: .zero)
-//                case "filled":
-//                    view.controller(MDCTextInputControllerFilled(textInput: view), padding: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
-//                case "rounded":
-//                    // Not supported yet, so use "outlined" instead
-//                    view.controller(MDCTextInputControllerOutlined(textInput: view), padding: .zero)
-//                default:
-//                    GLog.i("Invalid style class: \(styleClass)")
-//
-//                }
-//            }
-
     }
 }
