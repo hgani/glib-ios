@@ -1,5 +1,6 @@
 public protocol BuildConfig {
     func host() -> String
+//    func wsHost() -> String
     func isDebugMode() -> Bool
 }
 

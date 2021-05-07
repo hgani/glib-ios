@@ -2,9 +2,24 @@
 
 import MaterialComponents.MaterialList
 
-open class MCollectionViewCell: MDCSelfSizingStereoCell {
+// See how we can use composition: https://github.com/material-components/material-components-ios-codelabs/blob/master/MDC-104/ObjectiveC/Starter/Shrine/Pods/MaterialComponents/components/List/src/MDCSelfSizingStereoCell.m
+//open class MCollectionViewCell: MDCSelfSizingStereoCell {
+open class MCollectionViewCell: MDCBaseCell {
     private var swipeOpened = false
     private let editButtonsPanel = GHorizontalPanel()
+    private let backend = MDCSelfSizingStereoCell()
+
+    var titleLabel: UILabel {
+        return backend.titleLabel
+    }
+
+    var detailLabel: UILabel {
+        return backend.detailLabel
+    }
+
+    var leadingImageView: UIImageView {
+        return backend.leadingImageView
+    }
 
     var hasEditButtons = false
 
@@ -54,8 +69,9 @@ open class MCollectionViewCell: MDCSelfSizingStereoCell {
 //            make.margins.equalTo(0)
 //            make.top.equalTo(0)
 //        }
-        detailLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom)
+
+        backend.detailLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(backend.titleLabel.snp.bottom)
         }
     }
 

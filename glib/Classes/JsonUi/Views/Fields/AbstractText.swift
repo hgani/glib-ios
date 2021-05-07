@@ -1,12 +1,12 @@
 class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
-    // NOTE: Library clients can register their own style classes here
-    public static var styleSpecs: [String: MTextFieldSpec] = [
-        "outlined": .outlined,
-        "filled": .filled,
-        "rounded": .rounded
-    ]
-
     #if INCLUDE_MDLIBS
+        // NOTE: Library clients can register their own style classes here
+        public static var styleSpecs: [String: MTextFieldSpec] = [
+            "outlined": .outlined,
+            "filled": .filled,
+            "rounded": .rounded
+        ]
+
         private let view = MTextField()
     #else
         private let view = GTextField()
@@ -67,9 +67,11 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
     }
 
     override func applyStyleClass(_ styleClass: String) {
+        #if INCLUDE_MDLIBS
         if let buttonSpec = type(of: self).styleSpecs[styleClass] {
             buttonSpec.decorate(view)
         }
+        #endif
 
         // TODO: Support custom classes
 //            if let klass = JsonUi.loadClass(name: styleClass, type: MTextFieldSpec.self) as? MTextFieldSpec.Type {
