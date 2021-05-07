@@ -17,7 +17,7 @@ class JsonAction_Snackbars_Alert: JsonAction {
         snackbar.text(message)
             .action(spec["onClose"].presence, screen, self)
             .position(spec["verticalPosition"].presence)
-        MDCSnackbarManager.show(snackbar)
+        MDCSnackbarManager.default.show(snackbar)
         
         return true
     }
@@ -33,7 +33,7 @@ class JsonAction_Snackbars_Select: JsonAction {
         snackbar.text(message)
             .action(spec["onClose"].presence, screen, self)
             .position(spec["verticalPosition"].presence)
-        MDCSnackbarManager.show(snackbar)
+        MDCSnackbarManager.default.show(snackbar)
         
         return true
     }
@@ -50,7 +50,7 @@ class MSnackbar: MDCSnackbarMessage {
             let action = MDCSnackbarMessageAction()
             action.title = "CLOSE"
             action.handler = { () in
-                MDCSnackbarManager.suspendAllMessages()
+                MDCSnackbarManager.default.suspendAllMessages()
                 JsonAction.execute(spec: onClose, screen: screen, creator: creator)
             }
             self.action = action
@@ -70,7 +70,7 @@ class MSnackbar: MDCSnackbarMessage {
             }
         }
         
-        MDCSnackbarManager.setBottomOffset(bottomOffset)
+        MDCSnackbarManager.default.setBottomOffset(bottomOffset)
         return self
     }
 }

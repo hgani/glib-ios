@@ -28,13 +28,13 @@ class JsonAction_Dialogs_Snackbar: JsonAction {
         let action = MDCSnackbarMessageAction()
         action.title = "CLOSE"
         action.handler = { () in
-            MDCSnackbarManager.suspendAllMessages()
+            MDCSnackbarManager.default.suspendAllMessages()
         }
 
         let snackbar = MDCSnackbarMessage()
         snackbar.text = message
         snackbar.action = action
-        MDCSnackbarManager.show(snackbar)
+        MDCSnackbarManager.default.show(snackbar)
 
         return true
     }
