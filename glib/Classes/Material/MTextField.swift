@@ -42,9 +42,18 @@ open class MTextField: GControl, ITextField {
         return backend.leadingAssistiveLabel
     }
 
+    public var isSecureTextEntry: Bool {
+        return backend.isSecureTextEntry
+    }
+
+    public var trailingView: UIView? {
+        return backend.trailingView
+    }
+
     public init(outlined: Bool) {
         super.init()
         if outlined {
+//            backend = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
             backend = MDCOutlinedTextField()
         }
         initialize()
@@ -64,21 +73,6 @@ open class MTextField: GControl, ITextField {
         withView(backend, matchParent: true)
     }
 
-//    open override func didMoveToSuperview() {
-//        super.didMoveToSuperview()
-////        helper.didMoveToSuperview()
-//    }
-//
-//    func initFilled() {
-//        backend = MDCFilledTextField()
-//        withView(backend, matchParent: true)
-//    }
-//
-//    func initOutlined() {
-//        backend = MDCOutlinedTextField()
-//        withView(backend, matchParent: true)
-//    }
-
     @discardableResult
     func rounded() -> Self {
         backend.layer.cornerRadius = 16
@@ -92,15 +86,13 @@ open class MTextField: GControl, ITextField {
         return self
     }
 
-//    public func placeholder(_ str: String) -> Self {
-//        controller.placeholderText = str
-//        return self
-//    }
-//
-//    public func hint(_ str: String) -> Self {
-//        controller.helperText = str
-//        return self
-//    }
+    public func trailingView(_ view: UIView) -> Self {
+        backend.trailingViewMode = .always
+        backend.trailingView = view
+//        backend.translatesAutoresizingMaskIntoConstraints = false
+//        backend.rightViewMode = .always
+        return self
+    }
 
     open override func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
         backend.addTarget(target, action: action, for: controlEvents)

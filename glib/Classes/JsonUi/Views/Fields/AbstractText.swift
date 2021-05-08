@@ -8,7 +8,7 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
         return view.text ?? ""
     }
 
-    func initTextField() -> UIView & ITextField {
+    func initTextField() -> MTextField {
         view = MTextField(outlined: spec["styleClasses"].arrayValue.contains("outlined"))
         
         name = spec["name"].string
@@ -18,7 +18,7 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
         view.text = spec["value"].string
         view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
 
-        initBottomBorderIfApplicable()
+//        initBottomBorderIfApplicable()
 
 //        self.registerToClosestForm(field: view)
 
@@ -31,29 +31,25 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
         }
     }
 
-    private func initBottomBorderIfApplicable() {
-        #if !INCLUDE_UILIBS
-            view.borderStyle = .none
-            view.layer.backgroundColor = UIColor.white.cgColor
-
-            view.layer.masksToBounds = false
-            view.layer.shadowColor = UIColor.lightGray.cgColor
-            view.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-            view.layer.shadowOpacity = 1.0
-            view.layer.shadowRadius = 0.0
-        #endif
-    }
+//    private func initBottomBorderIfApplicable() {
+//        #if !INCLUDE_UILIBS
+//            view.borderStyle = .none
+//            view.layer.backgroundColor = UIColor.white.cgColor
+//
+//            view.layer.masksToBounds = false
+//            view.layer.shadowColor = UIColor.lightGray.cgColor
+//            view.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+//            view.layer.shadowOpacity = 1.0
+//            view.layer.shadowRadius = 0.0
+//        #endif
+//    }
 
     func text() -> String? {
         return view.text
     }
 
     func errors(_ text: String?) {
-        #if INCLUDE_MDLIBS
-
         view.hintView.text = text
-
-        #endif
     }
 
     func validate() -> Bool {
@@ -61,13 +57,9 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
     }
 
     override func applyStyleClass(_ styleClass: String) {
-        #if INCLUDE_MDLIBS
-
         if let buttonSpec = JsonUiStyling.textFields[styleClass] {
             buttonSpec.decorate(view)
         }
-        
-        #endif
     }
 }
 
