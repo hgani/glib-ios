@@ -32,7 +32,7 @@ class JsonView_Heading: JsonView_Label {
 class JsonView_H1: JsonView_Heading {
     override func initView() -> UIView {
         super.initView()
-        label.font(nil, size: 18, traits: .traitBold)
+        label.font(nil, size: 24, traits: .traitBold)
         return label
     }
 }
@@ -40,7 +40,7 @@ class JsonView_H1: JsonView_Heading {
 class JsonView_H2: JsonView_Heading {
     override func initView() -> UIView {
         super.initView()
-        label.font(nil, size: 16, traits: .traitBold)
+        label.font(nil, size: 20, traits: .traitBold)
         return label
     }
 }

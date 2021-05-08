@@ -20,7 +20,7 @@ class JsonView_Fields_Password: JsonView_AbstractText {
     }
 
     private func updateRightIcon(textField: MTextField, imageView: UIImageView) {
-        let code = view.isSecureTextEntry ? "visibility" : "visibility.off"
+        let code = textField.isSecureTextEntry ? "visibility" : "visibility.off"
         imageView.image = UIImage(from: .materialIcon, code: code,
                                    textColor: .blue, backgroundColor: .clear,
                                    size: CGSize(width: 24, height: 24))
