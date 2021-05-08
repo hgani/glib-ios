@@ -11,23 +11,16 @@ public class MTextFieldSpec {
         decorator(view)
     }
 
-    static let outlined = MTextFieldSpec { textField in
-        // TODO
-//        textField.controller(MDCTextInputControllerOutlined(textInput: textField),
-//                             padding: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
-    }
-
-    static let filled = MTextFieldSpec { textField in
-        // TODO
-//        textField.controller(MDCTextInputControllerFilled(textInput: textField),
-//                             padding: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
-    }
+//    static let outlined = MTextFieldSpec { textField in
+//        textField.outlined()
+//    }
+//
+//    static let filled = MTextFieldSpec { textField in
+//        // Nothing to do. This is the default.
+//    }
 
     static let rounded = MTextFieldSpec { textField in
-        // TODO
-//        // Not supported yet, so use "outlined" instead
-//        textField.controller(MDCTextInputControllerOutlined(textInput: textField),
-//                             padding: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
+        textField.rounded()
     }
 }
 

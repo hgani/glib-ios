@@ -7,8 +7,8 @@ public class JsonUiStyling {
 
     // NOTE: Library clients can register their own style classes here
     public static var textFields: [String: MTextFieldSpec] = [
-        "outlined": .outlined,
-        "filled": .filled,
+//        "outlined": .outlined,
+//        "filled": .filled,
         "rounded": .rounded
     ]
 }

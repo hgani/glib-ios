@@ -1,9 +1,7 @@
+#if INCLUDE_MDLIBS
+
 class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
-    #if INCLUDE_MDLIBS
-        private let view = MTextField()
-    #else
-        private let view = GTextField()
-    #endif
+    private var view: MTextField!
 
     var name: String?
     var value: String {
@@ -11,6 +9,8 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
     }
 
     func initTextField() -> UIView & ITextField {
+        view = MTextField(outlined: spec["styleClasses"].arrayValue.contains("outlined"))
+        
         name = spec["name"].string
 
         view.labelView.text = spec["label"].string
@@ -70,3 +70,5 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
         #endif
     }
 }
+
+#endif

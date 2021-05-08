@@ -1,8 +1,8 @@
 #if INCLUDE_MDLIBS
 
+import MaterialComponents.MaterialTextControls_FilledTextFields
 import MaterialComponents.MaterialTextControls_OutlinedTextFields
 
-// See https://github.com/material-components/material-components-ios/issues/7133
 open class MTextField: GControl, ITextField {
 //    private var helper: ViewHelper!
 //    private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
@@ -11,7 +11,10 @@ open class MTextField: GControl, ITextField {
     // TODO: Make sure this doesn't generate cyclic references
 //    private var controller: MDCTextInputController!
 
-    private var backend: MDCOutlinedTextField!
+//    private var backend: MDCBaseTextField!
+
+    // See https://github.com/material-components/material-components-ios/issues/7133
+    private var backend: MDCBaseTextField = MDCFilledTextField()
 
     public var text: String? {
         get {
@@ -38,20 +41,14 @@ open class MTextField: GControl, ITextField {
     public var hintView: UILabel {
         return backend.leadingAssistiveLabel
     }
-//
-//    public var size: CGSize {
-//        return helper.size
-//    }
-//
-//    public init() {
-//        super.init(frame: .zero)
-//        initialize()
-//    }
-//
-//    public required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//        initialize()
-//    }
+
+    public init(outlined: Bool) {
+        super.init()
+        if outlined {
+            backend = MDCOutlinedTextField()
+        }
+        initialize()
+    }
 
     public override init() {
         super.init()
@@ -64,26 +61,28 @@ open class MTextField: GControl, ITextField {
     }
 
     private func initialize() {
-        // Try https://github.com/material-components/material-components-ios/issues/7133
-
-//        backend = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 300, height: 50))
-        backend = MDCOutlinedTextField()
-
-//        backend.backgroundColor = .blue
-
-//        backend.label.text = "Label"
-//        backend.text = "This is text"
-//        backend.placeholder = "555-555-5555"
-//        backend.leadingAssistiveLabel.text = "This is helper text"
-        backend.sizeToFit()
-
-//        width(.matchParent).color(bg: .green).append(backend)
         withView(backend, matchParent: true)
     }
 
-    open override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-//        helper.didMoveToSuperview()
+//    open override func didMoveToSuperview() {
+//        super.didMoveToSuperview()
+////        helper.didMoveToSuperview()
+//    }
+//
+//    func initFilled() {
+//        backend = MDCFilledTextField()
+//        withView(backend, matchParent: true)
+//    }
+//
+//    func initOutlined() {
+//        backend = MDCOutlinedTextField()
+//        withView(backend, matchParent: true)
+//    }
+
+    @discardableResult
+    func rounded() -> Self {
+        backend.layer.cornerRadius = 16
+        return self
     }
 
     public func specs(_ specs: MTextFieldSpec...) -> Self {
@@ -167,13 +166,6 @@ open class MTextField: GControl, ITextField {
 //        return self
 //    }
 //
-////    public func specs(_ specs: MTextFieldSpec...) -> Self {
-////        for spec in specs {
-////            spec.decorate(self)
-////        }
-////        return self
-////    }
-//
     public func secure(_ secure: Bool) -> Self {
         backend.isSecureTextEntry = secure
         return self
@@ -183,12 +175,7 @@ open class MTextField: GControl, ITextField {
         backend.keyboardType = type
         return self
     }
-//
-//    public func text(_ text: String) -> Self {
-//        self.text = text
-//        return self
-//    }
-//
+
 //    public func errors(_ text: String?) -> Self {
 //        controller.setErrorText(text, errorAccessibilityValue: nil)
 //        return self
@@ -199,17 +186,5 @@ open class MTextField: GControl, ITextField {
 //        return self
 //    }
 }
-
-//class MDCTextInputControllerRoundedOutlined: MDCTextInputControllerOutlined {
-//    @objc func updateBorder() {
-//        let superClass = class_getSuperclass(type(of: self))
-//        let selector = #selector(updateBorder)
-//
-//        let impl = class_getMethodImplementation(superClass, selector)
-//        typealias ObjCVoidVoidFn = @convention(c) (AnyObject, Selector) -> Void
-//        let fn = unsafeBitCast(impl, to: ObjCVoidVoidFn.self)
-//        fn(self, selector)
-//    }
-//}
 
 #endif
