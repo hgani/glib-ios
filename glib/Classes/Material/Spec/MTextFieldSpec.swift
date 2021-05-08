@@ -1,8 +1,16 @@
 #if INCLUDE_MDLIBS
 
-import MaterialComponents.MaterialTextFields
+public class MTextFieldSpec {
+    private var decorator: ((MTextField) -> Void)
 
-extension MTextFieldSpec {
+    public init(_ decorator: @escaping ((MTextField) -> Void)) {
+        self.decorator = decorator
+    }
+
+    func decorate(_ view: MTextField) {
+        decorator(view)
+    }
+
     static let outlined = MTextFieldSpec { textField in
         // TODO
 //        textField.controller(MDCTextInputControllerOutlined(textInput: textField),

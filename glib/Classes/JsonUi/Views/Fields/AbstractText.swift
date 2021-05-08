@@ -1,12 +1,5 @@
 class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
     #if INCLUDE_MDLIBS
-        // NOTE: Library clients can register their own style classes here
-        public static var styleSpecs: [String: MTextFieldSpec] = [
-            "outlined": .outlined,
-            "filled": .filled,
-            "rounded": .rounded
-        ]
-
         private let view = MTextField()
     #else
         private let view = GTextField()
@@ -23,9 +16,7 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
         view.labelView.text = spec["label"].string
         view.placeholder = spec["placeholder"].string
         view.text = spec["value"].string
-
-        // TODO: Use GControl once we've sort out the autolayout width/height
-//        view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
+        view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
 
         initBottomBorderIfApplicable()
 
@@ -71,10 +62,11 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
 
     override func applyStyleClass(_ styleClass: String) {
         #if INCLUDE_MDLIBS
-        // TODO
-//        if let buttonSpec = type(of: self).styleSpecs[styleClass] {
-//            buttonSpec.decorate(view)
-//        }
+
+        if let buttonSpec = JsonUiStyling.textFields[styleClass] {
+            buttonSpec.decorate(view)
+        }
+        
         #endif
     }
 }

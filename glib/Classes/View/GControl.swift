@@ -3,6 +3,10 @@ import UIKit
 open class GControl: UIControl {
     private var helper: ControlHelper<GControl>!
 
+    public var size: CGSize {
+        return helper.size
+    }
+
     public init() {
         super.init(frame: .zero)
         initialize()
@@ -48,10 +52,15 @@ open class GControl: UIControl {
         return self
     }
 
-    public func color(bg: UIColor?) -> Self {
-        if let bgColor = bg {
-            backgroundColor = bgColor
-        }
+//    public func color(bg: UIColor?) -> Self {
+//        if let bgColor = bg {
+//            backgroundColor = bgColor
+//        }
+//        return self
+//    }
+
+    public func color(bg: UIColor) -> Self {
+        backgroundColor = bg
         return self
     }
 
@@ -60,7 +69,26 @@ open class GControl: UIControl {
         return self
     }
 
-    public func withView(_ child: UIView) -> Self {
+//    public func withView(_ child: UIView) -> Self {
+//        // The hope is this makes things more predictable
+//        child.translatesAutoresizingMaskIntoConstraints = false
+//
+//        addSubview(child)
+//
+//        snp.makeConstraints { make in
+//            make.left.equalTo(child)
+//            make.top.equalTo(child)
+//
+//            // TODO
+////            make.width.greaterThanOrEqualTo(child)
+////            make.height.greaterThanOrEqualTo(child)
+//            make.width.equalTo(child)
+//            make.height.equalTo(child)
+//        }
+//        return self
+//    }
+
+    public func withView(_ child: UIView, matchParent: Bool) -> Self {
         // The hope is this makes things more predictable
         child.translatesAutoresizingMaskIntoConstraints = false
 
@@ -70,8 +98,13 @@ open class GControl: UIControl {
             make.left.equalTo(child)
             make.top.equalTo(child)
 
-            make.width.greaterThanOrEqualTo(child)
-            make.height.greaterThanOrEqualTo(child)
+            if matchParent {
+                make.width.equalTo(child)
+                make.height.equalTo(child)
+            } else {
+                make.width.greaterThanOrEqualTo(child)
+                make.height.greaterThanOrEqualTo(child)
+            }
         }
         return self
     }

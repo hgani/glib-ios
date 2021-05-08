@@ -3,7 +3,7 @@
 import MaterialComponents.MaterialTextControls_OutlinedTextFields
 
 // See https://github.com/material-components/material-components-ios/issues/7133
-open class MTextField: GVerticalPanel, ITextField {
+open class MTextField: GControl, ITextField {
 //    private var helper: ViewHelper!
 //    private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
     private var padding = UIEdgeInsets.zero
@@ -38,7 +38,7 @@ open class MTextField: GVerticalPanel, ITextField {
     public var hintView: UILabel {
         return backend.leadingAssistiveLabel
     }
-
+//
 //    public var size: CGSize {
 //        return helper.size
 //    }
@@ -64,15 +64,12 @@ open class MTextField: GVerticalPanel, ITextField {
     }
 
     private func initialize() {
-//        helper = ViewHelper(self)
-//        controller = MDCTextInputControllerUnderline(textInput: self)
-
-//        hint("Hint")
-//        errors("Error")
-
         // Try https://github.com/material-components/material-components-ios/issues/7133
 
-        backend = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 300, height: 50))
+//        backend = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 300, height: 50))
+        backend = MDCOutlinedTextField()
+
+//        backend.backgroundColor = .blue
 
 //        backend.label.text = "Label"
 //        backend.text = "This is text"
@@ -80,39 +77,14 @@ open class MTextField: GVerticalPanel, ITextField {
 //        backend.leadingAssistiveLabel.text = "This is helper text"
         backend.sizeToFit()
 
-        width(.matchParent).height(50).color(bg: .green).append(backend)
+//        width(.matchParent).color(bg: .green).append(backend)
+        withView(backend, matchParent: true)
     }
 
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
 //        helper.didMoveToSuperview()
     }
-
-//    func controller(_ controller: MDCTextInputController, padding: UIEdgeInsets) {
-//        self.controller = controller
-//        self.padding = padding
-//    }
-
-//    public func styleClasses(_ styleClasses: [Json]) -> Self {
-//        for styleClass in styleClasses {
-//            switch styleClass {
-//            case "outlined":
-//                controller = MDCTextInputControllerOutlined(textInput: self)
-//                padding = .zero
-//            case "filled":
-//                controller = MDCTextInputControllerFilled(textInput: self)
-//                padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-//            case "rounded":
-//                controller = MDCTextInputControllerOutlined(textInput: self)
-//                padding = .zero
-//            default:
-////                NSLog(<#T##format: String##String#>, <#T##args: CVarArg...##CVarArg#>)
-//
-//            }
-//        }
-//
-//        return self
-//    }
 
     public func specs(_ specs: MTextFieldSpec...) -> Self {
         for spec in specs {
@@ -131,10 +103,15 @@ open class MTextField: GVerticalPanel, ITextField {
 //        return self
 //    }
 
-//    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+    open override func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
+        backend.addTarget(target, action: action, for: controlEvents)
+    }
+
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+        // TODO
 //        helper.paddings(t: top, l: left, b: bottom, r: right)
-//        return self
-//    }
+        return self
+    }
 //
 //    open override func textRect(forBounds bounds: CGRect) -> CGRect {
 //        return bounds.inset(by: padding)
@@ -234,17 +211,5 @@ open class MTextField: GVerticalPanel, ITextField {
 //        fn(self, selector)
 //    }
 //}
-
-public class MTextFieldSpec {
-    private var decorator: ((MTextField) -> Void)
-
-    public init(_ decorator: @escaping ((MTextField) -> Void)) {
-        self.decorator = decorator
-    }
-
-    func decorate(_ view: MTextField) {
-        decorator(view)
-    }
-}
 
 #endif
