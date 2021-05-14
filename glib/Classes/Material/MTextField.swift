@@ -34,6 +34,15 @@ open class MTextField: GControl, ITextField {
         }
     }
 
+    public var delegate: UITextFieldDelegate? {
+        get {
+            return backend.delegate
+        }
+        set {
+            backend.delegate = newValue
+        }
+    }
+
     public var labelView: UILabel {
         return backend.label
     }
