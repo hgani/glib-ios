@@ -112,7 +112,8 @@ public class Rest {
                         }
 
                         let jsonData = Json(data)
-                        if httpResponse.statusCode >= 500 && httpResponse.statusCode < 600 {
+                        if httpResponse.statusCode == 400 || // Bad request
+                            (httpResponse.statusCode >= 500 && httpResponse.statusCode < 600) {
                             self.notifyError(indicator: indicator, error: GCustomError(message: "Server error"), onHttpFailure: onHttpFailure)
                         } else {
                             self.handleResponse(content: jsonData, response: httpResponse, indicator: indicator, onHttpSuccess: onHttpSuccess)
