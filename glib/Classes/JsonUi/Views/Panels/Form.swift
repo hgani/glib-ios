@@ -73,16 +73,6 @@ class JsonView_Panels_Form: JsonView {
                     JsonAction.execute(spec: response.content["onResponse"], screen: screen, creator: self)
                     return true
                 })
-
-//            _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)?.execute { response in
-//                #if INCLUDE_MDLIBS
-//
-//                Generic.sharedInstance.genericIsBusy.value = false
-//
-//                #endif
-//                JsonAction.execute(spec: response.content["onResponse"], screen: screen, creator: self)
-//                return true
-//            }
         }
     }
 }

@@ -1,7 +1,12 @@
 class JsonView_AbstractField: JsonView {
     override func didAttach(to _: UIView) {
-        self.registerToClosestForm(field: view())
+//        self.registerToClosestForm(field: view())
     }
+
+    override func onAfterInitView(_ view: UIView) {
+        self.registerToClosestForm(field: view)
+    }
+
 
     func registerToClosestForm(field: UIView) {
         if let form = closest(JsonView_Panels_Form.FormPanel.self, from: field) {

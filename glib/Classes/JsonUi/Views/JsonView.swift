@@ -93,6 +93,10 @@ open class JsonView {
         fatalError("Need implementation")
     }
 
+    open func onAfterInitView(_ view: UIView) {
+        // To be overridden
+    }
+
     private func applyStyleClasses(_ styleClasses: [String]) {
         for styleClass in styleClasses {
             applyStyleClass(styleClass)
@@ -119,15 +123,25 @@ open class JsonView {
         let view = initView()
         self.backend = view
         initGenericAttributes(backend: view)
+
+        // This might look hacky but it's much less error prone than the alternative, where we need to
+        // explicitly execute the callback for every parent component, which will get very complex
+        // when it involves nested parents because we won't know at which point the whole nesting has
+        // been fully connected.
+        DispatchQueue.main.async {
+            // This is supposed to execute after the view has been added to parent.
+            self.onAfterInitView(view)
+        }
+
         return view
     }
 
-    func closest<T: UIView>(_ type: T.Type, from: UIView) -> T? {
+    func closest<T: UIView>(_ instanceType: T.Type, from: UIView) -> T? {
         if let superview = from.superview {
             if let found = superview as? T {
                 return found
             } else {
-                return closest(type, from: superview)
+                return closest(instanceType, from: superview)
             }
         }
         return nil
