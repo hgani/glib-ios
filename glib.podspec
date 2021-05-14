@@ -40,7 +40,7 @@ Simplify iOS development
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'SwiftIconFont', '~> 3.0'
+  s.dependency 'SwiftIconFont', '~> 6.0'
   s.dependency 'SideMenu', '~> 5.0'
   s.dependency 'SnapKit', '~> 4.0'
 

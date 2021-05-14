@@ -11,8 +11,8 @@ public struct GIcon {
 
     private var prefix: String {
         switch font {
-        case .fontAwesome:
-            return "fa"
+//        case .fontAwesome:
+//            return "fa"
         case .iconic:
             return "ic"
         case .ionicon:
@@ -27,6 +27,8 @@ public struct GIcon {
             return "sm"
         case .themify:
             return "ti"
+        default:
+            fatalError("Unsupported iconset")
         }
     }
 
