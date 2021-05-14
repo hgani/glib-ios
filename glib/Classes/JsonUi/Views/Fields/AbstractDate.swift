@@ -28,7 +28,7 @@ class JsonView_AbstractDate: JsonView_AbstractText {
 //    }
 }
 
-extension UITextField {
+extension MTextField {
     
     func setInputViewDatePicker(mode: UIDatePicker.Mode, target: Any, selector: Selector) {
         let screenWidth = UIScreen.main.bounds.width

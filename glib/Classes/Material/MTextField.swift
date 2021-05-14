@@ -54,13 +54,31 @@ open class MTextField: GControl, ITextField {
     public var errorView: UILabel {
         return backend.trailingAssistiveLabel
     }
-    
+
     public var isSecureTextEntry: Bool {
         return backend.isSecureTextEntry
     }
 
     public var trailingView: UIView? {
         return backend.trailingView
+    }
+
+    public override var inputView: UIView? {
+        get {
+            return backend.inputView
+        }
+        set {
+            backend.inputView = newValue
+        }
+    }
+
+    public override var inputAccessoryView: UIView? {
+        get {
+            return backend.inputAccessoryView
+        }
+        set {
+            backend.inputAccessoryView = newValue
+        }
     }
 
     public init(outlined: Bool) {
@@ -115,6 +133,10 @@ open class MTextField: GControl, ITextField {
         // TODO
 //        helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
+    }
+
+    open override func resignFirstResponder() -> Bool {
+        return backend.resignFirstResponder()
     }
 //
 //    open override func textRect(forBounds bounds: CGRect) -> CGRect {
