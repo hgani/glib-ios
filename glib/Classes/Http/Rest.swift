@@ -30,56 +30,6 @@ public class Rest {
         }
     }
 
-//    private func executeGeneric(indicator: ProgressIndicator,
-//                                onHttpSuccess: @escaping (Response) -> Bool,
-//                                onHttpFailure: @escaping (Error) -> Bool) {
-//        GLog.i(string)
-//        #if DEBUG || ADHOC
-//            GLog.i("Params: \(params)")
-//        #endif
-//
-//        indicator.show()
-//        if let r = request {
-//            r.responseString { response in
-//                if let r = response.response {
-//                    if !GHttp.instance.delegate.processResponse(r) {
-//                        indicator.hide()
-//                        return
-//                    }
-//                }
-//
-//                switch response.result {
-//                case .success(let value):
-//                    indicator.hide()
-//
-//                    var status = "Unknown status"
-//                    if let code = response.response?.statusCode {
-//                        status = String(code)
-//                    }
-//
-//                    var headers = Json()
-//                    if let fields = response.response?.allHeaderFields {
-//                        for field in fields {
-//                            GLog.t("KEY: \(String(describing: field.key))")
-//                            headers[String(describing: field.key)] = Json(field.value)
-//                        }
-//                    }
-//
-//                    let content = JSON(parseJSON: value)
-//
-//                    GLog.d("[\(status)]: \(content)")
-//                    if !onHttpSuccess(Response(content: content, headers: headers)) {
-//                        indicator.show(error: content["message"].string ?? content["error"].string ?? "")
-//                    }
-//                case .failure(let error):
-//                    if !onHttpFailure(error) {
-//                        indicator.show(error: error.localizedDescription)
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     public func execute(indicator: ProgressIndicatorEnum = .standard,
                         localCache: Bool = false,
                         onHttpFailure: @escaping (Error) -> Bool = { _ in false },
@@ -161,7 +111,12 @@ public class Rest {
                             }
                         }
 
-                        self.handleResponse(content: Json(data), response: httpResponse, indicator: indicator, onHttpSuccess: onHttpSuccess)
+                        let jsonData = Json(data)
+                        if httpResponse.statusCode >= 500 && httpResponse.statusCode < 600 {
+                            StandardProgressIndicator.shared.show(error: "Server error")
+                        } else {
+                            self.handleResponse(content: jsonData, response: httpResponse, indicator: indicator, onHttpSuccess: onHttpSuccess)
+                        }
                     } else {
                         if let safeError = error {
                             DispatchQueue.main.async {
