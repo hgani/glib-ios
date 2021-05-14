@@ -51,6 +51,10 @@ open class MTextField: GControl, ITextField {
         return backend.leadingAssistiveLabel
     }
 
+    public var errorView: UILabel {
+        return backend.trailingAssistiveLabel
+    }
+    
     public var isSecureTextEntry: Bool {
         return backend.isSecureTextEntry
     }

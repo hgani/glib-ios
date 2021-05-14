@@ -49,7 +49,8 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
     }
 
     func errors(_ text: String?) {
-        view.hintView.text = text
+//        view.hintView.text = text
+        view.errorView.text = text
     }
 
     func validate() -> Bool {
