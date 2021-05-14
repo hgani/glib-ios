@@ -19,7 +19,7 @@ public class ProgressIndicatorEnum {
     }
 }
 
-private class StandardProgressIndicator: ProgressIndicator {
+public class StandardProgressIndicator: ProgressIndicator {
     public static let shared = StandardProgressIndicator()
 
     public func show() {
