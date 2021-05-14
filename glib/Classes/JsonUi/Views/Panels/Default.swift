@@ -1,4 +1,4 @@
-class JsonViewDefaultPanel: JsonView, ParentPanel {
+class JsonViewDefaultPanel: JsonView {
 //    let panel: GVerticalPanel
     let panel: IVerticalPanel & UIView
 
@@ -26,22 +26,25 @@ class JsonViewDefaultPanel: JsonView, ParentPanel {
         // NOTE: subviews property is deprecated
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
         var fabView: JsonView?
-        var views = [UIView]()
+//        var views = [UIView]()
         for viewSpec in childViews {
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
                 if let fabJsonView = jsonView as? JsonView_Fab {
                     fabView = fabJsonView
                 } else {
-                    addView(jsonView, to: panel)
+//                    panel.addView(view, top: 0)
+//                    parent.addView(view, top: 0)
+//                    addView(jsonView, to: panel)
 
-//                    views.append(jsonView.createView())
+                    // TODO
+                    panel.addView(jsonView.createView(), top: 0)
                 }
             }
         }
 
-        for view in views {
-            panel.addView(view, top: 0)
-        }
+//        for view in views {
+//            panel.addView(view, top: 0)
+//        }
 
         // Need to be added last
         if let fabJsonView = fabView {
@@ -50,7 +53,10 @@ class JsonViewDefaultPanel: JsonView, ParentPanel {
 //            fabJsonView.afterViewAdded(parentView: panel)
 //            ScrollableView.register(fab: view)
 
-            let view = addConstraintlessView(fabJsonView, to: panel)
+//            let view = addConstraintlessView(fabJsonView, to: panel)
+
+            let view = fabJsonView.createView()
+            panel.addConstraintlessView(view)
             ScrollableView.register(fab: view)
         }
 
