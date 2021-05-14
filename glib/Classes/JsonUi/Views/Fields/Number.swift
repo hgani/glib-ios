@@ -1,3 +1,5 @@
+#if INCLUDE_MDLIBS
+
 class JsonView_Fields_Number: JsonView_AbstractText {
 //    private var delegate: Delegate?
 //    private var field: UITextField!
@@ -6,11 +8,7 @@ class JsonView_Fields_Number: JsonView_AbstractText {
 //        delegate = Delegate(self)
 
         let field = super.initTextField()
-        #if INCLUDE_MDLIBS
-        if let mField = field as? MTextField {
-            mField.keyboardType(.numberPad)
-        }
-        #endif
+        field.keyboardType(.numberPad)
 //        field.delegate = delegate
         return field
     }
@@ -49,3 +47,5 @@ class JsonView_Fields_Number: JsonView_AbstractText {
 //        }
 //    }
 }
+
+#endif
