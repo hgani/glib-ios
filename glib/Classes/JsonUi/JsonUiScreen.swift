@@ -3,6 +3,7 @@ import SwiftPhoenixClient
 open class JsonUiScreen: GScreen {
     private(set) var url: String
     private let contentOnly: Bool
+    private let hideBackButton: Bool
     private var request: Rest?
     private var socket: Socket?
     private var channel: Channel?
@@ -13,14 +14,15 @@ open class JsonUiScreen: GScreen {
         .height(300)
         .color(bg: .red)
 
-    public init(url: String, contentOnly: Bool = false) {
+    public init(url: String, hideBackButton: Bool = false, contentOnly: Bool = false) {
         self.url = url
         self.contentOnly = contentOnly
+        self.hideBackButton = hideBackButton
         super.init()
     }
 
-    public convenience init(path: String) {
-        self.init(url: "\(GHttp.instance.host())/\(path)")
+    public convenience init(path: String, hideBackButton: Bool = false) {
+        self.init(url: "\(GHttp.instance.host())/\(path)", hideBackButton: hideBackButton)
     }
 
     public required init?(coder _: NSCoder) {
@@ -29,6 +31,10 @@ open class JsonUiScreen: GScreen {
 
     open override func viewDidLoad() {
         super.initOnDidLoad()
+
+        if hideBackButton {
+            nav.hideBackButton()
+        }
 
         onRefresh()
     }
