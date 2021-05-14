@@ -58,23 +58,31 @@ class JsonView_Panels_Form: JsonView {
                 return
             }
 
-            #if INCLUDE_MDLIBS
-
             Generic.sharedInstance.genericIsBusy.value = true
-
-            #endif
 
             let spec = jsonView.spec
             let screen = jsonView.screen
-            _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)?.execute { response in
-                #if INCLUDE_MDLIBS
+            _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)?.execute(
+                indicator: .standard,
+                localCache: false,
+                onHttpFailure: { _ in
+                    Generic.sharedInstance.genericIsBusy.value = false
+                    return false
+                }, onHttpSuccess: { response in
+                    Generic.sharedInstance.genericIsBusy.value = false
+                    JsonAction.execute(spec: response.content["onResponse"], screen: screen, creator: self)
+                    return true
+                })
 
-                Generic.sharedInstance.genericIsBusy.value = false
-
-                #endif
-                JsonAction.execute(spec: response.content["onResponse"], screen: screen, creator: self)
-                return true
-            }
+//            _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)?.execute { response in
+//                #if INCLUDE_MDLIBS
+//
+//                Generic.sharedInstance.genericIsBusy.value = false
+//
+//                #endif
+//                JsonAction.execute(spec: response.content["onResponse"], screen: screen, creator: self)
+//                return true
+//            }
         }
     }
 }

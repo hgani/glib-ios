@@ -113,17 +113,14 @@ public class Rest {
 
                         let jsonData = Json(data)
                         if httpResponse.statusCode >= 500 && httpResponse.statusCode < 600 {
-                            StandardProgressIndicator.shared.show(error: "Server error")
+                            self.notifyError(indicator: indicator, error: GCustomError(message: "Server error"), onHttpFailure: onHttpFailure)
                         } else {
                             self.handleResponse(content: jsonData, response: httpResponse, indicator: indicator, onHttpSuccess: onHttpSuccess)
                         }
                     } else {
                         if let safeError = error {
-                            DispatchQueue.main.async {
-                                if !onHttpFailure(safeError) {
-                                    indicator.show(error: safeError.localizedDescription)
-                                }
-                            }
+
+                            self.notifyError(indicator: indicator, error: safeError, onHttpFailure: onHttpFailure)
                         }
                     }
                 }
@@ -137,6 +134,14 @@ public class Rest {
             }
         }
         return self
+    }
+
+    private func notifyError(indicator: ProgressIndicator, error: Error, onHttpFailure: @escaping (Error) -> Bool) {
+        DispatchQueue.main.async {
+            if !onHttpFailure(error) {
+                indicator.show(error: error.localizedDescription)
+            }
+        }
     }
 
     private func handleResponse(content: Json,
