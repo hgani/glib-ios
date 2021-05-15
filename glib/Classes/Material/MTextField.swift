@@ -3,7 +3,7 @@
 import MaterialComponents.MaterialTextControls_FilledTextFields
 import MaterialComponents.MaterialTextControls_OutlinedTextFields
 
-open class MTextField: GControl, ITextField {
+open class MTextField: GControl, ITextField, UITextFieldDelegate {
 //    private var helper: ViewHelper!
 //    private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
     private var padding = UIEdgeInsets.zero
@@ -12,6 +12,9 @@ open class MTextField: GControl, ITextField {
 //    private var controller: MDCTextInputController!
 
 //    private var backend: MDCBaseTextField!
+
+
+    private var onBeginEditing: ((MTextField) -> Void)?
 
     // See https://github.com/material-components/material-components-ios/issues/7133
     private var backend: MDCBaseTextField = MDCFilledTextField()
@@ -34,14 +37,15 @@ open class MTextField: GControl, ITextField {
         }
     }
 
-    public var delegate: UITextFieldDelegate? {
-        get {
-            return backend.delegate
-        }
-        set {
-            backend.delegate = newValue
-        }
-    }
+//    // TODO: Should wrap this in onBeginEditing() etc instead
+//    public var delegate: UITextFieldDelegate? {
+//        get {
+//            return backend.delegate
+//        }
+//        set {
+//            backend.delegate = newValue
+//        }
+//    }
 
     public var labelView: UILabel {
         return backend.label
@@ -101,6 +105,8 @@ open class MTextField: GControl, ITextField {
     }
 
     private func initialize() {
+        backend.delegate = self
+
         withView(backend, matchParent: true)
     }
 
@@ -137,6 +143,17 @@ open class MTextField: GControl, ITextField {
 
     open override func resignFirstResponder() -> Bool {
         return backend.resignFirstResponder()
+    }
+
+    // TODO: Move to extension
+    open func onBeginEditing(_ command: @escaping (MTextField) -> Void) {
+        onBeginEditing = command
+    }
+
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        if let callback = onBeginEditing {
+            callback(self)
+        }
     }
 //
 //    open override func textRect(forBounds bounds: CGRect) -> CGRect {
