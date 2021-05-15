@@ -111,6 +111,7 @@ open class JsonView_Panels_List: JsonView {
             .autoRowHeight(estimate: 100)
             .delegate(delegate, retain: true)
             .source(delegate)
+            .separator(.none)
             .reloadData()
 
         return tableView
