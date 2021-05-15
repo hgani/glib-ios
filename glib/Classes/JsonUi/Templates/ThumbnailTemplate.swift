@@ -13,7 +13,13 @@ class JsonTemplate_Thumbnail: JsonTemplate {
             if !spec["styleClasses"].arrayValue.contains("card") {
                 impl.disableCardStyle()
             }
-            
+
+            for styleClass in spec["styleClasses"].arrayValue {
+                if let decorator = JsonUiStyling.thumbnailTemplates[styleClass.stringValue] {
+                     decorator.decorate(impl)
+                 }
+            }
+
             if let chips = spec["chips"].array {
                 for (index, chipSpec) in chips.enumerated() {
                     let chip = MChip().text(chipSpec["text"].stringValue)

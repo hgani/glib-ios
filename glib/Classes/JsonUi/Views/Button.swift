@@ -38,20 +38,5 @@ class JsonView_Button: JsonView {
         if let buttonSpec = JsonUiStyling.buttons[styleClass] {
             buttonSpec.decorate(view)
         }
-
-//        if let klass = JsonUi.loadClass(name: styleClass, type: MButtonSpecProtocol.self) as? MButtonSpecProtocol.Type {
-//            let spec = klass.init()
-//            spec.createSpec().decorate(view)
-//        } else {
-//            switch styleClass {
-//            case "link":
-//                view.specs(.link)
-//            case "icon":
-//                view.specs(.icon(JsonView_Icon.icon(spec: spec["icon"])))
-////                view.layer.cornerRadius = 18
-//            default:
-//                GLog.e("Invalid style \(styleClass)")
-//            }
-//        }
     }
 }

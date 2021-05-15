@@ -6,8 +6,7 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
     let subtitle = GLabel().specs(.libCellSubtitle, .libMuted).paddings(top: 4, left: nil, bottom: nil, right: nil)
     let chips = GHorizontalPanel()
     public let contentPanel = GVerticalPanel().paddings(top: 10, left: 10, bottom: 10, right: 10)
-    private let container = MCard().width(.matchParent)
-
+    public let container = MCard().width(.matchParent)
 
     open override func initContent() {
         let content = GHorizontalPanel()
