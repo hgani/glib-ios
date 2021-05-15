@@ -56,4 +56,8 @@ open class GHeaderFooterView: UIView {
         _ = container.color(bg: bg)
         return self
     }
+
+    static func createSeparator() -> UIView {
+        return GView().width(.matchParent).height(1).color(bg: .libCellBorder)
+    }
 }

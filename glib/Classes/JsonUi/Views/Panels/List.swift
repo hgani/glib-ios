@@ -235,9 +235,9 @@ open class JsonView_Panels_List: JsonView {
         func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
             // Without this wrapper, all section headers will be at the top trampling each other.
             let wrapper = GHeaderFooterView()
-                .append(GView().width(.matchParent).height(1).color(bg: .libCellBorder))
+                .append(GHeaderFooterView.createSeparator())
                 .append(JsonViewDefaultPanel.createPanel(spec: sections[section]["header"], screen: listView.screen))
-                .append(GView().width(.matchParent).height(1).color(bg: .libCellBorder))
+                .append(GHeaderFooterView.createSeparator())
             return wrapper
 
 //            if let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as? ListHeaderCell {

@@ -19,9 +19,9 @@ class JsonView_Button: JsonView {
         }
 
         if let text = spec["text"].string {
-            _ = view.title(text)
+            view.title(text)
         }
-        _ = view.onClick { _ in
+        view.onClick { _ in
             JsonAction.execute(spec: self.spec["onClick"], screen: self.screen, creator: self.view)
         }
 

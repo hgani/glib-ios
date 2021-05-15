@@ -8,6 +8,7 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
     public let contentPanel = GVerticalPanel().paddings(top: 10, left: 10, bottom: 10, right: 10)
     private let container = MCard().width(.matchParent)
 
+
     open override func initContent() {
         let content = GHorizontalPanel()
             .append(picture)
@@ -21,12 +22,21 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
             .append(container.append(content))
 
         initContent(picture: picture, title: title, subtitle: subtitle)
+
+        container.isUserInteractionEnabled = false
     }
 
     func disableCardStyle() {
-        container.border(color: .clear, width: 0)
+        // See https://github.com/material-components/material-components-ios/issues/4332
+        container
+            .border(color: .clear, width: 0)
+            .color(bg: .clear)
+            .inkView.isHidden = true
+
+        paddings(top: nil, left: nil, bottom: 0, right: nil)
+            .append(GHeaderFooterView.createSeparator())
     }
-    
+
     open func initContent(picture: GImageView, title: GLabel, subtitle: GLabel) {
         // To be overridden
     }
