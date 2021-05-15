@@ -14,11 +14,12 @@ class JsonView_Fields_Datetime: JsonView_AbstractDate {
         setInputViewDatePicker(field: textField, mode: .dateAndTime, onSelected: {
             self.commitSelection()
         })
-//        textField.setInputViewDatePicker(mode: .dateAndTime, target: self, selector: #selector(tapDone))
 
         let isoDateFormatter = DateFormatter()
         isoDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-        if let dateStr = spec["value"].string, let date = isoDateFormatter.date(from: dateStr) {
+
+        let dateStr = String(spec["value"].stringValue.prefix(16))
+        if let date = isoDateFormatter.date(from: dateStr) {
             textField.text = dateFormatter.string(from: date)
         }
 
