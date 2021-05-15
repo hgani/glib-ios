@@ -25,7 +25,7 @@ class JsonView_AbstractDate: JsonView_AbstractText {
         let done = GBarButtonItem().title("Done").onClick(onSelected)
 //        let barButton = UIBarButtonItem(title: "Done", style: .plain, target: target, action: selector)
         toolBar.setItems([cancel, flexible, done], animated: false)
-        field.inputAccessoryView = toolBar
+        field.backendInputAccessoryView = toolBar
     }
 
 //    #if INCLUDE_MDLIBS

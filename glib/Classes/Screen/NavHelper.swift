@@ -71,4 +71,8 @@ open class NavHelper {
         let previousViewController = length >= 2 ? navController.viewControllers[length - 1] : nil
         return previousViewController
     }
+
+    public func isRoot() -> Bool {
+        return navController.viewControllers.count <= 1
+    }
 }

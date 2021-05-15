@@ -1,6 +1,6 @@
 class JsonAction_Windows_Open: JsonAction {
     override func silentExecute() -> Bool {
-        nav.push(JsonUiScreen(url: spec["url"].stringValue))
+        nav.push(JsonUiScreen(url: spec["url"].stringValue, hideBackButton: nav.isRoot()))
         return true
     }
 }

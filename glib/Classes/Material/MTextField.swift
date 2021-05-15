@@ -75,7 +75,18 @@ open class MTextField: GControl, ITextField {
         }
     }
 
-    public override var inputAccessoryView: UIView? {
+//    public override var inputAccessoryView: UIView? {
+//        get {
+//            return backend.inputAccessoryView
+//        }
+//        set {
+//            backend.inputAccessoryView = newValue
+//        }
+//    }
+
+    // Don't override inputAccessoryView because it causes a crash when UIKit performs its own
+    // internal initialization.
+    public var backendInputAccessoryView: UIView? {
         get {
             return backend.inputAccessoryView
         }
