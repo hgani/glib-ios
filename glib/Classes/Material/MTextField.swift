@@ -3,7 +3,7 @@
 import MaterialComponents.MaterialTextControls_FilledTextFields
 import MaterialComponents.MaterialTextControls_OutlinedTextFields
 
-open class MTextField: GControl, ITextField, UITextFieldDelegate {
+open class MTextField: GControl, ITextField {
 //    private var helper: ViewHelper!
 //    private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
     private var padding = UIEdgeInsets.zero
@@ -12,7 +12,6 @@ open class MTextField: GControl, ITextField, UITextFieldDelegate {
 //    private var controller: MDCTextInputController!
 
 //    private var backend: MDCBaseTextField!
-
 
     private var onBeginEditing: ((MTextField) -> Void)?
 
@@ -145,16 +144,6 @@ open class MTextField: GControl, ITextField, UITextFieldDelegate {
         return backend.resignFirstResponder()
     }
 
-    // TODO: Move to extension
-    open func onBeginEditing(_ command: @escaping (MTextField) -> Void) {
-        onBeginEditing = command
-    }
-
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
-        if let callback = onBeginEditing {
-            callback(self)
-        }
-    }
 //
 //    open override func textRect(forBounds bounds: CGRect) -> CGRect {
 //        return bounds.inset(by: padding)
@@ -229,6 +218,18 @@ open class MTextField: GControl, ITextField, UITextFieldDelegate {
 //        self.trailingViewMode = mode
 //        return self
 //    }
+}
+
+extension MTextField: UITextFieldDelegate {
+    open func onBeginEditing(_ command: @escaping (MTextField) -> Void) {
+        onBeginEditing = command
+    }
+
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        if let callback = onBeginEditing {
+            callback(self)
+        }
+    }
 }
 
 #endif
