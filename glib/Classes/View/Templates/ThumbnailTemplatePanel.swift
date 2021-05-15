@@ -5,7 +5,8 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
     let title = GLabel().specs(.libCellTitle)
     let subtitle = GLabel().specs(.libCellSubtitle, .libMuted).paddings(top: 4, left: nil, bottom: nil, right: nil)
     let chips = GHorizontalPanel()
-    public let contentPanel = GVerticalPanel().paddings(top: 4, left: 10, bottom: 10, right: 10)
+    public let contentPanel = GVerticalPanel().paddings(top: 10, left: 10, bottom: 10, right: 10)
+    private let container = MCard().width(.matchParent)
 
     open override func initContent() {
         let content = GHorizontalPanel()
@@ -15,12 +16,17 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
                 .append(subtitle)
                 .append(chips.width(.matchParent), top: 5))
 
-        paddings(top: 8, left: 14, bottom: 8, right: 14)
-            .append(content)
+        width(.matchParent)
+            .paddings(top: 8, left: 14, bottom: 8, right: 14)
+            .append(container.append(content))
 
         initContent(picture: picture, title: title, subtitle: subtitle)
     }
 
+    func disableCardStyle() {
+        container.border(color: .clear, width: 0)
+    }
+    
     open func initContent(picture: GImageView, title: GLabel, subtitle: GLabel) {
         // To be overridden
     }

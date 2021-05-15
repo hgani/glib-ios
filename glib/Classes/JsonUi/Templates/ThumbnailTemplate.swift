@@ -9,6 +9,10 @@ class JsonTemplate_Thumbnail: JsonTemplate {
             impl.setImage(url: spec["imageUrl"].string)
             impl.setTitle(text: spec["title"].string)
             impl.setSubtitle(text: spec["subtitle"].string)
+
+            if !spec["styleClasses"].arrayValue.contains("card") {
+                impl.disableCardStyle()
+            }
             
             if let chips = spec["chips"].array {
                 for (index, chipSpec) in chips.enumerated() {
