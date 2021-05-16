@@ -12,5 +12,10 @@ public class JsonUiStyling {
         "rounded": .rounded
     ]
 
+    public static var labels: [String: GLabelSpec] = [
+        "link": .link,
+//        "rounded": .rounded
+    ]
+
     public static var thumbnailTemplates = [String: ThumbnailTemplateSpec]()
 }

@@ -311,15 +311,3 @@ extension GLabel {
         return action == #selector(UIResponderStandardEditActions.copy)
     }
 }
-
-public class GLabelSpec {
-    private var decorator: ((GLabel) -> Void)
-
-    public init(_ decorator: @escaping ((GLabel) -> Void)) {
-        self.decorator = decorator
-    }
-
-    func decorate(_ view: GLabel) {
-        decorator(view)
-    }
-}

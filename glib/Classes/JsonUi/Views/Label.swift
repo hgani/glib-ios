@@ -34,6 +34,12 @@ class JsonView_Label: JsonView {
 
         return label
     }
+
+    override func applyStyleClass(_ styleClass: String) {
+        if let decorator = JsonUiStyling.labels[styleClass] {
+            decorator.decorate(label)
+        }
+    }
     
     override func didAttach(to parent: UIView) {
         if let form = closest(JsonView_Panels_Form.FormPanel.self, from: label) {
