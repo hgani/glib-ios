@@ -17,12 +17,14 @@ open class MenuCell: GTableViewCustomCell, MenuCellType {
     }
 
     open func populate() {
-        paddings(top: 8, left: 14, bottom: 8, right: 14)
+        paddings(top: 0, left: 14, bottom: 0, right: 14)
             .append(GHorizontalPanel()
-                .paddings(top: 5, left: 10, bottom: 5, right: 10)
+                .paddings(top: 12, left: 10, bottom: 12, right: 10)
+                .align(.middle)
                 .append(iconLabel)
                 .append(titleLabel, left: 5)
             )
+            .append(GHeaderFooterView.createSeparator())
     }
 
     open func update(item: MenuItem) {

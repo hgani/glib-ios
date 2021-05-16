@@ -20,6 +20,7 @@ open class MenuNavController: GScreen {
                 .autoRowHeight(estimate: 50)
                 .delegate(self)
                 .source(self)
+                .separator(.none)
                 .reload()
         )
     }
