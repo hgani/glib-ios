@@ -35,22 +35,28 @@ open class ScreenHelper {
 
     public func leftMenu(controller: UIViewController) {
         setupLeftMenuButton()
+//
+//        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: controller)
+//        menuLeftNavigationController.leftSide = true
+//
+//        SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
+//        SideMenuManager.default.menuPresentMode = .viewSlideOut
+//        SideMenuManager.default.menuFadeStatusBar = false
+//
+//        if let navigationController = screen.navigationController {
+//            SideMenuManager.default.menuAddPanGestureToPresent(toView: navigationController.navigationBar)
+//            SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: navigationController.view)
+//        }
 
-        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: controller)
-        menuLeftNavigationController.leftSide = true
-
-        SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
-        SideMenuManager.default.menuPresentMode = .viewSlideOut
-        SideMenuManager.default.menuFadeStatusBar = false
-
-        if let navigationController = screen.navigationController {
-            SideMenuManager.default.menuAddPanGestureToPresent(toView: navigationController.navigationBar)
-            SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: navigationController.view)
-        }
+        let leftMenuNavigationController = SideMenuNavigationController(rootViewController: controller)
+        SideMenuManager.default.leftMenuNavigationController = leftMenuNavigationController
     }
 
     @objc func leftMenuButtonPressed() {
-        screen.controller.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+        if let viewController = SideMenuManager.default.leftMenuNavigationController {
+            screen.controller.present(viewController, animated: true, completion: nil)
+        }
+//        screen.controller.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
 
     // Made public so that it's accessible from GaniWeb
