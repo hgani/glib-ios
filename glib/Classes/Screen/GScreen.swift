@@ -33,6 +33,7 @@ open class GScreen: UIViewController {
         fatalError("Call initOnDidLoad() instead")
     }
 
+    // Use a separate method so that viewDidLoad() doesn't get overridden if it's declared in an extension
     open func initOnDidLoad() {
         super.viewDidLoad()
 
