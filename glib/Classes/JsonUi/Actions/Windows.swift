@@ -8,6 +8,7 @@ class JsonAction_Windows_Open: JsonAction {
 class JsonAction_Windows_Close: JsonAction {
     override func silentExecute() -> Bool {
         guard let previousScreen = nav.previousScreen() as? JsonUiScreen else {
+            GLog.w("Previous screen doesn't exist")
             return false
         }
 
@@ -35,6 +36,7 @@ class JsonAction_Windows_CloseAll: JsonAction {
 class JsonAction_Windows_Reload: JsonAction {
     override func silentExecute() -> Bool {
         guard let currentScreen = screen as? JsonUiScreen else {
+            GLog.e("Current screen doesn't exist")
             return false
         }
 
@@ -49,29 +51,17 @@ class JsonAction_Windows_Reload: JsonAction {
 
 class JsonAction_Windows_CloseWithReload: JsonAction {
     override func silentExecute() -> Bool {
-        NSLog("JsonAction_Windows_CloseWithReload1: \((screen as! JsonUiScreen).url)")
         guard let previousScreen = nav.previousScreen() as? JsonUiScreen else {
+            GLog.w("Previous screen doesn't exist")
             return false
         }
 
-            NSLog("JsonAction_Windows_CloseWithReload2")
-
         CATransaction.begin()
-//        if let onClose = spec["onClose"].presence {
-            CATransaction.setCompletionBlock {
-
-                NSLog("JsonAction_Windows_CloseWithReload3: \(previousScreen.url)")
-//                let url = spec["url"].string ?? currentScreen.url
-                previousScreen.update(url: previousScreen.url, onLoad: {
-                    NSLog("JsonAction_Windows_CloseWithReload4")
-//                    JsonAction.execute(spec: self.spec["onReload"], screen: self.screen, creator: self)
-                })
-
-
-//                let previousScreen = self.nav.previousScreen() ?? self.screen
-//                JsonAction.execute(spec: onClose, screen: previousScreen, creator: self)
-            }
-//        }
+        CATransaction.setCompletionBlock {
+            previousScreen.update(url: previousScreen.url, onLoad: {
+                //JsonAction.execute(spec: self.spec["onReload"], screen: self.screen, creator: self)
+            })
+        }
         nav.pop()
         CATransaction.commit()
         return true
