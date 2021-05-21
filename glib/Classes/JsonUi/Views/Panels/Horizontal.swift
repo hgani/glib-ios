@@ -47,10 +47,28 @@ class JsonView_Panels_Horizontal: JsonView {
     private func setDistribution(childViews: [UIView]) {
         switch spec["distribution"].stringValue {
         case "fillEqually":
-            for view in childViews {
-                panel.addView(view, left: 0)
+            // This manual implementation works for buttons, but not for panels
+//            for view in childViews {
+//                panel.addView(view, left: 0)
+//            }
+//            panel.split()
+
+            let wrappedViews = childViews.map { view -> UIView in
+                // TODO: Genericize implementation to support non IView?
+                if let iview = view as? IView {
+                    iview.width(.matchParent)
+                } else {
+                    fatalError("Non IView child is not supported")
+                }
+                return GAligner().align(.top).withView(view)
             }
-            panel.split()
+            let stacker = GStackView()
+                .height(.matchParent)
+                .color(bg: .blue)
+                .axis(.horizontal)
+                .distribution(.fillEqually)
+                .withViews(wrappedViews)
+            panel.addView(stacker, left: 0)
         case "spaceEqually":
             for view in childViews {
                 panel.addView(GAligner().align(.top).withView(view), left: 0)
