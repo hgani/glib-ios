@@ -53,6 +53,11 @@ public class JsonUi {
 //        initVerticalPanel(screen.container.content, spec: spec["body"], screen: screen)
 //        initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
 
+        // This is a workaround. Ideally we can instruct every matchParent view to stretch.
+        screen.container.content.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(Device.screenHeight).priorityLow()
+        }
+
         initVerticalPanel(screen.container.header.clear(), spec: spec["header"], screen: screen)
         initVerticalPanel(screen.container.content.clear(), spec: spec["body"], screen: screen)
         initVerticalPanel(screen.container.footer.clear(), spec: spec["footer"], screen: screen)
@@ -70,8 +75,6 @@ public class JsonUi {
     public static func parseEntireScreen(_ spec: Json, screen: GScreen) {
         screen.title = spec["title"].string
 
-        
-        
         parseScreenContent(spec, screen: screen)
         initNavBar(spec: spec, screen: screen)
     }
@@ -82,7 +85,7 @@ public class JsonUi {
 
     private static func initVerticalPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
         if let wrapper = JsonViewDefaultPanel(spec, screen).view() as? GVerticalPanel {
-            panel.addView(wrapper.width(.matchParent))
+            panel.addView(wrapper.width(.matchParent).height(.matchParent))
         }
     }
 
