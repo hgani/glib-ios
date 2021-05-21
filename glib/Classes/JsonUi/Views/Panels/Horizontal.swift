@@ -54,7 +54,6 @@ class JsonView_Panels_Horizontal: JsonView {
 //            panel.split()
 
             let wrappedViews = childViews.map { view -> UIView in
-                // TODO: Genericize implementation to support non IView?
                 if let iview = view as? IView {
                     iview.width(.matchParent)
                 } else {
@@ -64,7 +63,6 @@ class JsonView_Panels_Horizontal: JsonView {
             }
             let stacker = GStackView()
                 .height(.matchParent)
-                .color(bg: .blue)
                 .axis(.horizontal)
                 .distribution(.fillEqually)
                 .withViews(wrappedViews)

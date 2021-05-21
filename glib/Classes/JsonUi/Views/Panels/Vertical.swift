@@ -48,16 +48,13 @@ class JsonView_Panels_Vertical: JsonView {
     private func setDistribution(childViews: [UIView]) {
         switch spec["distribution"].stringValue {
         case "fillEqually":
+            // This manual implementation works for buttons, but not for panels
 //            for view in childViews {
 //                panel.addView(view, top: 0)
 //            }
 //            panel.split()
 
             let wrappedViews = childViews.map { view -> UIView in
-                // TODO: Genericize implementation to support non IView?
-//                if let iview = view as? IView {
-//                    iview.width(.matchParent)
-//                }
                 if let iview = view as? IView {
                     iview.height(.matchParent)
                 } else {
@@ -69,10 +66,8 @@ class JsonView_Panels_Vertical: JsonView {
             // https://makeapppie.com/2015/11/11/how-to-add-stack-views-programmatically-and-almost-avoid-autolayout/
             let stacker = GStackView()
                 .width(.matchParent)
-                .color(bg: .red)
                 .axis(.vertical)
                 .distribution(.fillEqually)
-//                .spacing(14)
                 .withViews(wrappedViews)
             panel.addView(stacker, top: 0)
         case "spaceEqually":

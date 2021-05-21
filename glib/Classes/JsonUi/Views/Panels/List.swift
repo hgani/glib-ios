@@ -239,16 +239,6 @@ open class JsonView_Panels_List: JsonView {
                 .append(JsonViewDefaultPanel.createPanel(spec: sections[section]["header"], screen: listView.screen))
                 .append(GHeaderFooterView.createSeparator())
             return wrapper
-
-//            if let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as? ListHeaderCell {
-//                headerCell.createView(spec: sections[section]["header"], screen: listView.screen)
-//                return headerCell
-//            }
-//            return nil
-
-//            let vw = UIView()
-//            vw.backgroundColor = UIColor.red
-//            return vw
         }
 
         func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
