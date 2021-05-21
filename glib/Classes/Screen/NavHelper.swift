@@ -68,7 +68,7 @@ open class NavHelper {
 
     public func previousScreen() -> UIViewController? {
         let length = navController.viewControllers.count
-        let previousViewController = length >= 2 ? navController.viewControllers[length - 1] : nil
+        let previousViewController = length >= 2 ? navController.viewControllers[length - 2] : nil
         return previousViewController
     }
 
