@@ -7,6 +7,7 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
     private var previousView: UIView?
     private var previousLayoutPriority: UILayoutPriority?
     private var rightConstraint: Constraint?
+    private var wrapContentConstraint: Constraint?
 
     private var totalGap = Float(0.0)
 
@@ -29,11 +30,21 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
 
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
 
-        snp.makeConstraints { make in
-            // NOTE: Prevent the panel from getting stretched to be larger than necessary. For example, when used
-            // in HamburgerPanel's header, it will squash the middle section.
-            // See https://stackoverflow.com/questions/17117799/autolayout-height-equal-to-maxmultiple-view-heights
-            make.height.equalTo(0).priorityLow()
+        updateHeightTendency()
+    }
+
+    private func updateHeightTendency() {
+        if helper.shouldHeightMatchParent() {
+            wrapContentConstraint?.deactivate()
+        } else {
+            snp.makeConstraints { make in
+                // NOTE: Prevent the panel from getting stretched to be larger than necessary. For example, when used
+                // in HamburgerPanel's header, it will squash the middle section.
+                // See https://stackoverflow.com/questions/17117799/autolayout-height-equal-to-maxmultiple-view-heights
+
+                // Increase hugging so that it tends to wrap content by default
+                wrapContentConstraint = make.height.equalTo(0).priorityLow().constraint
+            }
         }
     }
 
@@ -208,6 +219,7 @@ extension GHorizontalPanel: IView {
     @discardableResult
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
+        updateHeightTendency()
         return self
     }
 

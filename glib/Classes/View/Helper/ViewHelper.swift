@@ -145,7 +145,8 @@ public class ViewHelper {
         case .matchParent:
             matchParentHeightMultiplier = 1
         case .wrapContent:
-            nothingToDo()
+            matchParentHeightMultiplier = nil
+//            nothingToDo()
         }
 
         updateHeightConstraints()

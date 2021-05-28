@@ -7,7 +7,7 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
     private var previousViewElement: UIView!
     private var previousConstraint: NSLayoutConstraint!
     private var bottomConstraint: Constraint?
-    
+
     private var event: EventHelper<GVerticalPanel>!
 
     private var totalGap = Float(0.0)
@@ -37,6 +37,7 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
 
         self.snp.makeConstraints { (make) -> Void in
+            // Increase hugging so that it tends to wrap content by default
             make.width.equalTo(0).priorityLow()
         }
 
