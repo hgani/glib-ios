@@ -53,10 +53,10 @@ public class JsonUi {
 //        initVerticalPanel(screen.container.content, spec: spec["body"], screen: screen)
 //        initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
 
-        // This is a workaround. Ideally we can instruct every matchParent view to stretch.
-        screen.container.content.snp.makeConstraints { (make) -> Void in
-            make.height.equalTo(Device.screenHeight).priorityLow()
-        }
+//        // This is a workaround. Ideally we can instruct every matchParent view to stretch.
+//        screen.container.content.snp.makeConstraints { (make) -> Void in
+//            make.height.equalTo(Device.screenHeight).priorityLow()
+//        }
 
         initVerticalPanel(screen.container.header.clear(), spec: spec["header"], screen: screen)
         initVerticalPanel(screen.container.content.clear(), spec: spec["body"], screen: screen)
