@@ -1,20 +1,32 @@
 class JsonView_Panels_Vertical: JsonView {
-    private let panel: IVerticalPanel & UIView
+//    private let panel: IVerticalPanel & UIView
+    private let container = MCard()
+//    private let container = GAligner()
+    private let panel = GVerticalPanel()
+//        .width(.matchParent).height(.matchParent)
 
     public required init(_ spec: Json, _ screen: GScreen) {
-        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
-            #if INCLUDE_MDLIBS
-            panel = MCard().applyStyles(spec)
-            #else
-            panel = GVerticalPanel()
-            #endif
-        } else {
-            panel = GVerticalPanel()
-        }
+        // TODO: Improve this
+        // Move to a reusable parent class
+//        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
+//            #if INCLUDE_MDLIBS
+//            panel = MCard().applyStyles(spec)
+//            #else
+//            panel = GVerticalPanel()
+//            #endif
+//        } else {
+//            panel = GVerticalPanel()
+//        }
         super.init(spec, screen)
     }
 
     override func initView() -> UIView {
+        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
+           // Do nothing
+        } else {
+            container.disableCardStyle()
+        }
+
         // NOTE: subviews property is deprecated
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
         let views: [UIView] = childViews.compactMap { viewSpec -> UIView? in
@@ -27,7 +39,11 @@ class JsonView_Panels_Vertical: JsonView {
         setAlign()  // Needs to be called before adding child views
         setDistribution(childViews: views)
 
-        return panel
+        panel.onClick({ _ in
+            JsonAction.execute(spec: self.spec["onClick"], screen: self.screen, creator: self.panel)
+        })
+
+        return container.withView(panel)
     }
     
     private func setAlign() {

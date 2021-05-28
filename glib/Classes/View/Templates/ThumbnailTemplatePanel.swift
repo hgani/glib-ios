@@ -18,7 +18,7 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
 
         width(.matchParent)
             .paddings(top: 8, left: 14, bottom: 8, right: 14)
-            .append(container.append(content))
+            .append(container.withView(content))
 
         initContent(picture: picture, title: title, subtitle: subtitle)
 

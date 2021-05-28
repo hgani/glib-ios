@@ -3,7 +3,8 @@ import UIKit
 import MaterialComponents.MaterialCards
 import MaterialComponents.MaterialCards_Theming
 
-open class MCard: MDCCard, IView, IVerticalPanel {
+//open class MCard: MDCCard, IView, IVerticalPanel {
+open class MCard: MDCCard, IView {
     private var helper: ViewHelper!
     
     private var previousViewElement: UIView!
@@ -36,7 +37,7 @@ open class MCard: MDCCard, IView, IVerticalPanel {
         
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
         
-        addInitialBottomConstraint()
+//        addInitialBottomConstraint()
         
         initContent()
     }
@@ -44,7 +45,46 @@ open class MCard: MDCCard, IView, IVerticalPanel {
     open func initContent() {
         // To be overridden
     }
-    
+
+    @discardableResult
+    public func withView(_ child: UIView) -> Self {
+        // The hope is this makes things more predictable
+        child.translatesAutoresizingMaskIntoConstraints = false
+
+        addSubview(child)
+
+        snp.makeConstraints { make in
+            make.topMargin.equalTo(child.snp.top)
+            make.bottomMargin.equalTo(child.snp.bottom)
+            make.leftMargin.equalTo(child.snp.left)
+            make.rightMargin.equalTo(child.snp.right)
+
+//            switch horizontalAlign {
+//            case .center: make.centerX.equalTo(child)
+//            case .right: make.rightMargin.equalTo(child.snp.right)
+//            case .left: make.leftMargin.equalTo(child.snp.left)
+//            }
+//
+//            switch verticalAlign {
+//            case .middle: make.centerY.equalTo(child)
+//            case .top: make.topMargin.equalTo(child.snp.top)
+//            case .bottom: make.bottomMargin.equalTo(child.snp.bottom)
+//            }
+//
+//            // So that it is at least the size of the child
+//            make.width.greaterThanOrEqualTo(child)
+//            make.height.greaterThanOrEqualTo(child)
+        }
+        return self
+    }
+
+    func disableCardStyle() {
+        // See https://github.com/material-components/material-components-ios/issues/4332
+        border(color: .clear, width: 0)
+            .color(bg: .clear)
+            .inkView.isHidden = true
+    }
+
     private func addInitialBottomConstraint() {
         previousConstraint = NSLayoutConstraint(item: self,
                                                 attribute: .bottom,
@@ -75,19 +115,19 @@ open class MCard: MDCCard, IView, IVerticalPanel {
         }
     }
     
-    public func addView(_ child: UIView, top: Float = 0) {
-        totalGap += top
-        
-        // The hope is this makes things more predictable
-        child.translatesAutoresizingMaskIntoConstraints = false
-        
-        super.addSubview(child)
-        
-        initChildConstraints(child: child, top: top)
-        adjustSelfConstraints(child: child)
-        
-        previousViewElement = child
-    }
+//    public func addView(_ child: UIView, top: Float = 0) {
+//        totalGap += top
+//        
+//        // The hope is this makes things more predictable
+//        child.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        super.addSubview(child)
+//        
+//        initChildConstraints(child: child, top: top)
+//        adjustSelfConstraints(child: child)
+//        
+//        previousViewElement = child
+//    }
     
     public func addConstraintlessView(_ child: UIView) {
         super.addSubview(child)
@@ -99,11 +139,11 @@ open class MCard: MDCCard, IView, IVerticalPanel {
         return self
     }
     
-    @discardableResult
-    public func append(_ child: UIView, top: Float = 0) -> Self {
-        addView(child, top: top)
-        return self
-    }
+//    @discardableResult
+//    public func append(_ child: UIView, top: Float = 0) -> Self {
+//        addView(child, top: top)
+//        return self
+//    }
     
     // See https://github.com/zaxonus/AutoLayScroll/blob/master/AutoLayScroll/ViewController.swift
     private func initChildConstraints(child: UIView, top: Float) {
