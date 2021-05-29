@@ -7,6 +7,7 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
     private var previousViewElement: UIView!
     private var previousConstraint: NSLayoutConstraint!
     private var bottomConstraint: Constraint?
+    private var wrapContentConstraint: Constraint?
 
     private var event: EventHelper<GVerticalPanel>!
 
@@ -36,14 +37,28 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
 
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
 
-        self.snp.makeConstraints { (make) -> Void in
-            // Increase hugging so that it tends to wrap content by default
-            make.width.equalTo(0).priorityLow()
-        }
+//        // TODO: Implement similar to horizontal panel's updateHeightTendency
+//        self.snp.makeConstraints { (make) -> Void in
+//            // Increase hugging so that it tends to wrap content by default
+//            make.width.equalTo(0).priorityLow()
+//        }
 
         addInitialBottomConstraint()
 
         initContent()
+
+        updateWidthTendency()
+    }
+
+    private func updateWidthTendency() {
+        if helper.shouldHeightMatchParent() {
+            wrapContentConstraint?.deactivate()
+        } else {
+            snp.makeConstraints { make in
+                // Increase hugging so that it tends to wrap content by default
+                wrapContentConstraint = make.width.equalTo(0).priorityLow().constraint
+            }
+        }
     }
 
     open func initContent() {
@@ -54,16 +69,6 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
         self.snp.makeConstraints { (make) -> Void in
             bottomConstraint = make.height.equalTo(0).priorityLow().constraint
         }
-
-//        previousConstraint = NSLayoutConstraint(item: self,
-//                                                attribute: .bottom,
-//                                                relatedBy: .equal,
-//                                                toItem: self,
-//                                                attribute: .top,
-//                                                multiplier: 1.0,
-//                                                constant: 0.0)
-//        previousConstraint.priority = UILayoutPriority(rawValue: 900) // Lower priority than fixed height
-//        addConstraint(previousConstraint)
     }
 
     open override func didMoveToSuperview() {
@@ -174,6 +179,7 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
     @discardableResult
     public func width(_ width: LayoutSize) -> Self {
         helper.width(width)
+        updateWidthTendency()
         return self
     }
 

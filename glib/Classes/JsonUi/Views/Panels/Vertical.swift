@@ -39,9 +39,11 @@ class JsonView_Panels_Vertical: JsonView {
         setAlign()  // Needs to be called before adding child views
         setDistribution(childViews: views)
 
-        panel.onClick({ _ in
-            JsonAction.execute(spec: self.spec["onClick"], screen: self.screen, creator: self.panel)
-        })
+        if let onClick = self.spec["onClick"].presence {
+            panel.onClick({ _ in
+                JsonAction.execute(spec: onClick, screen: self.screen, creator: self.panel)
+            })
+        }
 
         return container.withView(panel)
     }
