@@ -64,7 +64,7 @@ open class MCard: MDCCard, IView {
 
     func disableCardStyle() {
         // See https://github.com/material-components/material-components-ios/issues/4332
-        border(color: .clear, width: 0)
+        border(color: .clear, width: 0, corner: 0)
             .color(bg: .clear)
             .inkView.isHidden = true
     }
