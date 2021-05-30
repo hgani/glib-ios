@@ -72,9 +72,4 @@ class JsonViewDefaultPanel: JsonView_AbstractPanel {
         component.view()
         return component.container
     }
-
-//    static func initPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) -> IVerticalPanel & UIView {
-    static func initPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
-        JsonViewDefaultPanel(panel, spec, screen).view()
-    }
 }

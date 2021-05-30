@@ -58,22 +58,6 @@ open class MCard: MDCCard, IView {
             make.bottomMargin.equalTo(child.snp.bottom)
             make.leftMargin.equalTo(child.snp.left)
             make.rightMargin.equalTo(child.snp.right)
-
-//            switch horizontalAlign {
-//            case .center: make.centerX.equalTo(child)
-//            case .right: make.rightMargin.equalTo(child.snp.right)
-//            case .left: make.leftMargin.equalTo(child.snp.left)
-//            }
-//
-//            switch verticalAlign {
-//            case .middle: make.centerY.equalTo(child)
-//            case .top: make.topMargin.equalTo(child.snp.top)
-//            case .bottom: make.bottomMargin.equalTo(child.snp.bottom)
-//            }
-//
-//            // So that it is at least the size of the child
-//            make.width.greaterThanOrEqualTo(child)
-//            make.height.greaterThanOrEqualTo(child)
         }
         return self
     }

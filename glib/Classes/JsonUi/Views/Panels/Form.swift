@@ -1,17 +1,29 @@
 import RxSwift
 
 class JsonView_Panels_Form: JsonView {
-    private let panel = FormPanel()
+    private let panel = FormPanel().width(.matchParent)
+    private let innerSpec: Json
+
+    required init(_ spec: Json, _ screen: GScreen) {
+        self.innerSpec = spec
+        super.init(Json(), screen)
+    }
 
     override func initView() -> UIView {
         panel.jsonView = self
 
-        JsonViewDefaultPanel.initPanel(panel, spec: spec, screen: screen)
+        if let wrapper = JsonViewDefaultPanel(innerSpec, screen).view() as? IView & UIView {
+            panel.withView(wrapper)
+        }
+
+//        JsonViewDefaultPanel.initPanel(panel, spec: spec, screen: screen)
 
         return panel
     }
 
-    class FormPanel: GVerticalPanel {
+//    class FormPanel: GVerticalPanel {
+
+    class FormPanel: GAligner {
         var formData = Variable(Json(parseJSON: "{}"))
         
         // NOTE: needs to be a weak var?
