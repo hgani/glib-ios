@@ -12,7 +12,6 @@ open class JsonUiScreen: GScreen {
         .layout(GCollectionViewFlowLayout().horizontal())
         .width(.matchParent)
         .height(300)
-        .color(bg: .red)
 
     public init(url: String, hideBackButton: Bool = false, contentOnly: Bool = false) {
         self.url = url

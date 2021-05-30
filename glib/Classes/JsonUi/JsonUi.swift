@@ -84,8 +84,11 @@ public class JsonUi {
 //    }
 
     private static func initVerticalPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
-        if let wrapper = JsonViewDefaultPanel(spec, screen).view() as? GVerticalPanel {
+//        if let wrapper = JsonViewDefaultPanel(spec, screen).view() as? GVerticalPanel {
+        if let wrapper = JsonViewDefaultPanel(spec, screen).view() as? IView & UIView {
             panel.addView(wrapper.width(.matchParent).height(.matchParent))
+        } else {
+            fatalError("Unexpected panel type")
         }
     }
 

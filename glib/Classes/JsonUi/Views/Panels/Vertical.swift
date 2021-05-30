@@ -1,9 +1,6 @@
-class JsonView_Panels_Vertical: JsonView {
+class JsonView_Panels_Vertical: JsonView_AbstractPanel {
 //    private let panel: IVerticalPanel & UIView
-    private let container = MCard()
-//    private let container = GAligner()
     private let panel = GVerticalPanel()
-//        .width(.matchParent).height(.matchParent)
 
     public required init(_ spec: Json, _ screen: GScreen) {
         // TODO: Improve this
@@ -21,12 +18,6 @@ class JsonView_Panels_Vertical: JsonView {
     }
 
     override func initView() -> UIView {
-        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
-           // Do nothing
-        } else {
-            container.disableCardStyle()
-        }
-
         // NOTE: subviews property is deprecated
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
         let views: [UIView] = childViews.compactMap { viewSpec -> UIView? in
@@ -45,7 +36,7 @@ class JsonView_Panels_Vertical: JsonView {
             })
         }
 
-        return container.withView(panel)
+        return initContainer(content: panel)
     }
     
     private func setAlign() {
