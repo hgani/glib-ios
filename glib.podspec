@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GLib'
-  s.version          = '0.9.1'
+  s.version          = '0.9.2'
   s.summary          = 'Simplify iOS development'
 
 # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ Simplify iOS development
   s.source           = { :git => 'https://github.com/hgani/ganilib-ios.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '11.0'
 
   s.source_files = 'glib/Classes/**/*'
   s.resources = 'glib/Fonts/*.ttf'
@@ -82,11 +82,11 @@ Simplify iOS development
     sub.dependency 'FBSDKLoginKit/Swift', '6.5.2'
   end
 
-  s.subspec 'Stripe' do |sub|
+  s.subspec 'Payment' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_STRIPE' }
     sub.dependency 'Stripe'
+    sub.dependency 'SwiftyStoreKit', '~> 0.15.0'
   end
-
 
   s.subspec 'UILibs' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_UILIBS' }

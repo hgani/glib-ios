@@ -106,7 +106,7 @@ open class JsonView {
         // To be overridden
     }
 
-    // TODO: Deprecate
+    // TODO: Consider using this instead of view() now that we use it for creation everywhere
     func createView() -> UIView {
 //        let view = initView()
 //        initGenericAttributes(backend: view)

@@ -1,7 +1,27 @@
+import SwiftyStoreKit
+
 class JsonView_ProductButton: JsonView_AbstractButton {
     override func initView() -> UIView {
         let view = super.initView()
         applyStyleClass("productButton")
+
+        if let productId = spec["productId"].string {
+        //        display.setButtonHidden(true)
+        //        display.setActivityIndicatorHidden(false)
+
+            SwiftyStoreKit.retrieveProductsInfo([productId]) { [weak self] in
+                if let product = $0.retrievedProducts.first, let price = product.localizedPrice {
+                    self?.button.title(price)
+                    
+//                    self?.display.setTitle(product.localizedPrice)
+                }
+
+    //            self?.display.setButtonHidden(false)
+    //            self?.display.setActivityIndicatorHidden(true)
+            }
+
+        }
+
         return view
     }
 
