@@ -23,28 +23,28 @@ open class MTabBar: MDCTabBar {
         self.delegate = self
     }
 
-    public func width(_ width: Int) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func height(_ height: Int) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func height(_ height: LayoutSize) -> Self {
-        helper.height(height)
-        return self
-    }
+//    public func width(_ width: Int) -> Self {
+//        helper.width(width)
+//        return self
+//    }
+//
+//    public func width(_ width: LayoutSize) -> Self {
+//        helper.width(width)
+//        return self
+//    }
+//
+//    public func height(_ height: Int) -> Self {
+//        helper.height(height)
+//        return self
+//    }
+//
+//    public func height(_ height: LayoutSize) -> Self {
+//        helper.height(height)
+//        return self
+//    }
 
     @discardableResult
-    public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
+    public func color(bg: UIColor?, text: UIColor?) -> Self {
         if let bgColor = bg {
             backgroundColor = bgColor
         }
@@ -97,6 +97,42 @@ extension MTabBar: MDCTabBarDelegate {
     public func tabBar(_ tabBar: MDCTabBar, shouldSelect item: UITabBarItem) -> Bool {
         return item.isEnabled
     }
+}
+
+extension MTabBar: IView {
+    public var size: CGSize {
+        return helper.size
+    }
+
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    public func color(bg: UIColor) -> Self {
+        color(bg: bg, text: nil)
+    }
+
 }
 
 #endif

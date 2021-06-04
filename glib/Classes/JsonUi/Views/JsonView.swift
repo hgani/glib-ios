@@ -21,8 +21,7 @@ open class JsonView {
             initPadding(view)
             applyStyleClasses(spec["styleClasses"].arrayValue.map({ $0.stringValue }))
         } else {
-            // TODO: Uncomment this when all of our views conform to IView
-//            fatalError("Not a valid view: \(type(of: backend)) in \(spec["view"])")
+            fatalError("Not a valid view: \(type(of: backend)) in \(spec["view"])")
         }
     }
 

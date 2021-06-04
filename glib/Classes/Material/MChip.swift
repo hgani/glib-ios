@@ -58,11 +58,6 @@ public class MChip: MDCChipView {
         return self
     }
 
-    @discardableResult
-    public func color(bg: UIColor) -> Self {
-        return color(bg: bg, text: nil)
-    }
-
     public func addClearButton() -> Self {
         var clearButton = UIControl()
         let clearButtonWidthAndHeight = 24.0
@@ -124,6 +119,11 @@ extension MChip: IView {
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
         return self
+    }
+
+    @discardableResult
+    public func color(bg: UIColor) -> Self {
+        return color(bg: bg, text: nil)
     }
 }
 

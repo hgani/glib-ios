@@ -2,14 +2,14 @@
 
 import MaterialComponents.MaterialButtons
 
-open class MButton: MDCButton, IView {
+open class MButton: MDCButton {
     fileprivate var helper: ViewHelper!
     private var onClick: ((MButton) -> Void)?
     var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
-
-    public var size: CGSize {
-        return helper.size
-    }
+//
+//    public var size: CGSize {
+//        return helper.size
+//    }
 
     public init() {
         super.init(frame: .zero)
@@ -60,26 +60,26 @@ open class MButton: MDCButton, IView {
 //        parseIcon()
 //        return self
 //    }
-
-    public func width(_ width: Int) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func height(_ height: Int) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func height(_ height: LayoutSize) -> Self {
-        helper.height(height)
-        return self
-    }
+//
+//    public func width(_ width: Int) -> Self {
+//        helper.width(width)
+//        return self
+//    }
+//
+//    public func width(_ width: LayoutSize) -> Self {
+//        helper.width(width)
+//        return self
+//    }
+//
+//    public func height(_ height: Int) -> Self {
+//        helper.height(height)
+//        return self
+//    }
+//
+//    public func height(_ height: LayoutSize) -> Self {
+//        helper.height(height)
+//        return self
+//    }
 
     @discardableResult
     public func padding(_ newPadding: GPadding) -> Self {
@@ -87,13 +87,13 @@ open class MButton: MDCButton, IView {
         contentEdgeInsets = paddings.toEdgeInsets()
         return self
     }
-
-    @discardableResult
-    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
-        paddings = paddings.to(top: top, left: left, bottom: bottom, right: right)
-        contentEdgeInsets = paddings.toEdgeInsets()
-        return self
-    }
+//
+//    @discardableResult
+//    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+//        paddings = paddings.to(top: top, left: left, bottom: bottom, right: right)
+//        contentEdgeInsets = paddings.toEdgeInsets()
+//        return self
+//    }
 
     @discardableResult
     public func specs(_ specs: MButtonSpec...) -> Self {
@@ -147,11 +147,6 @@ open class MButton: MDCButton, IView {
     }
 
     @discardableResult
-    public func color(bg: UIColor) -> Self {
-        return color(bg: bg, text: nil)
-    }
-
-    @discardableResult
     public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
         helper.border(color: color, width: width, corner: corner)
         return self
@@ -180,6 +175,44 @@ extension MButton: GWeightable {
     public func height(weight: Float, offset: Float = 0) -> Self {
         helper.height(weight: weight, offset: offset)
         return self
+    }
+}
+
+extension MButton: IView {
+    public var size: CGSize {
+        return helper.size
+    }
+
+    @discardableResult
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+        paddings = paddings.to(top: top, left: left, bottom: bottom, right: right)
+        contentEdgeInsets = paddings.toEdgeInsets()
+        return self
+    }
+
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    @discardableResult
+    public func color(bg: UIColor) -> Self {
+        return color(bg: bg, text: nil)
     }
 }
 
