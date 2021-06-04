@@ -14,6 +14,10 @@ open class JsonAction {
         return NavHelper(navController: GApp.instance.navigationController)
     }
 
+    public var indicator: IndicatorHelper {
+        return IndicatorHelper(screen)
+    }
+
     public required init(_ spec: Json, _ screen: UIViewController) {
         self.spec = spec
         self.screen = screen
