@@ -5,6 +5,11 @@ class JsonView_Chip: JsonView {
 
     override func initView() -> UIView {
         view.text(spec["text"].stringValue)
+
+        view.onClick { _ in
+            JsonAction.execute(spec: self.spec["onClick"], screen: self.screen, creator: self.view)
+        }
+
         return view
     }
 

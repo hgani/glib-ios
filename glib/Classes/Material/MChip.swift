@@ -3,7 +3,7 @@
 import MaterialComponents.MaterialChips
 
 public class MChip: MDCChipView {
-    fileprivate var helper: ViewHelper!
+    fileprivate var helper: ControlHelper<MChip>!
 
     private var onClearClick: ((MChip) -> Void)?
     
@@ -18,7 +18,7 @@ public class MChip: MDCChipView {
     }
 
     private func initialize() {
-        helper = ViewHelper(self)
+        helper = ControlHelper(self)
 
         setTitleColor(.black, for: [])
     }
@@ -58,6 +58,12 @@ public class MChip: MDCChipView {
         return self
     }
 
+    @discardableResult
+    open func onClick(_ command: @escaping (MChip) -> Void) -> Self {
+        helper.onClick(command)
+        return self
+    }
+
     public func addClearButton() -> Self {
         var clearButton = UIControl()
         let clearButtonWidthAndHeight = 24.0
@@ -73,7 +79,7 @@ public class MChip: MDCChipView {
         
         clearButton.addSubview(clearImageView)
         accessoryView = clearButton
-        clearButton.addTarget(self, action: #selector(performClick), for: .touchUpInside)
+        clearButton.addTarget(self, action: #selector(performClearClick), for: .touchUpInside)
         
         return self
     }
@@ -84,7 +90,7 @@ public class MChip: MDCChipView {
         return self
     }
     
-    @objc open func performClick() {
+    @objc open func performClearClick() {
         if let callback = self.onClearClick {
             callback(self)
         }
