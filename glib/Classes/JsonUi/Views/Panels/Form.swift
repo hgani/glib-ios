@@ -72,7 +72,7 @@ class JsonView_Panels_Form: JsonView {
 
             Generic.sharedInstance.genericIsBusy.value = true
 
-            let spec = jsonView.spec
+            let spec = jsonView.innerSpec
             let screen = jsonView.screen
             _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)?.execute(
                 indicator: .standard,
