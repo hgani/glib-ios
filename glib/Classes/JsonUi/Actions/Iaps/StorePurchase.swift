@@ -1,45 +1,34 @@
 import SwiftyStoreKit
 
-enum PurchaseMode: String {
-    case purchase
-    case restore
-//    case validate
-}
-
 class JsonAction_Iaps_StorePurchase: JsonAction {
     override func silentExecute() -> Bool {
-
-        guard let productId = spec["productId"].string, let mode = PurchaseMode(rawValue: spec["mode"].stringValue) else {
-//            completion?(.success(JSON()))
-            return false
-        }
-
-//        reload = spec["reloadOnSuccess"].boolValue
-
-//        display?.setLoadingIndicatorHidden(false)
-
         indicator.show()
 
+        let mode = spec["mode"].string
         switch mode {
-        case .purchase:
-            purchase(productId)
-        case .restore:
-            // TODO
-//            restore(completion: completion)
-            GLog.t("TODO")
+        case "purchase":
+            purchase()
+        case "restore":
+            restore()
+        default:
+            GLog.w("Invalid mode: \(mode)")
         }
 
         return true
     }
 
-    private func purchase(_ productId: String) {
+
+    private func purchase() {
+        let productId = spec["productId"].stringValue
+
         SwiftyStoreKit.purchaseProduct(productId, quantity: 1, atomically: true) { [weak self] result in
-            guard let safeSelf = self else { return }
+            guard let strongSelf = self else { return }
 
             switch result {
             case .success:
-                JsonAction.execute(spec: safeSelf.spec["onSuccess"], screen: safeSelf.screen, creator: safeSelf)
-//                self?.verifyReceipt(completion: completion)
+//                self?.state = .completed
+
+                self?.verifyReceipt()
             case let .error(error):
                 switch error.code {
                 // TODO:
@@ -53,102 +42,111 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
                 //                case .cloudServiceRevoked: print("User has revoked permission to use this cloud service")
                 case .paymentCancelled:
 //                    self?.state = .completed
-                    JsonAction.execute(spec: safeSelf.spec["onSuccess"], screen: safeSelf.screen, creator: safeSelf)
 //                    completion?(.success(JSON()))
+                    JsonAction.execute(spec: strongSelf.spec["onSuccess"], screen: strongSelf.screen, creator: strongSelf)
                 default:
-//                    self?.state = .error("store.error.purchase.title", "store.error.purchase.unknown")
-                    JsonAction.execute(spec: safeSelf.spec["onFailure"], screen: safeSelf.screen, creator: safeSelf)
+//                    self?.state = .error
+
+//                    self?.execute(.failure, parameters: parameters, completion: completion)
+
 //                    completion?(.failure(error))
+                    JsonAction.execute(spec: strongSelf.spec["onFailure"], screen: strongSelf.screen, creator: strongSelf)
                 }
 
                 guard let strongSelf = self else { return }
-//                os_log("Error occured purchasing to %{public}@: %@", log: strongSelf.log, type: .error, productId, "\(error)")
                 GLog.e("Error occured when purchasing \(productId)")
-            //                os_log(, log: strongSelf.log, type: .error, productId, "\(error)")
-
             }
         }
     }
 
+    private func verifyReceipt() {
+        ReceiptStore.shared.fetchReceipt(forceRefresh: false) { _ in
+            GLog.i("TODO")
+            // TODO
+//            do {
+//                self?.execute(parameters: try parameters["onSuccess"].merged(with: [
+//                    parameters["paramNameForFormData"].stringValue(withDefault: "formData"): [
+//                        "product_id": parameters["productId"].string,
+//                        "bundle_id": Bundle.main.bundleIdentifier,
+//                        "receipt_data": $0,
+//                    ],
+//                ]), completion: { result in
+//                    switch result {
+//                    case let .success(data):
+//                        self?.execute(parameters: data["onResponse"], completion: completion, interval: 0)
+//                    case let .failure(error):
+//                        self?.display?.showAlert(title: "Verification Failed", message: "Your purchase completed but there was an error connecting to Team App. You can try again using Restore Purchase.")
+//
+//                        completion?(.failure(error))
+//                    }
+//                }, interval: 0)
+//            } catch {}
+        }
+    }
 
+    private func restore() {
+        SwiftyStoreKit.restorePurchases(atomically: true) { [weak self] results in
+            if !results.restoreFailedPurchases.isEmpty {
+                guard let strongSelf = self else { return }
+                GLog.e("Error occured restoring purchases")
+
+//                self?.state = .error
+
+//                self?.execute(.failure, parameters: parameters, completion: completion)
+                JsonAction.execute(spec: strongSelf.spec["onFailure"], screen: strongSelf.screen, creator: strongSelf)
+            } else {
+//                self?.state = .completed
+
+                self?.verifyReceipt()
+            }
+        }
+    }
 }
 
-//import Foundation
-//import os.log
-//import SwiftyJSON
-//import SwiftyStoreKit
-//
-//enum PurchaseMode: String {
-//    case purchase
-//    case restore
-//    case validate
-//}
-//
+
 //final class PurchaseAction: ExecutableAction {
 //    private enum PurchaseState {
-//        case executing
-//        case error(String, String)
+//        case running
+//        case error
 //        case completed
 //    }
 //
-//    private var state = PurchaseState.executing {
+//    private var state = PurchaseState.running {
 //        didSet {
 //            switch state {
-//            case .executing: break
+//            case .running: break
 //            case .completed:
 //                display?.setLoadingIndicatorHidden(true)
-//
-//                if reload { router?.reload(url: nil) }
-//            case let .error(title, message):
+//            case .error:
 //                display?.setLoadingIndicatorHidden(true)
-//
-//                if reload {
-//                    display?.showAlert(
-//                        title: title.localized(),
-//                        message: message.localized(),
-//                        actions: [
-//                            AlertAction(title: "alert.ok".localized(), isDestructive: false, isCancel: false, handler: { [weak self] _ in
-//                                self?.router?.reload(url: nil)
-//                            }),
-//                        ],
-//                        isCancelEnabled: false
-//                    )
-//                } else {
-//                    display?.showAlert(title: title.localized(), message: message.localized())
-//                }
 //            }
 //        }
 //    }
-//
+
 //    private let log = OSLog(subsystem: "com.teamapp.presentation", category: "Store")
 //
-//    private var reload = false
-//
 //    override func execute(parameters: JSON, completion: ActionCompletion?) {
-//        guard let productId = AppSettings().productIdentifiers[parameters["productId"].stringValue], let mode = PurchaseMode(rawValue: parameters["mode"].stringValue) else {
-//            completion?(.success(JSON()))
-//            return
-//        }
-//
-//        reload = parameters["reloadOnSuccess"].boolValue
-//
 //        display?.setLoadingIndicatorHidden(false)
 //
-//        switch mode {
-//        case .purchase:
-//            purchase(productId, completion: completion)
-//        case .validate:
-//            verifyReceipt(completion: completion)
-//        case .restore:
-//            restore(completion: completion)
+//        switch parameters["mode"].string {
+//        case "purchase":
+//            purchase(parameters: parameters, completion: completion)
+//        case "restore":
+//            restore(parameters: parameters, completion: completion)
+//        default:
+//            completion?(.success(JSON()))
 //        }
 //    }
 //
-//    private func purchase(_ productId: String, completion: ActionCompletion?) {
+//    private func purchase(parameters: JSON, completion: ActionCompletion?) {
+//        let productId = parameters["productId"].stringValue
+//
 //        SwiftyStoreKit.purchaseProduct(productId, quantity: 1, atomically: true) { [weak self] result in
 //            switch result {
 //            case .success:
-//                self?.verifyReceipt(completion: completion)
+//                self?.state = .completed
+//
+//                self?.verifyReceipt(parameters: parameters, completion: completion)
 //            case let .error(error):
 //                switch error.code {
 //                // TODO:
@@ -164,7 +162,10 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
 //                    self?.state = .completed
 //                    completion?(.success(JSON()))
 //                default:
-//                    self?.state = .error("store.error.purchase.title", "store.error.purchase.unknown")
+//                    self?.state = .error
+//
+//                    self?.execute(.failure, parameters: parameters, completion: completion)
+//
 //                    completion?(.failure(error))
 //                }
 //
@@ -174,44 +175,71 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
 //        }
 //    }
 //
-//    private func verifyReceipt(completion: ActionCompletion?) {
-//        let validator = LocalReceiptValidator()
-//        SwiftyStoreKit.verifyReceipt(using: validator, forceRefresh: true) { [weak self] result in
-//            switch result {
-//            case let .success(receipt):
-//                ReceiptStore.shared.verifySubscription(inReceipt: receipt)
-//
-//                self?.state = .completed
-//
-//                completion?(.success(JSON()))
-//            case let .error(error):
-//                guard let strongSelf = self else { return }
-//                os_log("Error occured verifying receipt: %{public}@", log: strongSelf.log, type: .error, "\(error)")
-//
-//                self?.state = .error("store.error.verify.title", "store.error.verify.message")
-//
-//                completion?(.failure(error))
-//            }
-//        }
-//    }
-//
-//    private func restore(completion: ActionCompletion?) {
+//    private func restore(parameters: JSON, completion: ActionCompletion?) {
 //        SwiftyStoreKit.restorePurchases(atomically: true) { [weak self] results in
 //            if !results.restoreFailedPurchases.isEmpty {
 //                guard let strongSelf = self else { return }
 //                os_log("Error occured restoring purchases", log: strongSelf.log, type: .error)
 //
-//                self?.state = .error("store.error.restore.title", "store.error.restore.message")
+//                self?.state = .error
 //
-//                // TODO:
-//                completion?(.success(JSON()))
+//                self?.execute(.failure, parameters: parameters, completion: completion)
 //            } else {
-//                ReceiptStore.shared.verifySubscription()
-//
 //                self?.state = .completed
 //
-//                completion?(.success(JSON()))
+//                self?.verifyReceipt(parameters: parameters, completion: completion)
 //            }
 //        }
 //    }
+//
+//    private func verifyReceipt(parameters: JSON, completion: ActionCompletion?) {
+//        ReceiptStore.shared.fetchReceipt(forceRefresh: false) { [weak self] in
+//            do {
+//                self?.execute(parameters: try parameters["onSuccess"].merged(with: [
+//                    parameters["paramNameForFormData"].stringValue(withDefault: "formData"): [
+//                        "product_id": parameters["productId"].string,
+//                        "bundle_id": Bundle.main.bundleIdentifier,
+//                        "receipt_data": $0,
+//                    ],
+//                ]), completion: { result in
+//                    switch result {
+//                    case let .success(data):
+//                        self?.execute(parameters: data["onResponse"], completion: completion, interval: 0)
+//                    case let .failure(error):
+//                        self?.display?.showAlert(title: "Verification Failed", message: "Your purchase completed but there was an error connecting to Team App. You can try again using Restore Purchase.")
+//
+//                        completion?(.failure(error))
+//                    }
+//                }, interval: 0)
+//            } catch {}
+//        }
+//    }
+//
+//    private func execute(parameters: JSON, completion: ActionCompletion?, interval _: Int) {
+//        super.execute(parameters: parameters, completion: completion)
+//    }
 //}
+
+
+class ReceiptStore {
+    static let shared = ReceiptStore()
+
+    func fetchReceipt(forceRefresh: Bool, completion: @escaping (String) -> Void) {
+        if !forceRefresh, SwiftyStoreKit.localReceiptData == nil {
+            return
+        }
+
+        SwiftyStoreKit.fetchReceipt(forceRefresh: forceRefresh) {
+            switch $0 {
+            case let .success(receiptData):
+                completion(receiptData.base64EncodedString(options: []))
+            case .error:
+                if let localReceiptData = SwiftyStoreKit.localReceiptData {
+                    completion(localReceiptData.base64EncodedString(options: []))
+                }
+            }
+        }
+    }
+
+    private init() {}
+}
