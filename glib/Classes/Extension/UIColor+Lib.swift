@@ -8,4 +8,10 @@ public extension UIColor {
     // These defaults make sure things look decent in dark mode
     static let libDefaultBackground = UIColor.white
     static let libDefaultLabel = UIColor.black
+
+    static let libSuccess = UIColor(hex: "#4caf50")
+    static let libError = UIColor(hex: "#ff5252")
+    static let libWarning = UIColor(hex: "#fb8c00")
+    static let libInfo = UIColor(hex: "#1867c0")
+//    static let libInfo = UIColor(hex: "#5cbbf6")
 }

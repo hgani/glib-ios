@@ -1,22 +1,30 @@
 #if INCLUDE_MDLIBS
 
-public class MButtonSpec {
-    private var decorator: ((MButton) -> Void)
+public class MChipSpec {
+    private var decorator: ((MChip) -> Void)
 
-    public init(_ decorator: @escaping ((MButton) -> Void)) {
+    public init(_ decorator: @escaping ((MChip) -> Void)) {
         self.decorator = decorator
     }
 
-    func decorate(_ view: MButton) {
+    func decorate(_ view: MChip) {
         decorator(view)
     }
 
-    static let link = MButtonSpec { button in
-        button.color(bg: .clear, text: UIColor(hex: "#1976d2"))
+    static let success = MChipSpec { chip in
+        chip.color(bg: .libSuccess, text: .white)
     }
 
-    static let icon = MButtonSpec { button in
-        button.layer.cornerRadius = 18
+    static let error = MChipSpec { chip in
+        chip.color(bg: .libError, text: .white)
+    }
+
+    static let warning = MChipSpec { chip in
+        chip.color(bg: .libWarning, text: .white)
+    }
+
+    static let info = MChipSpec { chip in
+        chip.color(bg: .libInfo, text: .white)
     }
 }
 

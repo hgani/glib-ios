@@ -23,9 +23,10 @@ class JsonTemplate_Thumbnail: JsonTemplate {
             if let chips = spec["chips"].array {
                 for (index, chipSpec) in chips.enumerated() {
                     let chip = MChip().text(chipSpec["text"].stringValue)
-                    if let styleClasses = chipSpec["styleClasses"].array {
-                        chip.style(chipSpec["styleClasses"].arrayValue)
-                    }
+                    // TODO: Use MChipSpec instead
+//                    if let styleClasses = chipSpec["styleClasses"].array {
+//                        chip.style(chipSpec["styleClasses"].arrayValue)
+//                    }
                     impl.chips.width(.matchParent).append(chip, left: (index == 0 ? 0 : 5))
                 }
             }

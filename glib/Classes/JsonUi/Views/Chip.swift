@@ -7,6 +7,12 @@ class JsonView_Chip: JsonView {
         view.text(spec["text"].stringValue)
         return view
     }
+
+    override func applyStyleClass(_ styleClass: String) {
+        if let chipSpec = JsonUiStyling.chips[styleClass] {
+            chipSpec.decorate(view)
+        }
+    }
 }
 
 #endif

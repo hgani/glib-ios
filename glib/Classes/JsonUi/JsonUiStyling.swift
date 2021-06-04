@@ -18,4 +18,11 @@ public class JsonUiStyling {
     ]
 
     public static var thumbnailTemplates = [String: ThumbnailTemplateSpec]()
+
+    public static var chips: [String: MChipSpec] = [
+        "success": .success,
+        "error": .error,
+        "warning": .warning,
+        "info": .info
+    ]
 }
