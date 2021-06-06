@@ -82,9 +82,14 @@ Simplify iOS development
     sub.dependency 'FBSDKLoginKit/Swift', '6.5.2'
   end
 
+  s.subspec 'Stripe' do |sub|
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_STRIPE' }
+    # Stripe requires NSCameraUsageDescription in Info.plist
+    sub.dependency 'Stripe'
+  end
+
   s.subspec 'Payment' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_STRIPE' }
-    sub.dependency 'Stripe'
     sub.dependency 'SwiftyStoreKit', '~> 0.15.0'
   end
 

@@ -60,8 +60,17 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
     }
 
     private func verifyReceipt() {
-        ReceiptStore.shared.fetchReceipt(forceRefresh: false) { _ in
+        ReceiptStore.shared.fetchReceipt(forceRefresh: false) { [weak self] in
+            guard let strongSelf = self else { return }
+
+            var receiptData = $0
+            var properties = strongSelf.spec["onFailure"]
+            // TODO
+//            properties["formData"]
+            JsonAction.execute(spec: properties, screen: strongSelf.screen, creator: strongSelf)
+
             GLog.i("TODO")
+            
             // TODO
 //            do {
 //                self?.execute(parameters: try parameters["onSuccess"].merged(with: [
@@ -101,6 +110,30 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
             }
         }
     }
+}
+
+
+class ReceiptStore {
+    static let shared = ReceiptStore()
+
+    func fetchReceipt(forceRefresh: Bool, completion: @escaping (String) -> Void) {
+        if !forceRefresh, SwiftyStoreKit.localReceiptData == nil {
+            return
+        }
+
+        SwiftyStoreKit.fetchReceipt(forceRefresh: forceRefresh) {
+            switch $0 {
+            case let .success(receiptData):
+                completion(receiptData.base64EncodedString(options: []))
+            case .error:
+                if let localReceiptData = SwiftyStoreKit.localReceiptData {
+                    completion(localReceiptData.base64EncodedString(options: []))
+                }
+            }
+        }
+    }
+
+    private init() {}
 }
 
 
@@ -219,27 +252,3 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
 //        super.execute(parameters: parameters, completion: completion)
 //    }
 //}
-
-
-class ReceiptStore {
-    static let shared = ReceiptStore()
-
-    func fetchReceipt(forceRefresh: Bool, completion: @escaping (String) -> Void) {
-        if !forceRefresh, SwiftyStoreKit.localReceiptData == nil {
-            return
-        }
-
-        SwiftyStoreKit.fetchReceipt(forceRefresh: forceRefresh) {
-            switch $0 {
-            case let .success(receiptData):
-                completion(receiptData.base64EncodedString(options: []))
-            case .error:
-                if let localReceiptData = SwiftyStoreKit.localReceiptData {
-                    completion(localReceiptData.base64EncodedString(options: []))
-                }
-            }
-        }
-    }
-
-    private init() {}
-}
