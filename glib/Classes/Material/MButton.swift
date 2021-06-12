@@ -6,10 +6,6 @@ open class MButton: MDCButton {
     fileprivate var helper: ViewHelper!
     private var onClick: ((MButton) -> Void)?
     var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
-//
-//    public var size: CGSize {
-//        return helper.size
-//    }
 
     public init() {
         super.init(frame: .zero)
@@ -56,44 +52,12 @@ open class MButton: MDCButton {
         return self
     }
 
-//    public func iconify() -> Self {
-//        parseIcon()
-//        return self
-//    }
-//
-//    public func width(_ width: Int) -> Self {
-//        helper.width(width)
-//        return self
-//    }
-//
-//    public func width(_ width: LayoutSize) -> Self {
-//        helper.width(width)
-//        return self
-//    }
-//
-//    public func height(_ height: Int) -> Self {
-//        helper.height(height)
-//        return self
-//    }
-//
-//    public func height(_ height: LayoutSize) -> Self {
-//        helper.height(height)
-//        return self
-//    }
-
     @discardableResult
     public func padding(_ newPadding: GPadding) -> Self {
         paddings = paddings.to(top: newPadding.top, left: newPadding.left, bottom: newPadding.bottom, right: newPadding.right)
         contentEdgeInsets = paddings.toEdgeInsets()
         return self
     }
-//
-//    @discardableResult
-//    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
-//        paddings = paddings.to(top: top, left: left, bottom: bottom, right: right)
-//        contentEdgeInsets = paddings.toEdgeInsets()
-//        return self
-//    }
 
     @discardableResult
     public func specs(_ specs: MButtonSpec...) -> Self {
