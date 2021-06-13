@@ -1,9 +1,9 @@
-#if INCLUDE_MDLIBS
+#if INCLUDE_UILIBS
 
 import Charts
 
 class JsonView_Charts_Line: JsonView {
-    private var chartView = MLineChartView()
+    private var chartView = GLineChartView()
     private let data = LineChartData(dataSets: [])
     
     override func initView() -> UIView {
@@ -62,49 +62,6 @@ class JsonView_Charts_Line: JsonView {
         }
         
         return Double(0)
-    }
-}
-
-class MLineChartView: LineChartView {
-    fileprivate var helper: ViewHelper!
-    
-    init() {
-        super.init(frame: .zero)
-        initialize()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(frame: .zero)
-        initialize()
-    }
-    
-    private func initialize() {
-        helper = ViewHelper(self)
-    }
-    
-    public func width(_ width: Int) -> Self {
-        helper.width(width)
-        return self
-    }
-    
-    public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
-        return self
-    }
-    
-    public func height(_ height: Int) -> Self {
-        helper.height(height)
-        return self
-    }
-    
-    public func height(_ height: LayoutSize) -> Self {
-        helper.height(height)
-        return self
-    }
-    
-    public func data(_ data: LineChartData) -> Self {
-        self.data = data
-        return self
     }
 }
 

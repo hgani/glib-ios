@@ -70,8 +70,6 @@ extension MFloatingButton: IView {
 
     @discardableResult
     public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
-//        paddings = paddings.to(top: top, left: left, bottom: bottom, right: right)
-//        contentEdgeInsets = paddings.toEdgeInsets()
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
