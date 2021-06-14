@@ -9,8 +9,8 @@ public extension UIColor {
         self.init(red: 0, green: 0, blue: 0, alpha: 0)
     }
 
-    convenience init?(unsafeHex hexString: String) {
-        if let rgba = type(of: self).parseRgba(hex: hexString) {
+    convenience init?(unsafeHex hexString: String?) {
+        if let rgba = type(of: self).parseRgba(hex: hexString ?? "") {
             self.init(red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
             return
         }
