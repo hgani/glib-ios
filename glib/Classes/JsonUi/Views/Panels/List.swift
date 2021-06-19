@@ -253,9 +253,25 @@ open class JsonView_Panels_List: JsonView {
                     JsonAction.execute(spec: button["onClick"], screen: self.listView.screen, creator: tableView)
                 }
 
+                for styleClass in button["styleClasses"].arrayValue {
+                    switch styleClass {
+                    case "success":
+                        action.backgroundColor = .libSuccess
+                    case "error":
+                        action.backgroundColor = .libError
+                    case "warning":
+                        action.backgroundColor = .libWarning
+                    case "info":
+                        action.backgroundColor = .libInfo
+                    default:
+                        GLog.w("Ignoring custom style class: \(styleClass)")
+                    }
+                }
+
                 if let str = button["backgroundColor"].string {
                     action.backgroundColor = UIColor(hex: str)
                 }
+
                 actions.append(action)
             }
 
