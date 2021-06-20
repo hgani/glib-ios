@@ -8,9 +8,9 @@ open class MTextArea: MDCMultilineTextField {
     // TODO: Make sure this doesn't generate cyclic references
     private var controller: MDCTextInputController!
 
-    public var size: CGSize {
-        return helper.size
-    }
+//    public var size: CGSize {
+//        return helper.size
+//    }
 
     public init() {
         super.init(frame: .zero)
@@ -54,14 +54,14 @@ open class MTextArea: MDCMultilineTextField {
         return self
     }
 
-    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
-        helper.paddings(t: top, l: left, b: bottom, r: right)
-        return self
-    }
-
-    public func color(bg: UIColor) -> Self {
-        return color(bg: bg, text: nil)
-    }
+//    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+//        helper.paddings(t: top, l: left, b: bottom, r: right)
+//        return self
+//    }
+//
+//    public func color(bg: UIColor) -> Self {
+//        return color(bg: bg, text: nil)
+//    }
 
     public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
         if let bgColor = bg {
@@ -78,25 +78,25 @@ open class MTextArea: MDCMultilineTextField {
         return self
     }
 
-    public func width(_ width: Int) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func height(_ height: Int) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func height(_ height: LayoutSize) -> Self {
-        helper.height(height)
-        return self
-    }
+//    public func width(_ width: Int) -> Self {
+//        helper.width(width)
+//        return self
+//    }
+//
+//    public func width(_ width: LayoutSize) -> Self {
+//        helper.width(width)
+//        return self
+//    }
+//
+//    public func height(_ height: Int) -> Self {
+//        helper.height(height)
+//        return self
+//    }
+//
+//    public func height(_ height: LayoutSize) -> Self {
+//        helper.height(height)
+//        return self
+//    }
 
     public func specs(_ specs: MTextAreaSpec...) -> Self {
         for spec in specs {
@@ -134,6 +134,42 @@ public class MTextAreaSpec {
 
     func decorate(_ view: MTextArea) {
         decorator(view)
+    }
+}
+
+extension MTextArea: IView {
+    public var size: CGSize {
+        return helper.size
+    }
+
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    @discardableResult
+    public func color(bg: UIColor) -> Self {
+        return color(bg: bg, text: nil)
     }
 }
 

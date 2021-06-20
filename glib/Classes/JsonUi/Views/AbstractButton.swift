@@ -1,42 +1,41 @@
+#if INCLUDE_MDLIBS
+
 class JsonView_AbstractButton: JsonView {
-    #if INCLUDE_MDLIBS
-        private let view = MButton()
-            .font(RobotoFonts.Style.regular.font, size: 15)
-    #else
-        private let view = GButton()
-            .color(bg: nil, text: .darkGray)
-            .border(color: .darkGray)
-            .font(nil, size: 12)
-    #endif
+    let button = MButton()
+        .font(RobotoFonts.Style.regular.font, size: 15)
+
+//        private let view = GButton()
+//            .color(bg: nil, text: .darkGray)
+//            .border(color: .darkGray)
+//            .font(nil, size: 12)
 
     override func initView() -> UIView {
         if let icon = JsonView_Icon.icon(spec: spec["icon"]) {
-            view.icon(icon)
+            button.icon(icon)
         }
 
         ifColor(code: spec["color"].string) {
-            view.color(bg: nil, text: $0)
+            button.color(bg: nil, text: $0)
         }
 
         if let text = spec["text"].string {
-            view.title(text)
+            button.title(text)
         }
-        view.onClick { _ in
-            JsonAction.execute(spec: self.spec["onClick"], screen: self.screen, creator: self.view)
+        button.onClick { _ in
+            JsonAction.execute(spec: self.spec["onClick"], screen: self.screen, creator: self.button)
         }
 
-        #if INCLUDE_MDLIBS
         Generic.sharedInstance.genericIsBusy.asObservable().subscribe { _ in
-            self.view.enabled(!Generic.sharedInstance.genericIsBusy.value)
+            self.button.enabled(!Generic.sharedInstance.genericIsBusy.value)
         }
-        #endif
 
-        return view
+        return button
     }
 
     override func applyStyleClass(_ styleClass: String) {
         if let buttonSpec = JsonUiStyling.buttons[styleClass] {
-            buttonSpec.decorate(view)
+            buttonSpec.decorate(button)
         }
     }
 }
+#endif

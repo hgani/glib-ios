@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GLib'
-  s.version          = '0.9.1'
+  s.version          = '0.9.2'
   s.summary          = 'Simplify iOS development'
 
 # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ Simplify iOS development
   s.source           = { :git => 'https://github.com/hgani/ganilib-ios.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '11.0'
 
   s.source_files = 'glib/Classes/**/*'
   s.resources = 'glib/Fonts/*.ttf'
@@ -82,11 +82,16 @@ Simplify iOS development
     sub.dependency 'FBSDKLoginKit/Swift', '6.5.2'
   end
 
+  # Stripe requires NSCameraUsageDescription in Info.plist
   s.subspec 'Stripe' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_STRIPE' }
     sub.dependency 'Stripe'
   end
 
+  s.subspec 'IAPurchase' do |sub|
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_IAP' }
+    sub.dependency 'SwiftyStoreKit', '~> 0.15.0'
+  end
 
   s.subspec 'UILibs' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_UILIBS' }
@@ -102,27 +107,33 @@ Simplify iOS development
     # sub.dependency 'MBCheckboxButton'
     sub.dependency 'MBRadioCheckboxButton2', '2.0.1'
     sub.dependency 'RxSwift', '~> 4.5'
-    sub.dependency 'MaterialComponents/Buttons', '~> 124.0'
-    sub.dependency 'MaterialComponents/TextFields', '~> 124.0'
-    sub.dependency 'MaterialComponents/Tabs', '~> 124.0'
-    sub.dependency 'MaterialComponents/ProgressView', '~> 124.0'
-    sub.dependency 'MaterialComponents/Snackbar', '~> 124.0'
-    sub.dependency 'MaterialComponents/Dialogs', '~> 124.0'
-    sub.dependency 'MaterialComponents/Cards', '~> 124.0'
-    sub.dependency 'MaterialComponents/Cards+Theming', '~> 124.0'
-    sub.dependency 'MaterialComponents/List', '~> 124.0'
-    sub.dependency 'MaterialComponents/ActionSheet', '~> 124.0'
-    sub.dependency 'MaterialComponents/Chips', '~> 124.0'
-    sub.dependency 'MaterialComponents/TextControls+FilledTextAreas', '~> 124.0'
-    sub.dependency 'MaterialComponents/TextControls+FilledTextFields', '~> 124.0'
-    sub.dependency 'MaterialComponents/TextControls+OutlinedTextAreas', '~> 124.0'
-    sub.dependency 'MaterialComponents/TextControls+OutlinedTextFields', '~> 124.0'
+    sub.dependency 'MaterialComponents/Buttons', '124.1.1'
+    sub.dependency 'MaterialComponents/TextFields', '124.1.1'
+    sub.dependency 'MaterialComponents/Tabs', '124.1.1'
+    sub.dependency 'MaterialComponents/ProgressView', '124.1.1'
+    sub.dependency 'MaterialComponents/Snackbar', '124.1.1'
+    sub.dependency 'MaterialComponents/Dialogs', '124.1.1'
+    sub.dependency 'MaterialComponents/Cards', '124.1.1'
+    sub.dependency 'MaterialComponents/Cards+Theming', '124.1.1'
+    sub.dependency 'MaterialComponents/List', '124.1.1'
+    sub.dependency 'MaterialComponents/ActionSheet', '124.1.1'
+    sub.dependency 'MaterialComponents/Chips', '124.1.1'
+    sub.dependency 'MaterialComponents/TextControls+FilledTextAreas', '124.1.1'
+    sub.dependency 'MaterialComponents/TextControls+FilledTextFields', '124.1.1'
+    sub.dependency 'MaterialComponents/TextControls+OutlinedTextAreas', '124.1.1'
+    sub.dependency 'MaterialComponents/TextControls+OutlinedTextFields', '124.1.1'
+
+    # Need to lock this because v3.0.0 produces errors during archiving.
+    sub.dependency 'MDFInternationalization', '2.0.0'
     
     # sub.dependency 'MaterialComponents/TextFields+Theming', '~> 92.0'
     # sub.dependency 'MaterialComponents/schemes/Shape', '~> 92.0'
     sub.dependency 'MarkdownKit', '1.5'
     sub.dependency 'FlexLayout'
-    sub.dependency 'jsonlogic'
+    sub.dependency 'jsonlogic', '~> 1.1.0'
+    
+
+    # TODO: Move this out to a separate subspec
     sub.dependency 'SwiftPhoenixClient'
   end
 end

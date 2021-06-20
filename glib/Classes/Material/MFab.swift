@@ -3,6 +3,7 @@
 import MaterialComponents.MaterialButtons
 
 class MFloatingButton: MDCFloatingButton {
+    fileprivate var helper: ViewHelper!
     private var onClick: ((MFloatingButton) -> Void)?
 
     init() {
@@ -15,7 +16,9 @@ class MFloatingButton: MDCFloatingButton {
         initialize()
     }
 
-    private func initialize() {}
+    private func initialize() {
+        helper = ViewHelper(self)
+    }
 
     func icon(_ name: String) -> Self {
         let image = UIImage(from: .materialIcon,
@@ -46,6 +49,54 @@ class MFloatingButton: MDCFloatingButton {
         if let callback = self.onClick {
             callback(self)
         }
+    }
+
+    @discardableResult
+    public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
+        if let bgColor = bg {
+            backgroundColor = bgColor
+        }
+        if let textColor = text {
+            setTitleColor(textColor, for: .normal)
+        }
+        return self
+    }
+}
+
+extension MFloatingButton: IView {
+    public var size: CGSize {
+        return helper.size
+    }
+
+    @discardableResult
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    @discardableResult
+    public func color(bg: UIColor) -> Self {
+        return color(bg: bg, text: nil)
     }
 }
 

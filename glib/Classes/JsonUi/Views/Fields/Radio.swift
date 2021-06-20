@@ -49,7 +49,42 @@ class MRadio: RadioButton {
     private func initialize() {
         helper = ViewHelper(self)
     }
-    
+
+    func title(_ str: String) -> Self {
+        setTitle(str, for: [])
+        setTitleColor(.black, for: [])
+        titleLabel?.font = RobotoFonts.Style.regular.font
+        return self
+    }
+
+    @discardableResult
+    public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
+        if let bgColor = bg {
+            backgroundColor = bgColor
+        }
+        if let textColor = text {
+            setTitleColor(textColor, for: .normal)
+        }
+        return self
+    }
+
+    func delegate(_ delegate: RadioButtonDelegate) -> Self {
+        self.delegate = delegate
+        return self
+    }
+}
+
+extension MRadio: IView {
+    public var size: CGSize {
+        return helper.size
+    }
+
+    @discardableResult
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
     public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
@@ -70,16 +105,9 @@ class MRadio: RadioButton {
         return self
     }
 
-    func title(_ str: String) -> Self {
-        setTitle(str, for: [])
-        setTitleColor(.black, for: [])
-        titleLabel?.font = RobotoFonts.Style.regular.font
-        return self
-    }
-
-    func delegate(_ delegate: RadioButtonDelegate) -> Self {
-        self.delegate = delegate
-        return self
+    @discardableResult
+    public func color(bg: UIColor) -> Self {
+        return color(bg: bg, text: nil)
     }
 }
 

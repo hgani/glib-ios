@@ -9,9 +9,10 @@ open class JsonView {
         self.screen = screen
     }
 
-    public func didAttach(to parent: UIView) {
-        // To be overridden
-    }
+//    // TODO: Remove. Replaced with onAfterInitView
+//    public func didAttach(to parent: UIView) {
+//        // To be overridden
+//    }
 
     private func initGenericAttributes(backend: UIView) {
         if let view = backend as? UIView & IView {
@@ -106,7 +107,7 @@ open class JsonView {
         // To be overridden
     }
 
-    // TODO: Deprecate
+    // TODO: Consider using this instead of view() now that we use it for creation everywhere
     func createView() -> UIView {
 //        let view = initView()
 //        initGenericAttributes(backend: view)

@@ -58,11 +58,12 @@ class JsonView_Fields_StripeToken: JsonView_AbstractField, SubmittableField {
                 
                 let card = STPCardParams()
                 card.number = textField.cardNumber
-                card.expMonth = textField.expirationMonth
-                card.expYear = textField.expirationYear
+                // TODO: Need testing
+//                card.expMonth = UInt(textField.expirationMonth)
+//                card.expYear = UInt(textField.expirationYear)
                 card.cvc = textField.cvc
                 
-                STPAPIClient.shared().createToken(withCard: card) { token, error in
+                STPAPIClient.shared.createToken(withCard: card) { token, error in
                     guard let token = token else {
                         return
                     }

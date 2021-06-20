@@ -7,6 +7,7 @@ class JsonView_Panels_Custom: JsonView {
             return template.createPanel()
         }
 
-        return UIView()
+        // Specify 0 height so it doesn't compete for space.
+        return GView().height(0)
     }
 }

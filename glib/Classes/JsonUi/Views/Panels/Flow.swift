@@ -1,10 +1,11 @@
 import FlexLayout
 
 class JsonView_Panels_Flow: JsonView {
-    private let panel: UIView
+//    private let panel: UIView
+    private let panel = GView()
     
     public required init(_ spec: Json, _ screen: GScreen) {
-        panel = UIView()
+//        panel = UIView()
         super.init(spec, screen)
     }
     

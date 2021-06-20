@@ -1,19 +1,21 @@
-#if INCLUDE_MDLIBS
+#if INCLUDE_UILIBS
 
 import Charts
 
 class JsonView_Charts_Line: JsonView {
-    private var chartView = MLineChartView()
+    private var chartView = GLineChartView()
     private let data = LineChartData(dataSets: [])
     
     override func initView() -> UIView {
         renderData(spec["dataSeries"].presence)
         fetchData(spec["nextPage"].presence)
-        
+
+        // In the future, this needs to be able to auto-detect the value type
         let chartFormatter = DateValueFormatter()
         let xAxis = XAxis()
         xAxis.valueFormatter = chartFormatter
         chartView.xAxis.valueFormatter = xAxis.valueFormatter
+//        chartView.leftAxis.valueFormatter = DigitValueFormatter()
         chartView.width(.matchParent).height(200).data(data).fitScreen()
         
         return chartView
@@ -27,8 +29,15 @@ class JsonView_Charts_Line: JsonView {
                     entries.append(ChartDataEntry(x: timestamp(point["x"].stringValue),
                                                   y: point["y"].doubleValue))
                 }
-                let color = UIColor(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1.0)
+
+                let color = UIColor(unsafeHex: series["color"].string) ?? .black
+//                let color = UIColor(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1.0)
+
                 let set = LineChartDataSet(values: entries, label: series["title"].stringValue)
+
+                // In the future, this needs to be able to auto-detect the value type
+                set.valueFormatter = DigitValueFormatter()
+
                 set.mode = .cubicBezier
                 set.setColor(color)
                 set.setCircleColor(color)
@@ -65,49 +74,6 @@ class JsonView_Charts_Line: JsonView {
     }
 }
 
-class MLineChartView: LineChartView {
-    fileprivate var helper: ViewHelper!
-    
-    init() {
-        super.init(frame: .zero)
-        initialize()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(frame: .zero)
-        initialize()
-    }
-    
-    private func initialize() {
-        helper = ViewHelper(self)
-    }
-    
-    public func width(_ width: Int) -> Self {
-        helper.width(width)
-        return self
-    }
-    
-    public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
-        return self
-    }
-    
-    public func height(_ height: Int) -> Self {
-        helper.height(height)
-        return self
-    }
-    
-    public func height(_ height: LayoutSize) -> Self {
-        helper.height(height)
-        return self
-    }
-    
-    public func data(_ data: LineChartData) -> Self {
-        self.data = data
-        return self
-    }
-}
-
 public class DateValueFormatter: NSObject, IAxisValueFormatter {
     private let dateFormatterGet = DateFormatter()
     private let dateFormatterPrint = DateFormatter()
@@ -116,6 +82,18 @@ public class DateValueFormatter: NSObject, IAxisValueFormatter {
         let date = Date(timeIntervalSince1970: value)
         dateFormatterPrint.dateFormat = "MMM dd"
         return dateFormatterPrint.string(from: date)
+    }
+}
+
+// https://stackoverflow.com/questions/41644918/charts-linechartdataset-rounded-values/41692087#41692087
+class DigitValueFormatter : NSObject, IValueFormatter {
+
+    func stringForValue(_ value: Double,
+                        entry: ChartDataEntry,
+                        dataSetIndex: Int,
+                        viewPortHandler: ViewPortHandler?) -> String {
+        let valueWithoutDecimalPart = String(format: "%.0f", value)
+        return "\(valueWithoutDecimalPart)"
     }
 }
 

@@ -1,7 +1,7 @@
 class JsonView_AbstractField: JsonView {
-    override func didAttach(to _: UIView) {
-//        self.registerToClosestForm(field: view())
-    }
+//    override func didAttach(to _: UIView) {
+////        self.registerToClosestForm(field: view())
+//    }
 
     override func onAfterInitView(_ view: UIView) {
         self.registerToClosestForm(field: view)
