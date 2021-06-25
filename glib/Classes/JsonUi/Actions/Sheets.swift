@@ -7,6 +7,7 @@ class JsonAction_Sheets_Select: JsonAction {
         guard let buttons = spec["buttons"].array else { return false }
         let message = spec["message"].string
         let sheet = MDCActionSheetController(title: nil, message: message)
+        sheet.showsHeaderDivider = true
         for button in buttons {
             let action = MDCActionSheetAction(title: button["text"].stringValue, image: nil) { (_) in
                 JsonAction.execute(spec: button["onClick"], screen: self.screen, creator: self)

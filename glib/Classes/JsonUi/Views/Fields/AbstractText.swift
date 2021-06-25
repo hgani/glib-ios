@@ -14,9 +14,13 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
         name = spec["name"].string
 
         view.labelView.text = spec["label"].string
-        view.placeholder = spec["placeholder"].string
-        view.text = spec["value"].string
+//        view.placeholder = spec["placeholder"].string
+//        view.text = spec["value"].string
         view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
+
+        view
+            .placeholder(spec["placeholder"].stringValue)
+            .text(spec["value"].stringValue)
 
 //        initBottomBorderIfApplicable()
 
@@ -46,6 +50,10 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
 
     func text() -> String? {
         return view.text
+    }
+
+    func text(_ value : String) {
+        view.text(value)
     }
 
     func errors(_ text: String?) {

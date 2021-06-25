@@ -220,6 +220,16 @@ open class MTextField: GControl, ITextField {
         return self
     }
 
+    public func text(_ text: String) -> Self {
+        self.text = text
+        return self
+    }
+
+    public func placeholder(_ str: String) -> Self {
+        placeholder = str
+        return self
+    }
+    
 //    public func errors(_ text: String?) -> Self {
 //        controller.setErrorText(text, errorAccessibilityValue: nil)
 //        return self
