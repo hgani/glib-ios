@@ -9,6 +9,8 @@ open class GScreen: UIViewController {
     public var indicator: IndicatorHelper!
     public var nav: NavHelper!
 
+    private var timers = [Timer]()
+
 //    public lazy var refresher: GRefreshControl = {
 //        GRefreshControl().onValueChanged {
 //            self.onRefresh()
@@ -93,6 +95,7 @@ open class GScreen: UIViewController {
 
         if isMovingFromParent || isBeingDismissed {
             viewWillDetach()
+            stopTimers()
         }
     }
 
@@ -146,6 +149,26 @@ open class GScreen: UIViewController {
     // See https://stackoverflow.com/questions/44616409/declarations-in-extensions-cannot-override-yet-error-in-swift-4
     open func onRefresh() {
         // To be overridden
+    }
+
+    // Don't use Timer.scheduledTimer() directly to make sure timers are stopped when not in use.
+    func scheduleTimer(intervalInSeconds: TimeInterval, block: @escaping () -> Void) {
+        let timer = Timer.scheduledTimer(withTimeInterval: intervalInSeconds, repeats: true) { [weak self] _ in
+            block()
+        }
+        timers.append(timer)
+    }
+
+    private func stopTimers() {
+        let count = timers.count
+        if count > 0 {
+            NSLog("Stopping \(count) timers...")
+
+            for timer in timers {
+                timer.invalidate()
+            }
+            timers.removeAll()
+        }
     }
 }
 
