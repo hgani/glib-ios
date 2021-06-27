@@ -23,7 +23,7 @@ class JsonView_Panels_Form: JsonView {
 
 //    class FormPanel: GVerticalPanel {
 
-    class FormPanel: GAligner {
+    class FormPanel: GWrapper {
         var formData = Variable(Json(parseJSON: "{}"))
         
         // NOTE: needs to be a weak var?
