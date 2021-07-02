@@ -229,7 +229,7 @@ open class MTextField: GControl, ITextField {
         placeholder = str
         return self
     }
-    
+
 //    public func errors(_ text: String?) -> Self {
 //        controller.setErrorText(text, errorAccessibilityValue: nil)
 //        return self
