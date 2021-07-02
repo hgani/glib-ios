@@ -155,6 +155,11 @@ open class MTextField: GControl, ITextField {
         return backend.resignFirstResponder()
     }
 
+    func readOnly(_ value: Bool) -> Self {
+        isUserInteractionEnabled = !value
+        return self
+    }
+
 //
 //    open override func textRect(forBounds bounds: CGRect) -> CGRect {
 //        return bounds.inset(by: padding)
