@@ -17,21 +17,31 @@ class JsonView_TabBar: JsonView {
             }
 //            .delegate(delegate, retain: true)
 
-        spec["buttons"].arrayValue.forEach { (tab) in
-            let tabBarItem = JsonView_TabBarItem(tab)
+//        spec["buttons"].arrayValue.forEach { (tab) in
+//            let tabBarItem = JsonView_TabBarItem(tab)
+//            tabBar.items.append(tabBarItem)
+//        }
+
+        var selectedTab: UITabBarItem?
+        for (index, spec) in spec["buttons"].arrayValue.enumerated() {
+            let tabBarItem = JsonView_TabBarItem(spec)
             tabBar.items.append(tabBarItem)
+
+            if spec["disabled"].boolValue {
+                selectedTab = tabBarItem
+            }
         }
 
-        let selectedTab = tabBar.items.first(where: { (tab) -> Bool in
-            if let tabItem = tab as? JsonView_TabBarItem, let onClick = tabItem.spec["onClick"].presence {
-                return onClick["url"].stringValue == (screen as? JsonUiScreen)?.url
-            }
+//        let selectedTab = tabBar.items.first(where: { (tab) -> Bool in
+//            if let tabItem = tab as? JsonView_TabBarItem, let onClick = tabItem.spec["onClick"].presence {
+//                return onClick["url"].stringValue == (screen as? JsonUiScreen)?.url
+//            }
+//
+//            return false
+//        })
 
-            return false
-        })
-
-        if selectedTab != nil {
-            tabBar.setSelectedItem(selectedTab, animated: false)
+        if let item = selectedTab {
+            tabBar.setSelectedItem(item, animated: false)
         }
 
         return tabBar
