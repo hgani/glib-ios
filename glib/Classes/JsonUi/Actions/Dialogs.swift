@@ -67,6 +67,11 @@ class JsonAction_Dialogs_Open: JsonAction {
 //        let dialogController = TestJsonUiDialog()
         dialogController.modalPresentationStyle = .custom
         dialogController.transitioningDelegate = dialogTransitionController
+
+        if let mdcPresentationController = dialogController.presentationController as? MDCDialogPresentationController {
+            mdcPresentationController.dismissOnBackgroundTap = false
+        }
+
         screen.present(dialogController, animated: true, completion: nil)
 
         return true
