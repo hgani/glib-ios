@@ -152,8 +152,8 @@ open class GScreen: UIViewController {
     }
 
     // Don't use Timer.scheduledTimer() directly to make sure timers are stopped when not in use.
-    func scheduleTimer(intervalInSeconds: TimeInterval, block: @escaping () -> Void) {
-        let timer = Timer.scheduledTimer(withTimeInterval: intervalInSeconds, repeats: true) { [weak self] _ in
+    func scheduleTimer(intervalInSeconds: TimeInterval, repeats: Bool = true, block: @escaping () -> Void) {
+        let timer = Timer.scheduledTimer(withTimeInterval: intervalInSeconds, repeats: repeats) { [weak self] _ in
             block()
         }
         timers.append(timer)
