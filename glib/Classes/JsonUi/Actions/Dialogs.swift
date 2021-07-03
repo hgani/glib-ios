@@ -117,13 +117,20 @@ class JsonAction_Dialogs_ShowV1: JsonAction {
     }
 }
 
-class JsonAction_Dialogs_CloseV1: JsonAction {
+class JsonAction_Dialogs_Close: JsonAction {
     override func silentExecute() -> Bool {
+        guard let currentScreen = nav.currentScreen() as? JsonUiScreen else {
+            GLog.w("Current screen doesn't exist")
+            return false
+        }
+
         if var rootScreen = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedScreen = rootScreen.presentedViewController {
                 rootScreen = presentedScreen
             }
-            rootScreen.dismiss(animated: true, completion: nil)
+            rootScreen.dismiss(animated: true, completion: {
+                JsonAction.execute(spec: self.spec["onClose"], screen: currentScreen, creator: self)
+            })
         }
         return true
     }
