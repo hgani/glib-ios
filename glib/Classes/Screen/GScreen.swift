@@ -32,10 +32,15 @@ open class GScreen: UIViewController {
     }
 
     open override func viewDidLoad() {
-        fatalError("Call initOnDidLoad() instead")
+//        fatalError("Call initOnDidLoad() instead")
+        initOnDidLoad()
     }
 
     // Use a separate method so that viewDidLoad() doesn't get overridden if it's declared in an extension
+    //
+    // TODO: Change this back to viewDidLoad().
+    // Don't override viewDidLoad() using extension because for some reason, the overridden method sometimes
+    // doesn't get called (unpredictable). Use GScreenDelegate instead.
     open func initOnDidLoad() {
         super.viewDidLoad()
 
@@ -52,9 +57,11 @@ open class GScreen: UIViewController {
             edgesForExtendedLayout = []
         }
 
-        view.backgroundColor = UIColor.white
+//        view.backgroundColor = UIColor.white
 
         setupContainer()
+
+        GApp.instance.screenDelegate?.onViewDidLoad(screen: self)
     }
 
     private func setupContainer() {
@@ -176,6 +183,10 @@ extension GScreen: ScreenProtocol {
     public var controller: UIViewController {
         return self
     }
+}
+
+public protocol GScreenDelegate {
+    func onViewDidLoad(screen: GScreen)
 }
 
 #if INCLUDE_UILIBS
