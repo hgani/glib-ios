@@ -278,29 +278,6 @@ open class JsonView_Panels_List: JsonView {
             return actions.reversed()
         }
     }
-
-//    class ListHeaderCell: UITableViewCell {
-//        private let panel = GVerticalPanel()
-//
-//        func createView(spec: Json, screen: GScreen) {
-//            contentView.removeFromSuperview()
-//            backgroundColor = .white
-//            addSubview(panel)
-//            panel.paddings(top: 10, left: 10, bottom: 10, right: 10)
-//
-//            let childViews = spec["childViews"].arrayValue
-//            let subviews: [UIView] = childViews.compactMap { viewSpec -> UIView? in
-//                if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
-//                    return jsonView.createView()
-//                }
-//                return nil
-//            }
-//
-//            for view in subviews {
-//                panel.addView(view)
-//            }
-//        }
-//    }
 }
 
 #endif

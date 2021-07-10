@@ -57,11 +57,11 @@ open class GScreen: UIViewController {
             edgesForExtendedLayout = []
         }
 
-//        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.white
 
         setupContainer()
 
-        GApp.instance.screenDelegate?.onViewDidLoad(screen: self)
+        GApp.instance.screenDelegate.onViewDidLoad(screen: self)
     }
 
     private func setupContainer() {

@@ -10,8 +10,6 @@ class JsonView_Panels_Scroll: JsonView {
     override func initView() -> UIView {
         panel.autoResizeForKeyboard(screen: screen)
 
-//        JsonViewDefaultPanel.initPanel(panel.contentView, spec: spec, screen: screen)
-
         if let wrapper = JsonViewDefaultPanel(innerSpec, screen).view() as? IView & UIView {
             panel.contentView.append(wrapper)
         }
