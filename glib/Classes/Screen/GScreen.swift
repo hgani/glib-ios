@@ -186,6 +186,10 @@ extension GScreen: ScreenProtocol {
 }
 
 public protocol GScreenDelegate {
+    // This is a good place to set screen background so that the screen looks consistent in light vs dark mode.
+    // E.g.
+    // screen.nav.color(bg: .primary, text: .black)
+    // screen.container.bg(image: UIImage(named: "BLAH"), repeatTexture: true)
     func onViewDidLoad(screen: GScreen)
 }
 
