@@ -7,7 +7,8 @@ class JsonView_AbstractDate: JsonView_AbstractText {
 //        let datePicker = GDatePicker()
 
         if #available(iOS 14.0, *) {
-            datePicker.preferredDatePickerStyle = .inline
+//            datePicker.preferredDatePickerStyle = .inline
+            datePicker.preferredDatePickerStyle = .wheels
         }
 
         datePicker.datePickerMode = mode
