@@ -10,6 +10,7 @@ class JsonView_Fields_Date: JsonView_AbstractDate {
 
     override func initView() -> UIView {
         textField = super.initTextField()
+
         setInputViewDatePicker(field: textField, mode: .date, onSelected: {
             self.commitSelection()
         })

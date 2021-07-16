@@ -4,10 +4,12 @@ class JsonView_AbstractDate: JsonView_AbstractText {
     func setInputViewDatePicker(field: MTextField, mode: UIDatePicker.Mode, onSelected: @escaping () -> Void) {
         let screenWidth = UIScreen.main.bounds.width
         let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 200))
-//        let datePicker = GDatePicker()
+
+        if let value = self.spec["value"].iso8601 {
+            datePicker.setDate(value, animated: false)
+        }
 
         if #available(iOS 14.0, *) {
-//            datePicker.preferredDatePickerStyle = .inline
             datePicker.preferredDatePickerStyle = .wheels
         }
 
@@ -17,7 +19,6 @@ class JsonView_AbstractDate: JsonView_AbstractText {
         field.inputView = datePicker
 //
         let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: screenWidth, height: 44.0))
-//        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: screenWidth, height: 24.0))
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 //        let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: target, action: #selector(tapCancel))
         let cancel = GBarButtonItem().title("Cancel").onClick {
