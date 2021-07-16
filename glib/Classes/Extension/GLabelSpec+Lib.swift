@@ -7,6 +7,10 @@ extension GLabelSpec {
         _ = label.font(nil, size: 13)
     }
 
+    static let libCellSubsubtitle = GLabelSpec { label in
+        _ = label.font(nil, size: 13)
+    }
+
     static let libMuted = GLabelSpec { label in
         _ = label.color(text: label.textColor.muted())
     }

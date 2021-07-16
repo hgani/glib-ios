@@ -9,6 +9,7 @@ class JsonTemplate_Thumbnail: JsonTemplate {
             impl.setImage(url: spec["imageUrl"].string)
             impl.setTitle(text: spec["title"].string)
             impl.setSubtitle(text: spec["subtitle"].string)
+            impl.setSubsubtitle(text: spec["subsubtitle"].string)
 
             if !spec["styleClasses"].arrayValue.contains("card") {
                 impl.disableCardStyle()
