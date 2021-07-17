@@ -1,12 +1,40 @@
 //class JsonView_AbstractDate: JsonView_AbstractField, SubmittableField {
 class JsonView_AbstractDate: JsonView_AbstractText {
+    private var textField: MTextField?
+
+    private let utcTimeZone = TimeZone(abbreviation: "UTC")
+
+    lazy var dateFormatter : DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.amSymbol = "AM"
+        dateFormatter.pmSymbol = "PM"
+
+        // Don't adjust date/time to the device's time zone
+        dateFormatter.timeZone = utcTimeZone
+        return dateFormatter
+    }()
+
+    // From https://stackoverflow.com/questions/58779202/convert-datetime-from-one-timezone-to-another-timezone-swift
+    func changeTimeZone(_ date: Date, from: TimeZone, to: TimeZone) -> Date {
+        let sourceOffset = from.secondsFromGMT(for: date)
+        let destinationOffset = to.secondsFromGMT(for: date)
+        let timeInterval = TimeInterval(destinationOffset - sourceOffset)
+
+        return Date(timeInterval: timeInterval, since: date)
+    }
 
     func setInputViewDatePicker(field: MTextField, mode: UIDatePicker.Mode, onSelected: @escaping () -> Void) {
+        textField = field
+
         let screenWidth = UIScreen.main.bounds.width
         let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 200))
 
-        if let value = self.spec["value"].iso8601 {
-            datePicker.setDate(value, animated: false)
+        // Don't adjust date/time to the device's time zone
+        datePicker.timeZone = utcTimeZone
+
+        if let utcDate = self.spec["value"].iso8601 {
+            field.text = dateFormatter.string(from: utcDate)
+            datePicker.setDate(utcDate, animated: false)
         }
 
         if #available(iOS 14.0, *) {
@@ -24,35 +52,22 @@ class JsonView_AbstractDate: JsonView_AbstractText {
         let cancel = GBarButtonItem().title("Cancel").onClick {
             field.resignFirstResponder()
         }
-        let done = GBarButtonItem().title("Done").onClick(onSelected)
+        let done = GBarButtonItem().title("Done").onClick {
+            self.commitSelection()
+        }
 //        let barButton = UIBarButtonItem(title: "Done", style: .plain, target: target, action: selector)
         toolBar.setItems([cancel, flexible, done], animated: false)
         field.backendInputAccessoryView = toolBar
     }
 
-//    #if INCLUDE_MDLIBS
-//        private let view = MTextField()
-//    #else
-//        private let view = GTextField()
-//    #endif
-//
-//    var name: String?
-//    var value: String {
-//        return view.text ?? ""
-//    }
-//
-//    func validate() -> Bool {
-//        return true
-//    }
-//
-//    func initTextField() -> UITextField & ITextField {
-//        name = spec["name"].string
-//        #if INCLUDE_MDLIBS
-//        view.styleClasses(spec["styleClasses"].arrayValue)
-//        #endif
-//        view.placeholder = spec["label"].string
-//        view.text = spec["value"].string
-//
-//        return view
-//    }
+    private func commitSelection() {
+        guard let field = textField else {
+            return
+        }
+
+        if let datePicker = field.inputView as? UIDatePicker {
+            field.text = dateFormatter.string(from: datePicker.date)
+        }
+        field.resignFirstResponder()
+    }
 }
