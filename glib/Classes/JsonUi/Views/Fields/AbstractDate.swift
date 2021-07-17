@@ -1,10 +1,9 @@
-//class JsonView_AbstractDate: JsonView_AbstractField, SubmittableField {
 class JsonView_AbstractDate: JsonView_AbstractText {
-    private var textField: MTextField?
+    private weak var textField: MTextField?
 
     private let utcTimeZone = TimeZone(abbreviation: "UTC")
 
-    lazy var dateFormatter : DateFormatter = {
+    private lazy var dateFormatter : DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.amSymbol = "AM"
         dateFormatter.pmSymbol = "PM"
@@ -23,7 +22,19 @@ class JsonView_AbstractDate: JsonView_AbstractText {
         return Date(timeInterval: timeInterval, since: date)
     }
 
-    func setInputViewDatePicker(field: MTextField, mode: UIDatePicker.Mode, onSelected: @escaping () -> Void) {
+    func initFieldWithPicker(format: String, mode: UIDatePicker.Mode) -> MTextField {
+        let textField = super.initTextField()
+
+        if let utcDate = self.spec["value"].iso8601 {
+            dateFormatter.dateFormat = format
+            textField.text = dateFormatter.string(from: utcDate)
+        }
+
+        initDatePicker(field: textField, mode: .dateAndTime)
+        return textField
+    }
+
+    private func initDatePicker(field: MTextField, mode: UIDatePicker.Mode) {
         textField = field
 
         let screenWidth = UIScreen.main.bounds.width
@@ -33,7 +44,6 @@ class JsonView_AbstractDate: JsonView_AbstractText {
         datePicker.timeZone = utcTimeZone
 
         if let utcDate = self.spec["value"].iso8601 {
-            field.text = dateFormatter.string(from: utcDate)
             datePicker.setDate(utcDate, animated: false)
         }
 

@@ -1,29 +1,13 @@
 class JsonView_Fields_Date: JsonView_AbstractDate {
-//    private var textField = UITextField()
-//    private var textField: MTextField!
-
-//    private lazy var dateFormatter : DateFormatter = {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyyy-MM-dd"
-//        return dateFormatter
-//    }()
-
     override func initView() -> UIView {
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//
+//        let textField = super.initTextField()
+//
+//        setInputViewDatePicker(field: textField, mode: .date)
+//
+//        return textField
 
-        let textField = super.initTextField()
-
-        setInputViewDatePicker(field: textField, mode: .date, onSelected: {
-//            self.commitSelection()
-        })
-
-        return textField
+        return initFieldWithPicker(format: "yyyy-MM-dd", mode: .date)
     }
-
-//    private func commitSelection() {
-//        if let datePicker = textField.inputView as? UIDatePicker {
-//            textField.text = dateFormatter.string(from: datePicker.date)
-//        }
-//        textField.resignFirstResponder()
-//    }
 }
