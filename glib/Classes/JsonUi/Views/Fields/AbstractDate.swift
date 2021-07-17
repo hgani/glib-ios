@@ -22,19 +22,21 @@ class JsonView_AbstractDate: JsonView_AbstractText {
         return Date(timeInterval: timeInterval, since: date)
     }
 
-    func initFieldWithPicker(format: String, mode: UIDatePicker.Mode) -> MTextField {
+    func initFieldWithPicker(date: Date, mode: UIDatePicker.Mode, format: String) -> MTextField {
         let textField = super.initTextField()
 
-        if let utcDate = self.spec["value"].iso8601 {
-            dateFormatter.dateFormat = format
-            textField.text = dateFormatter.string(from: utcDate)
-        }
+//        fatalError("P \(self.spec["value"]) -- \(self.spec["value"].iso8601)")
 
-        initDatePicker(field: textField, mode: .dateAndTime)
+//        if let utcDate = spec["value"].iso8601 {
+            dateFormatter.dateFormat = format
+            textField.text = dateFormatter.string(from: date)
+//        }
+
+        initDatePicker(date: date, mode: mode, field: textField)
         return textField
     }
 
-    private func initDatePicker(field: MTextField, mode: UIDatePicker.Mode) {
+    private func initDatePicker(date: Date, mode: UIDatePicker.Mode, field: MTextField) {
         textField = field
 
         let screenWidth = UIScreen.main.bounds.width
@@ -43,9 +45,11 @@ class JsonView_AbstractDate: JsonView_AbstractText {
         // Don't adjust date/time to the device's time zone
         datePicker.timeZone = utcTimeZone
 
-        if let utcDate = self.spec["value"].iso8601 {
-            datePicker.setDate(utcDate, animated: false)
-        }
+//        if let utcDate = self.spec["value"].iso8601 {
+//            datePicker.setDate(utcDate, animated: false)
+//        }
+
+        datePicker.setDate(date, animated: false)
 
         if #available(iOS 14.0, *) {
             datePicker.preferredDatePickerStyle = .wheels
@@ -72,6 +76,7 @@ class JsonView_AbstractDate: JsonView_AbstractText {
 
     private func commitSelection() {
         guard let field = textField else {
+            GLog.e("Date field doesn't exist")
             return
         }
 

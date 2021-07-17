@@ -9,6 +9,14 @@ extension JSON {
         return iso8601 ?? Date()
     }
 
+    public var date: Date? {
+        return Formatter.dateOnly.date(from: stringValue)
+    }
+
+    public var dateValue: Date {
+        return date ?? Date()
+    }
+
     public var isNull: Bool {
         return type == .null
     }

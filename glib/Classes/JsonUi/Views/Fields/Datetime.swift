@@ -1,12 +1,5 @@
 class JsonView_Fields_Datetime: JsonView_AbstractDate {
     override func initView() -> UIView {
-//        dateFormatter.dateFormat = "yyyy-MM-dd hh:mm a"
-//
-//        let textField = super.initTextField()
-//        setInputViewDatePicker(field: textField, mode: .dateAndTime)
-//
-//        return textField
-
-        return initFieldWithPicker(format: "yyyy-MM-dd hh:mm a", mode: .dateAndTime)
+        return initFieldWithPicker(date: spec["value"].iso8601Value, mode: .dateAndTime, format: "yyyy-MM-dd hh:mm a")
     }
 }
