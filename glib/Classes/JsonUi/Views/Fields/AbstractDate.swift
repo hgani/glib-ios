@@ -25,12 +25,8 @@ class JsonView_AbstractDate: JsonView_AbstractText {
     func initFieldWithPicker(date: Date, mode: UIDatePicker.Mode, format: String) -> MTextField {
         let textField = super.initTextField()
 
-//        fatalError("P \(self.spec["value"]) -- \(self.spec["value"].iso8601)")
-
-//        if let utcDate = spec["value"].iso8601 {
-            dateFormatter.dateFormat = format
-            textField.text = dateFormatter.string(from: date)
-//        }
+        dateFormatter.dateFormat = format
+        textField.text = dateFormatter.string(from: date)
 
         initDatePicker(date: date, mode: mode, field: textField)
         return textField
