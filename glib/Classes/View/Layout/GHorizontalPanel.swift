@@ -40,16 +40,13 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
 
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
 
-//        updateHeightTendency(matchParent: wrapperHelper?.shouldHeightMatchParent() ?? helper.shouldHeightMatchParent())
         updateHeightTendency()
     }
 
     private func updateHeightTendency() {
         if containerHelper?.shouldHeightMatchParent() ?? helper.shouldHeightMatchParent() {
-            GLog.t("updateHeightTendency1")
             wrapContentConstraint?.deactivate()
         } else {
-            GLog.t("updateHeightTendency2")
             snp.makeConstraints { make in
                 // NOTE: Prevent the panel from getting stretched to be larger than necessary. For example, when used
                 // in HamburgerPanel's header, it will squash the middle section.
@@ -232,7 +229,6 @@ extension GHorizontalPanel: IView {
     @discardableResult
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
-//        updateHeightTendency()
         return self
     }
 
@@ -246,7 +242,6 @@ extension GHorizontalPanel: IView {
 extension GHorizontalPanel: SizingDelegate {
     // This may get called by the wrapper's helper. See init(ViewHelper)
     func onHeightUpdated() {
-        GLog.t("Height: onHeightUpdated2")
         updateHeightTendency()
     }
 }
