@@ -1,23 +1,19 @@
 class JsonView_Panels_Horizontal: JsonView_AbstractPanel {
-//    private let panel: IHorizontalPanel & UIView
-//    private let panel = GHorizontalPanel(container.helper)
-//        .width(.matchParent).height(.matchParent)
-//    private let panel = GVerticalPanel()
     private var panel: GHorizontalPanel!
 
-    public required init(_ spec: Json, _ screen: GScreen) {
-//        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
-//            #if INCLUDE_MDLIBS
-//            panel = MHorizontalCard().applyStyles(spec)
-//            #else
-//            panel = GHorizontalPanel()
-//            #endif
-//        } else {
-//            panel = GHorizontalPanel()
-//        }
-        super.init(spec, screen)
-//        panel = GHorizontalPanel(helper: container.helper)
-    }
+//    public required init(_ spec: Json, _ screen: GScreen) {
+////        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
+////            #if INCLUDE_MDLIBS
+////            panel = MHorizontalCard().applyStyles(spec)
+////            #else
+////            panel = GHorizontalPanel()
+////            #endif
+////        } else {
+////            panel = GHorizontalPanel()
+////        }
+//        super.init(spec, screen)
+////        panel = GHorizontalPanel(helper: container.helper)
+//    }
     
     override func initView() -> UIView {
         panel = GHorizontalPanel(wrapperHelper: container.helper)
