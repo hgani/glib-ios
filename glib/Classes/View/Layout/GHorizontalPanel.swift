@@ -1,7 +1,9 @@
 import SnapKit
 import UIKit
 
+// TODO: Remove IHorizontalPanel
 open class GHorizontalPanel: UIView, IHorizontalPanel {
+//    fileprivate var outerHelper: ViewHelper?
     fileprivate var helper: ViewHelper!
 
     private var previousView: UIView?
@@ -17,16 +19,23 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
 
     public init() {
         super.init(frame: .zero)
-        initialize()
+        initialize(helper: ViewHelper(self))
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        initialize()
+        initialize(helper: ViewHelper(self))
     }
 
-    private func initialize() {
-        helper = ViewHelper(self)
+    public init(wrapperHelper: ViewHelper) {
+        super.init(frame: .zero)
+        initialize(helper: wrapperHelper)
+    }
+
+    private func initialize(helper: ViewHelper) {
+        self.helper = helper
+        helper.delegate = self
+//        helper = ViewHelper(self)
 
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
 
@@ -35,8 +44,10 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
 
     private func updateHeightTendency() {
         if helper.shouldHeightMatchParent() {
+            GLog.t("updateHeightTendency1")
             wrapContentConstraint?.deactivate()
         } else {
+            GLog.t("updateHeightTendency2")
             snp.makeConstraints { make in
                 // NOTE: Prevent the panel from getting stretched to be larger than necessary. For example, when used
                 // in HamburgerPanel's header, it will squash the middle section.
@@ -219,7 +230,9 @@ extension GHorizontalPanel: IView {
     @discardableResult
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
-        updateHeightTendency()
+//        updateHeightTendency()
+
+//        fatalError("TEST3: \(helper.shouldHeightMatchParent())")
         return self
     }
 
@@ -227,5 +240,13 @@ extension GHorizontalPanel: IView {
     public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
+    }
+}
+
+extension GHorizontalPanel: SizingDelegate {
+    // This may get called by the wrapper's helper. See init(ViewHelper)
+    func onHeightUpdated() {
+        GLog.t("Height: onHeightUpdated2")
+        updateHeightTendency()
     }
 }

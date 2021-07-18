@@ -1,6 +1,7 @@
 import SnapKit
 import UIKit
 
+// NOTE: Rename this to SizeHelper().
 public class ViewHelper {
     private unowned let view: UIView
     private var matchParentWidthMultiplier: Float?
@@ -11,6 +12,10 @@ public class ViewHelper {
     private var heightConstraint: Constraint?
 
     private var backgroundView: GImageView?
+
+    // TODO: Should we use weak/unowned?
+    // TODO: Avoid writing publicly
+    var delegate: SizingDelegate?
 
     public var size: CGSize {
         return view.bounds.size
@@ -150,6 +155,9 @@ public class ViewHelper {
         }
 
         updateHeightConstraints()
+
+        GLog.t("Height: onHeightUpdated1")
+        delegate?.onHeightUpdated()
     }
 
     public func height(weight: Float, offset: Float = 0) {
@@ -318,6 +326,11 @@ public struct Paddings {
 //
 //        return Paddings(top: top, left: left, bottom: bottom, right: right)
 //    }
+
+}
+
+protocol SizingDelegate {
+    func onHeightUpdated()
 }
 
 public struct GPadding {

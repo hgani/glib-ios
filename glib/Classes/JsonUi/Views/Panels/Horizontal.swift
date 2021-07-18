@@ -1,9 +1,9 @@
 class JsonView_Panels_Horizontal: JsonView_AbstractPanel {
 //    private let panel: IHorizontalPanel & UIView
-    // Match width and height to the MCard container
-    private let panel = GHorizontalPanel().width(.matchParent).height(.matchParent)
+//    private let panel = GHorizontalPanel(container.helper)
+//        .width(.matchParent).height(.matchParent)
 //    private let panel = GVerticalPanel()
-
+    private var panel: GHorizontalPanel!
 
     public required init(_ spec: Json, _ screen: GScreen) {
 //        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
@@ -16,9 +16,12 @@ class JsonView_Panels_Horizontal: JsonView_AbstractPanel {
 //            panel = GHorizontalPanel()
 //        }
         super.init(spec, screen)
+//        panel = GHorizontalPanel(helper: container.helper)
     }
     
     override func initView() -> UIView {
+        panel = GHorizontalPanel(wrapperHelper: container.helper)
+
         // NOTE: subviews property is deprecated
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
         let views: [UIView] = childViews.compactMap { viewSpec -> UIView? in
