@@ -3,9 +3,8 @@ import UIKit
 
 // TODO: Remove IHorizontalPanel
 open class GHorizontalPanel: UIView, IHorizontalPanel {
-//    fileprivate var outerHelper: ViewHelper?
     fileprivate var helper: ViewHelper!
-    fileprivate var sizer: ViewHelper!
+    fileprivate var containerHelper: ViewHelper?
 
     private var previousView: UIView?
     private var previousLayoutPriority: UILayoutPriority?
@@ -20,32 +19,33 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
 
     public init() {
         super.init(frame: .zero)
-        initialize(sizer: ViewHelper(self))
+        initialize()
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        initialize(sizer: ViewHelper(self))
+        initialize()
     }
 
     public init(wrapperHelper: ViewHelper) {
         super.init(frame: .zero)
-        initialize(sizer: wrapperHelper)
+        initialize(wrapperHelper: wrapperHelper)
     }
 
-    private func initialize(sizer: ViewHelper) {
-        self.sizer = sizer
-        sizer.delegate = self
+    private func initialize(wrapperHelper: ViewHelper? = nil) {
+        self.containerHelper = wrapperHelper
+        containerHelper?.delegate = self
 
         helper = ViewHelper(self)
 
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
 
+//        updateHeightTendency(matchParent: wrapperHelper?.shouldHeightMatchParent() ?? helper.shouldHeightMatchParent())
         updateHeightTendency()
     }
 
     private func updateHeightTendency() {
-        if sizer.shouldHeightMatchParent() {
+        if containerHelper?.shouldHeightMatchParent() ?? helper.shouldHeightMatchParent() {
             GLog.t("updateHeightTendency1")
             wrapContentConstraint?.deactivate()
         } else {
@@ -63,7 +63,7 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
 
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        sizer.didMoveToSuperview()
+        helper.didMoveToSuperview()
     }
 
     public func clearViews() {
@@ -143,7 +143,7 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
             make.bottomMargin.greaterThanOrEqualTo(child.snp.bottom)
         }
 
-        if sizer.shouldWidthMatchParent() {
+        if containerHelper?.shouldWidthMatchParent() ?? helper.shouldWidthMatchParent() {
             rightConstraint?.deactivate()
 
             child.snp.makeConstraints { make in
@@ -202,7 +202,7 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
 
 extension GHorizontalPanel: IView {
     public var size: CGSize {
-        return sizer.size
+        return helper.size
     }
 
     @discardableResult
@@ -213,28 +213,26 @@ extension GHorizontalPanel: IView {
 
     @discardableResult
     public func width(_ width: Int) -> Self {
-        sizer.width(width)
+        helper.width(width)
         return self
     }
 
     @discardableResult
     public func width(_ width: LayoutSize) -> Self {
-        sizer.width(width)
+        helper.width(width)
         return self
     }
 
     @discardableResult
     public func height(_ height: Int) -> Self {
-        sizer.height(height)
+        helper.height(height)
         return self
     }
 
     @discardableResult
     public func height(_ height: LayoutSize) -> Self {
-        sizer.height(height)
+        helper.height(height)
 //        updateHeightTendency()
-
-//        fatalError("TEST3: \(helper.shouldHeightMatchParent())")
         return self
     }
 
