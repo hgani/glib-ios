@@ -1,19 +1,5 @@
 class JsonView_Panels_Horizontal: JsonView_AbstractPanel {
     private var panel: GHorizontalPanel!
-
-//    public required init(_ spec: Json, _ screen: GScreen) {
-////        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
-////            #if INCLUDE_MDLIBS
-////            panel = MHorizontalCard().applyStyles(spec)
-////            #else
-////            panel = GHorizontalPanel()
-////            #endif
-////        } else {
-////            panel = GHorizontalPanel()
-////        }
-//        super.init(spec, screen)
-////        panel = GHorizontalPanel(helper: container.helper)
-//    }
     
     override func initView() -> UIView {
         panel = GHorizontalPanel(wrapperHelper: container.helper)
@@ -71,25 +57,6 @@ class JsonView_Panels_Horizontal: JsonView_AbstractPanel {
                 .distribution(.fillEqually)
                 .withViews(wrappedViews)
             panel.addView(stacker, left: 0)
-
-//            let wrappedViews = childViews.map { view -> UIView in
-//                if let iview = view as? IView {
-//                    iview.height(.matchParent)
-//                } else {
-//                    fatalError("Non IView child is not supported")
-//                }
-//                return GAligner().align(.top).withView(view)
-//            }
-//
-//            let stacker = GStackView()
-//                .width(.matchParent)
-//                .axis(.vertical)
-//                .distribution(.fillEqually)
-//                .withViews(wrappedViews)
-////            panel.addTestView(stacker, top: 0)
-////            panel.height(.matchParent).addView(stacker, left: 0)
-//            panel.addView(stacker, left: 0)
-
         case "spaceEqually":
             for view in childViews {
                 panel.addView(GAligner().align(.top).withView(view), left: 0)

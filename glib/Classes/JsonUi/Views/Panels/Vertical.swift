@@ -1,22 +1,6 @@
 class JsonView_Panels_Vertical: JsonView_AbstractPanel {
     private let panel = GVerticalPanel()
 
-//    // TODO: Remove constructor
-//    public required init(_ spec: Json, _ screen: GScreen) {
-//        // TODO: Improve this
-//        // Move to a reusable parent class
-////        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
-////            #if INCLUDE_MDLIBS
-////            panel = MCard().applyStyles(spec)
-////            #else
-////            panel = GVerticalPanel()
-////            #endif
-////        } else {
-////            panel = GVerticalPanel()
-////        }
-//        super.init(spec, screen)
-//    }
-
     override func initView() -> UIView {
         // TODO: Follow horizontal panel's solution so that sizing is controller by the container
         // E.g. panel = GHorizontalPanel(wrapperHelper: container.helper)
