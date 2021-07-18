@@ -4,7 +4,8 @@ import MaterialComponents.MaterialCards
 import MaterialComponents.MaterialCards_Theming
 
 open class MCard: MDCCard, IView {
-    private var helper: ViewHelper!
+    // TODO: Make sure this is not writtable publicly
+    var helper: ViewHelper!
     
     private var previousViewElement: UIView!
     private var previousConstraint: NSLayoutConstraint!
