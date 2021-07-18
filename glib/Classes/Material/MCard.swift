@@ -3,7 +3,6 @@ import UIKit
 import MaterialComponents.MaterialCards
 import MaterialComponents.MaterialCards_Theming
 
-//open class MCard: MDCCard, IView, IVerticalPanel {
 open class MCard: MDCCard, IView {
     private var helper: ViewHelper!
     

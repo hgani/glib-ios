@@ -1,32 +1,37 @@
-class JsonView_Panels_Horizontal: JsonView {
-    private let panel: IHorizontalPanel & UIView
-    
+class JsonView_Panels_Horizontal: JsonView_AbstractPanel {
+//    private let panel: IHorizontalPanel & UIView
+    // Match width and height to the MCard container
+    private let panel = GHorizontalPanel().width(.matchParent).height(.matchParent)
+//    private let panel = GVerticalPanel()
+
+
     public required init(_ spec: Json, _ screen: GScreen) {
-        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
-            #if INCLUDE_MDLIBS
-            panel = MHorizontalCard().applyStyles(spec)
-            #else
-            panel = GHorizontalPanel()
-            #endif
-        } else {
-            panel = GHorizontalPanel()
-        }
+//        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
+//            #if INCLUDE_MDLIBS
+//            panel = MHorizontalCard().applyStyles(spec)
+//            #else
+//            panel = GHorizontalPanel()
+//            #endif
+//        } else {
+//            panel = GHorizontalPanel()
+//        }
         super.init(spec, screen)
     }
     
     override func initView() -> UIView {
         // NOTE: subviews property is deprecated
-        let childViews: [UIView] = (spec["subviews"].array ?? spec["childViews"].arrayValue).compactMap { viewSpec -> UIView? in
+        let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
+        let views: [UIView] = childViews.compactMap { viewSpec -> UIView? in
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
                 return jsonView.view()
             }
             return nil
         }
-        
-        setAlign()  // Needs to be called before adding child views
-        setDistribution(childViews: childViews)
 
-        return panel
+        setAlign()  // Needs to be called before adding child views
+        setDistribution(childViews: views)
+
+        return initContainer(content: panel)
     }
 
     private func setAlign() {
@@ -67,6 +72,25 @@ class JsonView_Panels_Horizontal: JsonView {
                 .distribution(.fillEqually)
                 .withViews(wrappedViews)
             panel.addView(stacker, left: 0)
+
+//            let wrappedViews = childViews.map { view -> UIView in
+//                if let iview = view as? IView {
+//                    iview.height(.matchParent)
+//                } else {
+//                    fatalError("Non IView child is not supported")
+//                }
+//                return GAligner().align(.top).withView(view)
+//            }
+//
+//            let stacker = GStackView()
+//                .width(.matchParent)
+//                .axis(.vertical)
+//                .distribution(.fillEqually)
+//                .withViews(wrappedViews)
+////            panel.addTestView(stacker, top: 0)
+////            panel.height(.matchParent).addView(stacker, left: 0)
+//            panel.addView(stacker, left: 0)
+
         case "spaceEqually":
             for view in childViews {
                 panel.addView(GAligner().align(.top).withView(view), left: 0)
