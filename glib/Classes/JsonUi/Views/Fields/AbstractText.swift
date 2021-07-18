@@ -21,6 +21,7 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
         view
             .placeholder(spec["placeholder"].stringValue)
             .text(spec["value"].stringValue)
+            .readOnly(spec["readOnly"].boolValue)
 
 //        initBottomBorderIfApplicable()
 

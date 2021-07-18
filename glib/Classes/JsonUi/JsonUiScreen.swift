@@ -29,6 +29,11 @@ open class JsonUiScreen: GScreen {
     }
 
     open override func viewDidLoad() {
+        if self.contentOnly {
+            // Dialog only
+            self.preferredContentSize = CGSize(width: self.view.bounds.width, height: 300)
+        }
+        
         super.initOnDidLoad()
 
         if hideBackButton {

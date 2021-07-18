@@ -38,7 +38,9 @@ open class MCard: MDCCard, IView {
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
         
 //        addInitialBottomConstraint()
-        
+
+        ripple(false)
+
         initContent()
     }
     
@@ -66,7 +68,6 @@ open class MCard: MDCCard, IView {
         // See https://github.com/material-components/material-components-ios/issues/4332
         border(color: .clear, width: 0, corner: 0)
             .color(bg: .clear)
-            .inkView.isHidden = true
     }
 
     private func addInitialBottomConstraint() {
@@ -233,10 +234,17 @@ open class MCard: MDCCard, IView {
         isHidden = hidden
         return self
     }
+
+    @discardableResult
+    private func ripple(_ enabled: Bool) -> Self {
+        // https://github.com/material-components/material-components-ios/issues/4332
+        self.inkView.isHidden = !enabled
+        return self
+    }
     
     public func onClick(_ command: @escaping (MCard) -> Void) -> Self {
         event.onClick(command)
-        return self
+        return ripple(true)
     }
     
     public func tap(_ command: (MCard) -> Void) -> Self {

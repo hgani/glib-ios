@@ -108,6 +108,7 @@ Simplify iOS development
     sub.dependency 'MBRadioCheckboxButton2', '2.0.1'
     sub.dependency 'RxSwift', '~> 4.5'
     sub.dependency 'MaterialComponents/Buttons', '124.1.1'
+    sub.dependency 'MaterialComponents/Buttons+Theming', '124.1.1'
     sub.dependency 'MaterialComponents/TextFields', '124.1.1'
     sub.dependency 'MaterialComponents/Tabs', '124.1.1'
     sub.dependency 'MaterialComponents/ProgressView', '124.1.1'
@@ -120,8 +121,10 @@ Simplify iOS development
     sub.dependency 'MaterialComponents/Chips', '124.1.1'
     sub.dependency 'MaterialComponents/TextControls+FilledTextAreas', '124.1.1'
     sub.dependency 'MaterialComponents/TextControls+FilledTextFields', '124.1.1'
+    sub.dependency 'MaterialComponents/TextControls+FilledTextFieldsTheming', '124.1.1'
     sub.dependency 'MaterialComponents/TextControls+OutlinedTextAreas', '124.1.1'
     sub.dependency 'MaterialComponents/TextControls+OutlinedTextFields', '124.1.1'
+    sub.dependency 'MaterialComponents/TextControls+OutlinedTextFieldsTheming', '124.1.1'
 
     # Need to lock this because v3.0.0 produces errors during archiving.
     sub.dependency 'MDFInternationalization', '2.0.0'
@@ -132,7 +135,7 @@ Simplify iOS development
     sub.dependency 'FlexLayout'
     sub.dependency 'jsonlogic', '~> 1.1.0'
     
-
+    # TODO
     # TODO: Move this out to a separate subspec
     sub.dependency 'SwiftPhoenixClient'
   end

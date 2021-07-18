@@ -9,4 +9,12 @@ extension Formatter {
         }
         return formatter
     }()
+
+    public static let dateOnly: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        // Make sure date is time zone neutral
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        return dateFormatter
+    }()
 }

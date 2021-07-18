@@ -26,7 +26,7 @@ open class GHeaderFooterView: UIView {
             make.right.equalTo(self)
         }
 
-        backgroundColor = .libDefaultBackground
+//        backgroundColor = .libDefaultBackground
     }
 
     public func clearViews() {

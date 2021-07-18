@@ -100,7 +100,12 @@ public class JsonUi {
                 .onClick({ _ in
                     JsonAction.execute(spec: json["onClick"], screen: screen, creator: nil)
                 })
-            JsonView_Icon.update(view: customView, spec: json["icon"])
+
+            if let text = json["text"].string {
+                customView.text(text)
+            } else {
+                JsonView_Icon.update(view: customView, spec: json["icon"])
+            }
             return GBarButtonItem(customView: customView)
         }
         screen.rightBarButtons(items: buttons)

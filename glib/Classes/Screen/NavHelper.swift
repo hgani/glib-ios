@@ -67,8 +67,19 @@ open class NavHelper {
     }
 
     public func previousScreen() -> UIViewController? {
+//        let length = navController.viewControllers.count
+//        let previousViewController = length >= 2 ? navController.viewControllers[length - 2] : nil
+//        return previousViewController
+        return lastScreen(index: 2)
+    }
+
+    public func currentScreen() -> UIViewController? {
+        return lastScreen(index: 1)
+    }
+
+    private func lastScreen(index: Int) -> UIViewController? {
         let length = navController.viewControllers.count
-        let previousViewController = length >= 2 ? navController.viewControllers[length - 2] : nil
+        let previousViewController = length >= index ? navController.viewControllers[length - index] : nil
         return previousViewController
     }
 

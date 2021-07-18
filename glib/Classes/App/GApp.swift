@@ -6,6 +6,7 @@ public class GApp {
 
     public var navigationController: GNavigationController!
     public var window: UIWindow!
+    public var screenDelegate: GScreenDelegate!
 
     public static let instance = GApp()
 
@@ -26,15 +27,16 @@ public class GApp {
         window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = navigationController
 
-//        window.backgroundColor = .white
-//        window.makeKeyAndVisible()
-
         return self
     }
 
     @available(iOS 13.0, *)
-    public func withNav(_ navigationController: GNavigationController, scene: UIWindowScene) -> Self {
+    public func withNav(_ navigationController: GNavigationController,
+                        scene: UIWindowScene,
+                        screenDelegate: GScreenDelegate) -> Self {
         RobotoFonts.loadAll()
+
+        self.screenDelegate = screenDelegate
 
         // Uncomment to debug
 //        #if DEBUG
@@ -48,9 +50,6 @@ public class GApp {
 
         window = UIWindow(windowScene: scene)
         window.rootViewController = navigationController
-
-//        window.backgroundColor = .white
-//        window.makeKeyAndVisible()
 
         return self
     }

@@ -1,7 +1,7 @@
 class JsonView_Fields_Timer: JsonView_AbstractText {
     private var valueInSeconds: Int = 0
-    private var minValue: Int = 0
-    private var maxValue: Int = 0
+    private var minValue: Int = -1000000
+    private var maxValue: Int = 1000000
 
     override func initView() -> UIView {
         let view = super.initTextField()

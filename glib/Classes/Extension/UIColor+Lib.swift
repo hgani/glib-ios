@@ -6,7 +6,8 @@ public extension UIColor {
     static let libLightBackground = UIColor(white: 0.9, alpha: 1)
 
     // These defaults make sure things look decent in dark mode
-    static let libDefaultBackground = UIColor.white
+    // Need to be set in JSON payload. Frontend shouldn't make assumption.
+//    static let libDefaultBackground = UIColor.white
     static let libDefaultLabel = UIColor.black
 
     static let libSuccess = UIColor(hex: "#4caf50")

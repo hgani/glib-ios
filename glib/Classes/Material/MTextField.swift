@@ -1,17 +1,14 @@
 #if INCLUDE_MDLIBS
 
 import MaterialComponents.MaterialTextControls_FilledTextFields
+import MaterialComponents.MaterialTextControls_FilledTextFieldsTheming
 import MaterialComponents.MaterialTextControls_OutlinedTextFields
+import MaterialComponents.MaterialTextControls_OutlinedTextFieldsTheming
 
 open class MTextField: GControl, ITextField {
 //    private var helper: ViewHelper!
 //    private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
     private var padding = UIEdgeInsets.zero
-
-    // TODO: Make sure this doesn't generate cyclic references
-//    private var controller: MDCTextInputController!
-
-//    private var backend: MDCBaseTextField!
 
     private var onBeginEditing: ((MTextField) -> Void)?
 
@@ -35,16 +32,6 @@ open class MTextField: GControl, ITextField {
             backend.placeholder = newValue
         }
     }
-
-//    // TODO: Should wrap this in onBeginEditing() etc instead
-//    public var delegate: UITextFieldDelegate? {
-//        get {
-//            return backend.delegate
-//        }
-//        set {
-//            backend.delegate = newValue
-//        }
-//    }
 
     public var labelView: UILabel {
         return backend.label
@@ -74,15 +61,6 @@ open class MTextField: GControl, ITextField {
             backend.inputView = newValue
         }
     }
-
-//    public override var inputAccessoryView: UIView? {
-//        get {
-//            return backend.inputAccessoryView
-//        }
-//        set {
-//            backend.inputAccessoryView = newValue
-//        }
-//    }
 
     // Don't override inputAccessoryView because it causes a crash when UIKit performs its own
     // internal initialization.
@@ -115,6 +93,8 @@ open class MTextField: GControl, ITextField {
     }
 
     private func initialize() {
+//        helper = ViewHelper(backend)
+
         backend.delegate = self
 
         withView(backend, matchParent: true)
@@ -131,6 +111,16 @@ open class MTextField: GControl, ITextField {
             spec.decorate(self)
         }
         return self
+    }
+
+    public func themeScheme(_ scheme: MDCContainerScheme) {
+        if let view = backend as? MDCOutlinedTextField {
+            view.applyTheme(withScheme: scheme)
+        } else if let view = backend as? MDCFilledTextField {
+            view.applyTheme(withScheme: scheme)
+        } else {
+            fatalError("Unsupported operation")
+        }
     }
 
     public func trailingView(_ view: UIView) -> Self {
@@ -155,6 +145,11 @@ open class MTextField: GControl, ITextField {
         return backend.resignFirstResponder()
     }
 
+    func readOnly(_ value: Bool) -> Self {
+        isUserInteractionEnabled = !value
+        return self
+    }
+
 //
 //    open override func textRect(forBounds bounds: CGRect) -> CGRect {
 //        return bounds.inset(by: padding)
@@ -171,9 +166,11 @@ open class MTextField: GControl, ITextField {
 ////        return UIEdgeInsetsInsetRect(bounds, padding)
 //    }
 //
-//    public func color(bg: UIColor) -> Self {
+    public override func color(bg: UIColor) -> Self {
+        backend.backgroundColor = bg
+        return self
 //        return color(bg: bg, text: nil)
-//    }
+    }
 //
 //    public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
 //        if let bgColor = bg {
@@ -184,32 +181,12 @@ open class MTextField: GControl, ITextField {
 //        }
 //        return self
 //    }
-//
+
 //    public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
 //        helper.border(color: color, width: width, corner: corner)
 //        return self
 //    }
-//
-//    public func width(_ width: Int) -> Self {
-//        helper.width(width)
-//        return self
-//    }
-//
-//    public func width(_ width: LayoutSize) -> Self {
-//        helper.width(width)
-//        return self
-//    }
-//
-//    public func height(_ height: Int) -> Self {
-//        helper.height(height)
-//        return self
-//    }
-//
-//    public func height(_ height: LayoutSize) -> Self {
-//        helper.height(height)
-//        return self
-//    }
-//
+
     public func secure(_ secure: Bool) -> Self {
         backend.isSecureTextEntry = secure
         return self
@@ -229,7 +206,7 @@ open class MTextField: GControl, ITextField {
         placeholder = str
         return self
     }
-    
+
 //    public func errors(_ text: String?) -> Self {
 //        controller.setErrorText(text, errorAccessibilityValue: nil)
 //        return self
