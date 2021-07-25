@@ -76,9 +76,3 @@ class JsonView_Panels_Horizontal: JsonView_AbstractPanel {
     }
 
 }
-//
-//protocol IHorizontalPanel {
-//    func addView(_ child: UIView, left: Float)
-//    func split() -> Self
-//    func align(_ align: GAligner.GAlignerVerticalGravity) -> Self
-//}

@@ -43,18 +43,26 @@ open class GHorizontalPanel: UIView {
     }
 
     private func updateHeightTendency() {
-        if containerHelper?.shouldHeightMatchParent() ?? helper.shouldHeightMatchParent() {
+        if shouldHeightMatchParent() {
             wrapContentConstraint?.deactivate()
         } else {
             snp.makeConstraints { make in
                 // NOTE: Prevent the panel from getting stretched to be larger than necessary. For example, when used
                 // in HamburgerPanel's header, it will squash the middle section.
                 // See https://stackoverflow.com/questions/17117799/autolayout-height-equal-to-maxmultiple-view-heights
-
+                //
                 // Increase hugging so that it tends to wrap content by default
                 wrapContentConstraint = make.height.equalTo(0).priorityLow().constraint
             }
         }
+    }
+
+    private func shouldWidthMatchParent() -> Bool {
+        return containerHelper?.shouldWidthMatchParent() ?? helper.shouldWidthMatchParent()
+    }
+
+    private func shouldHeightMatchParent() -> Bool {
+        return containerHelper?.shouldHeightMatchParent() ?? helper.shouldHeightMatchParent()
     }
 
     open override func didMoveToSuperview() {
@@ -139,7 +147,7 @@ open class GHorizontalPanel: UIView {
             make.bottomMargin.greaterThanOrEqualTo(child.snp.bottom)
         }
 
-        if containerHelper?.shouldWidthMatchParent() ?? helper.shouldWidthMatchParent() {
+        if shouldWidthMatchParent() {
             rightConstraint?.deactivate()
 
             child.snp.makeConstraints { make in

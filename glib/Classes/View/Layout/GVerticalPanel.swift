@@ -60,7 +60,7 @@ open class GVerticalPanel: UIView, IView {
     }
 
     private func updateWidthTendency() {
-        if containerHelper?.shouldWidthMatchParent() ?? helper.shouldWidthMatchParent() {
+        if shouldWidthMatchParent() {
             wrapContentConstraint?.deactivate()
         } else {
             snp.makeConstraints { make in
@@ -68,6 +68,14 @@ open class GVerticalPanel: UIView, IView {
                 wrapContentConstraint = make.width.equalTo(0).priorityLow().constraint
             }
         }
+    }
+
+    private func shouldWidthMatchParent() -> Bool {
+        return containerHelper?.shouldWidthMatchParent() ?? helper.shouldWidthMatchParent()
+    }
+
+    private func shouldHeightMatchParent() -> Bool {
+        return containerHelper?.shouldHeightMatchParent() ?? helper.shouldHeightMatchParent()
     }
 
     open func initContent() {
@@ -156,7 +164,7 @@ open class GVerticalPanel: UIView, IView {
             make.rightMargin.greaterThanOrEqualTo(child.snp.right)
         }
 
-        if !(containerHelper?.shouldHeightMatchParent() ?? helper.shouldHeightMatchParent()) {
+        if !shouldHeightMatchParent() {
             bottomConstraint?.deactivate()
 
             child.snp.makeConstraints { make in
@@ -207,12 +215,6 @@ open class GVerticalPanel: UIView, IView {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
-
-//    @discardableResult
-//    public func padding(_ padding: GPadding) -> Self {
-//        helper.padding(padding)
-//        return self
-//    }
 
     @discardableResult
     public func color(bg: UIColor) -> Self {
