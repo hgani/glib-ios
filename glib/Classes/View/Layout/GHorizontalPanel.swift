@@ -26,13 +26,13 @@ open class GHorizontalPanel: UIView {
         initialize()
     }
 
-    public init(wrapperHelper: ViewHelper) {
+    public init(containerHelper: ViewHelper) {
         super.init(frame: .zero)
-        initialize(wrapperHelper: wrapperHelper)
+        initialize(containerHelper: containerHelper)
     }
 
-    private func initialize(wrapperHelper: ViewHelper? = nil) {
-        self.containerHelper = wrapperHelper
+    private func initialize(containerHelper: ViewHelper? = nil) {
+        self.containerHelper = containerHelper
         containerHelper?.delegate = self
 
         helper = ViewHelper(self)
