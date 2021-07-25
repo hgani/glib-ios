@@ -3,9 +3,9 @@ import UIKit
 import MaterialComponents.MaterialCards
 import MaterialComponents.MaterialCards_Theming
 
-//open class MCard: MDCCard, IView, IVerticalPanel {
 open class MCard: MDCCard, IView {
-    private var helper: ViewHelper!
+    // TODO: Make sure this is not writtable publicly
+    var helper: ViewHelper!
     
     private var previousViewElement: UIView!
     private var previousConstraint: NSLayoutConstraint!
@@ -100,20 +100,6 @@ open class MCard: MDCCard, IView {
         }
     }
     
-//    public func addView(_ child: UIView, top: Float = 0) {
-//        totalGap += top
-//        
-//        // The hope is this makes things more predictable
-//        child.translatesAutoresizingMaskIntoConstraints = false
-//        
-//        super.addSubview(child)
-//        
-//        initChildConstraints(child: child, top: top)
-//        adjustSelfConstraints(child: child)
-//        
-//        previousViewElement = child
-//    }
-    
     public func addConstraintlessView(_ child: UIView) {
         super.addSubview(child)
     }
@@ -122,53 +108,6 @@ open class MCard: MDCCard, IView {
     public func clear() -> Self {
         clearViews()
         return self
-    }
-    
-//    @discardableResult
-//    public func append(_ child: UIView, top: Float = 0) -> Self {
-//        addView(child, top: top)
-//        return self
-//    }
-    
-    // See https://github.com/zaxonus/AutoLayScroll/blob/master/AutoLayScroll/ViewController.swift
-    private func initChildConstraints(child: UIView, top: Float) {
-        child.snp.makeConstraints { make in
-            if previousViewElement == nil {
-                make.top.equalTo(self.snp.topMargin).offset(top)
-            } else {
-                make.top.equalTo(previousViewElement.snp.bottom).offset(top)
-            }
-            
-            //            make.left.equalTo(self.snp.leftMargin)
-            
-            switch horizontalAlign {
-            case .center: make.centerX.equalTo(self)
-            case .right: make.right.equalTo(self.snp.rightMargin)
-            case .left: make.left.equalTo(self.snp.leftMargin)
-            }
-        }
-    }
-    
-    private func adjustSelfConstraints(child: UIView) {
-        snp.makeConstraints { (make) -> Void in
-            make.rightMargin.greaterThanOrEqualTo(child.snp.right)
-        }
-        
-        if !helper.shouldHeightMatchParent() {
-            removeConstraint(previousConstraint)
-            
-            previousConstraint = NSLayoutConstraint(item: child,
-                                                    attribute: .bottom,
-                                                    relatedBy: .equal,
-                                                    toItem: self,
-                                                    attribute: .bottomMargin,
-                                                    multiplier: 1.0,
-                                                    constant: 0.0)
-            previousConstraint.priority = UILayoutPriority(rawValue: 900)
-            
-            // At this point previousViewElement refers to the last subview, that is the one at the bottom.
-            addConstraint(previousConstraint)
-        }
     }
     
     @discardableResult
@@ -213,12 +152,6 @@ open class MCard: MDCCard, IView {
         return self
     }
     
-    //    @discardableResult
-    //    public func padding(_ padding: GPadding) -> Self {
-    //        helper.padding(padding)
-    //        return self
-    //    }
-    
     @discardableResult
     public func color(bg: UIColor) -> Self {
         backgroundColor = bg
@@ -255,31 +188,6 @@ open class MCard: MDCCard, IView {
     @discardableResult
     public func bg(image: UIImage?, repeatTexture: Bool) -> Self {
         helper.bg(image: image, repeatTexture: repeatTexture)
-        return self
-    }
-    
-    public func split() -> Self {
-        let count = subviews.count
-        GLog.i("Splitting \(count) views ...")
-        let weight = 1.0 / Float(count)
-        let offset = -(totalGap + paddings.top + paddings.bottom) / Float(count)
-        for view in subviews {
-            if let weightable = view as? GWeightable {
-                _ = weightable.height(weight: weight, offset: offset)
-            } else {
-                GLog.e("Invalid child view: \(view)")
-            }
-        }
-        
-        return self
-    }
-    
-    // MARK: - Alignment
-    
-    private var horizontalAlign: GAligner.GAlignerHorizontalGravity = .left
-    
-    public func align(_ align: GAligner.GAlignerHorizontalGravity) -> Self {
-        horizontalAlign = align
         return self
     }
 }

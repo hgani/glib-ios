@@ -1,23 +1,11 @@
 class JsonView_Panels_Vertical: JsonView_AbstractPanel {
-//    private let panel: IVerticalPanel & UIView
-    private let panel = GVerticalPanel()
+    private var panel: GVerticalPanel!
 
-    public required init(_ spec: Json, _ screen: GScreen) {
-        // TODO: Improve this
-        // Move to a reusable parent class
-//        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
-//            #if INCLUDE_MDLIBS
-//            panel = MCard().applyStyles(spec)
-//            #else
-//            panel = GVerticalPanel()
-//            #endif
-//        } else {
-//            panel = GVerticalPanel()
-//        }
-        super.init(spec, screen)
-    }
+//    private let panel = GVerticalPanel()
 
     override func initView() -> UIView {
+        panel = GVerticalPanel(containerHelper: container.helper)
+
         // NOTE: subviews property is deprecated
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
         let views: [UIView] = childViews.compactMap { viewSpec -> UIView? in
@@ -92,11 +80,11 @@ class JsonView_Panels_Vertical: JsonView_AbstractPanel {
     }
 }
 
-protocol IVerticalPanel {
-    func addView(_ view: UIView, top: Float) -> Void
-    func align(_ align: GAligner.GAlignerHorizontalGravity) -> Self
-    func split() -> Self
-    func addConstraintlessView(_ child: UIView) -> Void
-    func width(_ width: Int) -> Self
-    func width(_ width: LayoutSize) -> Self
-}
+//protocol IVerticalPanel {
+//    func addView(_ view: UIView, top: Float) -> Void
+//    func align(_ align: GAligner.GAlignerHorizontalGravity) -> Self
+//    func split() -> Self
+//    func addConstraintlessView(_ child: UIView) -> Void
+//    func width(_ width: Int) -> Self
+//    func width(_ width: LayoutSize) -> Self
+//}

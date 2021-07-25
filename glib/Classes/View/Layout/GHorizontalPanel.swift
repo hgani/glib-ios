@@ -1,8 +1,9 @@
 import SnapKit
 import UIKit
 
-open class GHorizontalPanel: UIView, IHorizontalPanel {
+open class GHorizontalPanel: UIView {
     fileprivate var helper: ViewHelper!
+    fileprivate var containerHelper: ViewHelper?
 
     private var previousView: UIView?
     private var previousLayoutPriority: UILayoutPriority?
@@ -25,7 +26,15 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
         initialize()
     }
 
-    private func initialize() {
+    public init(containerHelper: ViewHelper) {
+        super.init(frame: .zero)
+        initialize(containerHelper: containerHelper)
+    }
+
+    private func initialize(containerHelper: ViewHelper? = nil) {
+        self.containerHelper = containerHelper
+        containerHelper?.delegate = self
+
         helper = ViewHelper(self)
 
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
@@ -34,18 +43,26 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
     }
 
     private func updateHeightTendency() {
-        if helper.shouldHeightMatchParent() {
+        if shouldHeightMatchParent() {
             wrapContentConstraint?.deactivate()
         } else {
             snp.makeConstraints { make in
                 // NOTE: Prevent the panel from getting stretched to be larger than necessary. For example, when used
                 // in HamburgerPanel's header, it will squash the middle section.
                 // See https://stackoverflow.com/questions/17117799/autolayout-height-equal-to-maxmultiple-view-heights
-
+                //
                 // Increase hugging so that it tends to wrap content by default
                 wrapContentConstraint = make.height.equalTo(0).priorityLow().constraint
             }
         }
+    }
+
+    private func shouldWidthMatchParent() -> Bool {
+        return containerHelper?.shouldWidthMatchParent() ?? helper.shouldWidthMatchParent()
+    }
+
+    private func shouldHeightMatchParent() -> Bool {
+        return containerHelper?.shouldHeightMatchParent() ?? helper.shouldHeightMatchParent()
     }
 
     open override func didMoveToSuperview() {
@@ -130,7 +147,7 @@ open class GHorizontalPanel: UIView, IHorizontalPanel {
             make.bottomMargin.greaterThanOrEqualTo(child.snp.bottom)
         }
 
-        if helper.shouldWidthMatchParent() {
+        if shouldWidthMatchParent() {
             rightConstraint?.deactivate()
 
             child.snp.makeConstraints { make in
@@ -219,7 +236,6 @@ extension GHorizontalPanel: IView {
     @discardableResult
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
-        updateHeightTendency()
         return self
     }
 
@@ -227,5 +243,16 @@ extension GHorizontalPanel: IView {
     public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
+    }
+}
+
+extension GHorizontalPanel: SizingDelegate {
+    func onWidthUpdated() {
+        // Do nothing
+    }
+
+    // This may get called by the container's helper. See init(ViewHelper)
+    func onHeightUpdated() {
+        updateHeightTendency()
     }
 }

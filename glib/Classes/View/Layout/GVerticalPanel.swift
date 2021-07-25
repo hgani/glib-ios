@@ -1,8 +1,9 @@
 import SnapKit
 import UIKit
 
-open class GVerticalPanel: UIView, IView, IVerticalPanel {
+open class GVerticalPanel: UIView, IView {
     private var helper: ViewHelper!
+    fileprivate var containerHelper: ViewHelper?
 
     private var previousViewElement: UIView!
     private var previousConstraint: NSLayoutConstraint!
@@ -31,7 +32,15 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
         initialize()
     }
 
-    private func initialize() {
+    public init(containerHelper: ViewHelper) {
+        super.init(frame: .zero)
+        initialize(containerHelper: containerHelper)
+    }
+
+    private func initialize(containerHelper: ViewHelper? = nil) {
+        self.containerHelper = containerHelper
+        containerHelper?.delegate = self
+        
         helper = ViewHelper(self)
         event = EventHelper(self)
 
@@ -51,7 +60,7 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
     }
 
     private func updateWidthTendency() {
-        if helper.shouldHeightMatchParent() {
+        if shouldWidthMatchParent() {
             wrapContentConstraint?.deactivate()
         } else {
             snp.makeConstraints { make in
@@ -59,6 +68,14 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
                 wrapContentConstraint = make.width.equalTo(0).priorityLow().constraint
             }
         }
+    }
+
+    private func shouldWidthMatchParent() -> Bool {
+        return containerHelper?.shouldWidthMatchParent() ?? helper.shouldWidthMatchParent()
+    }
+
+    private func shouldHeightMatchParent() -> Bool {
+        return containerHelper?.shouldHeightMatchParent() ?? helper.shouldHeightMatchParent()
     }
 
     open func initContent() {
@@ -147,26 +164,12 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
             make.rightMargin.greaterThanOrEqualTo(child.snp.right)
         }
 
-        if !helper.shouldHeightMatchParent() {
+        if !shouldHeightMatchParent() {
             bottomConstraint?.deactivate()
 
             child.snp.makeConstraints { make in
                 bottomConstraint = make.bottom.equalTo(self.snp.bottomMargin).constraint
             }
-
-//            removeConstraint(previousConstraint)
-//
-//            previousConstraint = NSLayoutConstraint(item: child,
-//                                                    attribute: .bottom,
-//                                                    relatedBy: .equal,
-//                                                    toItem: self,
-//                                                    attribute: .bottomMargin,
-//                                                    multiplier: 1.0,
-//                                                    constant: 0.0)
-//            previousConstraint.priority = UILayoutPriority(rawValue: 900)
-//
-//            // At this point previousViewElement refers to the last subview, that is the one at the bottom.
-//            addConstraint(previousConstraint)
         }
     }
 
@@ -212,12 +215,6 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
-
-//    @discardableResult
-//    public func padding(_ padding: GPadding) -> Self {
-//        helper.padding(padding)
-//        return self
-//    }
 
     @discardableResult
     public func color(bg: UIColor) -> Self {
@@ -278,5 +275,16 @@ open class GVerticalPanel: UIView, IView, IVerticalPanel {
     public func align(_ align: GAligner.GAlignerHorizontalGravity) -> Self {
         horizontalAlign = align
         return self
+    }
+}
+
+extension GVerticalPanel: SizingDelegate {
+    // This may get called by the container's helper. See init(ViewHelper)
+    func onWidthUpdated() {
+        updateWidthTendency()
+    }
+
+    func onHeightUpdated() {
+        // Do nothing
     }
 }

@@ -84,7 +84,6 @@ public class JsonUi {
 //    }
 
     private static func initVerticalPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
-//        if let wrapper = JsonViewDefaultPanel(spec, screen).view() as? GVerticalPanel {
         if let wrapper = JsonViewDefaultPanel(spec, screen).view() as? IView & UIView {
             panel.addView(wrapper.width(.matchParent).height(.matchParent))
         } else {
@@ -108,7 +107,7 @@ public class JsonUi {
             }
             return GBarButtonItem(customView: customView)
         }
-        screen.rightBarButtons(items: buttons)
+        screen.rightBarButtons(items: buttons.reversed())
 
         if let leftDrawer = spec["leftDrawer"].presence {
             let menuController = JsonUiMenuNavController(leftDrawer, screen)

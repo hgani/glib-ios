@@ -1,28 +1,25 @@
 class JsonViewDefaultPanel: JsonView_AbstractPanel {
-//    let panel: GVerticalPanel
-    let panel: IVerticalPanel & UIView
+    let panel = GVerticalPanel()
 
-//    private let panel = GVerticalPanel().width(.matchParent)
-
-    required convenience init(_ spec: Json, _ screen: GScreen) {
-        // TODO: Use MCard. See GVerticalPanel
-//        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
-//            #if INCLUDE_MDLIBS
-//            let panel = MCard().applyStyles(spec)
-//            self.init(panel, spec, screen)
-//            #else
-//            self.init(GVerticalPanel(), spec, screen)
-//            #endif
-//        } else {
-//            self.init(GVerticalPanel(), spec, screen)
-//        }
-        self.init(GVerticalPanel(), spec, screen)
-    }
-
-    private init(_ view: IVerticalPanel & UIView, _ spec: Json, _ screen: GScreen) {
-        panel = view
-        super.init(spec, screen)
-    }
+//    required convenience init(_ spec: Json, _ screen: GScreen) {
+//        // TODO: Use MCard. See GVerticalPanel
+////        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
+////            #if INCLUDE_MDLIBS
+////            let panel = MCard().applyStyles(spec)
+////            self.init(panel, spec, screen)
+////            #else
+////            self.init(GVerticalPanel(), spec, screen)
+////            #endif
+////        } else {
+////            self.init(GVerticalPanel(), spec, screen)
+////        }
+//        self.init(GVerticalPanel(), spec, screen)
+//    }
+//
+//    private init(_ view: GVerticalPanel, _ spec: Json, _ screen: GScreen) {
+//        panel = view
+//        super.init(spec, screen)
+//    }
 
     override func initView() -> UIView {
         // NOTE: subviews property is deprecated
@@ -38,7 +35,6 @@ class JsonViewDefaultPanel: JsonView_AbstractPanel {
 //                    parent.addView(view, top: 0)
 //                    addView(jsonView, to: panel)
 
-                    // TODO
                     panel.addView(jsonView.createView(), top: 0)
                 }
             }
@@ -63,10 +59,8 @@ class JsonViewDefaultPanel: JsonView_AbstractPanel {
         }
 
         return initContainer(content: panel)
-//        return panel
     }
 
-//    static func createPanel(spec: Json, screen: GScreen) -> IVerticalPanel & UIView {
     static func createPanel(spec: Json, screen: GScreen) -> UIView {
         let component = JsonViewDefaultPanel(spec, screen)
         component.view()

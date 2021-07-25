@@ -33,49 +33,19 @@ open class GWebView: WKWebView {
         helper.didMoveToSuperview()
     }
 
-    public func color(bg: UIColor?) -> Self {
-        if let bgColor = bg {
-            backgroundColor = bgColor
-        }
-        return self
-    }
-
-    public func width(_ width: Int) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func width(weight: Float) -> Self {
-        helper.width(weight: weight)
-        return self
-    }
-
-    public func height(_ height: Int) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func height(_ height: LayoutSize) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func load(url: URL) -> Self {
+    public func load(url: URL, indicator: Bool = true) -> Self {
         requestUrl = url
 
         GLog.i("Loading \(url) ...")
-        refresher.show()
+        if indicator {
+            refresher.show()
+        }
         load(URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 30))
         return self
     }
 
-    public func load(url: String) -> Self {
-        return load(url: URL(string: url)!)
+    public func load(url: String, indicator: Bool = true) -> Self {
+        return load(url: URL(string: url)!, indicator: indicator)
     }
 
     // Not meant to be used in conjuction with Http and Rest because sessions are not shared
@@ -88,10 +58,6 @@ open class GWebView: WKWebView {
         if let url = self.requestUrl {
             _ = load(url: url)
         }
-    }
-
-    public func end() {
-        // Ends chaining
     }
 }
 
@@ -122,5 +88,45 @@ extension GWebView: WKNavigationDelegate {
         })
 
         GApp.instance.navigationController.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension GWebView: IView {
+    public var size: CGSize {
+        return helper.size
+    }
+
+    @discardableResult
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+//        paddings = paddings.to(top: top, left: left, bottom: bottom, right: right)
+//        contentEdgeInsets = paddings.toEdgeInsets()
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    @discardableResult
+    public func color(bg: UIColor) -> Self {
+        backgroundColor = bg
+        return self
     }
 }

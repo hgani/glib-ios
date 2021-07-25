@@ -1,32 +1,22 @@
-class JsonView_Panels_Horizontal: JsonView {
-    private let panel: IHorizontalPanel & UIView
-    
-    public required init(_ spec: Json, _ screen: GScreen) {
-        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
-            #if INCLUDE_MDLIBS
-            panel = MHorizontalCard().applyStyles(spec)
-            #else
-            panel = GHorizontalPanel()
-            #endif
-        } else {
-            panel = GHorizontalPanel()
-        }
-        super.init(spec, screen)
-    }
+class JsonView_Panels_Horizontal: JsonView_AbstractPanel {
+    private var panel: GHorizontalPanel!
     
     override func initView() -> UIView {
+        panel = GHorizontalPanel(containerHelper: container.helper)
+
         // NOTE: subviews property is deprecated
-        let childViews: [UIView] = (spec["subviews"].array ?? spec["childViews"].arrayValue).compactMap { viewSpec -> UIView? in
+        let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
+        let views: [UIView] = childViews.compactMap { viewSpec -> UIView? in
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
                 return jsonView.view()
             }
             return nil
         }
-        
-        setAlign()  // Needs to be called before adding child views
-        setDistribution(childViews: childViews)
 
-        return panel
+        setAlign()  // Needs to be called before adding child views
+        setDistribution(childViews: views)
+
+        return initContainer(content: panel)
     }
 
     private func setAlign() {
@@ -78,10 +68,11 @@ class JsonView_Panels_Horizontal: JsonView {
             }
         }
     }
-}
 
-protocol IHorizontalPanel {
-    func addView(_ child: UIView, left: Float)
-    func split() -> Self
-    func align(_ align: GAligner.GAlignerVerticalGravity) -> Self
+    override func applyStyleClass(_ styleClass: String) {
+        if let cardSpec = JsonUiStyling.panels[styleClass] {
+            cardSpec.decorate(container)
+        }
+    }
+
 }

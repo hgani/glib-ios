@@ -1,5 +1,3 @@
-//open class ThumbnailTableCell: GTableViewCustomCell {
-
 open class ThumbnailTemplatePanel: GVerticalPanel {
     let picture = GImageView()
     let title = GLabel().specs(.libCellTitle)
