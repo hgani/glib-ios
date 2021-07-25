@@ -44,13 +44,7 @@ open class GVerticalPanel: UIView, IView {
         helper = ViewHelper(self)
         event = EventHelper(self)
 
-        _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
-
-//        // TODO: Implement similar to horizontal panel's updateHeightTendency
-//        self.snp.makeConstraints { (make) -> Void in
-//            // Increase hugging so that it tends to wrap content by default
-//            make.width.equalTo(0).priorityLow()
-//        }
+        paddings(top: 0, left: 0, bottom: 0, right: 0)
 
         addInitialBottomConstraint()
 
@@ -162,7 +156,6 @@ open class GVerticalPanel: UIView, IView {
 
     private func adjustSelfConstraints(child: UIView) {
         snp.makeConstraints { (make) -> Void in
-//            make.rightMargin.equalTo(child.snp.right).priorityLow()
             make.rightMargin.greaterThanOrEqualTo(child.snp.right)
         }
 
