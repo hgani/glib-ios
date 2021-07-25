@@ -74,5 +74,4 @@ class JsonView_Panels_Horizontal: JsonView_AbstractPanel {
             cardSpec.decorate(container)
         }
     }
-
 }

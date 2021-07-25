@@ -1,8 +1,6 @@
 class JsonView_Panels_Vertical: JsonView_AbstractPanel {
     private var panel: GVerticalPanel!
 
-//    private let panel = GVerticalPanel()
-
     override func initView() -> UIView {
         panel = GVerticalPanel(containerHelper: container.helper)
 
@@ -79,12 +77,3 @@ class JsonView_Panels_Vertical: JsonView_AbstractPanel {
         }
     }
 }
-
-//protocol IVerticalPanel {
-//    func addView(_ view: UIView, top: Float) -> Void
-//    func align(_ align: GAligner.GAlignerHorizontalGravity) -> Self
-//    func split() -> Self
-//    func addConstraintlessView(_ child: UIView) -> Void
-//    func width(_ width: Int) -> Self
-//    func width(_ width: LayoutSize) -> Self
-//}
