@@ -108,7 +108,7 @@ public class JsonUi {
             }
             return GBarButtonItem(customView: customView)
         }
-        screen.rightBarButtons(items: buttons)
+        screen.rightBarButtons(items: buttons.reversed())
 
         if let leftDrawer = spec["leftDrawer"].presence {
             let menuController = JsonUiMenuNavController(leftDrawer, screen)
