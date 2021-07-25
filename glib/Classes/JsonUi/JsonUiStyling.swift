@@ -27,4 +27,6 @@ public class JsonUiStyling {
         "warning": .warning,
         "info": .info
     ]
+
+    public static var screens = [String: JsonUiScreenSpec]()
 }

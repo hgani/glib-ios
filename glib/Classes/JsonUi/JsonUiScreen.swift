@@ -70,11 +70,27 @@ open class JsonUiScreen: GScreen {
             socket = safeSocket
             initSocket(safeSocket, wsSpec: wsSpec)
         }
+
+        let spec = response.content
         
         if self.contentOnly {
-            JsonUi.parseScreenContent(response.content, screen: self)
+            JsonUi.parseScreenContent(spec, screen: self)
         } else {
-            JsonUi.parseEntireScreen(response.content, screen: self)
+            JsonUi.parseEntireScreen(spec, screen: self)
+        }
+
+        applyStyleClasses(spec["styleClasses"].arrayValue.map({ $0.stringValue }))
+    }
+
+    private func applyStyleClasses(_ styleClasses: [String]) {
+        for styleClass in styleClasses {
+            applyStyleClass(styleClass)
+        }
+    }
+
+    open func applyStyleClass(_ styleClass: String) {
+        if let screenSpec = JsonUiStyling.screens[styleClass] {
+            screenSpec.decorate(self)
         }
     }
 
