@@ -1,6 +1,7 @@
 class JsonViewDefaultPanel: JsonView_AbstractPanel {
-//    let panel: GVerticalPanel
-    let panel: IVerticalPanel & UIView
+    // TODO: Initialize right away
+    let panel: GVerticalPanel
+//    let panel: UIView
 
 //    private let panel = GVerticalPanel().width(.matchParent)
 
@@ -19,7 +20,7 @@ class JsonViewDefaultPanel: JsonView_AbstractPanel {
         self.init(GVerticalPanel(), spec, screen)
     }
 
-    private init(_ view: IVerticalPanel & UIView, _ spec: Json, _ screen: GScreen) {
+    private init(_ view: GVerticalPanel, _ spec: Json, _ screen: GScreen) {
         panel = view
         super.init(spec, screen)
     }

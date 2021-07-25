@@ -1,7 +1,7 @@
 import SnapKit
 import UIKit
 
-open class GVerticalPanel: UIView, IView, IVerticalPanel {
+open class GVerticalPanel: UIView, IView {
     private var helper: ViewHelper!
 
     private var previousViewElement: UIView!
