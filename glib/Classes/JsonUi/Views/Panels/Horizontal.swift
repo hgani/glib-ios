@@ -2,7 +2,7 @@ class JsonView_Panels_Horizontal: JsonView_AbstractPanel {
     private var panel: GHorizontalPanel!
     
     override func initView() -> UIView {
-        panel = GHorizontalPanel(wrapperHelper: container.helper)
+        panel = GHorizontalPanel(containerHelper: container.helper)
 
         // NOTE: subviews property is deprecated
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue

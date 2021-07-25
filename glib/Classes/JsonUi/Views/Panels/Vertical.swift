@@ -1,9 +1,10 @@
 class JsonView_Panels_Vertical: JsonView_AbstractPanel {
-    private let panel = GVerticalPanel()
+    private var panel: GVerticalPanel!
+
+//    private let panel = GVerticalPanel()
 
     override func initView() -> UIView {
-        // TODO: Follow horizontal panel's solution so that sizing is controller by the container
-        // E.g. panel = GHorizontalPanel(wrapperHelper: container.helper)
+        panel = GVerticalPanel(containerHelper: container.helper)
 
         // NOTE: subviews property is deprecated
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue

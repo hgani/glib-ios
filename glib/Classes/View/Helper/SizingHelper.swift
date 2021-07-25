@@ -118,6 +118,7 @@ public class SizingHelper {
         }
 
         updateWidthConstraints()
+        delegate?.onWidthUpdated()
     }
 
     public func width(weight: Float, offset: Float = 0) {
@@ -155,8 +156,6 @@ public class SizingHelper {
         }
 
         updateHeightConstraints()
-
-        GLog.t("Height: onHeightUpdated1")
         delegate?.onHeightUpdated()
     }
 
@@ -182,5 +181,6 @@ public enum LayoutSize: String {
 }
 
 protocol SizingDelegate {
+    func onWidthUpdated()
     func onHeightUpdated()
 }

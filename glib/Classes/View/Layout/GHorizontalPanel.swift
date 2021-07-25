@@ -239,7 +239,11 @@ extension GHorizontalPanel: IView {
 }
 
 extension GHorizontalPanel: SizingDelegate {
-    // This may get called by the wrapper's helper. See init(ViewHelper)
+    func onWidthUpdated() {
+        // Do nothing
+    }
+
+    // This may get called by the container's helper. See init(ViewHelper)
     func onHeightUpdated() {
         updateHeightTendency()
     }

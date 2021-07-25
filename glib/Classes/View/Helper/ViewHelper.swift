@@ -1,7 +1,6 @@
 import SnapKit
 import UIKit
 
-// NOTE: Rename this to SizeHelper().
 public class ViewHelper: SizingHelper {
     private unowned let view: UIView
 //    private var matchParentWidthMultiplier: Float?
