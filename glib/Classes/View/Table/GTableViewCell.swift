@@ -30,21 +30,23 @@ open class GTableViewCell: UITableViewCell {
     override open func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        if selected {
-            contentView.backgroundColor = .libCellHighlight
-        } else {
-            contentView.backgroundColor = .clear
-        }
+        // Already looks good without this.
+//        if selected {
+//            contentView.backgroundColor = .libCellHighlight
+//        } else {
+//            contentView.backgroundColor = .clear
+//        }
     }
 
     open override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
 
-        if highlighted {
-            contentView.backgroundColor = .lightGray
-        } else {
-            contentView.backgroundColor = .clear
-        }
+        // Already looks good without this.
+//        if highlighted {
+//            contentView.backgroundColor = .lightGray
+//        } else {
+//            contentView.backgroundColor = .clear
+//        }
     }
 
     public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
