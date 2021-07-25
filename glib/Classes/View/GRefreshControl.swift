@@ -32,13 +32,13 @@ open class GRefreshControl: UIRefreshControl, ProgressIndicator {
     public func show() {
         beginRefreshing()
 
-        // The following is for TableView and WebView so make sure to test both after modifying it.
-        DispatchQueue.main.async {
-            if let view = self.superview as? UIScrollView {
-                // See https://stackoverflow.com/questions/14718850/uirefreshcontrol-beginrefreshing-not-working-when-uitableviewcontroller-is-ins
-                view.setContentOffset(CGPoint(x: 0, y: view.contentOffset.y - self.frame.size.height), animated: true)
-            }
-        }
+//        // The following is for TableView and WebView so make sure to test both after modifying it.
+//        DispatchQueue.main.async {
+//            if let view = self.superview as? UIScrollView {
+//                // See https://stackoverflow.com/questions/14718850/uirefreshcontrol-beginrefreshing-not-working-when-uitableviewcontroller-is-ins
+//                view.setContentOffset(CGPoint(x: 0, y: view.contentOffset.y - self.frame.size.height), animated: true)
+//            }
+//        }
     }
 
     public func hide() {
