@@ -1,8 +1,7 @@
 import SnapKit
 import UIKit
 
-// TODO: Remove IHorizontalPanel
-open class GHorizontalPanel: UIView, IHorizontalPanel {
+open class GHorizontalPanel: UIView {
     fileprivate var helper: ViewHelper!
     fileprivate var containerHelper: ViewHelper?
 
