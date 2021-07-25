@@ -37,7 +37,7 @@ open class GHorizontalPanel: UIView {
 
         helper = ViewHelper(self)
 
-        _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
+        paddings(top: 0, left: 0, bottom: 0, right: 0)
 
         updateHeightTendency()
     }

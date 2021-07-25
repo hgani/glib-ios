@@ -1,7 +1,8 @@
 import UIKit
 import SnapKit
 
-open class GSplitPanel: UIView, IView, ISplitPanel {
+//open class GSplitPanel: UIView, IView, ISplitPanel {
+open class GSplitPanel: UIView, IView {
     private var helper: ViewHelper!
     private var event: EventHelper<GSplitPanel>!
 
@@ -19,11 +20,16 @@ open class GSplitPanel: UIView, IView, ISplitPanel {
         initialize()
     }
 
+//    public init(containerHelper: ViewHelper) {
+//        super.init(frame: .zero)
+//        initialize(containerHelper: containerHelper)
+//    }
+
     private func initialize() {
         helper = ViewHelper(self)
         event = EventHelper(self)
 
-        _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
+        paddings(top: 0, left: 0, bottom: 0, right: 0)
     }
 
     open override func didMoveToSuperview() {

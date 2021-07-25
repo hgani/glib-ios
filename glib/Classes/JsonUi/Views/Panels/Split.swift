@@ -1,39 +1,44 @@
-class JsonView_Panels_Split: JsonView {
+//class JsonView_Panels_Split: JsonView {
+class JsonView_Panels_Split: JsonView_AbstractPanel {
+
     // It makes no sense to use split panel with `wrapContent`, so `wrapContent` is not supported in iOS.
     // Use either `matchParent` (default in iOS) or specific width.
-    private let panel: ISplitPanel & UIView
+//    private let panel: ISplitPanel & UIView
     
-    public required init(_ spec: Json, _ screen: GScreen) {
-        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
-            // TODO
-//            #if INCLUDE_MDLIBS
-//            panel = MSplitCard().applyStyles(spec).width(.matchParent)
-//            #else
-//            panel = GSplitPanel().width(.matchParent)
-//            #endif
+//    private var panel: GSplitPanel!
+    private let panel = GSplitPanel()
 
-            panel = GSplitPanel().width(.matchParent)
-        } else {
-            panel = GSplitPanel().width(.matchParent)
-        }
-        super.init(spec, screen)
-    }
+//    public required init(_ spec: Json, _ screen: GScreen) {
+//        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
+//            // TODO
+////            #if INCLUDE_MDLIBS
+////            panel = MSplitCard().applyStyles(spec).width(.matchParent)
+////            #else
+////            panel = GSplitPanel().width(.matchParent)
+////            #endif
+//
+//            panel = GSplitPanel().width(.matchParent)
+//        } else {
+//            panel = GSplitPanel().width(.matchParent)
+//        }
+//        super.init(spec, screen)
+//    }
 
     override func initView() -> UIView {
         if let center = spec["center"].presence {
-            return panel.withViews(
+            panel.withViews(
                 createSubview(spec["left"], center: false),
                 createSubview(center, center: true),
                 createSubview(spec["right"], center: false)
-                )
+            )
         } else {
-            return panel.withViews(
+            panel.withViews(
                 left: createSubview(spec["left"], center: false),
                 right: createSubview(spec["right"], center: false)
-                )
+            )
         }
 
-        return panel
+        return initContainer(content: panel)
     }
 
     private func createSubview(_ subviewSpec: Json, center: Bool) -> UIView {
