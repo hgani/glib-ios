@@ -1,26 +1,6 @@
 class JsonViewDefaultPanel: JsonView_AbstractPanel {
     let panel = GVerticalPanel()
 
-//    required convenience init(_ spec: Json, _ screen: GScreen) {
-//        // TODO: Use MCard. See GVerticalPanel
-////        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
-////            #if INCLUDE_MDLIBS
-////            let panel = MCard().applyStyles(spec)
-////            self.init(panel, spec, screen)
-////            #else
-////            self.init(GVerticalPanel(), spec, screen)
-////            #endif
-////        } else {
-////            self.init(GVerticalPanel(), spec, screen)
-////        }
-//        self.init(GVerticalPanel(), spec, screen)
-//    }
-//
-//    private init(_ view: GVerticalPanel, _ spec: Json, _ screen: GScreen) {
-//        panel = view
-//        super.init(spec, screen)
-//    }
-
     override func initView() -> UIView {
         // NOTE: subviews property is deprecated
         let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
