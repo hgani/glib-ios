@@ -158,10 +158,10 @@ open class MTextField: GControl {
 ////        return UIEdgeInsetsInsetRect(bounds, padding)
 //    }
 //
-    public override func color(bg: UIColor) -> Self {
-        backend.backgroundColor = bg
-        return self
-    }
+//    public override func color(bg: UIColor) -> Self {
+//        backend.backgroundColor = bg
+//        return self
+//    }
 
     public func secure(_ secure: Bool) -> Self {
         backend.isSecureTextEntry = secure
