@@ -133,6 +133,7 @@ open class JsonView {
         DispatchQueue.main.async {
             // This is supposed to execute after the view has been added to parent.
             self.onAfterInitView(view)
+
             self.registerJsonLogic(view: view)
         }
 
@@ -140,20 +141,40 @@ open class JsonView {
     }
 
     private func registerJsonLogic(view: UIView) {
-        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {
-            form.formData.asObservable().subscribe { _ in
+        NSLog("registerJsonLogic1")
+        guard let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) else {
+            return
+        }
+        guard let showIf = self.spec["showIf"].rawString() else {
+            return
+        }
 
-                if let showIf = self.spec["showIf"].rawString() {
-                    do {
-                        let jsonlogic = try JsonLogic(showIf)
-                        let result: Bool = try jsonlogic.applyRule(to: form.formData.value.rawString())
-                        view.isHidden = !result
-                    } catch {
-                        GLog.d("Invalid rule")
+        NSLog("registerJsonLogic2")
+        form.formData.asObservable().subscribe { _ in
+            NSLog("registerJsonLogic3")
+
+            NSLog("registerJsonLogic4")
+            do {
+                let jsonlogic = try JsonLogic(showIf)
+                let result: Bool = try jsonlogic.applyRule(to: form.formData.value.rawString())
+
+                view.isHidden = !result
+                if let iview = view as? IView {
+                    if view.isHidden {
+
+                        iview.width(0).height(0)
+                    } else {
+
+                        iview.width(.wrapContent).height(.wrapContent)
                     }
+                } else {
+                    fatalError("Not a valid view: \(type(of: view))")
                 }
+            } catch {
+                GLog.d("Invalid rule")
             }
         }
+
     }
 
     func closest<T: UIView>(_ instanceType: T.Type, from: UIView) -> T? {
