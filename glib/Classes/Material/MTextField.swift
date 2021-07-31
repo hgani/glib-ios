@@ -8,6 +8,8 @@ import MaterialComponents.MaterialTextControls_OutlinedTextFieldsTheming
 open class MTextField: GControl {
     private var padding = UIEdgeInsets.zero
 
+    private var onEdit: ((MTextField) -> Void)?
+
     private var onBeginEditing: ((MTextField) -> Void)?
 
     // See https://github.com/material-components/material-components-ios/issues/7133
@@ -19,6 +21,15 @@ open class MTextField: GControl {
         }
         set {
             backend.text = newValue
+        }
+    }
+
+    public var label: String? {
+        get {
+            return labelView.text
+        }
+        set {
+            labelView.text = newValue
         }
     }
 
@@ -91,8 +102,6 @@ open class MTextField: GControl {
     }
 
     private func initialize() {
-//        helper = ViewHelper(backend)
-
         backend.delegate = self
 
         withView(backend, matchParent: true)
@@ -129,9 +138,22 @@ open class MTextField: GControl {
         return self
     }
 
-    open override func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
-        backend.addTarget(target, action: action, for: controlEvents)
+    // Cannot use ControlHelper because `backend` is not a UIControl.
+    func onEdit(_ command: @escaping (MTextField) -> Void) -> Self {
+        onEdit = command
+        backend.addTarget(self, action: #selector(performEdit), for: .editingChanged)
+        return self
     }
+
+    @objc open func performEdit() {
+        if let callback = self.onEdit {
+            callback(self)
+        }
+    }
+    
+//    open override func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event) {
+//        backend.addTarget(target, action: action, for: controlEvents)
+//    }
 
     open override func resignFirstResponder() -> Bool {
         return backend.resignFirstResponder()
@@ -175,6 +197,11 @@ open class MTextField: GControl {
 
     public func text(_ text: String) -> Self {
         self.text = text
+        return self
+    }
+
+    public func label(_ str: String) -> Self {
+        label = str
         return self
     }
 
