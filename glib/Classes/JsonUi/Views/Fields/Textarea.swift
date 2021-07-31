@@ -19,7 +19,8 @@ class JsonView_Fields_Textarea: JsonView_AbstractField, SubmittableField {
             .text(spec["value"].stringValue)
             .readOnly(spec["readOnly"].boolValue)
             .onEdit { _ in
-                self.updateJsonLogic()
+//                self.updateJsonLogic()
+                self.processJsonLogic(view: self.view, value: self.value)
             }
 
         //
@@ -42,11 +43,11 @@ class JsonView_Fields_Textarea: JsonView_AbstractField, SubmittableField {
         return view
     }
 
-    func updateJsonLogic() {
-        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {
-            updateFormData(form, fieldName, value)
-        }
-    }
+//    func updateJsonLogic() {
+//        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {
+//            updateFormData(form, fieldName, value)
+//        }
+//    }
 
     func validate() -> Bool {
 //        if let textView = view.textView {

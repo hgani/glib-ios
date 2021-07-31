@@ -40,15 +40,16 @@ class JsonView_Fields_RadioGroup: JsonView_AbstractField, SubmittableField {
                 radio.checked(false)
             }
         }
-        updateJsonLogic()
+//        updateJsonLogic()
+        self.processJsonLogic(view: self.panel, value: self.value)
     }
     
-    func updateJsonLogic() {
-        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: panel),
-            let fieldName = spec["name"].string {
-            updateFormData(form, fieldName, value)
-        }
-    }
+//    func updateJsonLogic() {
+//        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: panel),
+//            let fieldName = spec["name"].string {
+//            updateFormData(form, fieldName, value)
+//        }
+//    }
 
     func validate() -> Bool {
         return true

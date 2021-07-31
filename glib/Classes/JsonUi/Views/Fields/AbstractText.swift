@@ -22,7 +22,7 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
             .text(spec["value"].stringValue)
             .readOnly(spec["readOnly"].boolValue)
             .onEdit { _ in
-                self.updateJsonLogic()
+                self.processJsonLogic(view: self.view, value: self.value)
             }
 
 //        initBottomBorderIfApplicable()
@@ -31,12 +31,13 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
 
         return view
     }
-    
-   func updateJsonLogic() {
-        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {
-            updateFormData(form, fieldName, value)
-        }
-    }
+
+// TODO: Genericize and use this in audiostatus
+//   func updateJsonLogic() {
+//        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {
+//            updateFormData(form, fieldName, value)
+//        }
+//    }
 
 //    private func initBottomBorderIfApplicable() {
 //        #if !INCLUDE_UILIBS
