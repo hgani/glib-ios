@@ -7,7 +7,7 @@ class JsonView_Fields_Check: JsonView_AbstractField, SubmittableField, CheckboxB
 
     var name: String?
     var value: String {
-        return checkbox.isOn ? spec["value"].stringValue : (spec["uncheckValue"].string ?? "")
+        return checkbox.isOn ? spec["checkValue"].stringValue : spec["uncheckValue"].stringValue
     }
 
     override func initView() -> UIView {
@@ -26,20 +26,24 @@ class JsonView_Fields_Check: JsonView_AbstractField, SubmittableField, CheckboxB
     }
     
     func chechboxButtonDidSelect(_ button: CheckboxButton) {
-        updateJsonLogic(button)
+        updateJsonLogic()
     }
     
     func chechboxButtonDidDeselect(_ button: CheckboxButton) {
-        updateJsonLogic(button)
+        updateJsonLogic()
+    }
+
+    private func updateJsonLogic() {
+        self.processJsonLogic(view: self.checkbox, value: self.value)
     }
     
-    func updateJsonLogic(_ checkbox: CheckboxButton) {
-        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: checkbox),
-            let fieldName = spec["name"].string {
-            let isOn = checkbox.isOn ? "on" : ""
-            updateFormData(form, fieldName, isOn)
-        }
-    }
+//    func updateJsonLogic(_ checkbox: CheckboxButton) {
+//        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: checkbox),
+//            let fieldName = spec["name"].string {
+//            let isOn = checkbox.isOn ? "on" : ""
+//            updateFormData(form, fieldName, isOn)
+//        }
+//    }
 }
 
 #endif
