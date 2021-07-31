@@ -47,15 +47,10 @@ class JsonView_AbstractLabel: JsonView {
 //    }
 
     override func onAfterInitView(_ view: UIView) {
-        GLog.t("Label jsonlogic1")
         if let form = closest(JsonView_Panels_Form.FormPanel.self, from: label) {
-            GLog.t("Label jsonlogic2")
             form.formData.asObservable().subscribe { _ in
 
-                    GLog.t("Label jsonlogic3")
                 if let showIf = self.spec["showIf"].rawString() {
-
-                        GLog.t("Label jsonlogic4")
                     do {
                         let jsonlogic = try JsonLogic(showIf)
                         let result: Bool = try jsonlogic.applyRule(to: form.formData.value.rawString())

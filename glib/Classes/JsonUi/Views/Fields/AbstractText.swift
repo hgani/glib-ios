@@ -17,7 +17,7 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
 //        view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
 
         view
-            .text(spec["label"].stringValue)
+            .label(spec["label"].stringValue)
             .placeholder(spec["placeholder"].stringValue)
             .text(spec["value"].stringValue)
             .readOnly(spec["readOnly"].boolValue)
