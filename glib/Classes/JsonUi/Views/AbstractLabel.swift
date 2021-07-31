@@ -1,4 +1,4 @@
-import jsonlogic
+//import jsonlogic
 
 class JsonView_AbstractLabel: JsonView {
     let label = GLabel()
@@ -45,21 +45,21 @@ class JsonView_AbstractLabel: JsonView {
 //    override func didAttach(to parent: UIView) {
 //        fatalError("TODO: Remove")
 //    }
-
-    override func onAfterInitView(_ view: UIView) {
-        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: label) {
-            form.formData.asObservable().subscribe { _ in
-
-                if let showIf = self.spec["showIf"].rawString() {
-                    do {
-                        let jsonlogic = try JsonLogic(showIf)
-                        let result: Bool = try jsonlogic.applyRule(to: form.formData.value.rawString())
-                        self.label.isHidden = !result
-                    } catch {
-                        GLog.d("Invalid rule")
-                    }
-                }
-            }
-        }
-    }
+//
+//    override func onAfterInitView(_ view: UIView) {
+//        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: label) {
+//            form.formData.asObservable().subscribe { _ in
+//
+//                if let showIf = self.spec["showIf"].rawString() {
+//                    do {
+//                        let jsonlogic = try JsonLogic(showIf)
+//                        let result: Bool = try jsonlogic.applyRule(to: form.formData.value.rawString())
+//                        self.label.isHidden = !result
+//                    } catch {
+//                        GLog.d("Invalid rule")
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

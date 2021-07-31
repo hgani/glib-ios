@@ -1,3 +1,5 @@
+import jsonlogic
+
 open class JsonView {
     private var backend: UIView?
     public let spec: Json
@@ -131,9 +133,27 @@ open class JsonView {
         DispatchQueue.main.async {
             // This is supposed to execute after the view has been added to parent.
             self.onAfterInitView(view)
+            self.registerJsonLogic(view: view)
         }
 
         return view
+    }
+
+    private func registerJsonLogic(view: UIView) {
+        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {
+            form.formData.asObservable().subscribe { _ in
+
+                if let showIf = self.spec["showIf"].rawString() {
+                    do {
+                        let jsonlogic = try JsonLogic(showIf)
+                        let result: Bool = try jsonlogic.applyRule(to: form.formData.value.rawString())
+                        view.isHidden = !result
+                    } catch {
+                        GLog.d("Invalid rule")
+                    }
+                }
+            }
+        }
     }
 
     func closest<T: UIView>(_ instanceType: T.Type, from: UIView) -> T? {
