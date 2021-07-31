@@ -1,12 +1,5 @@
 #if INCLUDE_MDLIBS
 
-//import MaterialComponents.MaterialTextFields
-//
-//import MaterialComponents.MaterialTextControls_FilledTextFields
-//import MaterialComponents.MaterialTextControls_FilledTextFieldsTheming
-//import MaterialComponents.MaterialTextControls_OutlinedTextFields
-//import MaterialComponents.MaterialTextControls_OutlinedTextFieldsTheming
-
 import MaterialComponents.MaterialTextControls_FilledTextAreas
 import MaterialComponents.MaterialTextControls_FilledTextAreasTheming
 import MaterialComponents.MaterialTextControls_OutlinedTextAreas
@@ -14,6 +7,8 @@ import MaterialComponents.MaterialTextControls_OutlinedTextAreasTheming
 
 open class MTextArea: GControl {
     private var backend: MDCBaseTextArea = MDCFilledTextArea()
+
+    private var onEdit: ((MTextArea) -> Void)?
 
     public var text: String? {
         get {
@@ -65,7 +60,7 @@ open class MTextArea: GControl {
     }
 
     private func initialize() {
-//        backend.delegate = self
+        backend.textView.delegate = self
 
         withView(backend, matchParent: true)
     }
@@ -88,6 +83,24 @@ open class MTextArea: GControl {
     func readOnly(_ value: Bool) -> Self {
         isUserInteractionEnabled = !value
         return self
+    }
+
+    // Cannot use ControlHelper because `backend` is not a UIControl.
+    func onEdit(_ command: @escaping (MTextArea) -> Void) -> Self {
+        onEdit = command
+        return self
+    }
+
+    func performEdit() {
+        if let callback = self.onEdit {
+            callback(self)
+        }
+    }
+}
+
+extension MTextArea : UITextViewDelegate {
+    public func textViewDidChange(_ textView: UITextView) {
+        performEdit()
     }
 }
 

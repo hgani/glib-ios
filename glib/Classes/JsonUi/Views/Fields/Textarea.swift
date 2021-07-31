@@ -13,16 +13,15 @@ class JsonView_Fields_Textarea: JsonView_AbstractField, SubmittableField {
 
         name = spec["name"].string
 
-//        view.labelView.text = spec["label"].string
-        view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
-
         view
             .label(spec["label"].stringValue)
             .placeholder(spec["placeholder"].stringValue)
             .text(spec["value"].stringValue)
             .readOnly(spec["readOnly"].boolValue)
+            .onEdit { _ in
+                self.updateJsonLogic()
+            }
 
-//        name = spec["name"].string
         //
         //        view.width(.matchParent)
         //            .placeholder(spec["label"].stringValue)
@@ -43,7 +42,7 @@ class JsonView_Fields_Textarea: JsonView_AbstractField, SubmittableField {
         return view
     }
 
-    @objc func updateJsonLogic() {
+    func updateJsonLogic() {
         if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {
             updateFormData(form, fieldName, value)
         }
