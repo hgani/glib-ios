@@ -1,8 +1,7 @@
 #if INCLUDE_MDLIBS
 
 class JsonView_Fields_Textarea: JsonView_AbstractField, SubmittableField {
-//    private let view = MTextArea2()
-    private var view: MTextArea2!
+    private var view: MTextArea!
 
     var name: String?
     var value: String {
@@ -10,16 +9,15 @@ class JsonView_Fields_Textarea: JsonView_AbstractField, SubmittableField {
     }
 
     override func initView() -> UIView {
-        view = MTextArea2(outlined: spec["styleClasses"].arrayValue.contains("outlined"))
+        view = MTextArea(outlined: spec["styleClasses"].arrayValue.contains("outlined"))
 
         name = spec["name"].string
 
-        view.labelView.text = spec["label"].string
-//        view.placeholder = spec["placeholder"].string
-//        view.text = spec["value"].string
+//        view.labelView.text = spec["label"].string
         view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
 
         view
+            .label(spec["label"].stringValue)
             .placeholder(spec["placeholder"].stringValue)
             .text(spec["value"].stringValue)
             .readOnly(spec["readOnly"].boolValue)

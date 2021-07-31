@@ -1,9 +1,18 @@
 #if INCLUDE_MDLIBS
 
-import MaterialComponents.MaterialTextFields
+//import MaterialComponents.MaterialTextFields
+//
+//import MaterialComponents.MaterialTextControls_FilledTextFields
+//import MaterialComponents.MaterialTextControls_FilledTextFieldsTheming
+//import MaterialComponents.MaterialTextControls_OutlinedTextFields
+//import MaterialComponents.MaterialTextControls_OutlinedTextFieldsTheming
 
+import MaterialComponents.MaterialTextControls_FilledTextAreas
+import MaterialComponents.MaterialTextControls_FilledTextAreasTheming
+import MaterialComponents.MaterialTextControls_OutlinedTextAreas
+import MaterialComponents.MaterialTextControls_OutlinedTextAreasTheming
 
-open class MTextArea2: GControl {
+open class MTextArea: GControl {
     private var backend: MDCBaseTextArea = MDCFilledTextArea()
 
     public var text: String? {
@@ -23,7 +32,16 @@ open class MTextArea2: GControl {
             backend.placeholder = newValue
         }
     }
-    
+
+    public var label: String? {
+        get {
+            return labelView.text
+        }
+        set {
+            labelView.text = newValue
+        }
+    }
+
     public var labelView: UILabel {
         return backend.label
     }
@@ -59,6 +77,11 @@ open class MTextArea2: GControl {
 
     public func placeholder(_ str: String) -> Self {
         placeholder = str
+        return self
+    }
+
+    public func label(_ str: String) -> Self {
+        label = str
         return self
     }
 
