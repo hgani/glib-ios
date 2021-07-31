@@ -1,40 +1,22 @@
 import SnapKit
 import UIKit
 
-// TODO: Merge back to ViewHelper? Too complicated to handle both?
 public class SizingHelper {
     private unowned let view: UIView
     private var matchParentWidthMultiplier: Float?
     private var matchParentHeightMultiplier: Float?
-//    var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
 
     private var widthConstraint: Constraint?
     private var heightConstraint: Constraint?
 
-//    private var backgroundView: GImageView?
-
-    // TODO: Should we use weak/unowned?
-    // TODO: Avoid writing publicly
-    var delegate: SizingDelegate?
+    weak var delegate: SizingDelegate?
 
     public var size: CGSize {
         return view.bounds.size
     }
 
-//    public var screen: GScreen? {
-//        var nextResponder = view.next
-//        while let responder = nextResponder {
-//            if let screen = responder as? GScreen {
-//                return screen
-//            }
-//            nextResponder = responder.next
-//        }
-//        return nil
-//    }
-
     public init(_ view: UIView) {
         self.view = view
-//        view.layoutMargins = paddings.toEdgeInsets()
     }
 
     func didMoveToSuperview(debug: Bool = false) {
@@ -152,7 +134,6 @@ public class SizingHelper {
             matchParentHeightMultiplier = 1
         case .wrapContent:
             matchParentHeightMultiplier = nil
-//            nothingToDo()
         }
 
         updateHeightConstraints()
@@ -180,7 +161,7 @@ public enum LayoutSize: String {
     case matchParent, wrapContent
 }
 
-protocol SizingDelegate {
+protocol SizingDelegate : AnyObject {
     func onWidthUpdated()
     func onHeightUpdated()
 }
