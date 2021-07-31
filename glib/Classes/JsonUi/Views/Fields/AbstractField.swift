@@ -23,7 +23,7 @@ open class JsonView_AbstractField: JsonView {
          }
      }
 
-    func updateFormData(_ form: JsonView_Panels_Form.FormPanel, _ fieldName: String, _ value: String) {
+    private func updateFormData(_ form: JsonView_Panels_Form.FormPanel, _ fieldName: String, _ value: String) {
         do {
             try form.formData.value.merge(with: Json(parseJSON:
                 """
