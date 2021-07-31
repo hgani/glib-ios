@@ -5,9 +5,7 @@ import MaterialComponents.MaterialTextControls_FilledTextFieldsTheming
 import MaterialComponents.MaterialTextControls_OutlinedTextFields
 import MaterialComponents.MaterialTextControls_OutlinedTextFieldsTheming
 
-open class MTextField: GControl, ITextField {
-//    private var helper: ViewHelper!
-//    private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+open class MTextField: GControl {
     private var padding = UIEdgeInsets.zero
 
     private var onBeginEditing: ((MTextField) -> Void)?
@@ -135,12 +133,6 @@ open class MTextField: GControl, ITextField {
         backend.addTarget(target, action: action, for: controlEvents)
     }
 
-    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
-        // TODO
-//        helper.paddings(t: top, l: left, b: bottom, r: right)
-        return self
-    }
-
     open override func resignFirstResponder() -> Bool {
         return backend.resignFirstResponder()
     }
@@ -169,23 +161,7 @@ open class MTextField: GControl, ITextField {
     public override func color(bg: UIColor) -> Self {
         backend.backgroundColor = bg
         return self
-//        return color(bg: bg, text: nil)
     }
-//
-//    public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
-//        if let bgColor = bg {
-//            backgroundColor = bgColor
-//        }
-//        if let textColor = text {
-//            self.textColor = textColor
-//        }
-//        return self
-//    }
-
-//    public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
-//        helper.border(color: color, width: width, corner: corner)
-//        return self
-//    }
 
     public func secure(_ secure: Bool) -> Self {
         backend.isSecureTextEntry = secure

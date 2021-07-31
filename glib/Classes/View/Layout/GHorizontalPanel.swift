@@ -199,6 +199,12 @@ extension GHorizontalPanel: IView {
     }
 
     @discardableResult
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
+    @discardableResult
     public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
@@ -220,12 +226,6 @@ extension GHorizontalPanel: IView {
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
         updateHeightTendency()
-        return self
-    }
-
-    @discardableResult
-    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
-        helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
 }

@@ -125,6 +125,12 @@ extension GSplitPanel: IView {
     }
 
     @discardableResult
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
+    @discardableResult
     public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
@@ -147,11 +153,4 @@ extension GSplitPanel: IView {
         helper.height(height)
         return self
     }
-
-    @discardableResult
-    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
-        helper.paddings(t: top, l: left, b: bottom, r: right)
-        return self
-    }
-
 }
