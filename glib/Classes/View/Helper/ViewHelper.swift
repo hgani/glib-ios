@@ -2,19 +2,12 @@ import SnapKit
 import UIKit
 
 public class ViewHelper: SizingHelper {
+    // This only works if helper is only ever referenced by the owner View (not shared)
     private unowned let view: UIView
-//    private var matchParentWidthMultiplier: Float?
-//    private var matchParentHeightMultiplier: Float?
+
     var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
 
-//    private var widthConstraint: Constraint?
-//    private var heightConstraint: Constraint?
-
     private var backgroundView: GImageView?
-
-//    public var size: CGSize {
-//        return view.bounds.size
-//    }
 
     public var screen: GScreen? {
         var nextResponder = view.next
@@ -42,10 +35,6 @@ public class ViewHelper: SizingHelper {
         view.layer.cornerRadius = CGFloat(corner)
         view.layer.masksToBounds = true
     }
-
-//    public func padding(_ padding: GPadding) {
-//        paddings(t: padding.top, l: padding.left, b: padding.bottom, r: padding.right)
-//    }
 
     public func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?) {
         // Use our own variable to store the definitive values just in case layoutMargins gets changed directly,
@@ -196,26 +185,21 @@ public struct GPadding {
         self.left = left
     }
 
-//    func to(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Paddings {
-//        let top = top ?? self.top
-//        let left = left ?? self.left
-//        let bottom = bottom ?? self.bottom
-//        let right = right ?? self.right
-//
-//        return Padding(top: top, left: left, bottom: bottom, right: right)
-//    }
-}
+    func to(top: Float?, right: Float?, bottom: Float?, left: Float?) -> GPadding {
+        let top = top ?? self.top
+        let left = left ?? self.left
+        let bottom = bottom ?? self.bottom
+        let right = right ?? self.right
 
-//public struct GPadding {
-//    public let top: Float
-//    public let right: Float
-//    public let bottom: Float
-//    public let left: Float
-//
-//    public init(top: Float, right: Float, bottom: Float, left: Float) {
-//        self.top = top
-//        self.right = right
-//        self.bottom = bottom
-//        self.left = left
-//    }
-//}
+        return GPadding(top: top, right: right, bottom: bottom, left: left)
+    }
+
+    public func toEdgeInsets() -> UIEdgeInsets {
+        let top = self.top ?? 0
+        let left = self.left ?? 0
+        let bottom = self.bottom ?? 0
+        let right = self.right ?? 0
+
+        return UIEdgeInsets(top: CGFloat(top), left: CGFloat(left), bottom: CGFloat(bottom), right: CGFloat(right))
+    }
+}
