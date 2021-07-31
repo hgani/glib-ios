@@ -3,7 +3,9 @@ import UIKit
 
 open class GVerticalPanel: UIView, IView {
     private var helper: ViewHelper!
-    fileprivate var containerHelper: ViewHelper?
+
+    // Only the owner of the helper can keep a strong reference to it (see `ViewHelper.view`).
+    fileprivate weak var containerHelper: ViewHelper?
 
     private var previousView: UIView?
     private var previousConstraint: NSLayoutConstraint!

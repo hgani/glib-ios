@@ -4,7 +4,7 @@ import UIKit
 open class GButton: UIButton, IView {
     fileprivate var helper: ViewHelper!
     private var onClick: ((GButton) -> Void)?
-    var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
+    var paddings = GPadding(top: 0, right: 0, bottom: 0, left: 0)
 
     public var size: CGSize {
         return helper.size
@@ -66,7 +66,7 @@ open class GButton: UIButton, IView {
 
     @discardableResult
     public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
-        paddings = paddings.to(top: top, left: left, bottom: bottom, right: right)
+        paddings = paddings.to(top: top, right: right, bottom: bottom, left: left)
         contentEdgeInsets = paddings.toEdgeInsets()
         return self
     }
