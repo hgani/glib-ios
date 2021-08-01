@@ -2,14 +2,14 @@
 
 import RSSelectionMenu
 
-class JsonView_Fields_Select: JsonView_AbstractField, SubmittableField {
+class JsonView_Fields_Select: JsonView_AbstractField {
 //    private let textLabel = GLabel()
 //    private let valueLabel = GLabel()
     private let chipField = MChipField()
     private let errorLabel = GLabel()
 
-    var name: String?
-    var value: String {
+//    var name: String?
+    override var value: String {
         if selectedOptions.count > 0 {
             return selectedOptions.map({ (option) -> String in
                 return option.value
@@ -37,7 +37,7 @@ class JsonView_Fields_Select: JsonView_AbstractField, SubmittableField {
         }
     }
     
-    func validate() -> Bool {
+    override func validate() -> Bool {
         errors(nil)
         if let validation = spec["validation"].presence {
             if let required = validation["required"].presence, value == "" {
@@ -103,7 +103,7 @@ class JsonView_Fields_Select: JsonView_AbstractField, SubmittableField {
                 selectionMenu.show(style: .Actionsheet(title: self.spec["label"].stringValue, action: "Done", height: nil), from: self.screen)
             }
             .onEdit { _ in
-                self.processJsonLogic(view: self.chipField, value: self.value)
+                self.processJsonLogic(view: self.chipField)
             }
         
         errorLabel.width(.matchParent)

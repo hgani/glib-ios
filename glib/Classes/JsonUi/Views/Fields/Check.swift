@@ -2,16 +2,16 @@
 
 import MBRadioCheckboxButton2
 
-class JsonView_Fields_Check: JsonView_AbstractField, SubmittableField, CheckboxButtonDelegate {
+class JsonView_Fields_Check: JsonView_AbstractField, CheckboxButtonDelegate {
     private let checkbox = MCheckBox()
 
-    var name: String?
-    var value: String {
+//    var name: String?
+    override var value: String {
         return checkbox.isOn ? spec["checkValue"].stringValue : spec["uncheckValue"].stringValue
     }
 
     override func initView() -> UIView {
-        self.name = spec["name"].string
+//        self.name = spec["name"].string
 
 //        self.registerToClosestForm(field: checkbox)
 
@@ -21,9 +21,9 @@ class JsonView_Fields_Check: JsonView_AbstractField, SubmittableField, CheckboxB
             .title(spec["label"].stringValue)
     }
 
-    func validate() -> Bool {
-        return true
-    }
+//    func validate() -> Bool {
+//        return true
+//    }
     
     func chechboxButtonDidSelect(_ button: CheckboxButton) {
         updateJsonLogic()
@@ -34,7 +34,7 @@ class JsonView_Fields_Check: JsonView_AbstractField, SubmittableField, CheckboxB
     }
 
     private func updateJsonLogic() {
-        self.processJsonLogic(view: self.checkbox, value: self.value)
+        self.processJsonLogic(view: self.checkbox)
     }
     
 //    func updateJsonLogic(_ checkbox: CheckboxButton) {

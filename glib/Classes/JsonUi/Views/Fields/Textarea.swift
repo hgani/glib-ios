@@ -1,17 +1,17 @@
 #if INCLUDE_MDLIBS
 
-class JsonView_Fields_Textarea: JsonView_AbstractField, SubmittableField {
+class JsonView_Fields_Textarea: JsonView_AbstractField {
     private var view: MTextArea!
 
-    var name: String?
-    var value: String {
+//    var name: String?
+    override var value: String {
         return view.text ?? ""
     }
 
     override func initView() -> UIView {
         view = MTextArea(outlined: spec["styleClasses"].arrayValue.contains("outlined"))
 
-        name = spec["name"].string
+//        name = spec["name"].string
 
         view
             .label(spec["label"].stringValue)
@@ -20,7 +20,7 @@ class JsonView_Fields_Textarea: JsonView_AbstractField, SubmittableField {
             .readOnly(spec["readOnly"].boolValue)
             .onEdit { _ in
 //                self.updateJsonLogic()
-                self.processJsonLogic(view: self.view, value: self.value)
+                self.processJsonLogic(view: self.view)
             }
 
         //
@@ -49,13 +49,13 @@ class JsonView_Fields_Textarea: JsonView_AbstractField, SubmittableField {
 //        }
 //    }
 
-    func validate() -> Bool {
-//        if let textView = view.textView {
-//            textView.becomeFirstResponder()
-//            return textView.resignFirstResponder()
-//        }
-        return true
-    }
+//    func validate() -> Bool {
+////        if let textView = view.textView {
+////            textView.becomeFirstResponder()
+////            return textView.resignFirstResponder()
+////        }
+//        return true
+//    }
 }
 
 //class JsonView_Fields_Textarea: JsonView_AbstractField, SubmittableField {

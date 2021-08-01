@@ -1,17 +1,17 @@
 #if INCLUDE_MDLIBS
 
-class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
+class JsonView_AbstractText: JsonView_AbstractField {
     private var view: MTextField!
 
-    var name: String?
-    var value: String {
+//    var name: String?
+    override var value: String {
         return view.text ?? ""
     }
 
     func initTextField() -> MTextField {
         view = MTextField(outlined: spec["styleClasses"].arrayValue.contains("outlined"))
         
-        name = spec["name"].string
+//        name = spec["name"].string
 
 //        view.labelView.text = spec["label"].string
 //        view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
@@ -22,7 +22,7 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
             .text(spec["value"].stringValue)
             .readOnly(spec["readOnly"].boolValue)
             .onEdit { _ in
-                self.processJsonLogic(view: self.view, value: self.value)
+                self.processJsonLogic(view: self.view)
             }
 
 //        initBottomBorderIfApplicable()
@@ -65,9 +65,9 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
         view.errorView.text = text
     }
 
-    func validate() -> Bool {
-        return true
-    }
+//    func validate() -> Bool {
+//        return true
+//    }
 
     override func applyStyleClass(_ styleClass: String) {
         if let buttonSpec = JsonUiStyling.textFields[styleClass] {

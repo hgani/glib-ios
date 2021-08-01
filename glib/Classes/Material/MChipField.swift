@@ -85,13 +85,10 @@ class MChipField: MDCChipField {
     @discardableResult
     open func onEdit(_ command: @escaping (MChipField) -> Void) -> Self {
         onEdit = command
-//        textField.addTarget(self, action: #selector(performEdit), for: .editingChanged)
         return self
     }
 
-//    @objc open func performEdit() {
     private func performEdit() {
-        NSLog("performEdit1")
         if let callback = self.onEdit {
             callback(self)
         }
