@@ -3,25 +3,19 @@ open class JsonView_AbstractField: JsonView {
 ////        self.registerToClosestForm(field: view())
 //    }
 
-    // TODO: Why not put name and value here?
-    // TODO: Restrict writer
-
-    public var name: String?
-//    public var value = ""
+    public private(set) var name: String?
 
     // To be overridden
     open var value: String {
         fatalError("Need to be overridden")
-//        return ""
     }
 
     open override func onAfterInitView(_ view: UIView) {
         name = spec["name"].string
         
-        self.registerToClosestForm(field: view)
+        registerToClosestForm(field: view)
 
-        // TODO: Make JsonView_AbstractField a SubmittableField so we can access value
-//        processJsonLogic(view: view, value: value)
+        processJsonLogic(view: view)
     }
 
     func registerToClosestForm(field: UIView) {
@@ -33,12 +27,6 @@ open class JsonView_AbstractField: JsonView {
             }
         }
     }
-//
-//    func processJsonLogic(view: UIView, value: String) {
-//         if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {
-//             updateFormData(form, fieldName, value)
-//         }
-//     }
 
     func processJsonLogic(view: UIView) {
          if let fieldName = name, let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {

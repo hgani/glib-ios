@@ -49,7 +49,7 @@ class JsonView_Fields_Select: JsonView_AbstractField {
     }
 
     override func initView() -> UIView {
-        name = spec["name"].string
+//        name = spec["name"].string
 
 //        let textStrLabel = spec["label"].stringValue
 //        textLabel.font(RobotoFonts.Style.regular.font, size: 14)
