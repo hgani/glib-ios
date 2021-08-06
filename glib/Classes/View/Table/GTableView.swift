@@ -1,6 +1,6 @@
 import UIKit
 
-open class GTableView: UITableView {
+open class GTableView: UITableView, IView {
     private var helper: ViewHelper!
 
     // Useful for making sure an unattached delegate object sticks around.

@@ -151,25 +151,29 @@ open class JsonView {
 
         NSLog("registerJsonLogic2")
         form.formData.asObservable().subscribe { _ in
-            NSLog("registerJsonLogic3")
-
-            NSLog("registerJsonLogic4")
             do {
                 let jsonlogic = try JsonLogic(showIf)
+                NSLog("registerJsonLogic3: \(form.formData.value.rawString())")
                 let result: Bool = try jsonlogic.applyRule(to: form.formData.value.rawString())
 
-                view.isHidden = !result
                 if let iview = view as? IView {
-                    if view.isHidden {
-
-                        iview.width(0).height(0)
-                    } else {
-
-                        iview.width(.wrapContent).height(.wrapContent)
-                    }
+                    iview.show(result)
                 } else {
                     fatalError("Not a valid view: \(type(of: view))")
                 }
+//                // TODO: Implement reusable setShow() in IView
+//                view.isHidden = !result
+//                if let iview = view as? IView {
+//                    if view.isHidden {
+//
+//                        iview.width(0).height(0)
+//                    } else {
+//
+//                        iview.width(.wrapContent).height(.wrapContent)
+//                    }
+//                } else {
+//                    fatalError("Not a valid view: \(type(of: view))")
+//                }
             } catch {
                 GLog.d("Invalid rule")
             }
