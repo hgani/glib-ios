@@ -1,6 +1,6 @@
 import UIKit
 
-open class GHamburgerPanel: UIView, IContainer {
+open class GHamburgerPanel: UIView {
     private var helper: ViewHelper!
 
     public var size: CGSize {

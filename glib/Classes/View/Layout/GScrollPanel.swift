@@ -1,6 +1,6 @@
 import UIKit
 
-open class GScrollPanel: UIScrollView, IContainer {
+open class GScrollPanel: UIScrollView {
     private var helper: ViewHelper!
     let contentView = GVerticalPanel()
     private weak var keyboardScreen: GScreen?

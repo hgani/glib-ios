@@ -1,2 +1,2 @@
-public protocol IContainer: IView {
-}
+//public protocol IContainer: IView {
+//}
