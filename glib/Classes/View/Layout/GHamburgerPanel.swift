@@ -62,8 +62,10 @@ open class GHamburgerPanel: UIView {
         return self
     }
 
+    @discardableResult
     public func color(bg: UIColor) -> Self {
-        backgroundColor = bg
+//        backgroundColor = bg
+        helper.bg(color: bg)
         return self
     }
 

@@ -106,6 +106,11 @@ public class ViewHelper: SizingHelper {
         return previousHugging
     }
 
+    public func bg(color: UIColor) {
+        backgroundView?.removeFromSuperview()
+        view.backgroundColor = color
+    }
+
     public func bg(image: UIImage?, repeatTexture: Bool) {
         view.backgroundColor = nil
         backgroundView?.removeFromSuperview()
