@@ -52,10 +52,12 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
                 //                case .cloudServiceNetworkConnectionFailed: print("Could not connect to the network")
                 //                case .cloudServiceRevoked: print("User has revoked permission to use this cloud service")
                 case .paymentCancelled:
+                    NSLog("Purchase canceled")
 //                    self?.state = .completed
 //                    completion?(.success(JSON()))
-                    JsonAction.execute(spec: strongSelf.spec["onSuccess"], screen: strongSelf.screen, creator: strongSelf)
+//                    JsonAction.execute(spec: strongSelf.spec["onSuccess"], screen: strongSelf.screen, creator: strongSelf)
                 default:
+                    NSLog("JsonAction_Iaps_StorePurchase6")
 //                    self?.state = .error
 
 //                    self?.execute(.failure, parameters: parameters, completion: completion)
@@ -169,9 +171,8 @@ class ReceiptStore {
     private init() {}
 }
 
-
-// From 5 Jul 2021
-
+// From 6 Aug 2021
+//
 //import Foundation
 //import os.log
 //import SwiftyJSON
