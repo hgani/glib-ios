@@ -125,8 +125,26 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
             }
         }
     }
-}
 
+    public static func initOnAppLaunch() {
+        SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
+            for purchase in purchases {
+                switch purchase.transaction.transactionState {
+                case .purchased, .restored:
+                    if purchase.needsFinishTransaction {
+                        SwiftyStoreKit.finishTransaction(purchase.transaction)
+                    }
+
+                    ReceiptStore.shared.fetchReceipt(forceRefresh: true, completion: { _ in })
+                case .failed, .purchasing, .deferred:
+                    break
+                @unknown default:
+                    break
+                }
+            }
+        }
+    }
+}
 
 class ReceiptStore {
     static let shared = ReceiptStore()
