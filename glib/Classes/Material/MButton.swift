@@ -148,35 +148,39 @@ extension MButton: IView {
     }
 
     @discardableResult
+    public func color(bg: UIColor) -> Self {
+        return color(bg: bg, text: nil)
+    }
+
+    @discardableResult
     public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
         paddings = paddings.to(top: top, left: left, bottom: bottom, right: right)
         contentEdgeInsets = paddings.toEdgeInsets()
         return self
     }
 
+    @discardableResult
     public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
     }
 
+    @discardableResult
     public func width(_ width: LayoutSize) -> Self {
         helper.width(width)
         return self
     }
 
+    @discardableResult
     public func height(_ height: Int) -> Self {
         helper.height(height)
         return self
     }
 
+    @discardableResult
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
         return self
-    }
-
-    @discardableResult
-    public func color(bg: UIColor) -> Self {
-        return color(bg: bg, text: nil)
     }
 }
 

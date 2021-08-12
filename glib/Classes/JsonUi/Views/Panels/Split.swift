@@ -1,36 +1,21 @@
-class JsonView_Panels_Split: JsonView {
-    // It makes no sense to use split panel with `wrapContent`, so `wrapContent` is not supported in iOS.
-    // Use either `matchParent` (default in iOS) or specific width.
-    private let panel: ISplitPanel & UIView
-    
-    public required init(_ spec: Json, _ screen: GScreen) {
-        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("card") {
-            #if INCLUDE_MDLIBS
-            panel = MSplitCard().applyStyles(spec).width(.matchParent)
-            #else
-            panel = GSplitPanel().width(.matchParent)
-            #endif
-        } else {
-            panel = GSplitPanel().width(.matchParent)
-        }
-        super.init(spec, screen)
-    }
+class JsonView_Panels_Split: JsonView_AbstractPanel {
+    private let panel = GSplitPanel()
 
     override func initView() -> UIView {
         if let center = spec["center"].presence {
-            return panel.withViews(
+            panel.withViews(
                 createSubview(spec["left"], center: false),
                 createSubview(center, center: true),
                 createSubview(spec["right"], center: false)
-                )
+            )
         } else {
-            return panel.withViews(
+            panel.withViews(
                 left: createSubview(spec["left"], center: false),
                 right: createSubview(spec["right"], center: false)
-                )
+            )
         }
 
-        return panel
+        return initContainer(content: panel)
     }
 
     private func createSubview(_ subviewSpec: Json, center: Bool) -> UIView {

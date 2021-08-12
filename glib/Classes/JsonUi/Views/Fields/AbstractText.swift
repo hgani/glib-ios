@@ -1,27 +1,29 @@
 #if INCLUDE_MDLIBS
 
-class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
+class JsonView_AbstractText: JsonView_AbstractField {
     private var view: MTextField!
 
-    var name: String?
-    var value: String {
+//    var name: String?
+    override var value: String {
         return view.text ?? ""
     }
 
     func initTextField() -> MTextField {
         view = MTextField(outlined: spec["styleClasses"].arrayValue.contains("outlined"))
         
-        name = spec["name"].string
+//        name = spec["name"].string
 
-        view.labelView.text = spec["label"].string
-//        view.placeholder = spec["placeholder"].string
-//        view.text = spec["value"].string
-        view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
+//        view.labelView.text = spec["label"].string
+//        view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
 
         view
+            .label(spec["label"].stringValue)
             .placeholder(spec["placeholder"].stringValue)
             .text(spec["value"].stringValue)
             .readOnly(spec["readOnly"].boolValue)
+            .onEdit { _ in
+                self.processJsonLogic(view: self.view)
+            }
 
 //        initBottomBorderIfApplicable()
 
@@ -29,12 +31,13 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
 
         return view
     }
-    
-    @objc func updateJsonLogic() {
-        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {
-            updateFormData(form, fieldName, value)
-        }
-    }
+
+// TODO: Genericize and use this in audiostatus
+//   func updateJsonLogic() {
+//        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {
+//            updateFormData(form, fieldName, value)
+//        }
+//    }
 
 //    private func initBottomBorderIfApplicable() {
 //        #if !INCLUDE_UILIBS
@@ -62,9 +65,9 @@ class JsonView_AbstractText: JsonView_AbstractField, SubmittableField {
         view.errorView.text = text
     }
 
-    func validate() -> Bool {
-        return true
-    }
+//    func validate() -> Bool {
+//        return true
+//    }
 
     override func applyStyleClass(_ styleClass: String) {
         if let buttonSpec = JsonUiStyling.textFields[styleClass] {

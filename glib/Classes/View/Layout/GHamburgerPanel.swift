@@ -1,6 +1,6 @@
 import UIKit
 
-open class GHamburgerPanel: UIView, IContainer {
+open class GHamburgerPanel: UIView {
     private var helper: ViewHelper!
 
     public var size: CGSize {
@@ -62,8 +62,10 @@ open class GHamburgerPanel: UIView, IContainer {
         return self
     }
 
+    @discardableResult
     public func color(bg: UIColor) -> Self {
-        backgroundColor = bg
+//        backgroundColor = bg
+        helper.bg(color: bg)
         return self
     }
 

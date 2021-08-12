@@ -1,6 +1,6 @@
 #if INCLUDE_MDLIBS
 
-open class MCollectionView: UICollectionView, IContainer {
+open class MCollectionView: UICollectionView {
     private var helper: ViewHelper!
 
     public var size: CGSize {

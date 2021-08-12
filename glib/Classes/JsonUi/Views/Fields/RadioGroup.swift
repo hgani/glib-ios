@@ -1,17 +1,17 @@
 #if INCLUDE_MDLIBS
 
-class JsonView_Fields_RadioGroup: JsonView_AbstractField, SubmittableField {
+class JsonView_Fields_RadioGroup: JsonView_AbstractField {
     private let panel = GVerticalPanel()
     private var selectedJsonRadio: JsonView_Fields_Radio?
     private var jsonRadios: [JsonView_Fields_Radio] = []
 
-    var name: String?
-    var value: String {
+//    var name: String?
+    override var value: String {
         return self.selectedJsonRadio?.value ?? ""
     }
 
     override func initView() -> UIView {
-        name = spec["name"].stringValue
+//        name = spec["name"].stringValue
         let childViews = spec["childViews"].arrayValue
 
         for index in 0..<childViews.count {
@@ -40,19 +40,20 @@ class JsonView_Fields_RadioGroup: JsonView_AbstractField, SubmittableField {
                 radio.checked(false)
             }
         }
-        updateJsonLogic()
+//        updateJsonLogic()
+        self.processJsonLogic(view: self.panel)
     }
     
-    func updateJsonLogic() {
-        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: panel),
-            let fieldName = spec["name"].string {
-            updateFormData(form, fieldName, value)
-        }
-    }
-
-    func validate() -> Bool {
-        return true
-    }
+//    func updateJsonLogic() {
+//        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: panel),
+//            let fieldName = spec["name"].string {
+//            updateFormData(form, fieldName, value)
+//        }
+//    }
+//
+//    func validate() -> Bool {
+//        return true
+//    }
 }
 
 #endif

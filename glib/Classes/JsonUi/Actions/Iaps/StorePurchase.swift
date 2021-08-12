@@ -19,17 +19,28 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
 
 
     private func purchase() {
+        NSLog("JsonAction_Iaps_StorePurchase1")
         let productId = spec["productId"].stringValue
 
-        SwiftyStoreKit.purchaseProduct(productId, quantity: 1, atomically: true) { [weak self] result in
-            guard let strongSelf = self else { return }
+//        SwiftyStoreKit.purchaseProduct(productId, quantity: 1, atomically: true) { [weak self] result in
+        SwiftyStoreKit.purchaseProduct(productId, quantity: 1, atomically: true) { result in
+            self.indicator.hide()
 
+                NSLog("JsonAction_Iaps_StorePurchase2")
+            let strongSelf = self
+//            guard let strongSelf = self else { return }
+
+                NSLog("JsonAction_Iaps_StorePurchase3")
             switch result {
             case .success:
+
+                    NSLog("JsonAction_Iaps_StorePurchase4")
 //                self?.state = .completed
 
-                self?.verifyReceipt()
+                self.verifyReceipt()
             case let .error(error):
+
+                    NSLog("JsonAction_Iaps_StorePurchase5")
                 switch error.code {
                 // TODO:
                 //                case .unknown: print("Unknown error. Please contact support")
@@ -41,10 +52,12 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
                 //                case .cloudServiceNetworkConnectionFailed: print("Could not connect to the network")
                 //                case .cloudServiceRevoked: print("User has revoked permission to use this cloud service")
                 case .paymentCancelled:
+                    NSLog("Purchase canceled")
 //                    self?.state = .completed
 //                    completion?(.success(JSON()))
-                    JsonAction.execute(spec: strongSelf.spec["onSuccess"], screen: strongSelf.screen, creator: strongSelf)
+//                    JsonAction.execute(spec: strongSelf.spec["onSuccess"], screen: strongSelf.screen, creator: strongSelf)
                 default:
+                    NSLog("JsonAction_Iaps_StorePurchase6")
 //                    self?.state = .error
 
 //                    self?.execute(.failure, parameters: parameters, completion: completion)
@@ -53,7 +66,7 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
                     JsonAction.execute(spec: strongSelf.spec["onFailure"], screen: strongSelf.screen, creator: strongSelf)
                 }
 
-                guard let strongSelf = self else { return }
+//                guard let strongSelf = self else { return }
                 GLog.e("Error occured when purchasing \(productId)")
             }
         }
@@ -94,9 +107,13 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
     }
 
     private func restore() {
-        SwiftyStoreKit.restorePurchases(atomically: true) { [weak self] results in
+//        SwiftyStoreKit.restorePurchases(atomically: true) { [weak self] results in
+        SwiftyStoreKit.restorePurchases(atomically: true) { results in
+            self.indicator.hide()
+
             if !results.restoreFailedPurchases.isEmpty {
-                guard let strongSelf = self else { return }
+                let strongSelf = self
+//                guard let strongSelf = self else { return }
                 GLog.e("Error occured restoring purchases")
 
 //                self?.state = .error
@@ -106,12 +123,30 @@ class JsonAction_Iaps_StorePurchase: JsonAction {
             } else {
 //                self?.state = .completed
 
-                self?.verifyReceipt()
+                self.verifyReceipt()
+            }
+        }
+    }
+
+    public static func initOnAppLaunch() {
+        SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
+            for purchase in purchases {
+                switch purchase.transaction.transactionState {
+                case .purchased, .restored:
+                    if purchase.needsFinishTransaction {
+                        SwiftyStoreKit.finishTransaction(purchase.transaction)
+                    }
+
+                    ReceiptStore.shared.fetchReceipt(forceRefresh: true, completion: { _ in })
+                case .failed, .purchasing, .deferred:
+                    break
+                @unknown default:
+                    break
+                }
             }
         }
     }
 }
-
 
 class ReceiptStore {
     static let shared = ReceiptStore()
@@ -136,7 +171,13 @@ class ReceiptStore {
     private init() {}
 }
 
-
+// From 6 Aug 2021
+//
+//import Foundation
+//import os.log
+//import SwiftyJSON
+//import SwiftyStoreKit
+//
 //final class PurchaseAction: ExecutableAction {
 //    private enum PurchaseState {
 //        case running
@@ -155,7 +196,7 @@ class ReceiptStore {
 //            }
 //        }
 //    }
-
+//
 //    private let log = OSLog(subsystem: "com.teamapp.presentation", category: "Store")
 //
 //    override func execute(parameters: JSON, completion: ActionCompletion?) {
@@ -252,3 +293,4 @@ class ReceiptStore {
 //        super.execute(parameters: parameters, completion: completion)
 //    }
 //}
+//

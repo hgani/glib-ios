@@ -3,7 +3,9 @@ import UIKit
 
 open class GHorizontalPanel: UIView {
     fileprivate var helper: ViewHelper!
-    fileprivate var containerHelper: ViewHelper?
+
+    // Only the owner of the helper can keep a strong reference to it (see `ViewHelper.view`).
+    fileprivate weak var containerHelper: ViewHelper?
 
     private var previousView: UIView?
     private var previousLayoutPriority: UILayoutPriority?
@@ -37,7 +39,7 @@ open class GHorizontalPanel: UIView {
 
         helper = ViewHelper(self)
 
-        _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
+        paddings(top: 0, left: 0, bottom: 0, right: 0)
 
         updateHeightTendency()
     }
@@ -90,7 +92,7 @@ open class GHorizontalPanel: UIView {
 
         super.addSubview(child)
         initChildConstraints(child: child, left: left)
-        adjustParentBottomConstraint(child: child)
+        adjustSelfConstraints(child: child)
 
         previousView = child
     }
@@ -123,26 +125,7 @@ open class GHorizontalPanel: UIView {
         }
     }
 
-//        // See https://github.com/zaxonus/AutoLayScroll/blob/master/AutoLayScroll/ViewController.swift
-//        private func initChildConstraints(child: UIView, top: Float) {
-//            child.snp.makeConstraints { make in
-//                if previousViewElement == nil {
-//                    make.top.equalTo(self.snp.topMargin).offset(top)
-//                } else {
-//                    make.top.equalTo(previousViewElement.snp.bottom).offset(top)
-//                }
-//
-//    //            make.left.equalTo(self.snp.leftMargin)
-//
-//                switch horizontalAlign {
-//                case .center: make.centerX.equalTo(self)
-//                case .right: make.right.equalTo(self.snp.rightMargin)
-//                case .left: make.left.equalTo(self.snp.leftMargin)
-//                }
-//            }
-//        }
-
-    private func adjustParentBottomConstraint(child: UIView) {
+    private func adjustSelfConstraints(child: UIView) {
         snp.makeConstraints { make in
             make.bottomMargin.greaterThanOrEqualTo(child.snp.bottom)
         }
@@ -216,6 +199,12 @@ extension GHorizontalPanel: IView {
     }
 
     @discardableResult
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
+    @discardableResult
     public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
@@ -236,12 +225,7 @@ extension GHorizontalPanel: IView {
     @discardableResult
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
-        return self
-    }
-
-    @discardableResult
-    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
-        helper.paddings(t: top, l: left, b: bottom, r: right)
+        updateHeightTendency()
         return self
     }
 }

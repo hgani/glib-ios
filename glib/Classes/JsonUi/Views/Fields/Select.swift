@@ -2,14 +2,14 @@
 
 import RSSelectionMenu
 
-class JsonView_Fields_Select: JsonView_AbstractField, SubmittableField {
+class JsonView_Fields_Select: JsonView_AbstractField {
 //    private let textLabel = GLabel()
 //    private let valueLabel = GLabel()
     private let chipField = MChipField()
     private let errorLabel = GLabel()
 
-    var name: String?
-    var value: String {
+//    var name: String?
+    override var value: String {
         if selectedOptions.count > 0 {
             return selectedOptions.map({ (option) -> String in
                 return option.value
@@ -37,7 +37,7 @@ class JsonView_Fields_Select: JsonView_AbstractField, SubmittableField {
         }
     }
     
-    func validate() -> Bool {
+    override func validate() -> Bool {
         errors(nil)
         if let validation = spec["validation"].presence {
             if let required = validation["required"].presence, value == "" {
@@ -49,7 +49,7 @@ class JsonView_Fields_Select: JsonView_AbstractField, SubmittableField {
     }
 
     override func initView() -> UIView {
-        name = spec["name"].string
+//        name = spec["name"].string
 
 //        let textStrLabel = spec["label"].stringValue
 //        textLabel.font(RobotoFonts.Style.regular.font, size: 14)
@@ -75,31 +75,35 @@ class JsonView_Fields_Select: JsonView_AbstractField, SubmittableField {
 //                selectionMenu.onDismiss = { self.selectedOptions = $0 }
 //                selectionMenu.show(style: .Actionsheet(title: self.spec["label"].stringValue, action: "Done", height: nil), from: self.screen)
 //            }), top: 5)
-        
+
+        let strongScreen = self.screen
+
         chipField.width(.matchParent)
             .placeholder(spec["label"].stringValue)
             .onClick { (field) in
-                let selectionMenu = RSSelectionMenu(
-                    selectionType: (self.spec["multiple"].bool ?? false ? .Multiple : .Single),
-                    dataSource: self.spec["options"].arrayValue.map({ (option) -> OptionModel in
-                        if let text = option.string {
-                            return OptionModel(text: text, value: text)
-                        }
-                        else {
-                            return OptionModel(text: option["text"].stringValue,
-                                               value: option["value"].stringValue)
-                        }
-                    })) { (cell, option, indexPath) in
-                        cell.textLabel?.text = option.text
+                let selectionType: SelectionType = self.spec["multiple"].bool ?? false ? .Multiple : .Single
+                let options = self.spec["options"].arrayValue.map({ (option) -> OptionModel in
+                    if let text = option.string {
+                        return OptionModel(text: text, value: text)
+                    }
+                    else {
+                        return OptionModel(text: option["text"].stringValue, value: option["value"].stringValue)
+                    }
+                })
+                let selectionMenu = RSSelectionMenu(selectionType: selectionType, dataSource: options) { (cell, option, indexPath) in
+                    cell.textLabel?.text = option.text
                 }
                 selectionMenu.onDismiss = {
                     self.errors(nil)
                     self.selectedOptions = $0
                     self.chipField.clearTextInput()
                     self.chipField.textField.resignFirstResponder()
-                    self.updateJsonLogic()
+//                    self.updateJsonLogic()
                 }
                 selectionMenu.show(style: .Actionsheet(title: self.spec["label"].stringValue, action: "Done", height: nil), from: self.screen)
+            }
+            .onEdit { _ in
+                self.processJsonLogic(view: self.chipField)
             }
         
         errorLabel.width(.matchParent)
@@ -110,11 +114,11 @@ class JsonView_Fields_Select: JsonView_AbstractField, SubmittableField {
         return GVerticalPanel().append(chipField, top: 10).append(errorLabel)
     }
     
-    func updateJsonLogic() {
-        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: chipField) {
-            updateFormData(form, fieldName, value)
-        }
-    }
+//    func updateJsonLogic() {
+//        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: chipField) {
+//            updateFormData(form, fieldName, value)
+//        }
+//    }
     
     func errors(_ text: String?) -> Void {
         if let errorText = text {

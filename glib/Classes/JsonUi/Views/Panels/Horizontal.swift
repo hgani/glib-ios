@@ -71,8 +71,7 @@ class JsonView_Panels_Horizontal: JsonView_AbstractPanel {
 
     override func applyStyleClass(_ styleClass: String) {
         if let cardSpec = JsonUiStyling.panels[styleClass] {
-            cardSpec.decorate(container)
+            cardSpec.decorate(container: container, contentPanel: panel)
         }
     }
-
 }

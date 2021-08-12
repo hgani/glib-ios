@@ -2,16 +2,16 @@
 
 import MBRadioCheckboxButton2
 
-class JsonView_Fields_Check: JsonView_AbstractField, SubmittableField, CheckboxButtonDelegate {
+class JsonView_Fields_Check: JsonView_AbstractField, CheckboxButtonDelegate {
     private let checkbox = MCheckBox()
 
-    var name: String?
-    var value: String {
-        return checkbox.isOn ? spec["value"].stringValue : (spec["uncheckValue"].string ?? "")
+//    var name: String?
+    override var value: String {
+        return checkbox.isOn ? spec["checkValue"].stringValue : spec["uncheckValue"].stringValue
     }
 
     override func initView() -> UIView {
-        self.name = spec["name"].string
+//        self.name = spec["name"].string
 
 //        self.registerToClosestForm(field: checkbox)
 
@@ -21,25 +21,29 @@ class JsonView_Fields_Check: JsonView_AbstractField, SubmittableField, CheckboxB
             .title(spec["label"].stringValue)
     }
 
-    func validate() -> Bool {
-        return true
-    }
+//    func validate() -> Bool {
+//        return true
+//    }
     
     func chechboxButtonDidSelect(_ button: CheckboxButton) {
-        updateJsonLogic(button)
+        updateJsonLogic()
     }
     
     func chechboxButtonDidDeselect(_ button: CheckboxButton) {
-        updateJsonLogic(button)
+        updateJsonLogic()
+    }
+
+    private func updateJsonLogic() {
+        self.processJsonLogic(view: self.checkbox)
     }
     
-    func updateJsonLogic(_ checkbox: CheckboxButton) {
-        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: checkbox),
-            let fieldName = spec["name"].string {
-            let isOn = checkbox.isOn ? "on" : ""
-            updateFormData(form, fieldName, isOn)
-        }
-    }
+//    func updateJsonLogic(_ checkbox: CheckboxButton) {
+//        if let form = closest(JsonView_Panels_Form.FormPanel.self, from: checkbox),
+//            let fieldName = spec["name"].string {
+//            let isOn = checkbox.isOn ? "on" : ""
+//            updateFormData(form, fieldName, isOn)
+//        }
+//    }
 }
 
 #endif

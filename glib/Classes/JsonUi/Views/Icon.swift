@@ -12,7 +12,8 @@ class JsonView_Icon: JsonView {
 //        view.icon(icon(spec: spec), size: 24)
 
         if let icon = icon(spec: spec) {
-            view.icon(icon, size: 24)
+//            view.icon(icon, size: 24)
+            view.icon(icon, size: nil)
         }
 
         if let badgeSpec = spec["badge"].presence {

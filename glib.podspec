@@ -120,9 +120,11 @@ Simplify iOS development
     sub.dependency 'MaterialComponents/ActionSheet', '124.1.1'
     sub.dependency 'MaterialComponents/Chips', '124.1.1'
     sub.dependency 'MaterialComponents/TextControls+FilledTextAreas', '124.1.1'
+    sub.dependency 'MaterialComponents/TextControls+FilledTextAreasTheming', '124.1.1'
     sub.dependency 'MaterialComponents/TextControls+FilledTextFields', '124.1.1'
     sub.dependency 'MaterialComponents/TextControls+FilledTextFieldsTheming', '124.1.1'
     sub.dependency 'MaterialComponents/TextControls+OutlinedTextAreas', '124.1.1'
+    sub.dependency 'MaterialComponents/TextControls+OutlinedTextAreasTheming', '124.1.1'
     sub.dependency 'MaterialComponents/TextControls+OutlinedTextFields', '124.1.1'
     sub.dependency 'MaterialComponents/TextControls+OutlinedTextFieldsTheming', '124.1.1'
 

@@ -95,15 +95,14 @@ public class JsonUi {
         // TODO: rightNavButtons is Deprecated
         let buttons = (spec["rightNavButtons"].array ?? spec["navBar"]["rightButtons"].arrayValue).map { json -> GBarButtonItem in
             let customView = GLabel()
-                .specs(.link)
                 .onClick({ _ in
                     JsonAction.execute(spec: json["onClick"], screen: screen, creator: nil)
                 })
 
             if let text = json["text"].string {
-                customView.text(text)
+                customView.specs(.navBarText).text(text)
             } else {
-                JsonView_Icon.update(view: customView, spec: json["icon"])
+                JsonView_Icon.update(view: customView.specs(.navBarIcon), spec: json["icon"])
             }
             return GBarButtonItem(customView: customView)
         }
