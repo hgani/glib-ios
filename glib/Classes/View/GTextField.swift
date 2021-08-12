@@ -1,6 +1,6 @@
 import UIKit
 
-open class GTextField: UITextField, ITextField {
+open class GTextField: UITextField {
     private var helper: ViewHelper!
     private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
 
@@ -133,7 +133,7 @@ public class GTextFieldSpec {
     }
 }
 
-protocol ITextField: IView {
-    func secure(_ secure: Bool) -> Self
-    func keyboardType(_ type: UIKeyboardType) -> Self
-}
+//protocol ITextField: IView {
+//    func secure(_ secure: Bool) -> Self
+//    func keyboardType(_ type: UIKeyboardType) -> Self
+//}

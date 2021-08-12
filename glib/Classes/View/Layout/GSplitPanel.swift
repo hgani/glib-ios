@@ -1,14 +1,12 @@
 import UIKit
 import SnapKit
 
-open class GSplitPanel: UIView, IView, ISplitPanel {
+open class GSplitPanel: UIView {
     private var helper: ViewHelper!
     private var event: EventHelper<GSplitPanel>!
 
-    public var size: CGSize {
-        return helper.size
-    }
-
+    // For now, containerHelper is not needed because splitPanel doesn't readjust its size
+    // based on its container's width/height.
     public init() {
         super.init(frame: .zero)
         initialize()
@@ -23,7 +21,7 @@ open class GSplitPanel: UIView, IView, ISplitPanel {
         helper = ViewHelper(self)
         event = EventHelper(self)
 
-        _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
+        paddings(top: 0, left: 0, bottom: 0, right: 0)
     }
 
     open override func didMoveToSuperview() {
@@ -104,29 +102,20 @@ open class GSplitPanel: UIView, IView, ISplitPanel {
         constraint.width.equalTo(0).priorityLow()
     }
 
-    public func width(_ width: Int) -> Self {
-        helper.width(width)
+    public func onClick(_ command: @escaping (GSplitPanel) -> Void) -> Self {
+        event.onClick(command)
         return self
     }
 
-    public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
+    public func interaction(_ enabled: Bool) -> Self {
+        isUserInteractionEnabled = enabled
         return self
     }
+}
 
-    public func height(_ height: Int) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func height(_ height: LayoutSize) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
-        helper.paddings(t: top, l: left, b: bottom, r: right)
-        return self
+extension GSplitPanel: IView {
+    public var size: CGSize {
+        return helper.size
     }
 
     @discardableResult
@@ -135,13 +124,33 @@ open class GSplitPanel: UIView, IView, ISplitPanel {
         return self
     }
 
-    public func onClick(_ command: @escaping (GSplitPanel) -> Void) -> Self {
-        event.onClick(command)
+    @discardableResult
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
 
-    public func interaction(_ enabled: Bool) -> Self {
-        isUserInteractionEnabled = enabled
+    @discardableResult
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    @discardableResult
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    @discardableResult
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    @discardableResult
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
         return self
     }
 }

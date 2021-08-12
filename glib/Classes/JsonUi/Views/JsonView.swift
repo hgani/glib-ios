@@ -1,3 +1,5 @@
+import jsonlogic
+
 open class JsonView {
     private var backend: UIView?
     public let spec: Json
@@ -123,6 +125,7 @@ open class JsonView {
         let view = initView()
         self.backend = view
         initGenericAttributes(backend: view)
+        hideInitially(view: view)
 
         // This might look hacky but it's much less error prone than the alternative, where we need to
         // explicitly execute the callback for every parent component, which will get very complex
@@ -131,9 +134,45 @@ open class JsonView {
         DispatchQueue.main.async {
             // This is supposed to execute after the view has been added to parent.
             self.onAfterInitView(view)
+            self.registerJsonLogic(view: view)
         }
 
         return view
+    }
+
+    private func hideInitially(view: UIView) {
+        if let showIf = self.spec["showIf"].presence {
+            if let iview = view as? IView {
+                iview.show(false)
+            } else {
+                fatalError("Not a valid view: \(type(of: view))")
+            }
+        }
+    }
+
+    private func registerJsonLogic(view: UIView) {
+        guard let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) else {
+            return
+        }
+        guard let showIf = self.spec["showIf"].rawString() else {
+            return
+        }
+
+        form.formData.asObservable().subscribe { _ in
+            do {
+                let jsonlogic = try JsonLogic(showIf)
+                let result: Bool = try jsonlogic.applyRule(to: form.formData.value.rawString())
+
+                if let iview = view as? IView {
+                    iview.show(result)
+                } else {
+                    fatalError("Not a valid view: \(type(of: view))")
+                }
+            } catch {
+                GLog.d("Invalid rule")
+            }
+        }
+
     }
 
     func closest<T: UIView>(_ instanceType: T.Type, from: UIView) -> T? {

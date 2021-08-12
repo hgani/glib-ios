@@ -1,4 +1,4 @@
-protocol SubmittableField {
+public protocol SubmittableField {
     var name: String? { get }
     var value: String { get }
     func validate() -> Bool
@@ -7,7 +7,4 @@ protocol SubmittableField {
 protocol SubmittableFileField: SubmittableField {
     var fileInput: Bool? { get }
     var completed: Bool? { get }
-}
-
-extension SubmittableField {
 }

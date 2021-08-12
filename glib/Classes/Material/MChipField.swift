@@ -5,6 +5,7 @@ import MaterialComponents.MaterialChips
 class MChipField: MDCChipField {
     fileprivate var helper: ViewHelper!
     private var onClick: ((MChipField) -> Void)?
+    private var onEdit: ((MChipField) -> Void)?
     
     public var size: CGSize {
         return helper.size
@@ -34,6 +35,8 @@ class MChipField: MDCChipField {
         var frame = UIScreen.main.bounds
         frame.size = sizeThatFits(frame.size)
         self.frame = frame
+
+        self.delegate = self
     }
     
     public func width(_ width: Int) -> Self {
@@ -77,6 +80,29 @@ class MChipField: MDCChipField {
         if let callback = self.onClick {
             callback(self)
         }
+    }
+
+    @discardableResult
+    open func onEdit(_ command: @escaping (MChipField) -> Void) -> Self {
+        onEdit = command
+        return self
+    }
+
+    private func performEdit() {
+        if let callback = self.onEdit {
+            callback(self)
+        }
+    }
+
+}
+
+extension MChipField: MDCChipFieldDelegate {
+    func chipField(_ chipField: MDCChipField, didAddChip chip: MDCChipView) {
+        performEdit()
+    }
+
+    func chipField(_ chipField: MDCChipField, didRemoveChip chip: MDCChipView) {
+        performEdit()
     }
 }
 

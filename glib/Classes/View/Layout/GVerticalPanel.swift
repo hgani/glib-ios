@@ -3,9 +3,11 @@ import UIKit
 
 open class GVerticalPanel: UIView, IView {
     private var helper: ViewHelper!
-    fileprivate var containerHelper: ViewHelper?
 
-    private var previousViewElement: UIView!
+    // Only the owner of the helper can keep a strong reference to it (see `ViewHelper.view`).
+    fileprivate weak var containerHelper: ViewHelper?
+
+    private var previousView: UIView?
     private var previousConstraint: NSLayoutConstraint!
     private var bottomConstraint: Constraint?
     private var wrapContentConstraint: Constraint?
@@ -44,13 +46,7 @@ open class GVerticalPanel: UIView, IView {
         helper = ViewHelper(self)
         event = EventHelper(self)
 
-        _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
-
-//        // TODO: Implement similar to horizontal panel's updateHeightTendency
-//        self.snp.makeConstraints { (make) -> Void in
-//            // Increase hugging so that it tends to wrap content by default
-//            make.width.equalTo(0).priorityLow()
-//        }
+        paddings(top: 0, left: 0, bottom: 0, right: 0)
 
         addInitialBottomConstraint()
 
@@ -100,7 +96,7 @@ open class GVerticalPanel: UIView, IView {
 //        removeConstraint(previousConstraint)
         addInitialBottomConstraint()
 
-        previousViewElement = nil
+        previousView = nil
 
 
         for view in subviews {
@@ -115,11 +111,10 @@ open class GVerticalPanel: UIView, IView {
         child.translatesAutoresizingMaskIntoConstraints = false
 
         super.addSubview(child)
-
         initChildConstraints(child: child, top: top)
         adjustSelfConstraints(child: child)
 
-        previousViewElement = child
+        previousView = child
     }
 
     public func addConstraintlessView(_ child: UIView) {
@@ -141,13 +136,17 @@ open class GVerticalPanel: UIView, IView {
     // See https://github.com/zaxonus/AutoLayScroll/blob/master/AutoLayScroll/ViewController.swift
     private func initChildConstraints(child: UIView, top: Float) {
         child.snp.makeConstraints { make in
-            if previousViewElement == nil {
-                make.top.equalTo(self.snp.topMargin).offset(top)
-            } else {
-                make.top.equalTo(previousViewElement.snp.bottom).offset(top)
-            }
+//            if previousViewElement == nil {
+//                make.top.equalTo(self.snp.topMargin).offset(top)
+//            } else {
+//                make.top.equalTo(previousViewElement.snp.bottom).offset(top)
+//            }
 
-//            make.left.equalTo(self.snp.leftMargin)
+            if let view = previousView {
+                make.top.equalTo(view.snp.bottom).offset(top)
+            } else {
+                make.top.equalTo(self.snp.topMargin).offset(top)
+            }
 
             switch horizontalAlign {
             case .center: make.centerX.equalTo(self)
@@ -158,9 +157,7 @@ open class GVerticalPanel: UIView, IView {
     }
 
     private func adjustSelfConstraints(child: UIView) {
-
         snp.makeConstraints { (make) -> Void in
-//            make.rightMargin.equalTo(child.snp.right).priorityLow()
             make.rightMargin.greaterThanOrEqualTo(child.snp.right)
         }
 

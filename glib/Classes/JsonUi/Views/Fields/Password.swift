@@ -1,8 +1,6 @@
 import SwiftIconFont
 
 class JsonView_Fields_Password: JsonView_AbstractText {
-//    private var view: UITextField!
-
     override func initView() -> UIView {
         let view = super.initTextField().secure(true)
 
@@ -24,12 +22,5 @@ class JsonView_Fields_Password: JsonView_AbstractText {
         imageView.image = UIImage(from: .materialIcon, code: code,
                                    textColor: .blue, backgroundColor: .clear,
                                    size: CGSize(width: 24, height: 24))
-
-//        if let mImageView = view.rightView as? UIImageView {
-//            let code = view.isSecureTextEntry ? "visibility" : "visibility.off"
-//            mImageView.image = UIImage(from: .materialIcon, code: code,
-//                                       textColor: .blue, backgroundColor: .clear,
-//                                       size: CGSize(width: 24, height: 24))
-//        }
     }
 }

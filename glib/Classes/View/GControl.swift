@@ -3,10 +3,6 @@ import UIKit
 open class GControl: UIControl {
     private var helper: ControlHelper<GControl>!
 
-    public var size: CGSize {
-        return helper.size
-    }
-
     public init() {
         super.init(frame: .zero)
         initialize()
@@ -30,38 +26,6 @@ open class GControl: UIControl {
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         helper.didMoveToSuperview()
-    }
-
-    public func width(_ width: Int) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func height(_ height: Int) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func height(_ height: LayoutSize) -> Self {
-        helper.height(height)
-        return self
-    }
-
-//    public func color(bg: UIColor?) -> Self {
-//        if let bgColor = bg {
-//            backgroundColor = bgColor
-//        }
-//        return self
-//    }
-
-    public func color(bg: UIColor) -> Self {
-        backgroundColor = bg
-        return self
     }
 
     open func onClick(_ command: @escaping (GControl) -> Void) -> Self {
@@ -108,8 +72,46 @@ open class GControl: UIControl {
         }
         return self
     }
+}
 
-    public func done() {
-        // End chaining
+extension GControl: IView {
+    public var size: CGSize {
+        return helper.size
+    }
+
+    @discardableResult
+    public func color(bg: UIColor) -> Self {
+        backgroundColor = bg
+        return self
+    }
+
+    @discardableResult
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
+    @discardableResult
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    @discardableResult
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    @discardableResult
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    @discardableResult
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
+        return self
     }
 }
