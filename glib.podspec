@@ -57,7 +57,8 @@ Simplify iOS development
 
   s.subspec 'Realm' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_REALM' }
-    sub.dependency 'RealmSwift', '~> 3.20'
+    #sub.dependency 'RealmSwift', '~> 3.20'
+    sub.dependency 'RealmSwift', '~> 10.12'
   end
 
   s.subspec 'Eureka' do |sub|
