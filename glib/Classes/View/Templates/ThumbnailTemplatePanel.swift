@@ -2,7 +2,7 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
     let picture = GImageView()
     let title = GLabel().specs(.libCellTitle)
     let subtitle = GLabel().specs(.libCellSubtitle).paddings(top: 4, left: nil, bottom: nil, right: nil)
-    let subsubtitle = GLabel().specs(.libCellSubsubtitle, .libMuted).paddings(top: 4, left: nil, bottom: nil, right: nil)
+    public let subsubtitle = GLabel().specs(.libCellSubsubtitle, .libMuted).paddings(top: 4, left: nil, bottom: nil, right: nil)
     let chips = GHorizontalPanel()
     public let contentPanel = GVerticalPanel().paddings(top: 20, left: 20, bottom: 10, right: 20)
     public let container = MCard().width(.matchParent)
@@ -54,17 +54,22 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
 
     public func setSubtitle(text: String?) {
         if let string = text {
-            subtitle.text(string).hidden(false)
+//            subtitle.text(string).hidden(false)
+            subtitle.text(string).show(true)
         } else {
-            subtitle.text("").hidden(true)
+//            subtitle.text("").hidden(true)
+            subtitle.show(false)
+            
         }
     }
 
     public func setSubsubtitle(text: String?) {
         if let string = text {
-            subsubtitle.text(string).hidden(false)
+//            subsubtitle.text(string).hidden(false)
+            subsubtitle.text(string).show(true)
         } else {
-            subsubtitle.text("").hidden(true)
+//            subsubtitle.text("").hidden(true)
+            subsubtitle.text("").show(false)
         }
     }
 }
