@@ -1,5 +1,6 @@
 import SnapKit
 import UIKit
+import FlexLayout
 
 open class GFlowPanel: UIView {
     fileprivate var helper: ViewHelper!
@@ -39,12 +40,14 @@ open class GFlowPanel: UIView {
         
         flex.direction(.row)
             .wrap(.wrap)
+            .backgroundColor(.red)
+//            .width(100%)
 
         helper = ViewHelper(self)
 
         paddings(top: 0, left: 0, bottom: 0, right: 0)
 
-//        updateHeightTendency()
+        updateHeightTendency()
     }
 
     private func updateHeightTendency() {
@@ -115,55 +118,55 @@ open class GFlowPanel: UIView {
         }
     }
 
-    // See https://github.com/zaxonus/AutoLayScroll/blob/master/AutoLayScroll/ViewController.swift
-    private func initChildConstraints(child: UIView, left: Float) {
-        child.snp.makeConstraints { make in
-
-            if let view = previousView {
-                make.left.equalTo(view.snp.right).offset(left)
-            } else {
-                make.left.equalTo(self.snp.leftMargin).offset(left)
-            }
-
-//            switch verticalAlign {
-//            case .middle:
-//                make.centerY.equalTo(self)
-//            case .top:
-//                make.top.equalTo(self.snp.topMargin)
-//            case .bottom:
-//                make.top.greaterThanOrEqualTo(self.snp.topMargin)
-//                make.bottom.equalTo(self.snp.bottomMargin)
+//    // See https://github.com/zaxonus/AutoLayScroll/blob/master/AutoLayScroll/ViewController.swift
+//    private func initChildConstraints(child: UIView, left: Float) {
+//        child.snp.makeConstraints { make in
+//
+//            if let view = previousView {
+//                make.left.equalTo(view.snp.right).offset(left)
+//            } else {
+//                make.left.equalTo(self.snp.leftMargin).offset(left)
 //            }
-        }
-    }
-
-    private func adjustSelfConstraints(child: UIView) {
-        snp.makeConstraints { make in
-            make.bottomMargin.greaterThanOrEqualTo(child.snp.bottom)
-        }
-
-        if shouldWidthMatchParent() {
-            rightConstraint?.deactivate()
-
-            child.snp.makeConstraints { make in
-                rightConstraint = make.right.lessThanOrEqualTo(self.snp.rightMargin).constraint
-            }
-
-            // Decrease resistance of the last view to avoid squashing the previous views which
-            // would happen if the last view is longer than the available space.
-            if let view = previousView, let priority = previousLayoutPriority {
-                ViewHelper.setResistance(view: view, axis: .horizontal, priority: priority)
-            }
-            previousLayoutPriority = ViewHelper.decreaseResistance(view: child, axis: .horizontal)
-
-        } else {
-            rightConstraint?.deactivate()
-
-            child.snp.makeConstraints { make in
-                rightConstraint = make.right.equalTo(self.snp.rightMargin).constraint
-            }
-        }
-    }
+//
+////            switch verticalAlign {
+////            case .middle:
+////                make.centerY.equalTo(self)
+////            case .top:
+////                make.top.equalTo(self.snp.topMargin)
+////            case .bottom:
+////                make.top.greaterThanOrEqualTo(self.snp.topMargin)
+////                make.bottom.equalTo(self.snp.bottomMargin)
+////            }
+//        }
+//    }
+//
+//    private func adjustSelfConstraints(child: UIView) {
+//        snp.makeConstraints { make in
+//            make.bottomMargin.greaterThanOrEqualTo(child.snp.bottom)
+//        }
+//
+//        if shouldWidthMatchParent() {
+//            rightConstraint?.deactivate()
+//
+//            child.snp.makeConstraints { make in
+//                rightConstraint = make.right.lessThanOrEqualTo(self.snp.rightMargin).constraint
+//            }
+//
+//            // Decrease resistance of the last view to avoid squashing the previous views which
+//            // would happen if the last view is longer than the available space.
+//            if let view = previousView, let priority = previousLayoutPriority {
+//                ViewHelper.setResistance(view: view, axis: .horizontal, priority: priority)
+//            }
+//            previousLayoutPriority = ViewHelper.decreaseResistance(view: child, axis: .horizontal)
+//
+//        } else {
+//            rightConstraint?.deactivate()
+//
+//            child.snp.makeConstraints { make in
+//                rightConstraint = make.right.equalTo(self.snp.rightMargin).constraint
+//            }
+//        }
+//    }
 
 //    open override func addSubview(_: UIView) {
 //        fatalError("Use addView() instead")

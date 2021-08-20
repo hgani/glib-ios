@@ -2,7 +2,8 @@ import FlexLayout
 
 class JsonView_Panels_Flow: JsonView {
 //    private let panel = GView()
-    private let panel = GFlowPanel().color(bg: .red).width(.matchParent)
+    private let panel = GFlowPanel()
+//        .color(bg: .red).width(.matchParent)
 //        .height(30)
     
     public required init(_ spec: Json, _ screen: GScreen) {
@@ -24,11 +25,13 @@ class JsonView_Panels_Flow: JsonView {
 //            panel.append(view)
 //        }
     
+//        // TODO: Avoid hardcoding width
         panel.flex
-//            .backgroundColor(UIColor(hex: spec["backgroundColor"].stringValue))
-//            .direction(.row)
-//            .wrap(.wrap)
             .width(CGFloat(spec["width"].intValue))
+//            .backgroundColor(UIColor(hex: spec["backgroundColor"].stringValue))
+////            .direction(.row)
+////            .wrap(.wrap)
+//            .width(CGFloat(spec["width"].intValue))
         
 //        for (index, view) in views.enumerated() {
 //            // TODO: seem spacer view doesn't work with FlexLayout
