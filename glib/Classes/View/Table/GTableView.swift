@@ -12,6 +12,18 @@ open class GTableView: UITableView, IView {
 
     public override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
+        
+        // https://stackoverflow.com/questions/18880341/why-is-there-extra-padding-at-the-top-of-my-uitableview-with-style-uitableviewst
+//        if style == .grouped {
+//            contentInsetAdjustmentBehavior = .never
+//        }
+//        self.edgesForExtendedLayout = .none
+        
+        // https://stackoverflow.com/questions/20305943/why-extra-space-is-at-top-of-uitableview-simple/20306058
+        if style == .grouped {
+            self.contentInset = UIEdgeInsets(top: -36, left: 0, bottom: 0, right: 0);
+        }
+
         initialize()
     }
 

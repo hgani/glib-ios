@@ -96,7 +96,8 @@ open class JsonView_Panels_List: JsonView {
 #else
 
 open class JsonView_Panels_List: JsonView {
-    private let tableView = GTableView().width(.matchParent).height(.matchParent)
+//    private let tableView = GTableView(frame: .zero, style: .plain).width(.matchParent).height(.matchParent)
+    private let tableView = GTableView(frame: .zero, style: .grouped).width(.matchParent).height(.matchParent)
 
     open override func initView() -> UIView {
         let delegate = Delegate(view: self)
