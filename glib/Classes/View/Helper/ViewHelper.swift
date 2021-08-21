@@ -36,11 +36,16 @@ public class ViewHelper: SizingHelper {
         view.layer.masksToBounds = true
     }
 
-    public func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?) {
+    public func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?, updateMargins: Bool = true) -> Paddings {
         // Use our own variable to store the definitive values just in case layoutMargins gets changed directly,
         // which can get confusing.
         paddings = paddings.to(top: top, left: left, bottom: bottom, right: right)
-        view.layoutMargins = paddings.toEdgeInsets()
+        
+        if updateMargins {
+            view.layoutMargins = paddings.toEdgeInsets()
+        }
+        
+        return paddings
     }
 
     public func padding(_ padding: GPadding) {
