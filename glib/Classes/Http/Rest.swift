@@ -172,9 +172,9 @@ public class Rest {
         }
     }
 
-    public func done() {
-        // End chaining
-    }
+//    public func done() {
+//        // End chaining
+//    }
 
     private static func augmentPostParams(_ params: GParams, _ method: HttpMethod) -> GParams {
         switch method {

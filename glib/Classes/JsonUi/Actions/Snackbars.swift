@@ -1,4 +1,4 @@
-import MaterialComponents.MaterialSnackbar
+//import MaterialComponents.MaterialSnackbar
 //import MaterialComponents.MaterialSnackbar_ColorThemer
 
 class JsonAction_Snackbars_Alert: JsonAction {
@@ -15,9 +15,18 @@ class JsonAction_Snackbars_Alert: JsonAction {
         
         let snackbar = MSnackbar()
         snackbar.text(message)
-            .action(spec["onClose"].presence, screen, self)
+            .action(title: "Close", onClick: { _ in
+                JsonAction.execute(spec: self.spec["onClose"], screen: self.screen, creator: self)
+            })
             .position(spec["verticalPosition"].presence)
-        MDCSnackbarManager.default.show(snackbar)
+            .show()
+        
+        MSnackbar()
+            .text("Server error")
+            .action(title: "Retry", onClick: { _ in
+            })
+            .position("teT")
+            .show()
         
         return true
     }
@@ -31,46 +40,18 @@ class JsonAction_Snackbars_Select: JsonAction {
         
         let snackbar = MSnackbar()
         snackbar.text(message)
-            .action(spec["onClose"].presence, screen, self)
+            .action(title: "Close", onClick: { _ in
+                JsonAction.execute(spec: self.spec["onClose"], screen: self.screen, creator: self)
+            })
             .position(spec["verticalPosition"].presence)
-        MDCSnackbarManager.default.show(snackbar)
+            .show()
+        
+//        let snackbar = MSnackbar()
+//        snackbar.text(message)
+//            .action(spec["onClose"].presence, screen, self)
+//            .position(spec["verticalPosition"].presence)
+//        MDCSnackbarManager.default.show(snackbar)
         
         return true
-    }
-}
-
-class MSnackbar: MDCSnackbarMessage {
-    func text(_ str: String) -> Self {
-        text = str
-        return self
-    }
-    
-    func action(_ spec: Json?, _ screen: UIViewController, _ creator: JsonAction) -> Self {
-        if let onClose = spec {
-            let action = MDCSnackbarMessageAction()
-            action.title = "CLOSE"
-            action.handler = { () in
-                MDCSnackbarManager.default.suspendAllMessages()
-                JsonAction.execute(spec: onClose, screen: screen, creator: creator)
-            }
-            self.action = action
-        }
-        return self
-    }
-    
-    func position(_ verticalPosition: Json?) -> Self {
-        var bottomOffset = CGFloat(0)
-        if let position = verticalPosition {
-            switch(position) {
-            case "top":
-                bottomOffset = CGFloat(UIScreen.main.bounds.height - 100)
-                break
-            default:
-                GLog.d("Default vertical position")
-            }
-        }
-        
-        MDCSnackbarManager.default.setBottomOffset(bottomOffset)
-        return self
     }
 }

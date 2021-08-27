@@ -135,7 +135,17 @@ open class JsonUiScreen: GScreen {
     func update(url: String, onLoad: @escaping () -> (Void)) {
         self.url = url
 
-        self.request = Rest.get(url: url).execute { response in
+        self.request = Rest.get(url: url).execute(onHttpFailure: { error in
+            MSnackbar()
+                .text("Server error")
+                .action(title: "Retry", onClick: { _ in
+                    self.onRefresh()
+                })
+                .autoDismiss(false)
+                .show()
+            
+            return false
+        }) { response in
             self.update(response: response)
             onLoad()
             return true
