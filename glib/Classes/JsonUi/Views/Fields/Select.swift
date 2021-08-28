@@ -151,7 +151,10 @@ class JsonView_Fields_Select: JsonView_AbstractField {
 //        }
 //    }
     
-//
+    // TODO:
+    // Support grouping (type == label)
+    // Support divider (type == divider)
+    // Use Custom Cells as described in https://github.com/rushisangani/RSSelectionMenu
     class OptionModel: Equatable  {
         static func == (lhs: JsonView_Fields_Select.OptionModel, rhs: JsonView_Fields_Select.OptionModel) -> Bool {
             return lhs.value == rhs.value
@@ -165,16 +168,6 @@ class JsonView_Fields_Select: JsonView_AbstractField {
             self.value = value
         }
     }
-    
-//    class OptionModel  {
-//        var text: String
-//        var value: String
-//
-//        init(text: String, value: String) {
-//            self.text = text
-//            self.value = value
-//        }
-//    }
 }
 
 #endif
