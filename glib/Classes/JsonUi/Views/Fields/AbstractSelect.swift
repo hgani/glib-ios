@@ -48,23 +48,33 @@ class JsonView_AbstractSelect: JsonView_AbstractField {
         return true
     }
 
-    func initSelect() -> UIView {
-        let strongScreen = self.screen
+    func initSelect(value: String?) -> UIView {
+        let options = self.spec["options"].arrayValue.map({ (option) -> OptionModel in
+            if let text = option.string {
+                return OptionModel(text: text, value: text)
+            }
+            else {
+                return OptionModel(text: option["text"].stringValue, value: option["value"].stringValue)
+            }
+        })
+        
+        let selectionType: SelectionStyle = self.spec["multiple"].boolValue ? .multiple : .single
+        self.selectedOptions = options.filter { $0.value == value }
+          
+        // Making sure only one option is selected is important for the timeZone field because some options map to
+        // the same timeZone ID.
+        if selectionType == .single, let firstOption = self.selectedOptions.first {
+            self.selectedOptions = [firstOption]
+        }
 
         chipField.width(.matchParent)
             .placeholder(spec["label"].stringValue)
             .onClick { (field) in
-                let selectionType: SelectionStyle = self.spec["multiple"].boolValue ? .multiple : .single
-                let options = self.spec["options"].arrayValue.map({ (option) -> OptionModel in
-                    if let text = option.string {
-                        return OptionModel(text: text, value: text)
-                    }
-                    else {
-                        return OptionModel(text: option["text"].stringValue, value: option["value"].stringValue)
-                    }
-                })
                 let selectionMenu = RSSelectionMenu(selectionStyle: selectionType, dataSource: options) { (cell, option, indexPath) in
                     cell.textLabel?.text = option.text
+                }
+                selectionMenu.setSelectedItems(items: self.selectedOptions) { _, _, _, _ in
+                    // Nothing to do
                 }
                 selectionMenu.onDismiss = {
                     self.errors(nil)
