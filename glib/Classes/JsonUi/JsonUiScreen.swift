@@ -66,9 +66,13 @@ open class JsonUiScreen: GScreen {
 
 //            socket = Socket("wss://phoenix-websocket-demo.herokuapp.com\(ws["socket"]["endpoint"].stringValue)", params: ws["socket"]["params"].dictionaryObject)
 
-            let safeSocket = Socket(url, params: params)
-            socket = safeSocket
-            initSocket(safeSocket, wsSpec: wsSpec)
+            if #available(iOS 13, *) {
+                let safeSocket = Socket(url, params: params)
+                socket = safeSocket
+                initSocket(safeSocket, wsSpec: wsSpec)
+            } else {
+                fatalError("Unsupported operation")
+            }
         }
 
         let spec = response.content
