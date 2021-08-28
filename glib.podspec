@@ -51,6 +51,9 @@ Simplify iOS development
   s.default_subspec = 'Core'
 
   s.subspec 'Core' do |sub|
+  end
+
+  s.subspec 'RemoteImage' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_KINGFISHER' }
     sub.dependency 'Kingfisher', '~> 4.0'
   end
