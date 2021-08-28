@@ -81,7 +81,7 @@ class JsonView_Fields_Select: JsonView_AbstractField {
         chipField.width(.matchParent)
             .placeholder(spec["label"].stringValue)
             .onClick { (field) in
-                let selectionType: SelectionType = self.spec["multiple"].bool ?? false ? .Multiple : .Single
+                let selectionType: SelectionStyle = self.spec["multiple"].boolValue ? .multiple : .single
                 let options = self.spec["options"].arrayValue.map({ (option) -> OptionModel in
                     if let text = option.string {
                         return OptionModel(text: text, value: text)
@@ -90,9 +90,10 @@ class JsonView_Fields_Select: JsonView_AbstractField {
                         return OptionModel(text: option["text"].stringValue, value: option["value"].stringValue)
                     }
                 })
-                let selectionMenu = RSSelectionMenu(selectionType: selectionType, dataSource: options) { (cell, option, indexPath) in
+                let selectionMenu = RSSelectionMenu(selectionStyle: selectionType, dataSource: options) { (cell, option, indexPath) in
                     cell.textLabel?.text = option.text
                 }
+//                selectionMenu.dismissAutomatically = true
                 selectionMenu.onDismiss = {
                     self.errors(nil)
                     self.selectedOptions = $0
@@ -100,7 +101,13 @@ class JsonView_Fields_Select: JsonView_AbstractField {
                     self.chipField.textField.resignFirstResponder()
 //                    self.updateJsonLogic()
                 }
-                selectionMenu.show(style: .Actionsheet(title: self.spec["label"].stringValue, action: "Done", height: nil), from: self.screen)
+//                selectionMenu.show(style: .popover(sourceView: self.chipField, size: CGSize(width: 200, height: 300), arrowDirection: .down, hideNavBar: true), from: self.screen)
+//                                selectionMenu.show(style: .alert(title: self.spec["label"].stringValue, action: "Done", height: nil), from: self.screen)
+//                selectionMenu.show(style: .push, from: self.screen)
+                    selectionMenu.show(from: self.screen)
+                
+                // Unfortunately this style doesn't allow users to cancel in single select mode
+                // selectionMenu.show(style: .actionSheet(title: self.spec["label"].stringValue, action: "Done", height: nil), from: self.screen)
             }
             .onEdit { _ in
                 self.processJsonLogic(view: self.chipField)
@@ -130,11 +137,26 @@ class JsonView_Fields_Select: JsonView_AbstractField {
         }
     }
     
-    class OptionModel: NSObject, UniqueProperty  {
-        func uniquePropertyName() -> String {
-            return "value"
+//    class OptionModel: NSObject, UniqueProperty  {
+//        func uniquePropertyName() -> String {
+//            return "value"
+//        }
+//
+//        var text: String
+//        var value: String
+//
+//        init(text: String, value: String) {
+//            self.text = text
+//            self.value = value
+//        }
+//    }
+    
+//
+    class OptionModel: Equatable  {
+        static func == (lhs: JsonView_Fields_Select.OptionModel, rhs: JsonView_Fields_Select.OptionModel) -> Bool {
+            return lhs.value == rhs.value
         }
-        
+
         var text: String
         var value: String
 
@@ -143,6 +165,16 @@ class JsonView_Fields_Select: JsonView_AbstractField {
             self.value = value
         }
     }
+    
+//    class OptionModel  {
+//        var text: String
+//        var value: String
+//
+//        init(text: String, value: String) {
+//            self.text = text
+//            self.value = value
+//        }
+//    }
 }
 
 #endif
