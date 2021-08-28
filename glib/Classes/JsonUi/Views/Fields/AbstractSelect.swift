@@ -3,12 +3,9 @@
 import RSSelectionMenu
 
 class JsonView_AbstractSelect: JsonView_AbstractField {
-//    private let textLabel = GLabel()
-//    private let valueLabel = GLabel()
     private let chipField = MChipField()
     private let errorLabel = GLabel()
 
-//    var name: String?
     override var value: String {
         if selectedOptions.count > 0 {
             return selectedOptions.map({ (option) -> String in
