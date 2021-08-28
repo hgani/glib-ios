@@ -93,7 +93,6 @@ class JsonView_Fields_Select: JsonView_AbstractField {
                 let selectionMenu = RSSelectionMenu(selectionStyle: selectionType, dataSource: options) { (cell, option, indexPath) in
                     cell.textLabel?.text = option.text
                 }
-//                selectionMenu.dismissAutomatically = true
                 selectionMenu.onDismiss = {
                     self.errors(nil)
                     self.selectedOptions = $0
