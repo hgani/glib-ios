@@ -1,3 +1,5 @@
+#if INCLUDE_IAP
+
 import SwiftyStoreKit
 
 class JsonView_ProductButton: JsonView_AbstractButton {
@@ -41,3 +43,5 @@ class JsonView_ProductButton: JsonView_AbstractButton {
 //        self?.display.setActivityIndicatorHidden(true)
 //    }
 }
+
+#endif

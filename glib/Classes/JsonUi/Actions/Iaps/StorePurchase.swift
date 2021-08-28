@@ -1,3 +1,5 @@
+#if INCLUDE_IAP
+
 import SwiftyStoreKit
 
 class JsonAction_Iaps_StorePurchase: JsonAction {
@@ -170,6 +172,8 @@ class ReceiptStore {
 
     private init() {}
 }
+
+#endif
 
 // From 6 Aug 2021
 //

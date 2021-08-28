@@ -51,7 +51,11 @@ public class GApp {
         window = UIWindow(windowScene: scene)
         window.rootViewController = navigationController
 
+        #if INCLUDE_IAP
+
         JsonAction_Iaps_StorePurchase.initOnAppLaunch()
+        
+        #endif
 
         return self
     }
