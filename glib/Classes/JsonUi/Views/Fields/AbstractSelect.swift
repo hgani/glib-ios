@@ -49,33 +49,6 @@ class JsonView_AbstractSelect: JsonView_AbstractField {
     }
 
     func initSelect() -> UIView {
-//        name = spec["name"].string
-
-//        let textStrLabel = spec["label"].stringValue
-//        textLabel.font(RobotoFonts.Style.regular.font, size: 14)
-//        valueLabel.font(RobotoFonts.Style.regular.font, size: 14)
-//
-//        return GVerticalPanel()
-//            .append(textLabel.text(textStrLabel), top: 10)
-//            .append(valueLabel.text("Select \(textStrLabel)").onClick({ (sender) in
-//                let selectionMenu = RSSelectionMenu(
-//                    selectionType: (self.spec["multiple"].bool ?? false ? .Multiple : .Single),
-//                    dataSource: self.spec["options"].arrayValue.map({ (option) -> OptionModel in
-//                        if let text = option.string {
-//                            return OptionModel(text: text, value: text)
-//                        }
-//                        else {
-//                            return OptionModel(text: option["text"].stringValue,
-//                                               value: option["value"].stringValue)
-//                        }
-//                    })) { (cell, option, indexPath) in
-//                        cell.textLabel?.text = option.text
-//                    }
-////                selectionMenu.setSelectedItems(items: self.selectedOptions) { (name, index, selected, selectedItems) in }
-//                selectionMenu.onDismiss = { self.selectedOptions = $0 }
-//                selectionMenu.show(style: .Actionsheet(title: self.spec["label"].stringValue, action: "Done", height: nil), from: self.screen)
-//            }), top: 5)
-
         let strongScreen = self.screen
 
         chipField.width(.matchParent)
@@ -98,7 +71,6 @@ class JsonView_AbstractSelect: JsonView_AbstractField {
                     self.selectedOptions = $0
                     self.chipField.clearTextInput()
                     self.chipField.textField.resignFirstResponder()
-//                    self.updateJsonLogic()
                 }
 //                selectionMenu.show(style: .popover(sourceView: self.chipField, size: CGSize(width: 200, height: 300), arrowDirection: .down, hideNavBar: true), from: self.screen)
 //                                selectionMenu.show(style: .alert(title: self.spec["label"].stringValue, action: "Done", height: nil), from: self.screen)
@@ -120,12 +92,6 @@ class JsonView_AbstractSelect: JsonView_AbstractField {
         return GVerticalPanel().append(chipField, top: 10).append(errorLabel)
     }
     
-//    func updateJsonLogic() {
-//        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: chipField) {
-//            updateFormData(form, fieldName, value)
-//        }
-//    }
-    
     func errors(_ text: String?) -> Void {
         if let errorText = text {
             chipField.layer.borderColor = UIColor.red.cgColor
@@ -135,20 +101,6 @@ class JsonView_AbstractSelect: JsonView_AbstractField {
             errorLabel.text("")
         }
     }
-    
-//    class OptionModel: NSObject, UniqueProperty  {
-//        func uniquePropertyName() -> String {
-//            return "value"
-//        }
-//
-//        var text: String
-//        var value: String
-//
-//        init(text: String, value: String) {
-//            self.text = text
-//            self.value = value
-//        }
-//    }
     
     // TODO:
     // Support grouping (type == label)
