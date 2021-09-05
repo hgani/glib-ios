@@ -53,10 +53,25 @@ public class GApp {
 
         #if INCLUDE_IAP
 
-        JsonAction_Iaps_StorePurchase.initOnAppLaunch()
+        JsonAction_Iap_StorePurchase.initOnAppLaunch()
         
         #endif
 
         return self
     }
+    
+    #if INCLUDE_FIREBASE
+    
+    public func handleNotificationClick(response: UNNotificationResponse) {
+        // See https://firebase.google.com/docs/cloud-messaging/ios/receive
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let path = userInfo["window_open_path"] as? String {
+            navigationController.pushViewController(JsonUiScreen(path: path, hideBackButton: true), animated: false)
+        } else {
+            GLog.w("Invalid notification data type")
+        }
+    }
+    
+    #endif
 }

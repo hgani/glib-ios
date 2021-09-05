@@ -58,9 +58,14 @@ Simplify iOS development
     sub.dependency 'Kingfisher', '~> 4.0'
   end
 
+  s.subspec 'Firebase' do |sub|
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_FIREBASE' }
+    sub.dependency 'Firebase/Analytics'	
+    sub.dependency 'Firebase/Messaging'
+  end
+
   s.subspec 'Realm' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_REALM' }
-    #sub.dependency 'RealmSwift', '~> 3.20'
     sub.dependency 'RealmSwift', '~> 10.12'
   end
 
