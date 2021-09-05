@@ -2,7 +2,7 @@
 
 import SwiftyStoreKit
 
-class JsonAction_Iaps_StorePurchase: JsonAction {
+class JsonAction_Iap_StorePurchase: JsonAction {
     override func silentExecute() -> Bool {
         indicator.show()
 
