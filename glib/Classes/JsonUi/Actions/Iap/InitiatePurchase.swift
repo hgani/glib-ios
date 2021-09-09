@@ -2,7 +2,9 @@
 
 import SwiftyStoreKit
 
-class JsonAction_Iap_StorePurchase: JsonAction {
+let SIMULATE_SUCCESS_ON_SIMULATOR = true
+
+class JsonAction_Iap_InitiatePurchase: JsonAction {
     override func silentExecute() -> Bool {
         indicator.show()
 
@@ -27,6 +29,13 @@ class JsonAction_Iap_StorePurchase: JsonAction {
 //        SwiftyStoreKit.purchaseProduct(productId, quantity: 1, atomically: true) { [weak self] result in
         SwiftyStoreKit.purchaseProduct(productId, quantity: 1, atomically: true) { result in
             self.indicator.hide()
+            
+            if SIMULATE_SUCCESS_ON_SIMULATOR {
+                #if targetEnvironment(simulator)
+//                self.verifyReceipt()
+                return
+                #endif
+            }
 
                 NSLog("JsonAction_Iaps_StorePurchase2")
             let strongSelf = self
@@ -39,7 +48,7 @@ class JsonAction_Iap_StorePurchase: JsonAction {
                     NSLog("JsonAction_Iaps_StorePurchase4")
 //                self?.state = .completed
 
-                self.verifyReceipt()
+                self.fetchReceipt()
             case let .error(error):
 
                     NSLog("JsonAction_Iaps_StorePurchase5")
@@ -74,18 +83,26 @@ class JsonAction_Iap_StorePurchase: JsonAction {
         }
     }
 
-    private func verifyReceipt() {
+    private func fetchReceipt() {
+        GLog.i("verifyReceipt1")
         ReceiptStore.shared.fetchReceipt(forceRefresh: false) { [weak self] in
-            guard let strongSelf = self else { return }
+            GLog.i("verifyReceipt2")
 
-            var receiptData = $0
-            var properties = strongSelf.spec["onFailure"]
-            // TODO
-//            properties["formData"]
-            JsonAction.execute(spec: properties, screen: strongSelf.screen, creator: strongSelf)
+            guard let self = self else { return }
 
-            GLog.i("TODO")
+
+            GLog.i("verifyReceipt2a")
             
+//            var receiptData = $0
+//            var properties = self.spec["onFailure"]
+//            // TODO
+////            properties["formData"]
+//            JsonAction.execute(spec: properties, screen: self.screen, creator: self)
+
+            GLog.i("verifyReceipt3")
+            
+            self.processReceipt(data: $0)
+
             // TODO
 //            do {
 //                self?.execute(parameters: try parameters["onSuccess"].merged(with: [
@@ -106,6 +123,20 @@ class JsonAction_Iap_StorePurchase: JsonAction {
 //                }, interval: 0)
 //            } catch {}
         }
+    }
+    
+    private func processReceipt(data: String) {
+        guard let bundleId = Bundle.main.bundleIdentifier else {
+            fatalError("Failed to get bundle ID")
+            return
+        }
+        let parameterizedSpec = self.spec["onSuccess"].mergeFormDataParams([
+            "product_id": self.spec["productId"].stringValue,
+            "bundle_id": bundleId,
+            "receipt_data": data
+        ])
+        JsonAction.execute(spec: parameterizedSpec, screen: self.screen, creator: self)
+        
     }
 
     private func restore() {

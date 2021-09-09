@@ -53,7 +53,7 @@ public class GApp {
 
         #if INCLUDE_IAP
 
-        JsonAction_Iap_StorePurchase.initOnAppLaunch()
+        JsonAction_Iap_InitiatePurchase.initOnAppLaunch()
         
         #endif
 

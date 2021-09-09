@@ -30,8 +30,17 @@ extension JSON {
     }
     
     func mergeFormDataParam(key: String, value: String) -> JSON {
+//        do {
+//            return try self.merged(with: ["formData" : [key: value]])
+//        } catch {
+//            return self
+//        }
+        mergeFormDataParams([key: value])
+    }
+    
+    func mergeFormDataParams(_ params: [String: String]) -> JSON {
         do {
-            return try self.merged(with: ["formData" : [key: value]])
+            return try self.merged(with: ["formData" : params])
         } catch {
             return self
         }

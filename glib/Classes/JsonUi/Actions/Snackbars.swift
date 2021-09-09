@@ -14,18 +14,11 @@ class JsonAction_Snackbars_Alert: JsonAction {
 //        MDCSnackbarColorThemer.applySemanticColorScheme(colorScheme)
         
         let snackbar = MSnackbar()
-        snackbar.text(message)
+            snackbar.text(message)
             .action(title: "Close", onClick: { _ in
                 JsonAction.execute(spec: self.spec["onClose"], screen: self.screen, creator: self)
             })
             .position(spec["verticalPosition"].presence)
-            .show()
-        
-        MSnackbar()
-            .text("Server error")
-            .action(title: "Retry", onClick: { _ in
-            })
-            .position("teT")
             .show()
         
         return true
