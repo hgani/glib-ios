@@ -3,18 +3,12 @@
 class JsonView_AbstractText: JsonView_AbstractField {
     private var view: MTextField!
 
-//    var name: String?
     override var value: String {
         return view.text ?? ""
     }
 
     func initTextField() -> MTextField {
         view = MTextField(outlined: spec["styleClasses"].arrayValue.contains("outlined"))
-        
-//        name = spec["name"].string
-
-//        view.labelView.text = spec["label"].string
-//        view.addTarget(self, action: #selector(updateJsonLogic), for: .editingChanged)
 
         view
             .label(spec["label"].stringValue)
@@ -25,19 +19,8 @@ class JsonView_AbstractText: JsonView_AbstractField {
                 self.processJsonLogic(view: self.view)
             }
 
-//        initBottomBorderIfApplicable()
-
-//        self.registerToClosestForm(field: view)
-
         return view
     }
-
-// TODO: Genericize and use this in audiostatus
-//   func updateJsonLogic() {
-//        if let fieldName = spec["name"].string, let form = closest(JsonView_Panels_Form.FormPanel.self, from: view) {
-//            updateFormData(form, fieldName, value)
-//        }
-//    }
 
 //    private func initBottomBorderIfApplicable() {
 //        #if !INCLUDE_UILIBS
@@ -61,13 +44,8 @@ class JsonView_AbstractText: JsonView_AbstractField {
     }
 
     func errors(_ text: String?) {
-//        view.hintView.text = text
         view.errorView.text = text
     }
-
-//    func validate() -> Bool {
-//        return true
-//    }
 
     override func applyStyleClass(_ styleClass: String) {
         if let buttonSpec = JsonUiStyling.textFields[styleClass] {

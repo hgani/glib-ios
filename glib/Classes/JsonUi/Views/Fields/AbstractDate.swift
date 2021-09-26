@@ -1,7 +1,13 @@
 class JsonView_AbstractDate: JsonView_AbstractText {
+    private static let screenWidth = UIScreen.main.bounds.width
+    private let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 200))
     private weak var textField: MTextField?
-
-    private let utcTimeZone = TimeZone(abbreviation: "UTC")
+    
+    override var value: String {
+        return Formatter.iso8601.string(from: datePicker.date)
+    }
+    
+//    private let utcTimeZone = TimeZone(abbreviation: "UTC")
 
     private lazy var dateFormatter : DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -9,23 +15,26 @@ class JsonView_AbstractDate: JsonView_AbstractText {
         dateFormatter.pmSymbol = "PM"
 
         // Don't adjust date/time to the device's time zone
-        dateFormatter.timeZone = utcTimeZone
+//        dateFormatter.timeZone = utcTimeZone
+
         return dateFormatter
     }()
 
     // From https://stackoverflow.com/questions/58779202/convert-datetime-from-one-timezone-to-another-timezone-swift
-    func changeTimeZone(_ date: Date, from: TimeZone, to: TimeZone) -> Date {
-        let sourceOffset = from.secondsFromGMT(for: date)
-        let destinationOffset = to.secondsFromGMT(for: date)
-        let timeInterval = TimeInterval(destinationOffset - sourceOffset)
-
-        return Date(timeInterval: timeInterval, since: date)
-    }
+//    func changeTimeZone(_ date: Date, from: TimeZone, to: TimeZone) -> Date {
+//        let sourceOffset = from.secondsFromGMT(for: date)
+//        let destinationOffset = to.secondsFromGMT(for: date)
+//        let timeInterval = TimeInterval(destinationOffset - sourceOffset)
+//
+//        return Date(timeInterval: timeInterval, since: date)
+//    }
 
     func initFieldWithPicker(date: Date, mode: UIDatePicker.Mode, format: String) -> MTextField {
         let textField = super.initTextField()
 
         dateFormatter.dateFormat = format
+        dateFormatter.timeZone = TimeZone(identifier: spec["displayTimeZone"].string ?? "Australia/Perth")
+
         textField.text = dateFormatter.string(from: date)
 
         initDatePicker(date: date, mode: mode, field: textField)
@@ -35,15 +44,8 @@ class JsonView_AbstractDate: JsonView_AbstractText {
     private func initDatePicker(date: Date, mode: UIDatePicker.Mode, field: MTextField) {
         textField = field
 
-        let screenWidth = UIScreen.main.bounds.width
-        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 200))
-
         // Don't adjust date/time to the device's time zone
-        datePicker.timeZone = utcTimeZone
-
-//        if let utcDate = self.spec["value"].iso8601 {
-//            datePicker.setDate(utcDate, animated: false)
-//        }
+//        datePicker.timeZone = utcTimeZone
 
         datePicker.setDate(date, animated: false)
 
@@ -52,11 +54,10 @@ class JsonView_AbstractDate: JsonView_AbstractText {
         }
 
         datePicker.datePickerMode = mode
-//        datePicker.sizeToFit()
 
         field.inputView = datePicker
-//
-        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: screenWidth, height: 44.0))
+
+        let toolBar = UIToolbar(frame: CGRect(x: 0.0, y: 0.0, width: type(of: self).screenWidth, height: 44.0))
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 //        let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: target, action: #selector(tapCancel))
         let cancel = GBarButtonItem().title("Cancel").onClick {

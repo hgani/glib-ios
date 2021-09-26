@@ -51,13 +51,21 @@ Simplify iOS development
   s.default_subspec = 'Core'
 
   s.subspec 'Core' do |sub|
+  end
+
+  s.subspec 'RemoteImage' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_KINGFISHER' }
     sub.dependency 'Kingfisher', '~> 4.0'
   end
 
+  s.subspec 'Firebase' do |sub|
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_FIREBASE' }
+    sub.dependency 'Firebase/Analytics'	
+    sub.dependency 'Firebase/Messaging'
+  end
+
   s.subspec 'Realm' do |sub|
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_REALM' }
-    #sub.dependency 'RealmSwift', '~> 3.20'
     sub.dependency 'RealmSwift', '~> 10.12'
   end
 
@@ -98,7 +106,8 @@ Simplify iOS development
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_UILIBS' }
     sub.dependency 'XLPagerTabStrip', '~> 8.0'
     sub.dependency 'TTTAttributedLabel'
-    sub.dependency 'RSSelectionMenu', '~> 5.3.2'
+    #sub.dependency 'RSSelectionMenu', '~> 5.3.2'
+    sub.dependency 'RSSelectionMenu', '~> 7.1.3'
     sub.dependency 'Charts', '~> 3.2.2'
   end
 

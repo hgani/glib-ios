@@ -66,9 +66,13 @@ open class JsonUiScreen: GScreen {
 
 //            socket = Socket("wss://phoenix-websocket-demo.herokuapp.com\(ws["socket"]["endpoint"].stringValue)", params: ws["socket"]["params"].dictionaryObject)
 
-            let safeSocket = Socket(url, params: params)
-            socket = safeSocket
-            initSocket(safeSocket, wsSpec: wsSpec)
+            if #available(iOS 13, *) {
+                let safeSocket = Socket(url, params: params)
+                socket = safeSocket
+                initSocket(safeSocket, wsSpec: wsSpec)
+            } else {
+                fatalError("Unsupported operation")
+            }
         }
 
         let spec = response.content
@@ -135,7 +139,17 @@ open class JsonUiScreen: GScreen {
     func update(url: String, onLoad: @escaping () -> (Void)) {
         self.url = url
 
-        self.request = Rest.get(url: url).execute { response in
+        self.request = Rest.get(url: url).execute(onHttpFailure: { error in
+            MSnackbar()
+                .text("Server error")
+                .action(title: "Retry", onClick: { _ in
+                    self.onRefresh()
+                })
+                .autoDismiss(false)
+                .show()
+            
+            return false
+        }) { response in
             self.update(response: response)
             onLoad()
             return true

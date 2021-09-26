@@ -1,6 +1,8 @@
+#if INCLUDE_IAP
+
 import SwiftyStoreKit
 
-class JsonView_ProductButton: JsonView_AbstractButton {
+class JsonView_Iap_ProductButton: JsonView_AbstractButton {
     override func initView() -> UIView {
         let view = super.initView()
         applyStyleClass("productButton")
@@ -41,3 +43,5 @@ class JsonView_ProductButton: JsonView_AbstractButton {
 //        self?.display.setActivityIndicatorHidden(true)
 //    }
 }
+
+#endif

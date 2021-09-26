@@ -10,7 +10,7 @@ class JsonView_AbstractButton: JsonView {
 //            .font(nil, size: 12)
 
     override func initView() -> UIView {
-        if let icon = JsonView_Icon.icon(spec: spec["icon"]) {
+        if let (icon, _) = JsonView_Icon.icon(spec: spec["icon"]) {
             button.icon(icon)
         }
 
