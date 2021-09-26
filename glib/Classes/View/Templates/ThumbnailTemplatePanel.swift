@@ -4,8 +4,10 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
     let subtitle = GLabel().specs(.libCellSubtitle).paddings(top: 4, left: nil, bottom: nil, right: nil)
     public let subsubtitle = GLabel().specs(.libCellSubsubtitle, .libMuted).paddings(top: 4, left: nil, bottom: nil, right: nil)
     let chips = GHorizontalPanel()
-    public let contentPanel = GVerticalPanel().paddings(top: 20, left: 20, bottom: 10, right: 20)
+    public let contentPanel = GVerticalPanel().paddings(top: 20, left: 20, bottom: 10, right: 20).color(bg: .red)
     public let container = MCard().width(.matchParent)
+    private let split = GSplitPanel().width(.matchParent).color(bg: .green)
+    public let rightMenu = GHorizontalPanel().color(bg: .blue).height(.matchParent).align(.middle)
 
     open override func initContent() {
         let content = GHorizontalPanel()
@@ -15,10 +17,12 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
                 .append(subtitle)
                 .append(subsubtitle)
                 .append(chips.width(.matchParent), top: 5))
+        
+        split.withViews(GView().width(0), content, rightMenu)
 
         width(.matchParent)
             .paddings(top: 8, left: 14, bottom: 8, right: 14)
-            .append(container.withView(content))
+            .append(container.withView(split))
 
         initContent(picture: picture, title: title, subtitle: subtitle)
 
@@ -31,7 +35,7 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
             .border(color: .clear, width: 0)
             .color(bg: .clear)
             .inkView.isHidden = true
-
+        
         paddings(top: nil, left: nil, bottom: 0, right: nil)
             .append(GHeaderFooterView.createSeparator())
     }

@@ -20,6 +20,12 @@ class JsonTemplate_Thumbnail: JsonTemplate {
                      decorator.decorate(impl)
                  }
             }
+            
+            // TODO: Generalize
+            for buttonSpec in spec["rightButtons"].arrayValue {
+                let button = JsonView_Button(buttonSpec, screen).initView()
+                impl.rightMenu.append(button)
+            }
 
             if let chips = spec["chips"].array {
                 for (index, chipSpec) in chips.enumerated() {
