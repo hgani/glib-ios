@@ -4,10 +4,10 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
     let subtitle = GLabel().specs(.libCellSubtitle).paddings(top: 4, left: nil, bottom: nil, right: nil)
     public let subsubtitle = GLabel().specs(.libCellSubsubtitle, .libMuted).paddings(top: 4, left: nil, bottom: nil, right: nil)
     let chips = GHorizontalPanel()
-    public let contentPanel = GVerticalPanel().paddings(top: 20, left: 20, bottom: 10, right: 20).color(bg: .red)
+    public let contentPanel = GVerticalPanel().paddings(top: 20, left: 20, bottom: 10, right: 20)
     public let container = MCard().width(.matchParent)
-    private let split = GSplitPanel().width(.matchParent).color(bg: .green)
-    public let rightMenu = GHorizontalPanel().color(bg: .blue).height(.matchParent).align(.middle)
+    private let split = GSplitPanel().width(.matchParent)
+    public let rightMenu = GHorizontalPanel().height(.matchParent).align(.middle)
 
     open override func initContent() {
         let content = GHorizontalPanel()
