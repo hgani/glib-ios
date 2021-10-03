@@ -7,6 +7,10 @@ open class MButton: MDCButton {
     private var onClick: ((MButton) -> Void)?
     var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
 
+    public var title: String {
+        return title(for: .normal) ?? ""
+    }
+
     public init() {
         super.init(frame: .zero)
         initialize()

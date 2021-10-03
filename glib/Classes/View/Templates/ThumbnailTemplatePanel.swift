@@ -26,7 +26,6 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
 
         initContent(picture: picture, title: title, subtitle: subtitle)
 
-        container.isUserInteractionEnabled = false
     }
 
     func disableCardStyle() {
