@@ -7,7 +7,7 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
     public let contentPanel = GVerticalPanel().paddings(top: 20, left: 20, bottom: 10, right: 20)
     public let container = MCard().width(.matchParent)
     private let split = GSplitPanel().width(.matchParent)
-    public let rightMenu = GHorizontalPanel().height(.matchParent).align(.middle)
+    public let rightMenu = GHorizontalPanel().paddings(top: nil, left: nil, bottom: nil, right: 10).height(.matchParent).align(.middle)
 
     open override func initContent() {
         let content = GHorizontalPanel()

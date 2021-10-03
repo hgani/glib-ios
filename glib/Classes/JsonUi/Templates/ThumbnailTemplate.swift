@@ -35,48 +35,7 @@ class JsonTemplate_Thumbnail: JsonTemplate {
             for rightButton in spec["rightButtons"].arrayValue {
                 let button = JsonView_AbstractButton(rightButton, screen).view()
                 impl.rightMenu.append(button)
-                
-//                impl.rightMenu.append(MButton().title("TEST1").onClick { _ in
-//                    NSLog("onClick3")
-//
-//                    JsonView_AbstractButton().initView()
-//
-//                    JsonAction.execute(spec: onClick, screen: self.screen, creator: nil)
-//
-//                })
-//                if let onClick = rightButton["onClick"].presence {
-//                    NSLog("onClick2")
-//
-//                    impl.rightMenu.append(MButton().title("TEST1").onClick { _ in
-//                        NSLog("onClick3")
-//
-//                        JsonAction.execute(spec: onClick, screen: self.screen, creator: nil)
-//
-//                    })
-//                    impl.rightMenu.append(GLabel().text("TEST2").onClick { _ in
-//                        NSLog("onClick4")
-//
-//                        JsonAction.execute(spec: onClick, screen: self.screen, creator: nil)
-//
-//                    })
-//                }
             }
-//
-//            if let onClick = spec["onClick"].presence {
-//                impl.rightMenu.append(MButton().title("TEST").onClick { _ in
-//    //                fatalError("BOOM")
-//                    JsonAction.execute(spec: onClick, screen: self.screen, creator: nil)
-//
-//                })
-//            }
-            
-//            for buttonSpec in spec["rightButtons"].arrayValue {
-////                let button = JsonView_Button(buttonSpec, screen).initView()
-////                impl.rightMenu.append(button)
-//                impl.rightMenu.append(GButton().title("TEST").onClick { _ in
-//                    fatalError("BOOM")
-//                })
-//            }
 
             if let chips = spec["chips"].array {
                 for (index, chipSpec) in chips.enumerated() {

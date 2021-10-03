@@ -17,8 +17,8 @@ public class MButtonSpec {
 
     static let icon = MButtonSpec { button in
         button.paddings(top: 0, left: 0, bottom: 0, right: 0)
-            .icon(button.title, size: CGFloat(24))
-//            .font(nil, size: 34)
+            .color(bg: .clear, text: .black)
+            .icon(button.title, size: 24)
         
         let size = CGFloat(50)
         

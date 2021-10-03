@@ -42,11 +42,12 @@ open class MButton: MDCButton {
 
     @discardableResult
     public func icon(_ icon: String, size: CGFloat? = nil) -> Self {
-        title(icon)
         if let sizeValue = size, let label = titleLabel {
-            label.font = label.font.withSize(sizeValue)
+            setTitleFont(label.font.withSize(sizeValue), for: .normal)
         }
-        parseIcon()
+        
+        title(icon)
+        parseIcon() // Needs to be after setting the font
         return self
     }
 
