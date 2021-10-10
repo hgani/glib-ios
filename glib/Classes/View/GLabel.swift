@@ -86,25 +86,6 @@ open class GLabel: UILabel, IView {
         if maxLines == nil {
             numberOfLines = 0
         }
-
-//        if let spacing = lineSpacing {
-//            fatalError("BOOM1")
-//            let paragraphStyle = NSMutableParagraphStyle()
-//            paragraphStyle.lineSpacing = CGFloat(spacing)
-//            paragraphStyle.lineBreakMode = lineBreakMode
-//            paragraphStyle.alignment = textAlignment
-//
-//            let attrString = NSMutableAttributedString(string: text)
-//            attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attrString.length))
-//
-//            attributedText = attrString
-//
-////            if let align = self.align {
-////                self.align(align)
-////            }
-//        } else {
-//            self.text = text
-//        }
         
         self.text = text
         
@@ -255,9 +236,9 @@ open class GLabel: UILabel, IView {
         return self
     }
 
-    public func done() {
-        // End chaining
-    }
+//    public func done() {
+//        // End chaining
+//    }
 
 //    // See https://stackoverflow.com/questions/27459746/adding-space-padding-to-a-uilabel
 //    override open var intrinsicContentSize: CGSize {
