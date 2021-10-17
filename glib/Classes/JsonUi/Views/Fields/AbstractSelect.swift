@@ -64,7 +64,8 @@ class JsonView_AbstractSelect: JsonView_AbstractField {
             self.selectedOptions = [firstOption]
         }
 
-        chipField.width(.matchParent)
+        chipField
+            .width(.matchParent)
             .placeholder(spec["label"].stringValue)
             .onClick { (field) in
                 let selectionMenu = RSSelectionMenu(selectionStyle: selectionType, dataSource: options) { (cell, option, indexPath) in

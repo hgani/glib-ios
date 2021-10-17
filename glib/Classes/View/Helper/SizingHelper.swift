@@ -229,8 +229,6 @@ public class SizingHelper {
             setHeightConstraint(0)
         }
         view.isHidden = !show
-        
-//        return self
     }
 
 }
