@@ -5,6 +5,10 @@ open class GDatePicker: UIDatePicker, IView {
 //    private var helper: ViewHelper!
 //    private var onSelect: ((GDatePicker) -> Void)?
 
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper!.size
     }

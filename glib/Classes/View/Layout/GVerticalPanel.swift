@@ -16,6 +16,11 @@ open class GVerticalPanel: UIView, IView {
 
     private var totalGap = Float(0.0)
 
+    // TODO: Move to extension
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

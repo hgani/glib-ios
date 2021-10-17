@@ -6,6 +6,10 @@ open class GButton: UIButton, IView {
     private var onClick: ((GButton) -> Void)?
     var paddings = GPadding(top: 0, right: 0, bottom: 0, left: 0)
 
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

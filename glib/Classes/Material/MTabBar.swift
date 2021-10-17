@@ -100,6 +100,10 @@ extension MTabBar: MDCTabBarDelegate {
 }
 
 extension MTabBar: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

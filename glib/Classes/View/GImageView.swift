@@ -90,6 +90,10 @@ open class GImageView: UIImageView {
 }
 
 extension GImageView: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

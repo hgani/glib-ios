@@ -5,6 +5,10 @@ open class GScrollPanel: UIScrollView, IView {
     let contentView = GVerticalPanel()
     private weak var keyboardScreen: GScreen?
     
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

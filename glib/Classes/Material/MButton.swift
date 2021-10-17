@@ -4,6 +4,7 @@ import MaterialComponents.MaterialButtons
 
 open class MButton: MDCButton {
     fileprivate var helper: ViewHelper!
+
     private var onClick: ((MButton) -> Void)?
     var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
 
@@ -148,6 +149,10 @@ extension MButton: GWeightable {
 }
 
 extension MButton: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

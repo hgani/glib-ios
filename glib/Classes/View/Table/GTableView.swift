@@ -97,6 +97,10 @@ open class GTableView: UITableView {
 }
 
 extension GTableView: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

@@ -75,6 +75,10 @@ open class GControl: UIControl {
 }
 
 extension GControl: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

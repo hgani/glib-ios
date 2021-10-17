@@ -114,6 +114,10 @@ open class GSplitPanel: UIView {
 }
 
 extension GSplitPanel: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

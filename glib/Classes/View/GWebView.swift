@@ -92,6 +92,10 @@ extension GWebView: WKNavigationDelegate {
 }
 
 extension GWebView: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }
