@@ -108,15 +108,6 @@ class JsonAction_Iap_InitiatePurchase: JsonAction {
 
             guard let self = self else { return }
 
-
-            GLog.i("verifyReceipt2a")
-            
-//            var receiptData = $0
-//            var properties = self.spec["onFailure"]
-//            // TODO
-////            properties["formData"]
-//            JsonAction.execute(spec: properties, screen: self.screen, creator: self)
-
             GLog.i("verifyReceipt3")
             
             self.processReceipt(data: $0)
