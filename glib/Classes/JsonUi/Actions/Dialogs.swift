@@ -9,13 +9,27 @@ class JsonAction_Dialogs_Alert: JsonAction {
         guard let message = spec["message"].string else {
             return false
         }
-
+        
+        // TODO: Reuse static method
         let alertController = MDCAlertController(title: "", message: message)
         alertController.mdc_dialogPresentationController?.dismissOnBackgroundTap = false
         alertController.addAction(MDCAlertAction(title: "OK") { _ in JsonAction.execute(spec: self.spec["onClose"], screen: self.screen, creator: self) })
         screen.present(alertController, animated: true, completion: nil)
 
         return true
+    }
+    
+    static func show(message: String, screen: UIViewController, onCloseSpec: Json? = nil, jsonAction: JsonAction? = nil) {
+        let alertController = MDCAlertController(title: "", message: message)
+        alertController.mdc_dialogPresentationController?.dismissOnBackgroundTap = false
+        alertController.addAction(
+            MDCAlertAction(title: "OK") { _ in
+                if let spec = onCloseSpec {
+                    JsonAction.execute(spec: spec, screen: screen, creator: jsonAction?.targetView)
+                }
+            }
+        )
+        screen.present(alertController, animated: true, completion: nil)
     }
 }
 

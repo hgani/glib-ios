@@ -53,7 +53,7 @@ class JsonAction_Iap_InitiatePurchase: JsonAction {
             }
 
                 NSLog("JsonAction_Iaps_StorePurchase2")
-            let strongSelf = self
+//            let strongSelf = self
 //            guard let strongSelf = self else { return }
 
                 NSLog("JsonAction_Iaps_StorePurchase3")
@@ -89,7 +89,13 @@ class JsonAction_Iap_InitiatePurchase: JsonAction {
 //                    self?.execute(.failure, parameters: parameters, completion: completion)
 
 //                    completion?(.failure(error))
-                    JsonAction.execute(spec: strongSelf.spec["onFailure"], screen: strongSelf.screen, creator: strongSelf)
+
+//                    JsonAction.execute(spec:  self.spec["onFailure"], screen: self.screen, creator: self)
+                    
+                    // To test this, when presented with IAP popup, simply click the device's home
+                    // button. This will cancel the purchase and produces an IAP error.
+                    let message = "Purchase failed! Reason: \(error.localizedDescription)"
+                    JsonAction_Dialogs_Alert.show(message: message, screen: self.screen)
                 }
 
 //                guard let strongSelf = self else { return }
