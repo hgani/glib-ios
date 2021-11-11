@@ -42,7 +42,12 @@ class JsonView_Iap_ProductButton: JsonView_AbstractButton {
     }
     
     private func attachPrice(_ price: String) {
-        let title = "\(self.button.title) (\(price))"
+        let title: String
+        if let styleClasses = spec["styleClasses"].array, styleClasses.contains("monthlySubscription") {
+            title = "\(self.button.title) FOR \(price) / MONTH"
+        } else {
+            title = "\(self.button.title) FOR \(price)"
+        }
         self.button.title(title)
     }
 
