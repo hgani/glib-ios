@@ -37,6 +37,10 @@ open class GView: UIView {
 }
 
 extension GView: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

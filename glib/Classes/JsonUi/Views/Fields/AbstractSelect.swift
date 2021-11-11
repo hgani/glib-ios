@@ -64,7 +64,8 @@ class JsonView_AbstractSelect: JsonView_AbstractField {
             self.selectedOptions = [firstOption]
         }
 
-        chipField.width(.matchParent)
+        chipField
+            .width(.matchParent)
             .placeholder(spec["label"].stringValue)
             .onClick { (field) in
                 let selectionMenu = RSSelectionMenu(selectionStyle: selectionType, dataSource: options) { (cell, option, indexPath) in
@@ -94,9 +95,9 @@ class JsonView_AbstractSelect: JsonView_AbstractField {
         errorLabel.width(.matchParent)
             .color(.red)
             .font(RobotoFonts.Style.regular.font, size: 12)
-            .paddings(top: 10, left: 12, bottom: 0, right: 0)
+            .paddings(top: 2, left: 12, bottom: 0, right: 0)
         
-        return GVerticalPanel().append(chipField, top: 10).append(errorLabel)
+        return GVerticalPanel().append(chipField).append(errorLabel)
     }
     
     func errors(_ text: String?) -> Void {

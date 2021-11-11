@@ -7,10 +7,6 @@ class MChipField: MDCChipField {
     private var onClick: ((MChipField) -> Void)?
     private var onEdit: ((MChipField) -> Void)?
     
-    public var size: CGSize {
-        return helper.size
-    }
-    
     public init() {
         super.init(frame: .zero)
         initialize()
@@ -37,31 +33,6 @@ class MChipField: MDCChipField {
         self.frame = frame
 
         self.delegate = self
-    }
-    
-    public func width(_ width: Int) -> Self {
-        helper.width(width)
-        return self
-    }
-    
-    public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
-        return self
-    }
-    
-    public func height(_ height: Int) -> Self {
-        helper.height(height)
-        return self
-    }
-    
-    public func height(_ height: LayoutSize) -> Self {
-        helper.height(height)
-        return self
-    }
-    
-    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
-        helper.paddings(t: top, l: left, b: bottom, r: right)
-        return self
     }
     
     public func placeholder(_ text: String) -> Self {
@@ -94,6 +65,11 @@ class MChipField: MDCChipField {
         }
     }
 
+    // Needed for helper.width() and helper.height()
+    open override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        helper.didMoveToSuperview()
+    }
 }
 
 extension MChipField: MDCChipFieldDelegate {
@@ -103,6 +79,52 @@ extension MChipField: MDCChipFieldDelegate {
 
     func chipField(_ chipField: MDCChipField, didRemoveChip chip: MDCChipView) {
         performEdit()
+    }
+}
+
+extension MChipField: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
+    public var size: CGSize {
+        return helper.size
+    }
+
+    @discardableResult
+    public func color(bg: UIColor) -> Self {
+        backgroundColor = bg
+        return self
+    }
+
+    @discardableResult
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
+    @discardableResult
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    @discardableResult
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    @discardableResult
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    @discardableResult
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
+        return self
     }
 }
 

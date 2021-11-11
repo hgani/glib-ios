@@ -6,6 +6,11 @@ open class GPicker: UIPickerView, IView {
     private var onSelect: ((GDatePicker) -> Void)?
     public let header = GVerticalPanel()
 
+    // TODO: Move to extension
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

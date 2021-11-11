@@ -98,6 +98,10 @@ public class MChip: MDCChipView {
 }
 
 extension MChip: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

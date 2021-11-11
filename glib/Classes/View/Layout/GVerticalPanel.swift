@@ -16,6 +16,11 @@ open class GVerticalPanel: UIView, IView {
 
     private var totalGap = Float(0.0)
 
+    // TODO: Move to extension
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }
@@ -136,12 +141,6 @@ open class GVerticalPanel: UIView, IView {
     // See https://github.com/zaxonus/AutoLayScroll/blob/master/AutoLayScroll/ViewController.swift
     private func initChildConstraints(child: UIView, top: Float) {
         child.snp.makeConstraints { make in
-//            if previousViewElement == nil {
-//                make.top.equalTo(self.snp.topMargin).offset(top)
-//            } else {
-//                make.top.equalTo(previousViewElement.snp.bottom).offset(top)
-//            }
-
             if let view = previousView {
                 make.top.equalTo(view.snp.bottom).offset(top)
             } else {

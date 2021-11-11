@@ -161,6 +161,10 @@ open class MCard: MDCCard {
 }
 
 extension MCard: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

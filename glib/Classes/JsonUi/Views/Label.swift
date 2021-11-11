@@ -1,4 +1,4 @@
-import jsonlogic
+//import jsonlogic
 
 class JsonView_Label: JsonView_AbstractLabel {
     override func initView() -> UIView {

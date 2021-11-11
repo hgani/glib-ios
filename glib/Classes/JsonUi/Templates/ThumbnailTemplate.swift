@@ -20,6 +20,22 @@ class JsonTemplate_Thumbnail: JsonTemplate {
                      decorator.decorate(impl)
                  }
             }
+            
+            // Enabling cell clicking will intercept content interaction, so it needs to be
+            // enabled/disabled depending on whether the cell has an onClick().
+            //
+            // In the future, consider not to use `didSelectRowAt` at all and just attach the
+            // onClick() to the container panel instead.
+            if spec["onClick"].isNull {
+                impl.container.isUserInteractionEnabled = true
+            } else {
+                impl.container.isUserInteractionEnabled = false
+            }
+            
+            for rightButton in spec["rightButtons"].arrayValue {
+                let button = JsonView_AbstractButton(rightButton, screen).view()
+                impl.rightMenu.append(button)
+            }
 
             if let chips = spec["chips"].array {
                 for (index, chipSpec) in chips.enumerated() {

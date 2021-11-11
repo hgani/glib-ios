@@ -9,13 +9,27 @@ class JsonAction_Dialogs_Alert: JsonAction {
         guard let message = spec["message"].string else {
             return false
         }
-
+        
+        // TODO: Reuse static method
         let alertController = MDCAlertController(title: "", message: message)
         alertController.mdc_dialogPresentationController?.dismissOnBackgroundTap = false
         alertController.addAction(MDCAlertAction(title: "OK") { _ in JsonAction.execute(spec: self.spec["onClose"], screen: self.screen, creator: self) })
         screen.present(alertController, animated: true, completion: nil)
 
         return true
+    }
+    
+    static func show(message: String, screen: UIViewController, onCloseSpec: Json? = nil, jsonAction: JsonAction? = nil) {
+        let alertController = MDCAlertController(title: "", message: message)
+        alertController.mdc_dialogPresentationController?.dismissOnBackgroundTap = false
+        alertController.addAction(
+            MDCAlertAction(title: "OK") { _ in
+                if let spec = onCloseSpec {
+                    JsonAction.execute(spec: spec, screen: screen, creator: jsonAction?.targetView)
+                }
+            }
+        )
+        screen.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -39,23 +53,6 @@ class JsonAction_Dialogs_Snackbar: JsonAction {
         return true
     }
 }
-
-//class JsonAction_Dialogs_Options: JsonAction {
-//    override func silentExecute() -> Bool {
-//        guard let buttons = spec["buttons"].array else { return false }
-//        let message = spec["message"].string
-//        let sheet = MDCActionSheetController(title: nil, message: message)
-//        for button in buttons {
-//            let action = MDCActionSheetAction(title: button["text"].stringValue, image: nil) { (_) in
-//                JsonAction.execute(spec: button["onClick"], screen: self.screen, creator: self)
-//            }
-//            sheet.addAction(action)
-//        }
-//        screen.present(sheet, animated: true, completion: nil)
-//
-//        return true
-//    }
-//}
 
 class JsonAction_Dialogs_Open: JsonAction {
     private let dialogTransitionController = MDCDialogTransitionController()

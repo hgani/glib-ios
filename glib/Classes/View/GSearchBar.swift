@@ -3,6 +3,10 @@ import UIKit
 open class GSearchBar: UISearchBar, IView {
     private var helper: ViewHelper!
 
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

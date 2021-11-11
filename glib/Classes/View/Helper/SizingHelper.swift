@@ -1,6 +1,9 @@
 import SnapKit
 import UIKit
 
+private let INDEX_WRAP_CONTENT = -1
+private let INDEX_MATCH_PARENT = -2
+
 public class SizingHelper {
     private unowned let view: UIView
     private var matchParentWidthMultiplier: Float?
@@ -8,6 +11,17 @@ public class SizingHelper {
 
     private var widthConstraint: Constraint?
     private var heightConstraint: Constraint?
+    
+//    private var hiddenWidthLayout: LayoutSize = .wrapContent
+//    private var hiddenHeightLayout: LayoutSize = .wrapContent
+    
+//    private static let wrapContentIndex = -1
+//    private static let matchParentIndex = -2
+//    private var hiddenWidth: Int = wrapContentIndex
+//    private var hiddenHeight: Int = wrapContentIndex
+    
+    private var hiddenWidth: Int = INDEX_WRAP_CONTENT
+    private var hiddenHeight: Int = INDEX_WRAP_CONTENT
 
     weak var delegate: SizingDelegate?
 
@@ -79,9 +93,15 @@ public class SizingHelper {
     }
 
     public func width(_ width: Int) {
-        resetWidth()
+        hiddenWidth = width
+        
+        setWidthConstraint(width)
+    }
 
-        matchParentWidthMultiplier = nil
+    private func setWidthConstraint(_ width: Int) {
+        resetWidth()
+                
+//        matchParentWidthMultiplier = nil
         view.snp.makeConstraints { (make) -> Void in
             widthConstraint = make.width.equalTo(width).constraint
         }
@@ -94,8 +114,10 @@ public class SizingHelper {
 
         switch width {
         case .matchParent:
+            hiddenWidth = INDEX_MATCH_PARENT
             matchParentWidthMultiplier = 1
         case .wrapContent:
+            hiddenWidth = INDEX_WRAP_CONTENT
             nothingToDo()
         }
 
@@ -117,22 +139,30 @@ public class SizingHelper {
     }
 
     public func height(_ height: Int) {
-        resetHeight()
+        hiddenHeight = height
 
+        setHeightConstraint(height)
+    }
+
+    private func setHeightConstraint(_ height: Int) {
+        resetHeight()
+        
         view.snp.makeConstraints { (make) -> Void in
             heightConstraint = make.height.equalTo(height).constraint
         }
 
         updateHeightConstraints()
     }
-
+    
     public func height(_ height: LayoutSize) {
         resetHeight()
 
         switch height {
         case .matchParent:
+            hiddenHeight = INDEX_MATCH_PARENT
             matchParentHeightMultiplier = 1
         case .wrapContent:
+            hiddenHeight = INDEX_WRAP_CONTENT
             matchParentHeightMultiplier = nil
         }
 
@@ -155,6 +185,52 @@ public class SizingHelper {
             self.height(heightValue)
         }
     }
+    
+    public func show(_ show: Bool) {
+//        guard let view = self as? UIView else { return self }
+        
+        if show {
+//            width(.wrapContent)
+//            height(.wrapContent)
+            
+            switch hiddenWidth {
+            case INDEX_WRAP_CONTENT:
+                width(.wrapContent)
+            case INDEX_MATCH_PARENT:
+                width(.matchParent)
+            default:
+                width(hiddenWidth)
+            }
+            
+            switch hiddenHeight {
+            case INDEX_WRAP_CONTENT:
+                height(.wrapContent)
+            case INDEX_MATCH_PARENT:
+                height(.matchParent)
+            default:
+                height(hiddenHeight)
+            }
+
+//            if hiddenWidth == -1 {
+//                width(.matchParent)
+//            } else {
+//                width(hiddenWidth)
+//            }
+//            if hiddenHeight == -1 {
+//                height(.matchParent)
+//            } else {
+//                height(hiddenHeight)
+//            }
+        } else {
+//            width(0)
+//            height(0)
+            
+            setWidthConstraint(0)
+            setHeightConstraint(0)
+        }
+        view.isHidden = !show
+    }
+
 }
 
 public enum LayoutSize: String {

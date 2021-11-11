@@ -16,7 +16,17 @@ public class MButtonSpec {
     }
 
     static let icon = MButtonSpec { button in
-        button.layer.cornerRadius = 18
+        button.paddings(top: 0, left: 0, bottom: 0, right: 0)
+            .color(bg: .clear, text: .black)
+            .icon(button.title, size: 24)
+        
+        let size = CGFloat(50)
+        
+        button.snp.makeConstraints { make in
+            make.width.equalTo(size)
+            make.height.equalTo(size)
+        }
+        button.layer.cornerRadius = size / 2
     }
 }
 

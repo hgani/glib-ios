@@ -183,6 +183,10 @@ open class GFlowPanel: UIView {
 }
 
 extension GFlowPanel: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

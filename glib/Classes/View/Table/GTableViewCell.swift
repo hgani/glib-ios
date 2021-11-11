@@ -25,6 +25,10 @@ open class GTableViewCell: UITableViewCell {
 
         // Allow background to be set by the parent views.
         backgroundColor = .clear
+        
+        // Enable this by default to minimize surprises, e.g buttons not clickabled.
+        isUserInteractionEnabled = true
+
     }
 
     override open func setSelected(_ selected: Bool, animated: Bool) {
@@ -71,7 +75,6 @@ open class GTableViewCell: UITableViewCell {
     }
 
     public func interactive(_ value: Bool) -> Self {
-        isUserInteractionEnabled = value
         if value {
             selectionStyle = .default
         } else {

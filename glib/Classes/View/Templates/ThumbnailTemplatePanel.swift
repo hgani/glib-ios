@@ -6,6 +6,8 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
     let chips = GHorizontalPanel()
     public let contentPanel = GVerticalPanel().paddings(top: 20, left: 20, bottom: 10, right: 20)
     public let container = MCard().width(.matchParent)
+    private let split = GSplitPanel().width(.matchParent)
+    public let rightMenu = GHorizontalPanel().paddings(top: nil, left: nil, bottom: nil, right: 10).height(.matchParent).align(.middle)
 
     open override func initContent() {
         let content = GHorizontalPanel()
@@ -15,14 +17,15 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
                 .append(subtitle)
                 .append(subsubtitle)
                 .append(chips.width(.matchParent), top: 5))
+        
+        split.withViews(GView().width(0), content, rightMenu)
 
         width(.matchParent)
             .paddings(top: 8, left: 14, bottom: 8, right: 14)
-            .append(container.withView(content))
+            .append(container.withView(split))
 
         initContent(picture: picture, title: title, subtitle: subtitle)
 
-        container.isUserInteractionEnabled = false
     }
 
     func disableCardStyle() {
@@ -31,7 +34,7 @@ open class ThumbnailTemplatePanel: GVerticalPanel {
             .border(color: .clear, width: 0)
             .color(bg: .clear)
             .inkView.isHidden = true
-
+        
         paddings(top: nil, left: nil, bottom: 0, right: nil)
             .append(GHeaderFooterView.createSeparator())
     }

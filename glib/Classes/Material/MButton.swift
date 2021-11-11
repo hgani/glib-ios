@@ -4,8 +4,13 @@ import MaterialComponents.MaterialButtons
 
 open class MButton: MDCButton {
     fileprivate var helper: ViewHelper!
+
     private var onClick: ((MButton) -> Void)?
     var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
+
+    public var title: String {
+        return title(for: .normal) ?? ""
+    }
 
     public init() {
         super.init(frame: .zero)
@@ -38,11 +43,12 @@ open class MButton: MDCButton {
 
     @discardableResult
     public func icon(_ icon: String, size: CGFloat? = nil) -> Self {
-        title(icon)
         if let sizeValue = size, let label = titleLabel {
-            label.font = label.font.withSize(sizeValue)
+            setTitleFont(label.font.withSize(sizeValue), for: .normal)
         }
-        parseIcon()
+        
+        title(icon)
+        parseIcon() // Needs to be after setting the font
         return self
     }
 
@@ -143,6 +149,10 @@ extension MButton: GWeightable {
 }
 
 extension MButton: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

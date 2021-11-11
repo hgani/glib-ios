@@ -84,6 +84,9 @@ open class GHorizontalPanel: UIView {
         }
     }
 
+    // NOTE: There seems to be an issue with child width/streching when placing multiple labels in
+    // a horizontal panel. Best to avoid doing this as the cause was still unknown the last time
+    // this issue was investigated.
     public func addView(_ child: UIView, left: Float = 0) {
         totalGap += left
 
@@ -188,6 +191,10 @@ open class GHorizontalPanel: UIView {
 }
 
 extension GHorizontalPanel: IView {
+    public var sizingHelper: SizingHelper {
+        return helper
+    }
+
     public var size: CGSize {
         return helper.size
     }

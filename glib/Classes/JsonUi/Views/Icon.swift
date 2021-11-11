@@ -1,6 +1,5 @@
 class JsonView_Icon: JsonView {
     private let view = GLabel()
-//        .width(24).height(24)
 
     override func initView() -> UIView {
         if let nestedSpec = spec["spec"].presence { // Deprecated
@@ -17,14 +16,6 @@ class JsonView_Icon: JsonView {
 
         if let (icon, size) = icon(spec: spec) {
             view.icon(icon, size: size)
-////            view.icon(icon, size: 24)
-//            let icon = GIcon(font: .materialIcon, code: iconSpec["name"].stringValue)
-//            if let size = iconSpec["size"].int {
-//                NSLog("**** SIZE: \(size)")
-//                view.icon(icon, size: CGFloat(size))
-//            } else {
-//                view.icon(icon, size: nil)
-//            }
         }
 
         if let badgeSpec = spec["badge"].presence {
