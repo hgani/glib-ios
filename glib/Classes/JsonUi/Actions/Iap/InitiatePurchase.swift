@@ -92,7 +92,7 @@ class JsonAction_Iap_InitiatePurchase: JsonAction {
 
 //                    JsonAction.execute(spec:  self.spec["onFailure"], screen: self.screen, creator: self)
                     
-                    // Display specific error message
+                    // Display specific error message for App Store approval.
                     //
                     // To test this, when presented with IAP popup, simply click the device's home
                     // button. This will cancel the purchase and produces an IAP error.
@@ -149,18 +149,17 @@ class JsonAction_Iap_InitiatePurchase: JsonAction {
                 #endif
             }
             
+            print("restore1")
+            
             if !results.restoreFailedPurchases.isEmpty {
-//                let strongSelf = self
-//                guard let strongSelf = self else { return }
+                print("restore2")
+
                 GLog.e("Error occured restoring purchases")
 
 //                self?.state = .error
 
 //                self?.execute(.failure, parameters: parameters, completion: completion)
 //                JsonAction.execute(spec: self.spec["onFailure"], screen: self.screen, creator: self)
-                
-//                let error = results.restoreFailedPurchases.first
-//                error.
                 
                 let reason = results.restoreFailedPurchases.map {
                     $0.0.localizedDescription
@@ -174,8 +173,24 @@ class JsonAction_Iap_InitiatePurchase: JsonAction {
                 JsonAction_Dialogs_Alert.show(message: message, screen: self.screen)
             } else {
 //                self?.state = .completed
-
-                self.fetchReceipt()
+                print("restore3")
+                
+                let productId = self.spec["productId"].stringValue
+                var purchased = false
+                
+                for purchase in results.restoredPurchases {
+                    if purchase.productId == productId {
+                        purchased = true
+                    }
+                    print("restore4: \(purchase.productId) -- \(productId)")
+                }
+                
+                if purchased {
+                    self.fetchReceipt()
+                } else {
+                    // Display specific error message for App Store approval.
+                    JsonAction_Dialogs_Alert.show(message: "Product has not been purchased on this Apple account", screen: self.screen)
+                }
             }
         }
     }
