@@ -1,6 +1,8 @@
 class JsonView_Fields_Email: JsonView_AbstractText {
     override func initView() -> UIView {
-        return super.initTextField().keyboardType(.emailAddress)
+        return super.initTextField()
+            .keyboardType(.emailAddress)
+            .autocapitalizationType(.none)
     }
 
     override func validate() -> Bool {

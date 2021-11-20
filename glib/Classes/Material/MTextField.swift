@@ -194,6 +194,11 @@ open class MTextField: GControl {
         backend.keyboardType = type
         return self
     }
+    
+    public func autocapitalizationType(_ type: UITextAutocapitalizationType) -> Self {
+        backend.autocapitalizationType = type
+        return self
+    }
 
     public func text(_ text: String) -> Self {
         self.text = text
