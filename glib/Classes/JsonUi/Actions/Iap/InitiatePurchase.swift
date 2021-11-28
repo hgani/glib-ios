@@ -136,6 +136,17 @@ class JsonAction_Iap_InitiatePurchase: JsonAction {
         
     }
 
+    // For non-consumable and auto-renewing subscription, this doesn't offer much compared to
+    // `purchase`, because `purchase` will reuse the previous payment, i.e. Apple will show a popup
+    // asking "You've already purchased this. Would you like to get it again for free?"
+    //
+    // But `restore` option needs to be provided explicitly:
+    // - For compliance with Apple guidelines
+    // - For clarity because "purchase" gives the impression to users that they need to
+    //   remake the payment again.
+    // - For specific scenarios where the payment is made when the app is not in foreground, hence
+    //   the app is not aware of the purchase getting completed. This could happen when the user is
+    //   taken away to iOS settings screen to enter/update their credit card details.
     private func restore() {
 //        SwiftyStoreKit.restorePurchases(atomically: true) { [weak self] results in
         SwiftyStoreKit.restorePurchases(atomically: true) { results in
