@@ -1,6 +1,16 @@
 class JsonAction_Windows_Open: JsonAction {
     override func silentExecute() -> Bool {
-        nav.push(JsonUiScreen(url: spec["url"].stringValue, hideBackButton: nav.isRoot()))
+//        nav.push(JsonUiScreen(url: spec["url"].stringValue, hideBackButton: nav.isRoot()))
+        
+        CATransaction.begin()
+        let nextScreen = JsonUiScreen(url: spec["url"].stringValue, hideBackButton: nav.isRoot())
+        if let onOpen = spec["onOpen"].presence {
+            CATransaction.setCompletionBlock {
+                JsonAction.execute(spec: onOpen, screen: nextScreen, creator: self)
+            }
+        }
+        nav.push(nextScreen)
+        CATransaction.commit()
         return true
     }
 }
