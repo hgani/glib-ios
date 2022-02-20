@@ -25,6 +25,17 @@ open class NavHelper {
     }
 
     public func color(bg: UIColor, text: UIColor) {
+        if #available(iOS 15.0, *) {
+            // See https://developer.apple.com/forums/thread/682420
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = bg
+            navController.navigationBar.standardAppearance = appearance;
+            navController.navigationBar.scrollEdgeAppearance = navController.navigationBar.standardAppearance
+        } else {
+            // Nothing to do
+        }
+
         navController.navigationBar.barTintColor = bg
         navController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: text]
         navController.navigationBar.tintColor = text // For built-in back button
