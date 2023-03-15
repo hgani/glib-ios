@@ -5,37 +5,37 @@ open class GButton: UIButton, IView {
     fileprivate var helper: ViewHelper!
     private var onClick: ((GButton) -> Void)?
     var paddings = GPadding(top: 0, right: 0, bottom: 0, left: 0)
-
+    
     public var sizingHelper: SizingHelper {
         return helper
     }
-
+    
     public var size: CGSize {
         return helper.size
     }
-
+    
     public init() {
         super.init(frame: .zero)
         initialize()
     }
-
+    
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
         initialize()
     }
-
+    
     private func initialize() {
         helper = ViewHelper(self)
-
+        
         // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
         _ = paddings(top: 10, left: 20, bottom: 10, right: 20)
     }
-
+    
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         helper.didMoveToSuperview()
     }
-
+    
     @discardableResult
     public func title(_ title: String) -> Self {
         titleLabel!.numberOfLines = 0

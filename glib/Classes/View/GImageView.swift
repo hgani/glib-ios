@@ -133,14 +133,18 @@ extension GImageView: IView {
     }
 }
 
-#if INCLUDE_KINGFISHER
+#if INCLUDE_REMOTEIMAGE
 
 import Kingfisher
+
+#endif
 
 extension GImageView {
     @discardableResult
     public func source(url: URL?, placeholder: UIImage? = nil) -> Self {
+        #if INCLUDE_REMOTEIMAGE
         kf.setImage(with: url, placeholder: placeholder)
+        #endif
         return self
     }
 
@@ -151,11 +155,13 @@ extension GImageView {
 
     @discardableResult
     public func source(url: URL?, placeholder: UIImage? = nil, onSuccess: @escaping () -> Void) -> Self {
+        #if INCLUDE_REMOTEIMAGE
         kf.setImage(with: url, placeholder: placeholder, options: nil, progressBlock: nil){ (image, error, cache, url) in
             if let image = image {
                 onSuccess()
             }
         }
+        #endif
         return self
     }
 
@@ -165,4 +171,3 @@ extension GImageView {
     }
 }
 
-#endif

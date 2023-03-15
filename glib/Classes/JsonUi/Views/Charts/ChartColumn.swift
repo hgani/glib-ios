@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import Charts
 
 class JsonView_Charts_Column: JsonView {
@@ -110,3 +112,5 @@ class MBarChartView: BarChartView {
         return self
     }
 }
+
+#endif

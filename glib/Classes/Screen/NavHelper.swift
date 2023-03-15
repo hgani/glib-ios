@@ -23,6 +23,29 @@ open class NavHelper {
             screen.navigationItem.setHidesBackButton(true, animated: false)
         }
     }
+    
+    public func customBackButton(initialize: @escaping (UIButton) -> Void) {
+        // See https://stackoverflow.com/questions/67768242/how-to-customize-navigation-back-button-in-swift
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        button.setTitle(" Back", for: .normal)
+        button.setTitleColor(navController.navigationBar.tintColor, for: .normal)
+        
+        initialize(button)
+        
+        button.frame = CGRect(x: 0, y: 0, width: 120, height: 30)
+        button.sizeToFit()
+        
+//        let spacing:CGFloat = 4.0; // the amount of spacing to appear between image and title
+//            button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: spacing)
+//            button.titleEdgeInsets = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: 0)
+        
+        
+        let barButton = UIBarButtonItem(customView: button)
+        if let screen = navController.topViewController as? GScreen {
+            screen.navigationItem.leftBarButtonItem = barButton
+        }
+    }
 
     public func color(bg: UIColor, text: UIColor) {
         if #available(iOS 15.0, *) {
@@ -39,6 +62,28 @@ open class NavHelper {
         navController.navigationBar.barTintColor = bg
         navController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: text]
         navController.navigationBar.tintColor = text // For built-in back button
+        
+//        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : text]
+//        navigationController.navigationBar.barTintColor = .white
+//        navigationController.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.red]
+            
+        
+//        let navBarAppearance = UINavigationBarAppearance()
+//        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+//        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+//        
+//        navController.navigationBar.standardAppearance = navBarAppearance;
+//        navController.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor(displayP3Red: 84/255, green: 93/255, blue: 118/255, alpha: 1)]
+//
+//        
+//            NSLog("TEST1")
+//        if let screen = navController.topViewController as? GScreen {
+//            NSLog("TEST2: \(screen.navigationItem.titleView)")
+//            screen.navigationItem.titleView?.backgroundColor = .red
+//            screen.navigationItem.titleView?.tintColor = .black
+//        }
+        
+        
     }
 
     public func viewWillAppear() {

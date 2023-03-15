@@ -28,7 +28,7 @@ Simplify iOS development
   s.source           = { :git => 'https://github.com/hgani/ganilib-ios.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '13.0'
 
   s.source_files = 'glib/Classes/**/*'
   s.resources = 'glib/Fonts/*.ttf'
@@ -54,7 +54,7 @@ Simplify iOS development
   end
 
   s.subspec 'RemoteImage' do |sub|
-    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_KINGFISHER' }
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_REMOTEIMAGE' }
     sub.dependency 'Kingfisher', '~> 4.0'
   end
 
@@ -106,7 +106,6 @@ Simplify iOS development
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_UILIBS' }
     sub.dependency 'XLPagerTabStrip', '~> 8.0'
     sub.dependency 'TTTAttributedLabel'
-    #sub.dependency 'RSSelectionMenu', '~> 5.3.2'
     sub.dependency 'RSSelectionMenu', '~> 7.1.3'
     sub.dependency 'Charts', '~> 3.2.2'
   end

@@ -1,14 +1,6 @@
+#if INCLUDE_FIREBASE
 
 import FirebaseMessaging
-
-//class JsonAction_Windows_Open: JsonAction {
-//    override func silentExecute() -> Bool {
-//        nav.push(JsonUiScreen(url: spec["url"].stringValue, hideBackButton: nav.isRoot()))
-//        return true
-//    }
-//}
-
-#if INCLUDE_FIREBASE
 
 class JsonAction_Fcm_FetchToken: JsonAction {
     override func silentExecute() -> Bool {
