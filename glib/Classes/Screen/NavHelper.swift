@@ -40,7 +40,6 @@ open class NavHelper {
 //            button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: spacing)
 //            button.titleEdgeInsets = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: 0)
         
-        
         let barButton = UIBarButtonItem(customView: button)
         if let screen = navController.topViewController as? GScreen {
             screen.navigationItem.leftBarButtonItem = barButton
@@ -62,28 +61,6 @@ open class NavHelper {
         navController.navigationBar.barTintColor = bg
         navController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: text]
         navController.navigationBar.tintColor = text // For built-in back button
-        
-//        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : text]
-//        navigationController.navigationBar.barTintColor = .white
-//        navigationController.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.red]
-            
-        
-//        let navBarAppearance = UINavigationBarAppearance()
-//        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-//        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-//        
-//        navController.navigationBar.standardAppearance = navBarAppearance;
-//        navController.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor(displayP3Red: 84/255, green: 93/255, blue: 118/255, alpha: 1)]
-//
-//        
-//            NSLog("TEST1")
-//        if let screen = navController.topViewController as? GScreen {
-//            NSLog("TEST2: \(screen.navigationItem.titleView)")
-//            screen.navigationItem.titleView?.backgroundColor = .red
-//            screen.navigationItem.titleView?.tintColor = .black
-//        }
-        
-        
     }
 
     public func viewWillAppear() {

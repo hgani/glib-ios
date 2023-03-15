@@ -28,9 +28,10 @@ class JsonView_Iap_ProductButton: JsonView_AbstractButton {
                     }
                 }
                 
-                #if targetEnvironment(simulator)
-                self.attachPrice("$12.34")
-                #endif
+//                # This doesn't seem to be required anymore. Now we can display real prices on simulator.
+//                #if targetEnvironment(simulator)
+//                self.attachPrice("$12.34")
+//                #endif
                 
 
                 self.screen.indicator.hide()
